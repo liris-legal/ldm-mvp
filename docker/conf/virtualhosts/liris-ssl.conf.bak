@@ -1,0 +1,26 @@
+<IfModule mod_ssl.c>
+    # liris
+    <VirtualHost *:443>
+        ServerAdmin admin@liris.com
+        ServerName liris.demo.connectiv.vn
+        
+        DocumentRoot /var/www/html/liris/public
+
+        <FilesMatch "\.php$">
+            SetHandler "proxy:fcgi://php72:9000"
+        </FilesMatch>
+
+        <Directory /var/www/html/liris/public/>
+            Options FollowSymLinks -Indexes
+            AllowOverride All
+            Require all granted
+        </Directory>
+        
+        SSLEngine on
+        SSLCertificateFile    /etc/apache2/ssl/apache.crt
+        SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+        
+        ErrorLog ${APACHE_LOG_DIR}/liris-error.log
+        CustomLog ${APACHE_LOG_DIR}/liris-access.log combined
+    </VirtualHost>
+</IfModule>
