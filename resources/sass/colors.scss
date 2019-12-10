@@ -1,0 +1,12 @@
+$color___primary: #1452CC;
+$color___white: #fff;
+$color___background: #F5F7FA;
+
+// Defind background button
+%app-btn-primary{
+    background-color: $color___primary;
+    color: $color___white;
+}
+%background-dark{
+    background-color: $color___background;
+}

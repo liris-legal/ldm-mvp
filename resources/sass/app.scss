@@ -1,1 +1,26 @@
-//
+@import '~vuetify/dist/vuetify.min.css';
+@import 'colors';
+@import "class-default";
+
+
+// Defind styles for app
+.app-login{
+    padding: 7em 0em;
+    height: 100vh;
+    @extend %background-dark;
+    .v-form{
+        .app-logo{
+            padding-bottom: 3em;
+        }
+        @extend .mr-0-auto;
+        .v-btn__content{
+            color: $color___white;
+        }
+        .container-app-login{
+            max-width: 400px;
+            height: auto;
+            background-color: $color___white;
+            padding: 2em;
+        }
+    }
+}
