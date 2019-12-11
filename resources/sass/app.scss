@@ -2,25 +2,35 @@
 @import 'colors';
 @import "class-default";
 
-
 // Defind styles for app
-.app-login{
-    padding: 7em 0em;
-    height: 100vh;
-    @extend %background-dark;
-    .v-form{
-        .app-logo{
-            padding-bottom: 3em;
-        }
-        @extend .mr-0-auto;
-        .v-btn__content{
-            color: $color___white;
-        }
-        .container-app-login{
-            max-width: 400px;
-            height: auto;
-            background-color: $color___white;
-            padding: 2em;
+.v-application{
+    background-color: $color___background;
+    .login{
+        background-color: inherit;
+        height: 100vh;
+        padding: 7em 0em;
+        .card{
+            border: unset;
+            @extend %background-dark;
+            .card-header{
+                @extend %background-dark;
+                border-bottom: unset;
+                padding-bottom: 2em;
+            }
+            .card-body {
+                height: auto;
+                max-width: 400px;
+                width: 100%;
+                margin: 0 auto;
+                background-color: $color___white;
+                padding: 2em;
+                .form-group{
+                    margin-bottom: 1rem;
+                    .form-control{
+                        height: 44px;
+                    }
+                }
+            }
         }
     }
 }

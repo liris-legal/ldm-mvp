@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="v-application">
+        <top-bar></top-bar>
         @yield('content')
+        <bottom-bar></bottom-bar>
     </div>
-    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/app.js')}}" defer></script>
 </body>
 </html>
