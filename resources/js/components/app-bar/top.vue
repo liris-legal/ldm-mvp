@@ -1,53 +1,30 @@
 <template>
-	<div>
-		<v-app-bar
-				color="deep-purple accent-4"
-				dark
-		>
-			<v-app-bar-nav-icon />
-			
-			<v-toolbar-title>Page title</v-toolbar-title>
-			
-			<v-spacer />
-			
-			<v-btn icon>
-				<v-icon>mdi-heart</v-icon>
+		<v-app-bar color="deep-purple accent-4"	dense	dark class="top-bar">
+			<v-btn icon><v-icon>arrow_back_ios</v-icon></v-btn>
+			<v-spacer></v-spacer>
+			<v-btn icon v-on:click="displayMenu = !displayMenu">
+				<v-icon>apps</v-icon>
 			</v-btn>
-			
-			<v-btn icon>
-				<v-icon>mdi-magnify</v-icon>
-			</v-btn>
-			
-			<v-menu
-					left
-					bottom
-			>
-				<template v-slot:activator="{ on }">
-					<v-btn icon v-on="on">
-						<v-icon>mdi-dots-vertical</v-icon>
-					</v-btn>
-				</template>
-				
-				<v-list>
-					<v-list-item
-							v-for="n in 5"
-							:key="n"
-							@click="() => {}"
-					>
-						<v-list-item-title>Option {{ n }}</v-list-item-title>
-					</v-list-item>
-				</v-list>
-			</v-menu>
+			<v-list class="list-menu-top-bar" v-show="displayMenu">
+				<v-list-item>
+					<v-list-item-title>abcde@gmail.com</v-list-item-title>
+				</v-list-item>
+				<v-list-item>
+					<v-list-item-title>ログアウト</v-list-item-title>
+				</v-list-item>
+			</v-list>
 		</v-app-bar>
-	</div>
 </template>
 
 <script>
-  export default {
-    name: "top"
+	export default {
+	  data() {
+	    return {
+        displayMenu: false
+			}
+		},
+		mounted() {
+      console.log(this.displayMenu)
+    }
   }
 </script>
-
-<style scoped>
-
-</style>

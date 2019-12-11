@@ -12,11 +12,11 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            ['first_name' => 'user1', 'last_name' => 'connectiv', 'email' => 'user1.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
-            ['first_name' => 'user2', 'last_name' => 'connectiv', 'email' => 'user2.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
-            ['first_name' => 'user3', 'last_name' => 'connectiv', 'email' => 'user3.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
-            ['first_name' => 'user4', 'last_name' => 'connectiv', 'email' => 'user4.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
-            ['first_name' => 'user5', 'last_name' => 'connectiv', 'email' => 'cong.du.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
+            ['name' => 'user1', 'email' => 'user1.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
+            ['name' => 'user2', 'email' => 'user2.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
+            ['name' => 'user3', 'email' => 'user3.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
+            ['name' => 'user4', 'email' => 'user4.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
+            ['name' => 'user5', 'email' => 'cong.du.connectiv@gmail.com', 'password' => bcrypt('connectiv'),],
         ]);
     }
 }

@@ -20,6 +20,11 @@
 }
 
 .v-application {
+  display: block;
+  height: 100vh;
+}
+
+.v-application {
   background-color: #F5F7FA;
 }
 
@@ -53,5 +58,53 @@
 
 .v-application .login .card .card-body .form-group .form-control {
   height: 44px;
+}
+
+.top-bar .list-menu-top-bar {
+  position: absolute;
+  z-index: 9999;
+  right: 2%;
+  top: 115%;
+  background-color: #fff !important;
+  color: #404040 !important;
+}
+
+.top-bar .list-menu-top-bar .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+  background-color: inherit !important;
+  color: #404040 !important;
+}
+
+.top-bar .list-menu-top-bar .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):hover {
+  background-color: #F5F7FA !important;
+  color: #404040 !important;
+}
+
+.bottom-bar .col-4 {
+  padding: 3px;
+}
+
+.bottom-bar .col-4 .v-btn {
+  display: block;
+  width: 100%;
+  margin: 0;
+  max-width: 100%;
+}
+
+.bottom-bar .col-4 .v-btn--active {
+  color: #1452CC !important;
+}
+
+.bottom-bar .col-4 .v-btn .v-icon {
+  font-size: 29.25px;
+}
+
+.bottom-bar .add-button-bottom-app .list-item-add-button {
+  position: absolute;
+  top: -220%;
+  right: 15px;
+}
+
+.bottom-bar .add-button-bottom-app .list-item-add-button .v-list-item {
+  text-align: left;
 }
 

@@ -13,7 +13,9 @@
 <body>
     <div id="app" class="v-application">
         <top-bar></top-bar>
+        <div class="clearfix"></div>
         @yield('content')
+        <div class="clearfix"></div>
         <bottom-bar></bottom-bar>
     </div>
     <script src="{{asset('js/app.js')}}" defer></script>

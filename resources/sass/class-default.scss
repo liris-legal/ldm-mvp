@@ -5,3 +5,7 @@
     height: 44px !important;
     margin:.6em;
 }
+@mixin background-text($background, $textColor){
+    background-color: $background !important;
+    color: $textColor !important;
+}

@@ -4,6 +4,10 @@
 
 // Defind styles for app
 .v-application{
+    display: block;
+    height: 100vh;
+}
+.v-application{
     background-color: $color___background;
     .login{
         background-color: inherit;
@@ -30,6 +34,48 @@
                         height: 44px;
                     }
                 }
+            }
+        }
+    }
+}
+.top-bar{
+    .list-menu-top-bar{
+        position: absolute;
+        z-index: 9999;
+        right: 2%;
+        top: 115%;
+        @include background-text(#fff, #404040);
+        .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
+            @include background-text(inherit, #404040);
+            &:hover{
+                @include background-text(#F5F7FA, #404040);
+            }
+        }
+    }
+}
+.bottom-bar{
+    .col-4{
+        padding: 3px;
+        .v-btn{
+            display: block;
+            width: 100%;
+            margin: 0;
+            max-width: 100%;
+            &--active{
+                color: #1452CC !important;
+            }
+            .v-icon{
+                font-size: 29.25px;
+            }
+        }
+    }
+    .add-button-bottom-app{
+        .list-item-add-button{
+            position: absolute;
+            top: -220%;
+            right: 15px;
+            .v-list-item{
+                text-align: left;
             }
         }
     }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'LDM Home')
+@section('title_name', 'LDM Home')
 @section('content')
 hihi
 @endsection
