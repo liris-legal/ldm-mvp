@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-
+@section('title', 'Login LDM')
 @section('content')
 <div class="login container">
     <div class="row justify-content-center">
@@ -46,9 +46,9 @@
 {{--                            </div>--}}
 {{--                        </div>--}}
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row mb-0 btn-add-form-group">
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary btn-block fix-form-control">
+                                <button type="submit" class="btn btn-primary d-block">
                                     {{ __('ログイン') }}
                                 </button>
 
@@ -60,6 +60,13 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="v-row">
+                    <div class="col-12 text-center">
+                        <a class="btn dark-link" href="{{ route('register') }}">
+                            {{ __('新しいアカウントを作成する。') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

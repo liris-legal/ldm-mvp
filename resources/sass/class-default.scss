@@ -3,9 +3,32 @@
 }
 .fix-form-control{
     height: 44px !important;
-    margin:.6em;
+    margin:0;
+    width: 100%;
+    border: 1px solid #C2C4CC;
+    border-radius: 4px;
+    padding: 5px 10px;
 }
 @mixin background-text($background, $textColor){
     background-color: $background !important;
     color: $textColor !important;
+}
+@mixin app-btn($width: 100%, $padding: 8px, $borderRadius: 4px){
+    width: $width;
+    padding: $padding;
+    border-radius: $borderRadius;
+}
+.btn{
+    @include app-btn();
+}
+.btn-primary{
+    @include background-text($color___primary, $color___white);
+}
+.dark-link{
+    @include background-text(transparent, #636363);
+    text-decoration: none;
+    &:hover{
+        text-decoration: underline;
+        color: $color___primary !important;
+    }
 }

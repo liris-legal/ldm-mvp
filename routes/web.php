@@ -11,7 +11,7 @@
 |
 */
 Auth::routes();
-
+Route::post('register', 'Auth\RegisterController@register')->name('register.post');
 //Route::get('login', function () { return view('apps.content.auth.login'); });
 //Route::post('login', 'Auth\LoginController@login')->name('login');
 

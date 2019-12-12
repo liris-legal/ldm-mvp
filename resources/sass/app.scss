@@ -9,7 +9,7 @@
 }
 .v-application{
     background-color: $color___background;
-    .login{
+    .login, .register{
         background-color: inherit;
         height: 100vh;
         padding: 7em 0em;
@@ -29,10 +29,13 @@
                 background-color: $color___white;
                 padding: 2em;
                 .form-group{
-                    margin-bottom: 1rem;
+                    margin-bottom: .5em;
                     .form-control{
                         height: 44px;
                     }
+                }
+                .btn-add-form-group{
+                    margin-top: 1em;
                 }
             }
         }
