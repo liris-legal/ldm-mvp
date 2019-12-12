@@ -12,7 +12,8 @@
 */
 Auth::routes();
 Route::post('register', 'Auth\RegisterController@register')->name('register.post');
-//Route::get('login', function () { return view('apps.content.auth.login'); });
-//Route::post('login', 'Auth\LoginController@login')->name('login');
 
-Route::get('/', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => '/', 'middleware' => 'auth'], function() {
+    Route::get('/', 'HomeController@index')->name('home');
+});
