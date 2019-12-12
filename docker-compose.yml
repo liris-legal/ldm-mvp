@@ -1,10 +1,8 @@
 version: "2"
 
 services:
-
   php72:
-    # image: connectivdocker/php:7.2
-    build: ./docker/php72
+    image: connectivdocker/php:7.2
     container_name: liris-php72
     networks:
       internal:
@@ -35,7 +33,7 @@ services:
 
   mysql:
     image: connectivdocker/mysql
-    container_name: mysql
+    container_name: liris-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: docker

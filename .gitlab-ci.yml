@@ -1,20 +1,13 @@
 #
 # Gitlab CI configuration for the Laravel Framework.
 #
-image: php:latest
+image: connectivdocker/php:7.2
 
 # Pick zero or more services to be used on all builds.
 # Only needed when using a docker container to run your tests in.
 # Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-a-service
 services:
-  - mysql:latest
-
-variables:
-  MYSQL_DATABASE: liris
-  MYSQL_ROOT_PASSWORD: secret
-
-stages:
-  - test
+  - mysql:5.7
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
@@ -23,83 +16,78 @@ cache:
     - vendor/
     - node_modules/
 
-# This is a basic example for a gem or script which doesn't use
-# services such as redis or postgres
-before_script:
-  # Update packages
-  - apt-get update -yqq
-  # Prep for Node
-  - apt-get install gnupg -yqq
-  # Upgrade to Node 12
-  - curl -sL https://deb.nodesource.com/setup_12.x | bash -
-  # Install dependencies
-  - apt-get install git nodejs libcurl4-gnutls-dev libicu-dev libmcrypt-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libpq-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev -yqq
-  # Install php extensions
-  - docker-php-ext-install mbstring pdo_mysql curl json intl gd xml zip bz2 opcache
-  # Install & enable Xdebug for code coverage reports
-  - pecl install xdebug
-  - docker-php-ext-enable xdebug
-  # Install Composer and project dependencies.
-  - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install
-  # Install Node dependencies.
-  # comment this out if you don't have a node dependency
-  - npm install
-  # Copy over testing configuration.
-  # Don't forget to set the database config in .env.testing correctly
-  # DB_HOST=mysql
-  # DB_DATABASE=project_name
-  # DB_USERNAME=root
-  # DB_PASSWORD=secret
-  - cp .env.testing .env
-  # Run npm build
-  # comment this out if you don't have a frontend build
-  # you can change this to to your frontend building script like
-  # npm run build
-  - npm run dev
-  # Generate an application key. Re-cache.
-  - php artisan key:generate
-  - php artisan config:cache
-  # Run database migrations.
-  - php artisan migrate
-  # Run database seed
-  - php artisan db:seed
+variables:
+  DB_HOST: mysql
+  MYSQL_DATABASE: homestead
+  DB_USERNAME: root
+  MYSQL_ROOT_PASSWORD: t00r3
 
-test:
+stages:
+  - test
+  - deploy
+
+unit_test:
+  stage: test
+  environment:
+    # coding convention check コーディング規約チェック
+    name: testing-environment
+    url: https://ldm.test.connectiv.vn
+  before_script:
+    # Install packages through composer
+    - composer self-update
+    - composer install --no-progress --no-interaction
+
+    # ENV configuration
+    - cp .env.testing .env
+
+    # Laravel: Generate an application key. Re-cache. migrate
+    - php artisan key:generate
+    - php artisan config:clear
+    - php artisan migrate:refresh
+    - php artisan db:seed --env="testing"
+
   script:
-    # run laravel tests
-    - php vendor/bin/phpunit --coverage-text --colors=never
-    # PSR2 test
-    - phpcs --config-set ignore_errors_on_exit 1
-    - phpcs --config-set ignore_warnings_on_exit 1
-    - phpcs --standard=PSR2 --ignore=./src/index.php --error-severity=1 --warning-severity=8 -w --colors ./src/
+    # Mess Detection
+    - vendor/bin/phpmd app/ text phpmd.xml
+
+    # Code Beautifier and Fixer
+    # Using the PHP Code Beautifier and Fixer
+    # https://github.com/squizlabs/PHP_CodeSniffer/wiki/Fixing-Errors-Automatically#using-the-php-code-beautifier-and-fixer
+    - vendor/bin/phpcbf --standard=psr2 app/
+
+    # PHP Code Sniffer
+    # only folder app
+    - vendor/bin/phpcs
+    # - vendor/bin/phpcs --standard=psr2 --ignore=vendor,bootstrap/cache/,storage,database,*.js,*.css,public/index.php,*.blade.php ./
+
     # PHPUnit
-    - phpunit --configuration ci/phpunit.xml
+    - echo "Running PHPUnit test...."
+    - vendor/bin/phpunit --colors --debug
 
-    # run frontend tests
-    # if you have any task for testing frontend
-    # set it in your package.json script
-    # comment this out if you don't have a frontend test
-    - npm test
-
-phpcs PSR2:
-  stage: linting
-  image: pipelinecomponents/php-codesniffer:latest
-  script:
-    - phpcs -s -p --colors --extensions=php --standard=PSR2 .
-
-dev:
+deploy_staging:
   stage: deploy
-  script:
-    - ssh-add <(echo "$DEPLOYER_BETA_KEY")
   only:
-    - dev
-
-production:
-  stage: deploy
+    - staging
+  environment:
+    # coding convention check コーディング規約チェック
+    name: staging-environment
+    url: https://ldm.test.connectiv.vn
+  before_script:
+    # Update packages
+    - apk update
+    # Run ssh-agent in background:
+    - 'which ssh-agent || ( apk add openssh-client -yqq )'
+    - mkdir -p ~/.ssh
+    # - echo "$SSH_PRIVATE_KEY"
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-add -l
   script:
-    - ssh-add <(echo "$DEPLOYER_PRODUCTION_KEY")
+    - echo "Deploying........."
+    # - ~/.composer/vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA"
 
-  only:
-    - prod
   when: manual
+
