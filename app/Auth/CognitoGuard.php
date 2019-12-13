@@ -16,8 +16,13 @@ class CognitoGuard extends SessionGuard implements StatefulGuard
     protected $request;
 
     /**
-    * CognitoGuard constructor.
-    */
+     * CognitoGuard constructor.
+     * @param $name
+     * @param $client
+     * @param $provider
+     * @param $session
+     * @param $request
+     */
     public function __construct(
         string $name,
         CognitoClient $client,
@@ -33,9 +38,13 @@ class CognitoGuard extends SessionGuard implements StatefulGuard
     }
 
     /**
-    * register
-    * Register new users
-    */
+     * register
+     * Register new users
+     * @param $email
+     * @param $pass
+     * @param $attributes
+     * @return string
+     */
     public function register($email, $pass, $attributes = [])
     {
         $username = $this->client->register($email, $pass, $attributes);
@@ -43,9 +52,11 @@ class CognitoGuard extends SessionGuard implements StatefulGuard
     }
 
     /**
-    * getCognitoUser
-    * Get Cognito username from email address
-    */
+     * getCognitoUser
+     * Get Cognito username from email address
+     * @param $email
+     * @return string
+     */
     public function getCognitoUser($email)
     {
         return $this->client->getUser($email);

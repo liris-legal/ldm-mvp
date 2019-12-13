@@ -11,6 +11,8 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 
+
+
 class RegisterController extends Controller
 {
     /*
@@ -33,16 +35,17 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
-    private  $AuthManager;
+    protected  $authManager;
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param AuthManager $authManager
      */
-    public function __construct(AuthManager $AuthManager)
+    public function __construct(AuthManager $authManager)
     {
         $this->middleware('guest');
-        $this->AuthManager = $AuthManager;
+        $this->authManager = $authManager;
     }
 
     public function register(Request $request)
@@ -52,7 +55,7 @@ class RegisterController extends Controller
         $this->validator($data)->validate();
 
         // Cognito側の新規登録
-        $username = $this->AuthManager->register(
+        $username = $this->authManager->register(
             $data['email'],
             $data['password'],
             [
@@ -75,7 +78,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-//            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'cognito_user_unique'],
             'password' => ['required', 'string', 'min:5', 'confirmed'],
         ]);
@@ -84,7 +86,8 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
+     * @param $username
      * @return \App\Models\User
      */
     protected function create(array $data,  $username)
