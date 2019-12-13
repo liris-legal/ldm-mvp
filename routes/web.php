@@ -11,7 +11,7 @@
 |
 */
 Auth::routes();
-Route::post('register', 'Auth\RegisterController@register')->name('register.post');
+Route::post('register', 'Auth\RegisterController@register')->name('auth.register');
 
 
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function() {
