@@ -32,3 +32,14 @@
         color: $color___primary !important;
     }
 }
+// Defind class for notification
+@mixin notification($status, $bgColor, $textColor){
+    .#{$status}{
+        background-color: $bgColor !important;
+        color: $textColor !important;
+    }
+}
+@include notification(success, $color___success, #fff);
+@include notification(info, $color___info, #fff);
+@include notification(warning, $color___warning, #fff);
+@include notification(error, $color___error, #fff);

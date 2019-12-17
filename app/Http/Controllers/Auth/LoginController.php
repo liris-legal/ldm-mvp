@@ -53,6 +53,18 @@ class LoginController extends Controller
     }
 
     /**
+     * sendFailedCognitoResponse
+     * @param $exception
+     * @throws ValidationException
+     */
+    private function sendFailedCognitoResponse(CognitoIdentityProviderException $exception)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => $exception->getAwsErrorMessage(),
+        ]);
+    }
+
+    /**
      * Login user
      * @param Request $request
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response|void
@@ -65,14 +77,9 @@ class LoginController extends Controller
             $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
 
         try {
             if ($this->attemptLogin($request)) {
-                dd($credentials);
                 return $this->sendLoginResponse($request);
             }
         } catch (CognitoIdentityProviderException $ce) {

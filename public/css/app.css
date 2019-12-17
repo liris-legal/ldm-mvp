@@ -47,6 +47,26 @@
   color: #1452CC !important;
 }
 
+.success {
+  background-color: #4caf50 !important;
+  color: #fff !important;
+}
+
+.info {
+  background-color: #3896f3 !important;
+  color: #fff !important;
+}
+
+.warning {
+  background-color: #3896f3 !important;
+  color: #fff !important;
+}
+
+.error {
+  background-color: #f75252 !important;
+  color: #fff !important;
+}
+
 .v-application {
   display: block;
   height: 100vh;
@@ -145,5 +165,9 @@
 
 .bottom-bar .add-button-bottom-app .list-item-add-button .v-list-item {
   text-align: left;
+}
+
+.notification .v-alert__border {
+  left: 0;
 }
 

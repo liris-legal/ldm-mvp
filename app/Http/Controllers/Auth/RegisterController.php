@@ -9,9 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
-
-
 
 class RegisterController extends Controller
 {
@@ -35,7 +34,7 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
-    protected  $authManager;
+    protected $authManager;
 
     /**
      * Create a new controller instance.
@@ -48,6 +47,9 @@ class RegisterController extends Controller
         $this->authManager = $authManager;
     }
 
+    /**
+     * register
+     */
     public function register(Request $request)
     {
         $data = $request->all();
@@ -66,7 +68,7 @@ class RegisterController extends Controller
         // Laravel側の新規登録
         $user = $this->create($data, $username);
         event(new Registered($user));
-        return redirect($this->redirectPath());
+        return redirect()->route('login')->with(['status' => 'success', 'message' => 'please check your mail!']);
     }
 
     /**
@@ -90,7 +92,7 @@ class RegisterController extends Controller
      * @param $username
      * @return \App\Models\User
      */
-    protected function create(array $data,  $username)
+    protected function create(array $data, $username)
     {
         return User::create([
             'cognito_username' =>  $username,

@@ -68,6 +68,11 @@
                         </a>
                     </div>
                 </div>
+                <div class="v-row">
+                    <col-6 class="text-center">
+                        {{ view('notification') }}
+                    </col-6>
+                </div>
             </div>
         </div>
     </div>

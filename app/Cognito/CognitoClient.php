@@ -7,6 +7,8 @@ use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 
 class CognitoClient
 {
+    const RESET_REQUIRED         = 'PasswordResetRequiredException';
+    const USER_NOT_FOUND         = 'UserNotFoundException';
     protected $client;
     protected $clientId;
     protected $clientSecret;
@@ -136,9 +138,13 @@ class CognitoClient
                 'ClientId' => $this->clientId,
                 'UserPoolId' => $this->poolId
             ]);
-        } catch (CognitoIdentityProviderException $e) {
-//            dd($e);
-            return false;
+        } catch (CognitoIdentityProviderException $exception) {
+            if ($exception->getAwsErrorCode() === self::RESET_REQUIRED ||
+                $exception->getAwsErrorCode() === self::USER_NOT_FOUND) {
+                return false;
+            }
+
+            throw $exception;
         }
         return true;
     }
