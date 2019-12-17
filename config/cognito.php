@@ -2,7 +2,7 @@
 return [
     'region'            =>  env('AWS_COGNITO_REGION'),
     'version'           =>  env('AWS_COGNITO_VERSION', 'latest'),
-    'key'               =>  env('AWS_COGNITO_VERSION', ''),
+    'key'               =>  env('AWS_COGNITO_KEY', ''),
     'secret'            =>  env('AWS_COGNITO_SECRET', ''),
     'app_client_id'     =>  env('AWS_COGNITO_CLIENT_ID'), // 作成したクライアントID
     'app_client_secret' =>  env('AWS_COGNITO_CLIENT_SECRET'), // 作成したクライアントシークレット

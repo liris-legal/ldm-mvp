@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Cognito;
 
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
@@ -115,6 +116,30 @@ class CognitoClient
         }
         return $user;
     }
-}
 
-?>
+    /**
+     * Authenticate
+     * @param $email
+     * @param $password
+     * @return bool
+     */
+    public function authenticate($email, $password)
+    {
+        try {
+            $this->client->adminInitiateAuth([
+                'AuthFlow' => 'ADMIN_USER_PASSWORD_AUTH',
+                'AuthParameters' => [
+                    'USERNAME' => $email,
+                    'PASSWORD' => $password,
+                    'SECRET_HASH' => $this->cognitoSecretHash($email)
+                ],
+                'ClientId' => $this->clientId,
+                'UserPoolId' => $this->poolId
+            ]);
+        } catch (CognitoIdentityProviderException $e) {
+//            dd($e);
+            return false;
+        }
+        return true;
+    }
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Auth;
 
 use App\Cognito\CognitoClient;
@@ -6,6 +7,7 @@ use Illuminate\Auth\SessionGuard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Symfony\Component\HttpFoundation\Request;
 
 class CognitoGuard extends SessionGuard implements StatefulGuard
@@ -47,8 +49,7 @@ class CognitoGuard extends SessionGuard implements StatefulGuard
      */
     public function register($email, $pass, $attributes = [])
     {
-        $username = $this->client->register($email, $pass, $attributes);
-        return $username;
+        return $this->client->register($email, $pass, $attributes);
     }
 
     /**
@@ -60,5 +61,38 @@ class CognitoGuard extends SessionGuard implements StatefulGuard
     public function getCognitoUser($email)
     {
         return $this->client->getUser($email);
+    }
+
+    /**
+     * HasValidCredentials
+     * @param $user
+     * @param $credentials
+     * @return bool
+     */
+    protected function hasValidCredentials($user, $credentials)
+    {
+        $result = $this->client->authenticate($credentials['email'], $credentials['password']);
+        if ($result && $user instanceof Authenticatable) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * attempt
+     * @param array $credentials
+     * @param boolean $remember
+     * @return boolean
+     */
+    public function attempt(array $credentials = [], $remember = false)
+    {
+        $this->fireAttemptEvent($credentials, $remember);
+        $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
+        if ($this->HasValidCredentials($user, $credentials)) {
+            $this->login($user, $credentials);
+            return true;
+        }
+        $this->fireFailedEvent($user, $credentials);
+        return false;
     }
 }

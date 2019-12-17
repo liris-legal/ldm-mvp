@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Cognito\CognitoClient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -31,27 +35,51 @@ class LoginController extends Controller
     protected $redirectTo = '/';
 
     /**
+     * $authManager instance
+     *
+     */
+    protected $authManager;
+
+    /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param AuthManager $authManager
      */
-    public function __construct()
+    public function __construct(AuthManager $authManager)
     {
         $this->middleware('guest')->except('logout');
+
+        $this->authManager = $authManager;
     }
+
     /**
-     * Login user.
+     * Login user
+     * @param Request $request
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Illuminate\Validation\ValidationException
      */
-//    public function login(LoginRequest $request)
-//    {
-//        $credentials = $request->only('email', 'password');
-//        dd($credentials);
-//        if(Auth::attempt($credentials)){
-//            dd($credentials);
-////            return redirect()->intended('/');
-//        }else{
-//            echo 'false';
-//        }
-//
-//    }
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        try {
+            if ($this->attemptLogin($request)) {
+                dd($credentials);
+                return $this->sendLoginResponse($request);
+            }
+        } catch (CognitoIdentityProviderException $ce) {
+            return $this->sendFailedCognitoResponse($ce);
+        } catch (\Exception $e) {
+            return $this->sendFailedLoginResponse($request);
+        }
+        return $this->sendFailedLoginResponse($request);
+    }
 }
