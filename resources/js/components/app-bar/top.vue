@@ -7,24 +7,48 @@
 			</v-btn>
 			<v-list class="list-menu-top-bar" v-show="displayMenu">
 				<v-list-item>
-					<v-list-item-title>abcde@gmail.com</v-list-item-title>
+					<v-list-item-title>{{ user.email }}</v-list-item-title>
 				</v-list-item>
 				<v-list-item>
-					<v-list-item-title>ログアウト</v-list-item-title>
+					<v-list-item-title v-on:click="logout">ログアウト</v-list-item-title>
 				</v-list-item>
 			</v-list>
 		</v-app-bar>
 </template>
 
 <script>
+	/**
+	 * top-bar component include infomation person of user and logout.
+	 * @property {Boolean} displayMenu - Is to show/hidden Menu App-nav-top
+	 */
 	export default {
+	  props: {
+      user: { type: Object, required: true, default: {} }
+		},
 	  data() {
 	    return {
         displayMenu: false
 			}
 		},
-		mounted() {
-      console.log(this.displayMenu)
-    }
+		methods: {
+	    /**
+			 * @function logout
+			 * @async
+			 * @description user logout.
+			 */
+	    async logout() {
+				await axios({
+					method: 'post',
+					url: 'logout'
+				})
+				.then( res => {location.reload() })
+				.catch( err => {
+				  if(err.response.status === 401){
+            console.log(err.response.data.message);
+					}
+          location.reload();
+				});
+			}
+		}
   }
 </script>

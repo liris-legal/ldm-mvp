@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
-    <title>@yield('title_name', 'Liris Application')</title>
+    <title>@yield('title', 'Liris Application')</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
     <div id="app" class="v-application">
-        <top-bar></top-bar>
+        <top-bar :user="{{Auth::user()}}"></top-bar>
         <div class="clearfix"></div>
         @yield('content')
         <div class="clearfix"></div>
