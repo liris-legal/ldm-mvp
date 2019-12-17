@@ -43,3 +43,12 @@
 @include notification(info, $color___info, #fff);
 @include notification(warning, $color___warning, #fff);
 @include notification(error, $color___error, #fff);
+
+// defind validation
+@mixin validation($status, $textColor){
+    .text-#{$status} {
+        color: $textColor;
+    }
+}
+// for validate: .text-error
+@include validation(error, $color___error);

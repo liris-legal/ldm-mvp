@@ -67,6 +67,10 @@
   color: #fff !important;
 }
 
+.text-error {
+  color: #f75252;
+}
+
 .v-application {
   display: block;
   height: 100vh;
