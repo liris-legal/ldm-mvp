@@ -1,14 +1,14 @@
 <?php
 namespace App\Validators;
 
-use  Illuminate\Auth\AuthManager;
+use Illuminate\Auth\AuthManager;
 
-class CognitoUserUniqueValidator {
-
+class CognitoUserUniqueValidator
+{
     /**
-     * @var AuthManager
+     * @var $authManager
      */
-    private $authManager;
+//    private $authManager;
 
     public function __construct(AuthManager $authManager)
     {
@@ -23,5 +23,4 @@ class CognitoUserUniqueValidator {
         }
         return true;
     }
-
 }
