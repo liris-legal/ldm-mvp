@@ -13,4 +13,9 @@ class Document extends Model
     {
         return $this->belongsTo('App\Models\Cases');
     }
+
+    public function categoryDocument()
+    {
+        return $this->belongsTo('App\Models\CategoryDocument');
+    }
 }

@@ -41,5 +41,4 @@ class LoginRequest extends FormRequest
             'password.min'   =>  'Password is too short!',
         ];
     }
-
 }

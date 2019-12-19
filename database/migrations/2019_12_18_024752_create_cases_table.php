@@ -15,14 +15,14 @@ class CreateCasesTable extends Migration
     {
         Schema::create('cases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('category_case_id');
             $table->string('number')->unique();
             $table->string('name');
             $table->string('courts')->nullable();
             $table->string('other_parties')->nullable();
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_case_id')->references('id')->on('category_cases')->onDelete('cascade');
         });
     }
 
