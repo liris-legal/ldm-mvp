@@ -2,7 +2,7 @@
 		<v-app-bar color="deep-purple accent-4"	dense	dark class="top-bar">
 			<v-btn icon><v-icon>arrow_back_ios</v-icon></v-btn>
 			<v-spacer></v-spacer>
-			<v-btn icon v-on:click="displayMenu = !displayMenu">
+			<v-btn icon v-on:click="displayMenu = !displayMenu" v-click-outside="hidden">
 				<v-icon>apps</v-icon>
 			</v-btn>
 			<v-list class="list-menu-top-bar" v-show="displayMenu">
@@ -21,6 +21,7 @@
 	 * top-bar component include infomation person of user and logout.
 	 * @property {Boolean} displayMenu - Is to show/hidden Menu App-nav-top
 	 */
+  import ClickOutside from 'vue-click-outside'
 	export default {
 	  props: {
       user: { type: Object, required: true, default: {} }
@@ -48,7 +49,20 @@
 					}
           location.reload();
 				});
+			},
+      /**
+			 * @function hidden
+       * @description To hidden a block
+       */
+			hidden() {
+	      this.displayMenu = false;
 			}
-		}
+		},
+    directives: {
+	    /**
+			 * ClickOutside: Clicks Outside an Element
+			 */
+      ClickOutside
+    }
   }
 </script>

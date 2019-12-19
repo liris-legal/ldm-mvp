@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "vue-click-outside": "^1.0.7",
         "vuetify": "^2.1.14"
     }
 }

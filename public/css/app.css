@@ -12,6 +12,10 @@
   background-color: #F5F7FA;
 }
 
+.text-size-30 {
+  font-size: 30px !important;
+}
+
 .mr-0-auto {
   margin: 0 auto !important;
 }
@@ -69,6 +73,10 @@
 
 .text-error {
   color: #f75252;
+}
+
+h2.title-name {
+  color: #0B104D;
 }
 
 .v-application {
@@ -133,6 +141,7 @@
 }
 
 .top-bar .list-menu-top-bar .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+  cursor: pointer;
   background-color: inherit !important;
   color: #404040 !important;
 }
@@ -173,5 +182,24 @@
 
 .notification .v-alert__border {
   left: 0;
+}
+
+.list-item-add-button .block-link {
+  display: block;
+  text-decoration: none;
+}
+
+.list-item-add-button .block-link:hover {
+  background-color: #F5F7FA !important;
+  color: #404040 !important;
+}
+
+.home-content {
+  padding: 1em 2em;
+}
+
+h3.description {
+  color: #808080;
+  margin-top: 2em;
 }
 

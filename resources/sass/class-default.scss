@@ -52,3 +52,6 @@
 }
 // for validate: .text-error
 @include validation(error, $color___error);
+h2.title-name{
+    color: $color___text_primary;
+}

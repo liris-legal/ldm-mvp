@@ -1,5 +1,6 @@
 @import '~vuetify/dist/vuetify.min.css';
 @import 'colors';
+@import 'size';
 @import "class-default";
 
 // Defind styles for app
@@ -49,6 +50,7 @@
         top: 115%;
         @include background-text(#fff, #404040);
         .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
+            cursor: pointer;
             @include background-text(inherit, #404040);
             &:hover{
                 @include background-text(#F5F7FA, #404040);
@@ -87,4 +89,21 @@
     .v-alert__border{
         left: 0;
     }
+}
+.list-item-add-button{
+    .block-link{
+        &:hover{
+            @include background-text(#F5F7FA, #404040);
+        }
+
+        display: block;
+        text-decoration: none;
+    }
+}
+.home-content {
+    padding: 1em 2em;
+}
+h3.description {
+    color: #808080;
+    margin-top: 2em;
 }

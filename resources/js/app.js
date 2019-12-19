@@ -24,6 +24,7 @@ export default new Vuetify({
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('top-bar', require('./components/app-bar/top.vue').default);
 Vue.component('bottom-bar', require('./components/app-bar/bottom.vue').default);
+Vue.component('app-home', require('./components/home.vue').default);
 
 const app = new Vue({
     el: '#app',
