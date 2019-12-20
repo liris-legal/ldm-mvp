@@ -16,4 +16,6 @@ Route::post('register', 'Auth\RegisterController@register')->name('auth.register
 
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/folders', 'HomeController@folder')->name('folders');
+    Route::get('/cases', 'HomeController@cases')->name('cases');
 });

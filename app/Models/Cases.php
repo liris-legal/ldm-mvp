@@ -18,4 +18,24 @@ class Cases extends Model
     {
         return $this->hasMany('App\Models\Document');
     }
+
+    public function defendants()
+    {
+        return $this->hasMany('App\Models\Defendant');
+    }
+
+    public function defendantsAgent()
+    {
+        return $this->hasMany('App\Models\DefendantAgent');
+    }
+
+    public function plaintiff()
+    {
+        return $this->hasMany('App\Models\Plaintiff');
+    }
+
+    public function plaintiffAgent()
+    {
+        return $this->hasMany('App\Models\PlaintiffAgent');
+    }
 }

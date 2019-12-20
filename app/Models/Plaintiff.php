@@ -10,6 +10,6 @@ class Plaintiff extends Model
 
     public function case()
     {
-        return $this->belongsTo('App\Models\Cases');
+        return $this->belongsTo('App\Models\Cases', 'case_id');
     }
 }

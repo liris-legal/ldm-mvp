@@ -2,13 +2,13 @@
 	<v-bottom-navigation fixed light class="bottom-bar">
 		<v-row>
 			<v-col cols="4" class="text-center">
-				<v-btn value="recent" href="/" :class="{'v-btn--active': checkRoute('/')}">
+				<v-btn value="recent" href="/" :class="{'v-btn--active': checkRoutes(['/'])}">
 					<span>ホーム</span>
 					<v-icon>home</v-icon>
 				</v-btn>
 			</v-col>
 			<v-col cols="4" class="text-center">
-				<v-btn value="favorites">
+				<v-btn value="favorites" href="folders" :class="{'v-btn--active': checkRoutes(['/folders', '/cases'])}">
 					<span>ファイル</span>
 					<v-icon>folder_open</v-icon>
 				</v-btn>
@@ -60,15 +60,17 @@
           getClass.classList.remove('v-btn--active');
 				}
       },
-			
+
       /**
-       * @function checkRoute
+       * @function checkRoutes
        * @description Check route and active class when click on url
-			 * @return boolean
+       *
+       * @param {Array} $array - Is a array has many paths
+       * @return boolean
        */
-			checkRoute($url) {
-				return window.location.pathname === $url;
-			}
+      checkRoutes($array) {
+        return $array.find( value => window.location.pathname === value );
+      }
 		},
     directives: {
       /**

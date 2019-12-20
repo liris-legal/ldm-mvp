@@ -100,7 +100,7 @@
         text-decoration: none;
     }
 }
-.home-content{
+.container-fluid{
     .header-content{
         padding: 1em 2em;
         .title-name{
@@ -113,4 +113,9 @@
     }
     @include app_thead(text-size-15);
     @include app_document(text-size-18);
+    @include app_folder(text-size-15);
+}
+
+.cases-page {
+
 }

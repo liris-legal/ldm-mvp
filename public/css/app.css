@@ -21,13 +21,14 @@
 }
 
 .text-size-15,
-.home-content .app-thead .name {
+.container-fluid .app-folder .folder-link .name,
+.container-fluid .app-thead .name {
   font-size: 15px !important;
 }
 
 .text-size-18,
-.home-content .app-document-2 .document-link .name,
-.home-content .app-document-2 .document-link .date {
+.container-fluid .app-document-2 .document-link .name,
+.container-fluid .app-document-2 .document-link .date {
   font-size: 18px !important;
 }
 
@@ -209,46 +210,67 @@
   color: #404040 !important;
 }
 
-.home-content .header-content {
+.container-fluid .header-content {
   padding: 1em 2em;
 }
 
-.home-content .header-content .title-name {
+.container-fluid .header-content .title-name {
   color: #0B104D;
 }
 
-.home-content .header-content .description {
+.container-fluid .header-content .description {
   color: #808080;
   margin-top: 1em;
 }
 
-.home-content .app-thead {
+.container-fluid .app-thead {
   color: #404040;
   border: 1px solid #DADDE6;
   background-color: #FAFAFA;
 }
 
-.home-content .app-thead .name {
+.container-fluid .app-thead .name {
   margin-left: 40px;
 }
 
-.home-content .app-document-2 {
+.container-fluid .app-document-2 {
   color: #404040;
   border: 1px solid #DADDE6;
   background-color: #FFFFFF;
 }
 
-.home-content .app-document-2:hover {
+.container-fluid .app-document-2:hover {
   background-color: #F5F7FA;
 }
 
-.home-content .app-document-2 .document-link {
+.container-fluid .app-document-2 .document-link {
   color: #404040;
   text-decoration: none;
 }
 
-.home-content .app-document-2 .document-link .name,
-.home-content .app-document-2 .document-link .date {
+.container-fluid .app-document-2 .document-link .name,
+.container-fluid .app-document-2 .document-link .date {
   margin-left: 40px;
+}
+
+.container-fluid .app-folder {
+  color: #404040;
+  border: 1px solid #DADDE6;
+  background-color: #FFFFFF;
+}
+
+.container-fluid .app-folder:hover {
+  background-color: #F5F7FA;
+}
+
+.container-fluid .app-folder .folder-link {
+  color: #404040;
+  text-decoration: none;
+}
+
+.container-fluid .app-folder .folder-link .name {
+  margin-left: 40px;
+  line-height: 40px;
+  height: 0px;
 }
 

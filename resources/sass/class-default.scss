@@ -88,3 +88,27 @@
         }
     }
 }
+
+// component app-folder
+@mixin app_folder($textSizeName) {
+    .app-folder{
+        color: #404040;
+        border: 1px solid #DADDE6;
+        background-color: #FFFFFF;
+
+        &:hover{
+            background-color: #F5F7FA;
+        }
+        .folder-link{
+            color: #404040;
+            text-decoration: none;
+
+            .name{
+                @extend .#{$textSizeName};
+                margin-left: 40px;
+                line-height: 40px;
+                height: 0px;
+            }
+        }
+    }
+}
