@@ -100,10 +100,17 @@
         text-decoration: none;
     }
 }
-.home-content {
-    padding: 1em 2em;
-}
-h3.description {
-    color: #808080;
-    margin-top: 2em;
+.home-content{
+    .header-content{
+        padding: 1em 2em;
+        .title-name{
+            color: $color___text_primary;
+        }
+        .description {
+            color: #808080;
+            margin-top: 1em;
+        }
+    }
+    @include app_thead(text-size-15);
+    @include app_document(text-size-18);
 }

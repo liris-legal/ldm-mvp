@@ -1,6 +1,6 @@
 <template>
 		<v-app-bar color="deep-purple accent-4"	dense	dark class="top-bar">
-			<v-btn icon><v-icon>arrow_back_ios</v-icon></v-btn>
+			<v-btn v-if="!checkRoute('/')" icon><v-icon>arrow_back_ios</v-icon></v-btn>
 			<v-spacer></v-spacer>
 			<v-btn icon v-on:click="displayMenu = !displayMenu" v-click-outside="hidden">
 				<v-icon>apps</v-icon>
@@ -56,7 +56,16 @@
        */
 			hidden() {
 	      this.displayMenu = false;
-			}
+			},
+			
+      /**
+       * @function checkRoute
+       * @description Check route and active class when click on url
+       * @return boolean
+       */
+      checkRoute($url) {
+        return window.location.pathname === $url;
+      }
 		},
     directives: {
 	    /**

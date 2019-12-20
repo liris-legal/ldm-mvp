@@ -16,6 +16,25 @@
   font-size: 30px !important;
 }
 
+.text-size-20 {
+  font-size: 20px !important;
+}
+
+.text-size-15,
+.home-content .app-thead .name {
+  font-size: 15px !important;
+}
+
+.text-size-18,
+.home-content .app-document-2 .document-link .name,
+.home-content .app-document-2 .document-link .date {
+  font-size: 18px !important;
+}
+
+.font-weight-600 {
+  font-weight: 600 !important;
+}
+
 .mr-0-auto {
   margin: 0 auto !important;
 }
@@ -73,10 +92,6 @@
 
 .text-error {
   color: #f75252;
-}
-
-h2.title-name {
-  color: #0B104D;
 }
 
 .v-application {
@@ -194,12 +209,46 @@ h2.title-name {
   color: #404040 !important;
 }
 
-.home-content {
+.home-content .header-content {
   padding: 1em 2em;
 }
 
-h3.description {
+.home-content .header-content .title-name {
+  color: #0B104D;
+}
+
+.home-content .header-content .description {
   color: #808080;
-  margin-top: 2em;
+  margin-top: 1em;
+}
+
+.home-content .app-thead {
+  color: #404040;
+  border: 1px solid #DADDE6;
+  background-color: #FAFAFA;
+}
+
+.home-content .app-thead .name {
+  margin-left: 40px;
+}
+
+.home-content .app-document-2 {
+  color: #404040;
+  border: 1px solid #DADDE6;
+  background-color: #FFFFFF;
+}
+
+.home-content .app-document-2:hover {
+  background-color: #F5F7FA;
+}
+
+.home-content .app-document-2 .document-link {
+  color: #404040;
+  text-decoration: none;
+}
+
+.home-content .app-document-2 .document-link .name,
+.home-content .app-document-2 .document-link .date {
+  margin-left: 40px;
 }
 
