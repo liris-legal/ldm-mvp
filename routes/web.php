@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+Route::post('register', 'Auth\RegisterController@register')->name('auth.register');
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
+    Route::get('/', 'HomeController@index')->name('home');
 });

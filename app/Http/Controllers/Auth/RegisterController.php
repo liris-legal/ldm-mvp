@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -28,16 +32,43 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+
+    protected $authManager;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param AuthManager $authManager
      */
-    public function __construct()
+    public function __construct(AuthManager $authManager)
     {
         $this->middleware('guest');
+        $this->authManager = $authManager;
+    }
+
+    /**
+     * register
+     */
+    public function register(Request $request)
+    {
+        $data = $request->all();
+
+        $this->validator($data)->validate();
+
+        // Cognito側の新規登録
+        $username = $this->authManager->register(
+            $data['email'],
+            $data['password'],
+            [
+                'email' => $data['email'],
+            ]
+        );
+
+        // Laravel側の新規登録
+        $user = $this->create($data, $username);
+        event(new Registered($user));
+        return redirect()->route('login')->with(['status' => 'success', 'message' => 'please check your mail!']);
     }
 
     /**
@@ -49,24 +80,23 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'cognito_user_unique'],
+            'password' => ['required', 'string', 'min:5', 'confirmed'],
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @param array $data
+     * @param $username
+     * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $data, $username)
     {
         return User::create([
-            'name' => $data['name'],
+            'cognito_username' =>  $username,
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
         ]);
     }
 }

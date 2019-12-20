@@ -1,0 +1,57 @@
+.mr-0-auto{
+    margin: 0 auto !important;
+}
+.fix-form-control{
+    height: 44px !important;
+    margin:0;
+    width: 100%;
+    border: 1px solid #C2C4CC;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+@mixin background-text($background, $textColor){
+    background-color: $background !important;
+    color: $textColor !important;
+}
+@mixin app-btn($width: 100%, $padding: 8px, $borderRadius: 4px){
+    width: $width;
+    padding: $padding;
+    border-radius: $borderRadius;
+}
+.btn{
+    @include app-btn();
+}
+.btn-primary{
+    @include background-text($color___primary, $color___white);
+}
+.dark-link{
+    @include background-text(transparent, #636363);
+    text-decoration: none;
+    &:hover{
+        text-decoration: underline;
+        color: $color___primary !important;
+    }
+}
+// Defind class for notification
+@mixin notification($status, $bgColor, $textColor){
+    .#{$status}{
+        background-color: $bgColor !important;
+        color: $textColor !important;
+    }
+}
+@include notification(success, $color___success, #fff);
+@include notification(info, $color___info, #fff);
+@include notification(warning, $color___warning, #fff);
+@include notification(error, $color___error, #fff);
+
+// defind validation
+@mixin validation($status, $textColor){
+    .text-#{$status} {
+        color: $textColor;
+    }
+}
+// for validate: .text-error
+@include validation(error, $color___error);
+h2.title-name{
+    color: $color___text_primary;
+}

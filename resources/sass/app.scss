@@ -1,1 +1,109 @@
-//
+@import '~vuetify/dist/vuetify.min.css';
+@import 'colors';
+@import 'size';
+@import "class-default";
+
+// Defind styles for app
+.v-application{
+    display: block;
+    height: 100vh;
+}
+.v-application{
+    background-color: $color___background;
+    .login, .register{
+        background-color: inherit;
+        height: 100vh;
+        padding: 7em 0em;
+        .card{
+            border: unset;
+            @extend %background-dark;
+            .card-header{
+                @extend %background-dark;
+                border-bottom: unset;
+                padding-bottom: 2em;
+            }
+            .card-body {
+                height: auto;
+                max-width: 400px;
+                width: 100%;
+                margin: 0 auto;
+                background-color: $color___white;
+                padding: 2em;
+                .form-group{
+                    margin-bottom: .5em;
+                    .form-control{
+                        height: 44px;
+                    }
+                }
+                .btn-add-form-group{
+                    margin-top: 1em;
+                }
+            }
+        }
+    }
+}
+.top-bar{
+    .list-menu-top-bar{
+        position: absolute;
+        z-index: 9999;
+        right: 2%;
+        top: 115%;
+        @include background-text(#fff, #404040);
+        .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
+            cursor: pointer;
+            @include background-text(inherit, #404040);
+            &:hover{
+                @include background-text(#F5F7FA, #404040);
+            }
+        }
+    }
+}
+.bottom-bar{
+    .col-4{
+        padding: 3px;
+        .v-btn{
+            display: block;
+            width: 100%;
+            margin: 0;
+            max-width: 100%;
+            &--active{
+                color: #1452CC !important;
+            }
+            .v-icon{
+                font-size: 29.25px;
+            }
+        }
+    }
+    .add-button-bottom-app{
+        .list-item-add-button{
+            position: absolute;
+            top: -220%;
+            right: 15px;
+            .v-list-item{
+                text-align: left;
+            }
+        }
+    }
+}
+.notification {
+    .v-alert__border{
+        left: 0;
+    }
+}
+.list-item-add-button{
+    .block-link{
+        &:hover{
+            @include background-text(#F5F7FA, #404040);
+        }
+
+        display: block;
+        text-decoration: none;
+    }
+}
+.home-content {
+    padding: 1em 2em;
+}
+h3.description {
+    color: #808080;
+    margin-top: 2em;
+}
