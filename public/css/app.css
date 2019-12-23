@@ -16,6 +16,26 @@
   font-size: 30px !important;
 }
 
+.text-size-20 {
+  font-size: 20px !important;
+}
+
+.text-size-15,
+.container-fluid .app-folder .folder-link .name,
+.container-fluid .app-thead .name {
+  font-size: 15px !important;
+}
+
+.text-size-18,
+.container-fluid .app-document-2 .document-link .name,
+.container-fluid .app-document-2 .document-link .date {
+  font-size: 18px !important;
+}
+
+.font-weight-600 {
+  font-weight: 600 !important;
+}
+
 .mr-0-auto {
   margin: 0 auto !important;
 }
@@ -73,10 +93,6 @@
 
 .text-error {
   color: #f75252;
-}
-
-h2.title-name {
-  color: #0B104D;
 }
 
 .v-application {
@@ -194,12 +210,67 @@ h2.title-name {
   color: #404040 !important;
 }
 
-.home-content {
+.container-fluid .header-content {
   padding: 1em 2em;
 }
 
-h3.description {
+.container-fluid .header-content .title-name {
+  color: #0B104D;
+}
+
+.container-fluid .header-content .description {
   color: #808080;
-  margin-top: 2em;
+  margin-top: 1em;
+}
+
+.container-fluid .app-thead {
+  color: #404040;
+  border: 1px solid #DADDE6;
+  background-color: #FAFAFA;
+}
+
+.container-fluid .app-thead .name {
+  margin-left: 40px;
+}
+
+.container-fluid .app-document-2 {
+  color: #404040;
+  border: 1px solid #DADDE6;
+  background-color: #FFFFFF;
+}
+
+.container-fluid .app-document-2:hover {
+  background-color: #F5F7FA;
+}
+
+.container-fluid .app-document-2 .document-link {
+  color: #404040;
+  text-decoration: none;
+}
+
+.container-fluid .app-document-2 .document-link .name,
+.container-fluid .app-document-2 .document-link .date {
+  margin-left: 40px;
+}
+
+.container-fluid .app-folder {
+  color: #404040;
+  border: 1px solid #DADDE6;
+  background-color: #FFFFFF;
+}
+
+.container-fluid .app-folder:hover {
+  background-color: #F5F7FA;
+}
+
+.container-fluid .app-folder .folder-link {
+  color: #404040;
+  text-decoration: none;
+}
+
+.container-fluid .app-folder .folder-link .name {
+  margin-left: 40px;
+  line-height: 40px;
+  height: 0px;
 }
 

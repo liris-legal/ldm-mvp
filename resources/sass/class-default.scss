@@ -52,6 +52,63 @@
 }
 // for validate: .text-error
 @include validation(error, $color___error);
-h2.title-name{
-    color: $color___text_primary;
+
+// component app-thead
+@mixin app_thead($textSizeName){
+    .app-thead{
+        color: #404040;
+        border: 1px solid #DADDE6;
+        background-color: #FAFAFA;
+
+        .name{
+            @extend .#{$textSizeName};
+            margin-left: 40px;
+        }
+    }
+}
+
+// component app-document-2
+@mixin app_document($textSizeName) {
+    .app-document-2{
+        color: #404040;
+        border: 1px solid #DADDE6;
+        background-color: #FFFFFF;
+
+        &:hover{
+            background-color: #F5F7FA;
+        }
+        .document-link{
+            color: #404040;
+            text-decoration: none;
+
+            .name, .date{
+                @extend .#{$textSizeName};
+                margin-left: 40px;
+            }
+        }
+    }
+}
+
+// component app-folder
+@mixin app_folder($textSizeName) {
+    .app-folder{
+        color: #404040;
+        border: 1px solid #DADDE6;
+        background-color: #FFFFFF;
+
+        &:hover{
+            background-color: #F5F7FA;
+        }
+        .folder-link{
+            color: #404040;
+            text-decoration: none;
+
+            .name{
+                @extend .#{$textSizeName};
+                margin-left: 40px;
+                line-height: 40px;
+                height: 0px;
+            }
+        }
+    }
 }

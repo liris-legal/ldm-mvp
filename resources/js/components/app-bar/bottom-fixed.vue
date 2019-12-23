@@ -2,13 +2,13 @@
 	<v-bottom-navigation fixed light class="bottom-bar">
 		<v-row>
 			<v-col cols="4" class="text-center">
-				<v-btn value="recent">
+				<v-btn value="recent" href="/" :class="{'v-btn--active': checkRoutes(['/'])}">
 					<span>ホーム</span>
 					<v-icon>home</v-icon>
 				</v-btn>
 			</v-col>
 			<v-col cols="4" class="text-center">
-				<v-btn value="favorites">
+				<v-btn value="favorites" href="folders" :class="{'v-btn--active': checkRoutes(['/folders', '/cases'])}">
 					<span>ファイル</span>
 					<v-icon>folder_open</v-icon>
 				</v-btn>
@@ -37,19 +37,39 @@
 
 <script>
   import ClickOutside from 'vue-click-outside'
+	/**
+	 * bottom-fixed is component
+	 * @property {Boolean} showAdd - Is to show/hidden a block.
+	 */
   export default {
+    name: "bottom-fixed",
     data() {
       return {
         showAdd: false
 			}
 		},
 		methods: {
+      /**
+			 * @function hidden
+			 * @description To remove class v-btn-active
+			 */
       hidden() {
 				if(this.showAdd === true){
           this.showAdd = false;
           let getClass = document.getElementById("btn-add-app");
           getClass.classList.remove('v-btn--active');
 				}
+      },
+
+      /**
+       * @function checkRoutes
+       * @description Check route and active class when click on url
+       *
+       * @param {Array} $array - Is a array has many paths
+       * @return boolean
+       */
+      checkRoutes($array) {
+        return $array.find( value => window.location.pathname === value );
       }
 		},
     directives: {
