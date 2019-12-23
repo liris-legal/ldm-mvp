@@ -1,5 +1,5 @@
 <template>
-	<div class="app-document-2">
+	<div class="app-document-8">
 		<a href="#" class="document-link">
 			<v-row v-ripple>
 				<v-col :class="columnOfClass.class1">

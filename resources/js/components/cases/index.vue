@@ -6,35 +6,91 @@
 				<h3 class="description"/>
 			</v-col>
 		</v-row>
-		<app-thead :thead="thead" />
-		<app-case-8 v-for="item in cases" :key="item.id" :itemCase="item" />
+		
+		<div class="scroll-slide">
+			<div class="list-case-wrapper pseudo-table">
+				<div class="thead d-flex">
+					<v-col class="d-flex col-12 half-width">
+						<v-col class="col-3">
+							<div class="name font-weight-600">事件番号</div>
+						</v-col>
+						<v-col class="col-3">
+							<div class="name font-weight-600">事件名</div>
+						</v-col>
+						<v-col class="col-3">
+							<div class="name font-weight-600">裁判所・部署</div>
+						</v-col>
+						<v-col class="col-3">
+							<div class="name font-weight-600">原告</div>
+						</v-col>
+					</v-col>
+					
+					<v-col class="d-flex col-12">
+						<v-col class="col-3">
+							<div class="name font-weight-600">原告代理人</div>
+						</v-col>
+						<v-col class="col-3">
+							<div class="name font-weight-600">被告</div>
+						</v-col>
+						<v-col class="col-3">
+							<div class="name font-weight-600">被告代理人</div>
+						</v-col>
+						<v-col class="col-3 row">
+							<div class="col-6">
+								<div class="name font-weight-600">その他当事者</div>
+							</div>
+							<div class="col-6 text-right">
+								<div class="name font-weight-600">...</div>
+							</div>
+						</v-col>
+					</v-col>
+				</div>
+<!--				<div class="t-body">-->
+<!--					<a href="#" class="document-link">-->
+<!--						<v-row v-ripple>-->
+<!--							<v-col :class="columnOfClass.class1">-->
+<!--								<div class="name">{{ document.name }}</div>-->
+<!--							</v-col>-->
+<!--							<v-col :class="columnOfClass.class2">-->
+<!--								<div class="date">{{ document.updated_at }}</div>-->
+<!--							</v-col>-->
+<!--						</v-row>-->
+<!--					</a>-->
+<!--				</div>-->
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
   export default {
     name: "index",
-    data() {
-      return {
-        thead: [
-          { id: 1, name: '事件番号', class: 'col-2'},
-          { id: 2, name: '事件名', class: 'col-2'},
-          { id: 3, name: '裁判所・部署', class: 'col-2'},
-          { id: 4, name: '原告', class: 'col-2'},
-          { id: 5, name: '原告代理人', class: 'col-1'},
-          { id: 6, name: '被告代理人', class: 'col-1'},
-          { id: 7, name: 'その他当事者', class: 'col-1'},
-          { id: 8, name: '', class: 'col-1'}
-        ],
-        columnOfClass: { class1: 'col-7', 'class2': 'col-5'},
-      }
-    },
 		props: {
       cases: { type: Array, required: false, default: [] }
-		}
+		},
+		mounted() {
+      console.log(this.cases)
+    }
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+	.scroll-slide {
+		width: auto;
+		overflow-x: scroll;
+		overflow-y: visible;
+		.pseudo-table{
+			width: 100%;
+			.thead {
+				display: flex;
+				width: 100%;
+				.half-width{
+					max-width: 100%;
+				}
+			}
+		}
+	}
+	::-webkit-scrollbar {
+		width: 0;
+	}
 </style>
