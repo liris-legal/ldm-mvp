@@ -20,6 +20,9 @@ services:
     networks:
       internal:
         ipv4_address: 172.23.0.89
+    ports:
+    - 80
+    - 443
     volumes:
     - ./docker/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
     - ./docker/conf/virtualhosts:/usr/local/apache2/conf/extra/vhosts
