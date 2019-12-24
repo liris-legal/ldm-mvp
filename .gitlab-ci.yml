@@ -15,8 +15,9 @@ cache:
 # https://docs.gitlab.com/ce/ci/yaml/README.html#variables
 variables:
   DB_HOST: mysql
-  MYSQL_DATABASE: liris
+  DB_DATABASE: liris
   DB_USERNAME: docker
+  DB_PASSWORD: docker
   MYSQL_ROOT_PASSWORD: docker
 
 # Globally script will be execute
