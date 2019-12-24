@@ -1,4 +1,4 @@
-@servers(['develop' => ['ubuntu@54.238.212.147'],  'local' => ['tahi@192.168.1.1']])
+@servers(['develop' => ['ubuntu@3.112.199.228'],  'local' => ['tahi@192.168.1.1']])
 
 @setup
     echo "[SETUP] path in development server";
