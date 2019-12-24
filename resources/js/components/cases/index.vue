@@ -1,19 +1,28 @@
 <template>
-	<div class="container-fluid cases-page">
-		<v-row>
-			<v-col class="col-12 header-content">
-				<h2 class="title-name text-size-30">民事事件</h2>
-				<h3 class="description"/>
-			</v-col>
-		</v-row>
-		<app-thead :thead="thead" />
-		<app-case-8 v-for="item in cases" :key="item.id" :itemCase="item" />
-	</div>
+  <div class="container-fluid cases-page">
+    <v-row>
+      <v-col class="col-12 header-content">
+        <h2 class="title-name text-size-30">
+          民事事件
+        </h2>
+        <h3 class="description" />
+      </v-col>
+    </v-row>
+    <app-thead :thead="thead" />
+    <app-case-8
+      v-for="item in cases"
+      :key="item.id"
+      :item-case="item"
+    />
+  </div>
 </template>
 
 <script>
   export default {
-    name: "index",
+    name: "Index",
+		props: {
+      cases: { type: Array, required: false, default: () => [] }
+		},
     data() {
       return {
         thead: [
@@ -28,10 +37,7 @@
         ],
         columnOfClass: { class1: 'col-7', 'class2': 'col-5'},
       }
-    },
-		props: {
-      cases: { type: Array, required: false, default: [] }
-		}
+    }
   }
 </script>
 
