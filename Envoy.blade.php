@@ -2,7 +2,7 @@
 
 @setup
     echo "[SETUP] path in development server";
-    $base_path              = '/home/ubuntu/liris';
+    $base_path              = '/home/ubuntu/LDM';
 
     echo "[SETUP] docker container in development server";
     $container              = 'liris-php72';
@@ -32,7 +32,7 @@
 @endtask
 
 @task('yarn')
-    echo "Build Vuejs frontend through docker"
+    echo "Build frontend through yarn inside docker"
     docker exec {{ $container }} bash -c "cd {{ $work_dir }} && yarn && yarn prod"
 @endtask
 
