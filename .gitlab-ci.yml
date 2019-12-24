@@ -17,7 +17,7 @@ variables:
   DB_HOST: mysql
   DB_DATABASE: liris
   DB_USERNAME: root
-  MYSQL_ROOT_PASSWORD: t00r3
+  MYSQL_ROOT_PASSWORD: t00r
 
 # Globally script will be execute
 default:
