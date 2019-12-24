@@ -82,7 +82,7 @@ unit_test:
     - vendor/bin/phpunit --colors --debug
 
     # ESlinter
-    - eslint --ext .js,.vue resources/js
+    - ./node_modules/.bin/eslint --ext .js,.vue resources/js
 
 deploy_staging:
   stage: deploy
