@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Defendant extends Model
+class DefendantRepresentative extends Model
 {
     public $fillable = ['name'];
 
     /**
-     * Get case for the Defendant.
+     * Get case for the Defendant Representative.
      */
     public function case()
     {
@@ -17,7 +17,7 @@ class Defendant extends Model
     }
 
     /**
-     * Get type author for the Defendant.
+     * Get type author for the Defendant Representative.
      */
     public function typeAuthor()
     {

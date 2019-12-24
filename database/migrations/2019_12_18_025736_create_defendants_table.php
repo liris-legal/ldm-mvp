@@ -16,10 +16,13 @@ class CreateDefendantsTable extends Migration
         Schema::create('defendants', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedInteger('type_author_id');
             $table->unsignedBigInteger('case_id');
             $table->timestamps();
 
             $table->foreign('case_id')->references('id')->on('cases')->onDelete('cascade');
+            $table->foreign('type_author_id')->references('id')->on('type_authors')->onDelete('cascade');
+
         });
     }
 

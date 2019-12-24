@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class TypeDocument extends Model
 {
     public $fillable = ['name'];
     public $timestamps = true;
 
-    public function cases()
+    public function documents()
     {
-        return $this->hasMany('App\Models\Cases');
+        return $this->hasMany('App\Models\TypeDocument');
     }
 }
