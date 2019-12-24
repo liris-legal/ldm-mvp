@@ -16,9 +16,8 @@ cache:
 variables:
   DB_HOST: mysql
   DB_DATABASE: liris
-  DB_USERNAME: docker
-  DB_PASSWORD: docker
-  MYSQL_ROOT_PASSWORD: docker
+  DB_USERNAME: root
+  MYSQL_ROOT_PASSWORD: t00r3
 
 # Globally script will be execute
 default:
