@@ -60,6 +60,7 @@ unit_test:
     - php artisan db:seed --env="testing"
 
     # Install dependencies through yarn
+    - npm install --global cross-env
     - yarn install --production
     # Builder frontend through yarn
     - yarn prod
