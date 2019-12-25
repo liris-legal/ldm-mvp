@@ -7,90 +7,100 @@
 			</v-col>
 		</v-row>
 		
-		<div class="scroll-slide">
-			<div class="list-case-wrapper pseudo-table">
-				<div class="thead d-flex">
-					<v-col class="d-flex col-12 half-width">
-						<v-col class="col-3">
-							<div class="name font-weight-600">事件番号</div>
-						</v-col>
-						<v-col class="col-3">
-							<div class="name font-weight-600">事件名</div>
-						</v-col>
-						<v-col class="col-3">
-							<div class="name font-weight-600">裁判所・部署</div>
-						</v-col>
-						<v-col class="col-3">
-							<div class="name font-weight-600">原告</div>
-						</v-col>
-					</v-col>
-					
-					<v-col class="d-flex col-12">
-						<v-col class="col-3">
-							<div class="name font-weight-600">原告代理人</div>
-						</v-col>
-						<v-col class="col-3">
-							<div class="name font-weight-600">被告</div>
-						</v-col>
-						<v-col class="col-3">
-							<div class="name font-weight-600">被告代理人</div>
-						</v-col>
-						<v-col class="col-3 row">
-							<div class="col-6">
-								<div class="name font-weight-600">その他当事者</div>
+		<div class="overflow overflow-x-auto">
+			<table class="table">
+				<thead>
+					<tr class="title d-flex">
+						<th scope="col" class="col col-3">事件番号</th>
+						<th scope="col" class="col col-3">事件名</th>
+						<th scope="col" class="col col-3">裁判所・部署</th>
+						<th scope="col" class="col col-3">原告</th>
+						<th scope="col" class="col col-3">原告代理人</th>
+						<th scope="col" class="col col-3">被告</th>
+						<th scope="col" class="col col-3">被告代理人</th>
+						<th scope="col" class="col col-3 f-flex">
+							<div class="col1">その他当事者</div>
+							<v-spacer></v-spacer>
+							<div></div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="d-flex" @click="clickTR()">
+						<td scope="col" class="col col-3">平成31年（ワ）○○号</td>
+						<td scope="col" class="col col-3">損害賠償請求事件</td>
+						<td scope="col" class="col col-3">東京地方裁判所</td>
+						<td scope="col" class="col col-3">ABCDE株式会社</td>
+						<td scope="col" class="col col-3">FGHIJ法律事務所</td>
+						<td scope="col" class="col col-3">KLMNO株式会社</td>
+						<td scope="col" class="col col-3">PQRST法律事務所</td>
+						<td scope="col" class="col col-3 d-flex pa-0 last-child-table">
+							<div class="col-6"><div class="pl-3">-</div></div>
+							<v-spacer></v-spacer>
+							<div class="col-6 text-right col-btn font-weight-600 text-size-20">
+								<v-btn icon v-on:click="clickBTN" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
 							</div>
-							<div class="col-6 text-right">
-								<div class="name font-weight-600">...</div>
-							</div>
-						</v-col>
-					</v-col>
-				</div>
-<!--				<div class="t-body">-->
-<!--					<a href="#" class="document-link">-->
-<!--						<v-row v-ripple>-->
-<!--							<v-col :class="columnOfClass.class1">-->
-<!--								<div class="name">{{ document.name }}</div>-->
-<!--							</v-col>-->
-<!--							<v-col :class="columnOfClass.class2">-->
-<!--								<div class="date">{{ document.updated_at }}</div>-->
-<!--							</v-col>-->
-<!--						</v-row>-->
-<!--					</a>-->
-<!--				</div>-->
-			</div>
+							<v-list class="subs-menu" v-if="isActive">
+								<v-list-item>
+									<v-list-item-title>名前を変更</v-list-item-title>
+								</v-list-item>
+								<v-list-item>
+									<v-list-item-title>ファイルを削除</v-list-item-title>
+								</v-list-item>
+							</v-list>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </template>
 
 <script>
+  import ClickOutside from 'vue-click-outside'
   export default {
     name: "index",
 		props: {
       cases: { type: Array, required: false, default: [] }
 		},
+		data() {
+      return {
+        isActive: false
+			}
+		},
+    methods: {
+      /**
+       * @function hidden
+       * @description To hidden a block
+       */
+      hidden() {
+        this.isActive = false;
+      },
+      clickTR() {
+        console.log('click me!')
+			},
+      clickBTN() {
+        this.isActive = !this.isActive;
+        console.log('click button!')
+			},
+
+      /**
+       * @function checkRoute
+       * @description Check route and active class when click on url
+       * @return boolean
+       */
+      checkRoute($url) {
+        return window.location.pathname === $url;
+      }
+    },
+    directives: {
+      /**
+       * ClickOutside: Clicks Outside an Element
+       */
+      ClickOutside
+    },
 		mounted() {
       console.log(this.cases)
     }
   }
 </script>
-
-<style scoped lang="scss">
-	.scroll-slide {
-		width: auto;
-		overflow-x: scroll;
-		overflow-y: visible;
-		.pseudo-table{
-			width: 100%;
-			.thead {
-				display: flex;
-				width: 100%;
-				.half-width{
-					max-width: 100%;
-				}
-			}
-		}
-	}
-	::-webkit-scrollbar {
-		width: 0;
-	}
-</style>

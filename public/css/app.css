@@ -147,22 +147,25 @@
   margin-top: 1em;
 }
 
-.top-bar .list-menu-top-bar {
+.list-menu-top-bar,
+.cases-page .overflow-x-auto table tbody tr .last-child-table .subs-menu {
   position: absolute;
   z-index: 9999;
-  right: 2%;
+  right: 5px;
   top: 115%;
   background-color: #fff !important;
   color: #404040 !important;
 }
 
-.top-bar .list-menu-top-bar .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+.list-menu-top-bar .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled),
+.cases-page .overflow-x-auto table tbody tr .last-child-table .subs-menu .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
   cursor: pointer;
   background-color: inherit !important;
   color: #404040 !important;
 }
 
-.top-bar .list-menu-top-bar .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):hover {
+.list-menu-top-bar .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):hover,
+.cases-page .overflow-x-auto table tbody tr .last-child-table .subs-menu .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):hover {
   background-color: #F5F7FA !important;
   color: #404040 !important;
 }
@@ -272,5 +275,55 @@
   margin-left: 40px;
   line-height: 40px;
   height: 0px;
+}
+
+.cases-page .overflow-x-auto {
+  white-space: nowrap;
+  height: 70vh;
+}
+
+.cases-page .overflow-x-auto table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.cases-page .overflow-x-auto table thead tr.title {
+  text-align: left;
+}
+
+.cases-page .overflow-x-auto table thead tr.title th {
+  background-color: #fff;
+  border-top: 1px solid #DADDE6;
+  border-bottom: 1px solid #DADDE6;
+}
+
+.cases-page .overflow-x-auto table tbody tr {
+  height: 52px;
+  cursor: pointer;
+}
+
+.cases-page .overflow-x-auto table tbody tr td {
+  background-color: #f7f7f7;
+  border-top: 1px solid #DADDE6;
+  border-bottom: 1px solid #DADDE6;
+}
+
+.cases-page .overflow-x-auto table tbody tr td .col-btn {
+  padding: 8px 12px;
+}
+
+.cases-page .overflow-x-auto table tbody tr:nth-child(2n) td {
+  background-color: #e8e8e8;
+  border-top: 1px solid #DADDE6;
+  border-bottom: 1px solid #DADDE6;
+}
+
+.cases-page .overflow-x-auto table tbody tr .last-child-table {
+  position: relative;
+}
+
+.cases-page .overflow-x-auto table tbody tr .last-child-table .subs-menu {
+  top: 55px;
+  right: 5px;
 }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cases;
-use App\Models\CategoryCase;
+use App\Models\TypeCase;
 use App\Models\Document;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -38,8 +38,8 @@ class HomeController extends Controller
      */
     public function folder()
     {
-        $folders = CategoryCase::all();
-        return view('content.folders.index', ['folders' => $folders]);
+        $typeCase = TypeCase::all();
+        return view('content.typeCases.index', ['typeCase' => $typeCase]);
     }
 
     /**
