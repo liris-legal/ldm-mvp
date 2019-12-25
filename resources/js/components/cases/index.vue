@@ -93,7 +93,8 @@
         return window.location.pathname === $url;
       },
       convertString(arrays){
-        arrays.toString();
+        let values = arrays.map(value => { return value.name });
+        return values.toString();
 			}
     },
     directives: {

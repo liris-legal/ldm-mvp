@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cases;
-use App\Http\Resources\Cases as CasesResource;
+use App\Models\Lawsuit;
+use App\Http\Resources\Lawsuit as LawsuitResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CasesController extends Controller
+class LawsuitsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,11 @@ class CasesController extends Controller
      */
     public function index()
     {
-        $cases = Cases::all()->map(function ($case) {
-            return new CasesResource($case);
+        $lawsuits = Lawsuit::all()->map(function ($lawsuit) {
+            return new LawsuitResource($lawsuit);
         })->toJson();
 
-        return view('content.cases.index', ['cases' => $cases]);
+        return view('content.cases.index', ['cases' => $lawsuits]);
     }
 
     /**

@@ -18,5 +18,5 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/folders', 'HomeController@folder')->name('folders');
 
-    Route::resource('cases', 'CasesController');
+    Route::resource('cases', 'LawsuitsController');
 });

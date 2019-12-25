@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          $this->call(SubmitterSeeder::class);
-         $this->call(TypeCaseSeeder::class);
+         $this->call(TypeLawsuitSeeder::class);
          $this->call(TypeDocumentSeeder::class);
-         $this->call(CasesSeeder::class);
+         $this->call(LawsuitSeeder::class);
          $this->call(PlaintiffSeeder::class);
          $this->call(PlaintiffRepresentativeSeeder::class);
          $this->call(DefendantRepresentativeSeeder::class);
