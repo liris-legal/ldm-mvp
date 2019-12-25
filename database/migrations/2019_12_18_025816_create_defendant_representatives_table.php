@@ -16,12 +16,12 @@ class CreateDefendantRepresentativesTable extends Migration
         Schema::create('defendant_representatives', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedInteger('type_author_id');
-            $table->unsignedBigInteger('case_id');
+            $table->unsignedInteger('submitter_id');
+            $table->unsignedBigInteger('cases_id');
             $table->timestamps();
 
-            $table->foreign('case_id')->references('id')->on('cases')->onDelete('cascade');
-            $table->foreign('type_author_id')->references('id')->on('type_authors')->onDelete('cascade');
+            $table->foreign('cases_id')->references('id')->on('cases')->onDelete('cascade');
+            $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
     }
 

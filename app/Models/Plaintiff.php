@@ -13,7 +13,7 @@ class Plaintiff extends Model
      */
     public function case()
     {
-        return $this->belongsTo('App\Models\Cases', 'case_id');
+        return $this->belongsTo('App\Models\Cases', 'cases_id');
     }
 
     /**
@@ -21,6 +21,6 @@ class Plaintiff extends Model
      */
     public function typeAuthor()
     {
-        return $this->belongsTo('App\Models\TypeAuthor', 'type_author_id');
+        return $this->belongsTo('App\Models\Submitter', 'submitter_id');
     }
 }
