@@ -1,4 +1,21 @@
 <template>
+<<<<<<< HEAD
+  <div class="app-document-2">
+    <a
+      href="#"
+      class="document-link"
+    >
+      <v-row v-ripple>
+        <v-col :class="columnOfClass.class1">
+          <div class="name">{{ document.name }}</div>
+        </v-col>
+        <v-col :class="columnOfClass.class2">
+          <div class="date">{{ document.updated_at }}</div>
+        </v-col>
+      </v-row>
+    </a>
+  </div>
+=======
 	<div class="app-document-8">
 		<a href="#" class="document-link">
 			<v-row v-ripple>
@@ -11,14 +28,15 @@
 			</v-row>
 		</a>
 	</div>
+>>>>>>> cong-dev
 </template>
 
 <script>
   export default {
-    name: "app-case-8",
+    name: "AppCase8",
     props: {
-      itemCase: { type: Object, required: true, default: {} },
-      columnOfClass: { type: Object, required: true, default: {} }
+      itemCase: { type: Object, required: true, default: () => {} },
+      columnOfClass: { type: Object, required: true, default: () => {} }
     }
   }
 </script>

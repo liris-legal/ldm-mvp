@@ -6,7 +6,7 @@
 				<h3 class="description"/>
 			</v-col>
 		</v-row>
-		
+
 		<div class="overflow overflow-x-auto">
 			<table class="table">
 				<thead>
@@ -59,11 +59,11 @@
 <script>
   import ClickOutside from 'vue-click-outside'
   export default {
-    name: "index",
+    name: "Index",
 		props: {
-      cases: { type: Array, required: false, default: [] }
+      cases: { type: Array, required: false, default: () => [] }
 		},
-		data() {
+    data() {
       return {
         isActive: false
 			}

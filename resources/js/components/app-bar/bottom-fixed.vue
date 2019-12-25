@@ -1,38 +1,73 @@
 <template>
-	<v-bottom-navigation fixed light class="bottom-bar">
-		<v-row>
-			<v-col cols="4" class="text-center">
-				<v-btn value="recent" href="/" :class="{'v-btn--active': checkRoutes(['/'])}">
-					<span>ホーム</span>
-					<v-icon>home</v-icon>
-				</v-btn>
-			</v-col>
-			<v-col cols="4" class="text-center">
-				<v-btn value="favorites" href="folders" :class="{'v-btn--active': checkRoutes(['/folders', '/cases'])}">
-					<span>ファイル</span>
-					<v-icon>folder_open</v-icon>
-				</v-btn>
-			</v-col>
-			<v-col cols="4" class="text-center add-button-bottom-app">
-					<v-btn id="btn-add-app" value="nearby" v-on:click="showAdd = !showAdd" v-click-outside="hidden">
-					<span>作成</span>
-					<v-icon>add</v-icon>
-				</v-btn>
-				<v-list class="list-item-add-button" v-if="showAdd">
-					<a href="/" class="block-link">
-						<v-list-item>
-							<v-list-item-title>新件を作成</v-list-item-title>
-						</v-list-item>
-					</a>
-					<a href="/" class="block-link">
-						<v-list-item>
-							<v-list-item-title>ファイルをアップロード</v-list-item-title>
-						</v-list-item>
-					</a>
-				</v-list>
-			</v-col>
-		</v-row>
-	</v-bottom-navigation>
+  <v-bottom-navigation
+    fixed
+    light
+    class="bottom-bar"
+  >
+    <v-row>
+      <v-col
+        cols="4"
+        class="text-center"
+      >
+        <v-btn
+          value="recent"
+          href="/"
+          :class="{'v-btn--active': checkRoutes(['/'])}"
+        >
+          <span>ホーム</span>
+          <v-icon>home</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col
+        cols="4"
+        class="text-center"
+      >
+        <v-btn
+          value="favorites"
+          href="folders"
+          :class="{'v-btn--active': checkRoutes(['/folders', '/cases'])}"
+        >
+          <span>ファイル</span>
+          <v-icon>folder_open</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col
+        cols="4"
+        class="text-center add-button-bottom-app"
+      >
+        <v-btn
+          id="btn-add-app"
+          v-click-outside="hidden"
+          value="nearby"
+          @click="showAdd = !showAdd"
+        >
+          <span>作成</span>
+          <v-icon>add</v-icon>
+        </v-btn>
+        <v-list
+          v-if="showAdd"
+          class="list-item-add-button"
+        >
+          <a
+            href="/"
+            class="block-link"
+          >
+            <v-list-item>
+              <v-list-item-title>新件を作成</v-list-item-title>
+            </v-list-item>
+          </a>
+          <a
+            href="/"
+            class="block-link"
+          >
+            <v-list-item>
+              <v-list-item-title>ファイルをアップロード</v-list-item-title>
+            </v-list-item>
+          </a>
+        </v-list>
+      </v-col>
+    </v-row>
+  </v-bottom-navigation>
 </template>
 
 <script>
@@ -42,7 +77,13 @@
 	 * @property {Boolean} showAdd - Is to show/hidden a block.
 	 */
   export default {
-    name: "bottom-fixed",
+    name: "BottomFixed",
+    directives: {
+      /**
+       * ClickOutside: Clicks Outside an Element
+       */
+      ClickOutside
+    },
     data() {
       return {
         showAdd: false
@@ -71,12 +112,6 @@
       checkRoutes($array) {
         return $array.find( value => window.location.pathname === value );
       }
-		},
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
-    }
+		}
   }
 </script>

@@ -3,12 +3,6 @@
 #
 image: connectivdocker/php:7.2
 
-# Pick zero or more services to be used on all builds.
-# Only needed when using a docker container to run your tests in.
-# Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-a-service
-services:
-  - mysql:5.7
-
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
@@ -16,13 +10,27 @@ cache:
     - vendor/
     - node_modules/
 
+# The following variables will automatically be passed down to the mysql container
+# as well as the mysql container and available within each.
+# https://docs.gitlab.com/ce/ci/yaml/README.html#variables
 variables:
   DB_HOST: mysql
-  MYSQL_DATABASE: ldmtool
+  MYSQL_DATABASE: liris
   DB_USERNAME: root
-  MYSQL_ROOT_PASSWORD: t00r3
+  MYSQL_ROOT_PASSWORD: t00r
 
+# Globally script will be execute
+default:
+  before_script:
+    # Update packages
+    - apk update
+
+# Groups jobs into stages.
+# All jobs in one stage must complete before next stage is executed.
+# Defaults to ['build', 'test', 'deploy'].
+# https://docs.gitlab.com/ce/ci/yaml/README.html#variables
 stages:
+  - build
   - test
   - deploy
 
@@ -32,6 +40,11 @@ unit_test:
     # coding convention check コーディング規約チェック
     name: testing-environment
     url: https://ldm.test.connectiv.vn
+  # Pick zero or more services to be used on all builds.
+  # Only needed when using a docker container to run your tests in.
+  # Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-a-service
+  services:
+    - mysql:5.7
   before_script:
     # Install packages through composer
     - composer self-update
@@ -46,6 +59,10 @@ unit_test:
     - php artisan migrate:refresh
     - php artisan db:seed --env="testing"
 
+    # Install dependencies through yarn
+    - yarn install
+    # Builder frontend through yarn
+    - yarn prod
   script:
     # Mess Detection
     - vendor/bin/phpmd app/ text phpmd.xml
@@ -64,17 +81,17 @@ unit_test:
     - echo "Running PHPUnit test...."
     - vendor/bin/phpunit --colors --debug
 
+    # ESlinter
+    - ./node_modules/.bin/eslint --ext .js,.vue resources/js
+
 deploy_staging:
   stage: deploy
   only:
-    - staging
+    - develop
   environment:
-    # coding convention check コーディング規約チェック
-    name: staging-environment
+    name: development-environment
     url: https://ldm.test.connectiv.vn
   before_script:
-    # Update packages
-    - apk update
     # Run ssh-agent in background:
     - 'which ssh-agent || ( apk add openssh-client -yqq )'
     - mkdir -p ~/.ssh
@@ -86,8 +103,8 @@ deploy_staging:
     - ssh-add ~/.ssh/id_rsa
     - ssh-add -l
   script:
-    - echo "Deploying........."
-    # - ~/.composer/vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA"
+    # Deploy project through envoy
+    - ~/.composer/vendor/bin/envoy run deploy --branch=develop
 
   when: manual
 
