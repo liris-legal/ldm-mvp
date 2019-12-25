@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoryCasesTable extends Migration
+class CreateTypeDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCategoryCasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_cases', function (Blueprint $table) {
+        Schema::create('type_documents', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name')->unique();
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateCategoryCasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_cases');
+        Schema::dropIfExists('type_documents');
     }
 }

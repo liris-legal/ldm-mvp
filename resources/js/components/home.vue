@@ -34,10 +34,7 @@
         ],
         columnOfClass: { class1: 'col-7', 'class2': 'col-5'},
 			}
-		},
-		mounted() {
-      console.log(this.documents)
-    }
+		}
   }
 </script>
 

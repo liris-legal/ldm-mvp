@@ -15,15 +15,15 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('case_id');
-            $table->unsignedInteger('category_document_id');
+            $table->string('number');
             $table->string('name')->unique();
             $table->string('url')->unique();
-            $table->string('author');
+            $table->unsignedInteger('type_document_id');
+            $table->unsignedInteger('type_author_id');
             $table->timestamps();
 
-            $table->foreign('case_id')->references('id')->on('cases')->onDelete('cascade');
-            $table->foreign('category_document_id')->references('id')->on('category_documents')->onDelete('cascade');
+            $table->foreign('type_author_id')->references('id')->on('type_authors')->onDelete('cascade');
+            $table->foreign('type_document_id')->references('id')->on('type_documents')->onDelete('cascade');
         });
     }
 

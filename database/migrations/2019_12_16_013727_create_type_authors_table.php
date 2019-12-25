@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoryDocumentsTable extends Migration
+class CreateTypeAuthorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCategoryDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_documents', function (Blueprint $table) {
+        Schema::create('type_authors', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name')->unique();
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateCategoryDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_documents');
+        Schema::dropIfExists('type_authors');
     }
 }

@@ -42,14 +42,14 @@
         }
     }
 }
-.top-bar{
-    .list-menu-top-bar{
+//.top-bar{
+    .list-menu-top-bar, %subs-menu{
         position: absolute;
         z-index: 9999;
-        right: 2%;
+        right: 5px;
         top: 115%;
         @include background-text(#fff, #404040);
-        .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
+        .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
             cursor: pointer;
             @include background-text(inherit, #404040);
             &:hover{
@@ -57,7 +57,7 @@
             }
         }
     }
-}
+//}
 .bottom-bar{
     .col-4{
         padding: 3px;
@@ -116,6 +116,97 @@
     @include app_folder(text-size-15);
 }
 
-.cases-page {
+// list cases component
+.cases-page{
+    .overflow-x-auto{
+        white-space: nowrap;
+        height: 70vh;
+        table{
+            width: 100%;
+            border-spacing: 0;
+            thead {
+                tr.title{
+                    text-align: left;
+                    th{
+                        background-color: #fff;
+                        border-top: 1px solid #DADDE6;
+                        border-bottom: 1px solid #DADDE6;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    height: 52px;
+                    cursor: pointer;
+                    td{
+                        background-color: #f7f7f7;
+                        border-top: 1px solid #DADDE6;
+                        border-bottom: 1px solid #DADDE6;
+                        .col-btn {
+                            padding: 8px 12px;
+                        }
+                    }
+                    &:nth-child(2n) {
+                        td{
+                            background-color: #e8e8e8;
+                            border-top: 1px solid #DADDE6;
+                            border-bottom: 1px solid #DADDE6;
+                        }
+                    }
 
+                    .last-child-table {
+                        position: relative;
+                        .subs-menu{
+                            top: 55px;
+                            right: 5px;
+                            @extend %subs-menu;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
+//.scroll-slide {
+//    width: auto;
+//    overflow-x: scroll;
+//    overflow-y: visible;
+//    height: 72vh;
+//    .pseudo-table{
+//        width: 100%;
+//        .thead, .row-content {
+//            display: flex;
+//            height: 44px;
+//            line-height: 0px;
+//            width: 100%;
+//            max-width: 100%;
+//            text-decoration: none;
+//            color: #404040;
+//
+//            .bg-thead-table {
+//                background-color: #fff;
+//                border-top: 1px solid #DADDE6;
+//                border-bottom: 1px solid #DADDE6;
+//            }
+//            .bg-tbody-table{
+//                background-color: #f7f7f7;
+//                border-top: 1px solid #DADDE6;
+//                border-bottom: 1px solid #DADDE6;
+//                &:hover{
+//                    background-color: #fff;
+//                }
+//            }
+//            &.row-content{
+//                height: 48px;
+//
+//                &:nth-child(2n) .bg-tbody-table{
+//                    background-color: #f5f5f5;
+//                }
+//            }
+//        }
+//    }
+//}
+//::-webkit-scrollbar {
+//    width: 0;
+//}

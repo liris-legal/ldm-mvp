@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDefendantAgentsTable extends Migration
+class CreateDefendantRepresentativesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateDefendantAgentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('defendant_agents', function (Blueprint $table) {
+        Schema::create('defendant_representatives', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedInteger('type_author_id');
             $table->unsignedBigInteger('case_id');
             $table->timestamps();
 
             $table->foreign('case_id')->references('id')->on('cases')->onDelete('cascade');
+            $table->foreign('type_author_id')->references('id')->on('type_authors')->onDelete('cascade');
         });
     }
 
@@ -30,6 +32,6 @@ class CreateDefendantAgentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('defendant_agents');
+        Schema::dropIfExists('defendant_representatives');
     }
 }

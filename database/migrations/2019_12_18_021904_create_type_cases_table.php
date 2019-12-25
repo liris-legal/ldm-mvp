@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlaintiffAgentsTable extends Migration
+class CreateTypeCasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreatePlaintiffAgentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('plaintiff_agents', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->unsignedBigInteger('case_id');
+        Schema::create('type_cases', function (Blueprint $table) {
+            $table->Increments('id');
+            $table->string('name')->unique();
             $table->timestamps();
-
-            $table->foreign('case_id')->references('id')->on('cases')->onDelete('cascade');
         });
     }
 
@@ -30,6 +27,6 @@ class CreatePlaintiffAgentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plaintiff_agents');
+        Schema::dropIfExists('type_cases');
     }
 }

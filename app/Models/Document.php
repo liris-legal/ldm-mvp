@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    public $fillable = ['case_id', 'name', 'author'];
+    public $fillable = ['url', 'name', 'number', 'type_author_id', 'type_document_id'];
     public $timestamps = true;
 
-    public function case()
+    public function typeAuthor()
     {
-        return $this->belongsTo('App\Models\Cases');
+        return $this->belongsTo('App\Models\TypeAuthor', 'type_author_id');
     }
 
-    public function categoryDocument()
+    public function typeDocument()
     {
-        return $this->belongsTo('App\Models\CategoryDocument');
+        return $this->belongsTo('App\Models\TypeDocument');
     }
 }
