@@ -10,10 +10,10 @@ class TypeCase extends Model
     public $timestamps = true;
 
     /**
-     * Get all cases for type case.
+     * Get all lawsuit for type lawsuit.
      */
-    public function cases()
+    public function lawsuits()
     {
-        return $this->hasMany('App\Models\Cases');
+        return $this->hasMany('App\Models\Lawsuit');
     }
 }

@@ -13,8 +13,8 @@ class DefendantSeeder extends Seeder
     public function run()
     {
         DB::table('defendants')->insert([
-            [ 'id' => '1' ,'name' => 'KLMNO株式会社', 'submitter_id' => '2', 'cases_id' => '1', 'created_at' => '2019-11-26 19:21:38', 'updated_at' => '2019-11-26 19:21:38' ],
-            [ 'id' => '2' ,'name' => 'LMNOP株式会社', 'submitter_id' => '2', 'cases_id' => '2', 'created_at' => '2019-11-26 19:21:39', 'updated_at' => '2019-11-26 19:21:39' ],
+            [ 'id' => '1' ,'name' => 'KLMNO株式会社', 'submitter_id' => '2', 'lawsuit_id' => '1', 'created_at' => '2019-11-26 19:21:38', 'updated_at' => '2019-11-26 19:21:38' ],
+            [ 'id' => '2' ,'name' => 'LMNOP株式会社', 'submitter_id' => '2', 'lawsuit_id' => '2', 'created_at' => '2019-11-26 19:21:39', 'updated_at' => '2019-11-26 19:21:39' ],
         ]);
     }
 }

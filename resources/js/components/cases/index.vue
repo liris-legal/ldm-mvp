@@ -30,7 +30,7 @@
 						<td scope="col" class="col col-3">{{ item.number }}</td>
 						<td scope="col" class="col col-3">{{ item.name }}</td>
 						<td scope="col" class="col col-3">{{ item.courts_departments }}</td>
-						<td scope="col" class="col col-3">{{ submitter(item.defendants) }}</td>
+						<td scope="col" class="col col-3">{{ convertString(item.defendants) }}</td>
 						<td scope="col" class="col col-3">FGHIJ法律事務所</td>
 						<td scope="col" class="col col-3">KLMNO株式会社</td>
 						<td scope="col" class="col col-3">PQRST法律事務所</td>
@@ -92,8 +92,8 @@
       checkRoute($url) {
         return window.location.pathname === $url;
       },
-			submitter(submitter){
-   
+      convertString(arrays){
+        arrays.toString();
 			}
     },
     directives: {

@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cases extends Model
+class Lawsuit extends Model
 {
     public $fillable = ['type_case_id', 'number', 'name', 'courts_departments'];
     public $timestamps = true;
 
     /**
-     * Get the type case for the cases.
+     * Get the type lawsuits for the lawsuit.
      */
     public function typeCase()
     {
