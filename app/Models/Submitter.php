@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TypeAuthor extends Model
+class Submitter extends Model
 {
     public $fillable = ['name'];
 
@@ -13,7 +13,7 @@ class TypeAuthor extends Model
      */
     public function plaintiffs()
     {
-        return $this->hasMany('App\Models\Plaintiff', 'type_author_id');
+        return $this->hasMany('App\Models\Plaintiff', 'submitter_id');
     }
 
     /**
@@ -21,7 +21,7 @@ class TypeAuthor extends Model
      */
     public function plaintiffRepresentatives()
     {
-        return $this->hasMany('App\Models\PlaintiffRepresentative', 'type_author_id');
+        return $this->hasMany('App\Models\PlaintiffRepresentative', 'submitter_id');
     }
 
     /**
@@ -29,7 +29,7 @@ class TypeAuthor extends Model
      */
     public function defendants()
     {
-        return $this->hasMany('App\Models\Defendant', 'type_author_id');
+        return $this->hasMany('App\Models\Defendant', 'submitter_id');
     }
 
     /**
@@ -37,7 +37,7 @@ class TypeAuthor extends Model
      */
     public function defendantsRepresentatives()
     {
-        return $this->hasMany('App\Models\DefendantsRepresentative', 'type_author_id');
+        return $this->hasMany('App\Models\DefendantsRepresentative', 'submitter_id');
     }
 
     /**
@@ -45,6 +45,6 @@ class TypeAuthor extends Model
      */
     public function otherParty()
     {
-        return $this->hasMany('App\Models\OtherParty', 'type_author_id');
+        return $this->hasMany('App\Models\OtherParty', 'submitter_id');
     }
 }

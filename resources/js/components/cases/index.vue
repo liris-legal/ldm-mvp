@@ -26,11 +26,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="d-flex" @click="clickTR()">
-						<td scope="col" class="col col-3">平成31年（ワ）○○号</td>
-						<td scope="col" class="col col-3">損害賠償請求事件</td>
-						<td scope="col" class="col col-3">東京地方裁判所</td>
-						<td scope="col" class="col col-3">ABCDE株式会社</td>
+					<tr class="d-flex" @click="clickTR()" v-for="item in cases" :key="item.id">
+						<td scope="col" class="col col-3">{{ item.number }}</td>
+						<td scope="col" class="col col-3">{{ item.name }}</td>
+						<td scope="col" class="col col-3">{{ item.courts_departments }}</td>
+						<td scope="col" class="col col-3">{{ submitter(item.defendants) }}</td>
 						<td scope="col" class="col col-3">FGHIJ法律事務所</td>
 						<td scope="col" class="col col-3">KLMNO株式会社</td>
 						<td scope="col" class="col col-3">PQRST法律事務所</td>
@@ -91,7 +91,10 @@
        */
       checkRoute($url) {
         return window.location.pathname === $url;
-      }
+      },
+			submitter(submitter){
+   
+			}
     },
     directives: {
       /**

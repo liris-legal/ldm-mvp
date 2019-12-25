@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TypeAuthorSeed extends Seeder
+class SubmitterSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class TypeAuthorSeed extends Seeder
      */
     public function run()
     {
-        DB::table('type_authors')->insert([
+        DB::table('submitters')->insert([
             [ 'id' => '1' ,'name' => '原告', 'created_at' => '2019-11-26 19:21:38', 'updated_at' => '2019-11-26 19:21:38' ],
             [ 'id' => '2' ,'name' => '被告', 'created_at' => '2019-11-26 19:21:40', 'updated_at' => '2019-11-26 19:21:40' ],
             [ 'id' => '3' ,'name' => '裁判所', 'created_at' => '2019-11-26 19:21:41', 'updated_at' => '2019-11-26 19:21:41' ],

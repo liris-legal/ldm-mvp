@@ -19,10 +19,10 @@ class CreateDocumentsTable extends Migration
             $table->string('name')->unique();
             $table->string('url')->unique();
             $table->unsignedInteger('type_document_id');
-            $table->unsignedInteger('type_author_id');
+            $table->unsignedInteger('submitter_id');
             $table->timestamps();
 
-            $table->foreign('type_author_id')->references('id')->on('type_authors')->onDelete('cascade');
+            $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
             $table->foreign('type_document_id')->references('id')->on('type_documents')->onDelete('cascade');
         });
     }

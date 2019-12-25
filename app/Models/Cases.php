@@ -22,7 +22,7 @@ class Cases extends Model
      */
     public function defendants()
     {
-        return $this->hasMany('App\Models\Defendant', 'case_id');
+        return $this->hasMany('App\Models\Defendant');
     }
 
     /**
@@ -30,7 +30,7 @@ class Cases extends Model
      */
     public function defendantRepresentatives()
     {
-        return $this->hasMany('App\Models\DefendantRepresentative', 'case_id');
+        return $this->hasMany('App\Models\DefendantRepresentative');
     }
 
     /**
@@ -38,7 +38,7 @@ class Cases extends Model
      */
     public function plaintiffs()
     {
-        return $this->hasMany('App\Models\Plaintiff', 'case_id');
+        return $this->hasMany('App\Models\Plaintiff');
     }
 
     /**
@@ -46,7 +46,7 @@ class Cases extends Model
      */
     public function plaintiffRepresentatives()
     {
-        return $this->hasMany('App\Models\PlaintiffAgent', 'case_id');
+        return $this->hasMany('App\Models\PlaintiffAgent');
     }
 
     /**
@@ -54,6 +54,6 @@ class Cases extends Model
      */
     public function otherParties()
     {
-        return $this->hasMany('App\Models\OtherParty', 'case_id');
+        return $this->hasMany('App\Models\OtherParty');
     }
 }
