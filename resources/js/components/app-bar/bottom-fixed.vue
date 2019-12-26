@@ -40,6 +40,7 @@
           v-click-outside="hidden"
           value="nearby"
           @click="showAdd = !showAdd"
+          :class="{'v-btn--active': checkRoutes(['/lawsuits/create'])}"
         >
           <span>作成</span>
           <v-icon>add</v-icon>
@@ -49,7 +50,7 @@
           class="list-item-add-button"
         >
           <a
-            href="/"
+            href="lawsuits/create"
             class="block-link"
           >
             <v-list-item>

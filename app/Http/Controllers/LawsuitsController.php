@@ -30,7 +30,7 @@ class LawsuitsController extends Controller
      */
     public function create()
     {
-        //
+        return view('content.lawsuits.create');
     }
 
     /**

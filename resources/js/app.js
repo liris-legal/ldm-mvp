@@ -23,6 +23,8 @@ Vue.component('app-bottom-bar', require('./components/app-bar/bottom-fixed.vue')
 Vue.component('app-home', require('./components/home.vue').default);
 Vue.component('type-lawsuits', require('./components/type-lawsuits/index.vue').default);
 Vue.component('lawsuits-component', require('./components/lawsuits/index.vue').default);
+Vue.component('lawsuits-create', require('./components/lawsuits/create.vue').default);
+Vue.component('lawsuits-edit', require('./components/lawsuits/edit.vue').default);
 
 // component global
 Vue.component('app-thead', require('./components/globals/app-thead.vue').default);

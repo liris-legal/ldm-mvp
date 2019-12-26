@@ -127,9 +127,6 @@
        * ClickOutside: Clicks Outside an Element
        */
       ClickOutside
-    },
-		mounted() {
-      console.log(this.clickBTN(this.lawsuits[0].id));
     }
   }
 </script>
