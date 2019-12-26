@@ -46,7 +46,7 @@ class Lawsuit extends Model
      */
     public function plaintiffRepresentatives()
     {
-        return $this->hasMany('App\Models\PlaintiffAgent');
+        return $this->hasMany('App\Models\PlaintiffRepresentative');
     }
 
     /**

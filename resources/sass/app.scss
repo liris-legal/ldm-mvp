@@ -113,7 +113,7 @@
     }
     @include app_thead(text-size-15);
     @include app_document(text-size-18);
-    @include app_folder(text-size-15);
+    @include app-type-lawsuits(text-size-15);
 }
 
 // list cases component
@@ -156,9 +156,9 @@
 
                     .last-child-table {
                         position: relative;
-                        .subs-menu{
-                            top: 55px;
-                            right: 5px;
+                        .sub-menu{
+                            top: 55px !important;
+                            right: 5px !important;
                             @extend %subs-menu;
                         }
                     }

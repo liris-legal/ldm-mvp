@@ -89,9 +89,9 @@
     }
 }
 
-// component app-folder
-@mixin app_folder($textSizeName) {
-    .app-folder{
+// component app-type-lawsuits
+@mixin app_type_lawsuits($textSizeName) {
+    .app-type-lawsuits{
         color: #404040;
         border: 1px solid #DADDE6;
         background-color: #FFFFFF;

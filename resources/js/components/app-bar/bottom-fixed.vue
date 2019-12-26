@@ -24,8 +24,8 @@
       >
         <v-btn
           value="favorites"
-          href="folders"
-          :class="{'v-btn--active': checkRoutes(['/folders', '/cases'])}"
+          href="type-lawsuits"
+          :class="{'v-btn--active': checkRoutes(['/type-lawsuits', '/lawsuits'])}"
         >
           <span>ファイル</span>
           <v-icon>folder_open</v-icon>

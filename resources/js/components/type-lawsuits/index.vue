@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid folders-page">
+  <div class="container-fluid type-lawsuits">
     <v-row>
       <v-col class="col-12 header-content">
         <h2 class="title-name text-size-30">
@@ -10,19 +10,18 @@
         </h3>
       </v-col>
     </v-row>
-    <app-folder
-      v-for="folder in folders"
-      :key="folder.id"
-      :folder="folder"
+    <app-type-lawsuit
+      v-for="type_lawsuit in type_lawsuits"
+      :key="type_lawsuit.id"
+      :type_lawsuit="type_lawsuit"
     />
   </div>
 </template>
 
 <script>
   export default {
-    name: "Index",
 		props: {
-      folders: {type: Array, required: true, default: () => []}
+      type_lawsuits: {type: Array, required: true, default: []}
 		}
   }
 </script>
