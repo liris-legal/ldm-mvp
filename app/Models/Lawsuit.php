@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cases extends Model
+class Lawsuit extends Model
 {
     public $fillable = ['type_case_id', 'number', 'name', 'courts_departments'];
     public $timestamps = true;
 
     /**
-     * Get the type case for the cases.
+     * Get the type lawsuits for the lawsuit.
      */
-    public function typeCase()
+    public function typeLawsuit()
     {
-        return $this->belongsTo('App\Models\TypeCase', 'type_case_id');
+        return $this->belongsTo('App\Models\TypeCase', 'type_lawsuit_id');
     }
 
     /**
@@ -46,7 +46,7 @@ class Cases extends Model
      */
     public function plaintiffRepresentatives()
     {
-        return $this->hasMany('App\Models\PlaintiffAgent');
+        return $this->hasMany('App\Models\PlaintiffRepresentative');
     }
 
     /**

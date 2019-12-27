@@ -17,10 +17,10 @@ class CreateDefendantRepresentativesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedInteger('submitter_id');
-            $table->unsignedBigInteger('cases_id');
+            $table->unsignedBigInteger('lawsuit_id');
             $table->timestamps();
 
-            $table->foreign('cases_id')->references('id')->on('cases')->onDelete('cascade');
+            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
             $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
     }

@@ -26,21 +26,21 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="d-flex" @click="clickTR()" v-for="item in cases" :key="item.id">
-						<td scope="col" class="col col-3">{{ item.number }}</td>
-						<td scope="col" class="col col-3">{{ item.name }}</td>
-						<td scope="col" class="col col-3">{{ item.courts_departments }}</td>
-						<td scope="col" class="col col-3">{{ submitter(item.defendants) }}</td>
-						<td scope="col" class="col col-3">FGHIJ法律事務所</td>
-						<td scope="col" class="col col-3">KLMNO株式会社</td>
-						<td scope="col" class="col col-3">PQRST法律事務所</td>
+					<tr class="d-flex" @click="clickTR(lawsuit.id)" v-for="lawsuit in lawsuits" :key="lawsuit.id">
+						<td scope="col" class="col col-3">{{ lawsuit.number }}</td>
+						<td scope="col" class="col col-3">{{ lawsuit.name }}</td>
+						<td scope="col" class="col col-3">{{ lawsuit.courts_departments }}</td>
+						<td scope="col" class="col col-3">{{ convertString(lawsuit.defendants) }}</td>
+						<td scope="col" class="col col-3">{{ convertString(lawsuit.defendant_representatives) }}</td>
+						<td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiffs) }}</td>
+						<td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiff_representatives) }}</td>
 						<td scope="col" class="col col-3 d-flex pa-0 last-child-table">
 							<div class="col-6"><div class="pl-3">-</div></div>
 							<v-spacer></v-spacer>
 							<div class="col-6 text-right col-btn font-weight-600 text-size-20">
-								<v-btn icon v-on:click="clickBTN" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
+								<v-btn :class="'lawsuit-sub-menu-' + lawsuit.id" icon v-on:click="clickBTN(lawsuit.id)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
 							</div>
-							<v-list class="subs-menu" v-if="isActive">
+							<v-list class="sub-menu" v-if="clickBTN(lawsuit.id)">
 								<v-list-item>
 									<v-list-item-title>名前を変更</v-list-item-title>
 								</v-list-item>
@@ -61,7 +61,7 @@
   export default {
     name: "Index",
 		props: {
-      cases: { type: Array, required: false, default: () => [] }
+      lawsuits: { type: Array, required: false, default: () => [] }
 		},
     data() {
       return {
@@ -71,17 +71,31 @@
     methods: {
       /**
        * @function hidden
-       * @description To hidden a block
+       * @description To hidden a sub-menu
        */
       hidden() {
         this.isActive = false;
       },
-      clickTR() {
-        console.log('click me!')
+
+      /**
+       * @function clickTR
+       * @description To click to a link
+       */
+      clickTR(lawsuit_id) {
+        return window.location.href = 'lawsuits/' + lawsuit_id;
 			},
-      clickBTN() {
-        this.isActive = !this.isActive;
-        console.log('click button!')
+
+      /**
+       * @function clickBTN
+       * @description To click to a button
+       */
+      clickBTN(lawsuit_id) {
+        lawsuit_id = 'lawsuit-sub-menu-' + lawsuit_id;
+        let uniqueClass = document.getElementsByClassName(lawsuit_id);
+        if(uniqueClass.length === 1) {
+          this.isActive = !this.isActive;
+          return this.isActive;
+				}
 			},
 
       /**
@@ -92,8 +106,20 @@
       checkRoute($url) {
         return window.location.pathname === $url;
       },
-			submitter(submitter){
-   
+
+      /**
+       * @function convertString
+       * @description convert array to string
+       * @return string
+       */
+      convertString(arrays){
+        if(arrays.length > 0){
+          let values = arrays.map(value => { return value.name });
+          return values.join(', ');
+				} else {
+          return '-'
+				}
+    
 			}
     },
     directives: {
@@ -101,9 +127,6 @@
        * ClickOutside: Clicks Outside an Element
        */
       ClickOutside
-    },
-		mounted() {
-      console.log(this.cases)
     }
   }
 </script>

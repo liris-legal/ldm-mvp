@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cases;
-use App\Http\Resources\Cases as CasesResource;
+use App\Models\TypeLawsuit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CasesController extends Controller
+class TypeLawsuitsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +15,8 @@ class CasesController extends Controller
      */
     public function index()
     {
-        $cases = Cases::all()->map(function ($case) {
-            return new CasesResource($case);
-        })->toJson();
-
-        return view('content.cases.index', ['cases' => $cases]);
+        $typeLawsuits = TypeLawsuit::all();
+        return view('content.typeLawsuits.index', ['typeLawsuits' => $typeLawsuits]);
     }
 
     /**
@@ -47,10 +43,10 @@ class CasesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cases  $cases
+     * @param  int  $id
      * @return Response
      */
-    public function show(Cases $cases)
+    public function show($id)
     {
         //
     }
@@ -58,10 +54,10 @@ class CasesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cases  $cases
+     * @param  int  $id
      * @return Response
      */
-    public function edit(Cases $cases)
+    public function edit($id)
     {
         //
     }
@@ -70,10 +66,10 @@ class CasesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cases  $cases
+     * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, Cases $cases)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -81,10 +77,10 @@ class CasesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cases  $cases
+     * @param  int  $id
      * @return Response
      */
-    public function destroy(Cases $cases)
+    public function destroy($id)
     {
         //
     }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
 @section('title', 'LDM Home')
 @section('content')
-    <folders-component :folders="{{ $typeCase }}"></folders-component>
+    <type-lawsuits :type_lawsuits="{{ $typeLawsuits }}"></type-lawsuits>
 @endsection

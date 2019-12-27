@@ -16,11 +16,11 @@ class CreateOtherPartiesTable extends Migration
         Schema::create('other_parties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedBigInteger('cases_id');
+            $table->unsignedBigInteger('lawsuit_id');
             $table->unsignedInteger('submitter_id');
             $table->timestamps();
 
-            $table->foreign('cases_id')->references('id')->on('cases')->onDelete('cascade');
+            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
             $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
     }

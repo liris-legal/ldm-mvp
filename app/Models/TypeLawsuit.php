@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TypeCase extends Model
+class TypeLawsuit extends Model
 {
     public $fillable = ['name'];
     public $timestamps = true;
 
     /**
-     * Get all cases for type case.
+     * Get all lawsuit for type lawsuit.
      */
-    public function cases()
+    public function lawsuits()
     {
-        return $this->hasMany('App\Models\Cases');
+        return $this->hasMany('App\Models\Lawsuit');
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cases;
-use App\Models\TypeCase;
 use App\Models\Document;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -29,16 +27,5 @@ class HomeController extends Controller
     {
         $documents = Document::all();
         return view('content.home', ['documents' => $documents]);
-    }
-
-    /**
-     * Show the application folders.
-     *
-     * @return Renderable
-     */
-    public function folder()
-    {
-        $typeCase = TypeCase::all();
-        return view('content.typeCases.index', ['typeCase' => $typeCase]);
     }
 }

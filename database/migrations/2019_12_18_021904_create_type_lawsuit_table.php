@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTypeCasesTable extends Migration
+class CreateTypeLawsuitTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTypeCasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_cases', function (Blueprint $table) {
+        Schema::create('type_lawsuits', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name')->unique();
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateTypeCasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_cases');
+        Schema::dropIfExists('type_lawsuits');
     }
 }

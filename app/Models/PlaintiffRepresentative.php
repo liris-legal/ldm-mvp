@@ -9,11 +9,11 @@ class PlaintiffRepresentative extends Model
     public $fillable = ['name'];
 
     /**
-     * Get case for the Plaintiff Representative.
+     * Get lawsuit for the Plaintiff Representative.
      */
-    public function case()
+    public function lawsuit()
     {
-        return $this->belongsTo('App\Models\Cases', 'cases_id');
+        return $this->belongsTo('App\Models\Lawsuit', 'lawsuit_id');
     }
 
     /**

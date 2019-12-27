@@ -1,3 +1,12 @@
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+.height-auto{
+    height: auto !important;
+}
 .mr-0-auto{
     margin: 0 auto !important;
 }
@@ -89,9 +98,9 @@
     }
 }
 
-// component app-folder
-@mixin app_folder($textSizeName) {
-    .app-folder{
+// component app-type-lawsuits
+@mixin app_type_lawsuits($textSizeName) {
+    .app-type-lawsuits{
         color: #404040;
         border: 1px solid #DADDE6;
         background-color: #FFFFFF;
@@ -110,5 +119,18 @@
                 height: 0px;
             }
         }
+    }
+}
+.form-control{
+    @extend .text-size-18;
+    label{
+        line-height: 40px;
+    }
+    .input-form-group {
+        height: 40px;
+        border-radius: 4px;
+        border: 1px solid #C2C4CC;
+        padding: 5px 10px;
+        padding-right: 20px;
     }
 }
