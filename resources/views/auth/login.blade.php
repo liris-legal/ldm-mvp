@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="v-row">
-                    <div class="col-md-3 text-center mr-0-auto">
+                    <div class="col-md-4 text-center mr-0-auto">
                         {{ view('notification') }}
                     </div>
                 </div>

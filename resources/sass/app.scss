@@ -157,9 +157,13 @@
                     .last-child-table {
                         position: relative;
                         .sub-menu{
+                            visibility: hidden;
                             top: 55px !important;
                             right: 5px !important;
                             @extend %subs-menu;
+                        }
+                        .actived{
+                            visibility: visible;
                         }
                     }
                 }
