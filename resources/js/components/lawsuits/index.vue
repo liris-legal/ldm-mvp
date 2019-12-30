@@ -44,7 +44,7 @@
 							<v-list-item>
 								<v-list-item-title>名前を変更</v-list-item-title>
 							</v-list-item>
-							<v-list-item>
+							<v-list-item @click="deleteLawsuit(lawsuit.id)">
 								<v-list-item-title>ファイルを削除</v-list-item-title>
 							</v-list-item>
 						</v-list>
@@ -114,7 +114,10 @@
           return '-'
         }
 
-      }
+      },
+			deleteLawsuit(lawsuit_id){
+        axios.post(`/lawsuits/` + lawsuit_id, );
+			}
     }
   }
 </script>

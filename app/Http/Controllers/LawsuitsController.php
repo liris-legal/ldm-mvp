@@ -108,10 +108,10 @@ class LawsuitsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cases  $cases
-     * @return Response
+     * @param Lawsuit $lawsuit
+     * @return void
      */
-    public function show(Cases $cases)
+    public function show(Lawsuit $lawsuit)
     {
         //
     }
@@ -119,10 +119,10 @@ class LawsuitsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cases  $cases
-     * @return Response
+     * @param Lawsuit $lawsuit
+     * @return void
      */
-    public function edit(Cases $cases)
+    public function edit(Lawsuit $lawsuit)
     {
         //
     }
@@ -147,6 +147,6 @@ class LawsuitsController extends Controller
      */
     public function destroy(Cases $cases)
     {
-        //
+
     }
 }

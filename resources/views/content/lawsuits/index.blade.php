@@ -1,5 +1,5 @@
 @extends('layouts.app')
 @section('title', '民事事件')
 @section('content')
-    <lawsuits-component :lawsuits="{{ $lawsuits }}" ></lawsuits-component>
+    <lawsuits-component :route_delete="{{ route('lawsuits.destroy') }}" :lawsuits="{{ $lawsuits }}" ></lawsuits-component>
 @endsection
