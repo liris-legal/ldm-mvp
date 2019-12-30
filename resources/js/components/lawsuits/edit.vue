@@ -25,7 +25,7 @@
 						<v-col class="col-3 pa-0 label"><label for="courts-lawsuit" class="font-weight-600">裁判所・部署</label></v-col>
 						<v-col class="col-9 pa-0 input"><input v-model="courts" id="courts-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
 					</v-col>
-					
+
 					<v-col cols="12" class="row form-control" v-for="(plaintiff, i) in plaintiffs" :key="plaintiff.i">
 						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-lawsuit' + i" class="font-weight-600">原告{{ convertString('plaintiffs', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
@@ -34,7 +34,7 @@
 							<v-btn v-on:click="removeValue('plaintiffs', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
 						</v-col>
 					</v-col>
-					
+
 					<v-col cols="12" class="row form-control" v-for="(plaintiff_representative, i) in plaintiff_representatives" :key="plaintiff_representative.i">
 						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-representative-lawsuit' + i" class="font-weight-600">原告代理人{{ convertString('plaintiff_representative', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
@@ -43,7 +43,7 @@
 							<v-btn v-on:click="removeValue('plaintiff_representatives', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
 						</v-col>
 					</v-col>
-					
+
 					<v-col cols="12" class="row form-control" v-for="(defendant, i) in defendants" :key="defendant.i">
 						<v-col class="col-3 pa-0 label"><label :for="'defendant-lawsuit' + i" class="font-weight-600">被告{{ convertString('defendants', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
@@ -52,7 +52,7 @@
 							<v-btn v-on:click="removeValue('defendants', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
 						</v-col>
 					</v-col>
-					
+
 					<v-col cols="12" class="row form-control" v-for="(defendant_representative, i) in defendant_representatives" :key="defendant_representative.i">
 						<v-col class="col-3 pa-0 label"><label :for="'defendant-representative-lawsuit' + i" class="font-weight-600">被告代理人{{ convertString('defendant_representatives', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
@@ -61,7 +61,7 @@
 							<v-btn v-on:click="removeValue('defendant_representatives', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
 						</v-col>
 					</v-col>
-					
+
 					<v-col cols="12" class="row form-control" v-for="(other_party, i) in other_parties" :key="other_party.i">
 						<v-col class="col-3 pa-0 label"><label :for="'other-party-lawsuit' + i" class="font-weight-600">その他当事者{{ convertString('other_parties', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
@@ -84,6 +84,10 @@
 <script>
   export default {
     name: "lawsuits-create",
+      props: {
+        type_lawsuits: {required: true, type: Array, default: []},
+        lawsuit: {required: true, type: Object, default: {}},
+      },
     data() {
       return {
         number: '',

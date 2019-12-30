@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\storeLawsuit;
 use App\Models\Lawsuit;
 use App\Http\Resources\Lawsuit as LawsuitResource;
 use App\Models\OtherParty;
@@ -13,7 +14,6 @@ use App\Models\Submitter;
 use App\Models\TypeLawsuit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Date;
 
 class LawsuitsController extends Controller
 {
@@ -43,66 +43,57 @@ class LawsuitsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created party.
      *
      * @param Request $request
+     * @param $submitter
+     * @param $lawsuit
+     * @param $party
+     * @param $model
      */
-    public function store(Request $request)
+    public function storeParties(Request $request, $submitter, $lawsuit, $party, $model)
     {
+        foreach ($request->get($party) as $item) {
+            $data = ['name' => $item, 'submitter_id' => $submitter->id, 'lawsuit_id' => $lawsuit->id];
+            $class = "App\Models\\".$model;
+            $class::create($data);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param storeLawsuit $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(storeLawsuit $request)
+    {
+        $data = $request->all();
+        $data['created_at'] = now();
+        $lawsuit = Lawsuit::create($data);
+
         $submitters = Submitter::all();
-        $lawsuit = new Lawsuit();
-        $lawsuit->type_lawsuit_id = $request['type_lawsuit_id'];
-        $lawsuit->number = $request['number'];
-        $lawsuit->name = $request['name'];
-        $lawsuit->courts_departments = $request['courts'];
-        $lawsuit->updated_at = now();
-        $lawsuit->created_at = now();
-        $lawsuit->save();
-        if ($request['plaintiffs'][0]['value'] !== null) {
-            foreach ($request->get('plaintiffs') as $plaintiff) {
-                $createPlaintiff = new Plaintiff();
-                $createPlaintiff->name = $plaintiff['value'];
-                $createPlaintiff->submitter_id = $submitters[0]->id;
-                $createPlaintiff->lawsuit_id = $lawsuit->id;
-                $createPlaintiff->save();
-            }
-        }
-        if ($request['plaintiff_representatives'][0]['value'] !== null) {
-            foreach ($request->get('plaintiff_representatives') as $plaintiffRe) {
-                $createPlaintiffRe = new PlaintiffRepresentative();
-                $createPlaintiffRe->name = $plaintiffRe['value'];
-                $createPlaintiffRe->submitter_id = $submitters[1]->id;
-                $createPlaintiffRe->lawsuit_id = $lawsuit->id;
-                $createPlaintiffRe->save();
-            }
-        }
-        if ($request['defendants'][0]['value'] !== null) {
-            foreach ($request->get('defendants') as $defendant) {
-                $createDefendant = new Defendant();
-                $createDefendant->name = $defendant['value'];
-                $createDefendant->submitter_id = $submitters[1]->id;
-                $createDefendant->lawsuit_id = $lawsuit->id;
-                $createDefendant->save();
-            }
-        }
-        if ($request['defendant_representatives'][0]['value'] !== null) {
-            foreach ($request->get('defendant_representatives') as $defendantRe) {
-                $createDefendantRe = new DefendantRepresentative();
-                $createDefendantRe->name = $defendantRe['value'];
-                $createDefendantRe->submitter_id = $submitters[1]->id;
-                $createDefendantRe->lawsuit_id = $lawsuit->id;
-                $createDefendantRe->save();
-            }
-        }
-        if ($request['other_parties'][0]['value'] !== null) {
-            foreach ($request->get('other_parties') as $otherParty) {
-                $createOtherParty = new OtherParty();
-                $createOtherParty->name = $otherParty['value'];
-                $createOtherParty->submitter_id = $submitters[3]->id;
-                $createOtherParty->lawsuit_id = $lawsuit->id;
-                $createOtherParty->save();
-            }
-        }
+        $this->storeParties($request, $submitters[0], $lawsuit, 'plaintiffs', 'Plaintiff');
+        $this->storeParties(
+            $request,
+            $submitters[0],
+            $lawsuit,
+            'plaintiff_representatives',
+            'PlaintiffRepresentative'
+        );
+        $this->storeParties($request, $submitters[1], $lawsuit, 'defendants', 'Defendant');
+        $this->storeParties(
+            $request,
+            $submitters[1],
+            $lawsuit,
+            'defendant_representatives',
+            'DefendantRepresentative'
+        );
+        $this->storeParties($request, $submitters[3], $lawsuit, 'other_parties', 'OtherParty');
+
+        $message = ['status' => 'success', 'content' => '事件を作成しました。'];
+
+        return response()->json(['url' => route('lawsuits.index'), 'message' => $message], 200);
     }
 
     /**
@@ -124,17 +115,19 @@ class LawsuitsController extends Controller
      */
     public function edit(Lawsuit $lawsuit)
     {
-        //
+        $typeLawsuits = TypeLawsuit::all();
+        $lawsuit = (new LawsuitResource($lawsuit))->toJSON();
+
+        return view('content.lawsuits.edit', [ 'typeLawsuits' => $typeLawsuits, 'lawsuit' => $lawsuit]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  \App\Cases  $cases
      * @return Response
      */
-    public function update(Request $request, Cases $cases)
+    public function update(Request $request)
     {
         //
     }
@@ -142,11 +135,15 @@ class LawsuitsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cases  $cases
-     * @return Response
+     * @param Lawsuit $lawsuit
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(Cases $cases)
+    public function destroy(Lawsuit $lawsuit)
     {
+        $lawsuit->delete();
 
+        $message = ['status' => 'success', 'content' => '事件を削除しました。'];
+        return response()->json(['url'=> route('lawsuits.index'), 'message' => $message], 200);
     }
 }

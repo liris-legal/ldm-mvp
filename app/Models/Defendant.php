@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Defendant extends Model
 {
-    public $fillable = ['name'];
+    public $fillable = ['name', 'submitter_id', 'lawsuit_id'];
 
     /**
      * Get lawsuit for the Defendant.
