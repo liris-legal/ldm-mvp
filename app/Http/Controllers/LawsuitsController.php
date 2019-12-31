@@ -11,6 +11,8 @@ use App\Models\Defendant;
 use App\Models\DefendantRepresentative;
 use App\Models\Submitter;
 use App\Models\TypeLawsuit;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Date;
@@ -124,17 +126,28 @@ class LawsuitsController extends Controller
      */
     public function edit(Lawsuit $lawsuit)
     {
-        //
+        $defendants = new LawsuitResource($lawsuit->defendants);
+        $plaintiffs = new LawsuitResource($lawsuit->plaintiffs);
+        $defendantsRe = new LawsuitResource($lawsuit->defendantRepresentatives);
+        $plaintiffsRe = new LawsuitResource($lawsuit->plaintiffRepresentatives);
+        $lawsuit = new LawsuitResource($lawsuit);
+        return view('content.lawsuits.edit', [
+            'lawsuit' => $lawsuit,
+            'defendants' => $defendants,
+            'plaintiffs' => $plaintiffs,
+            'defendantsRe' => $defendantsRe,
+            'plaintiffsRe' => $plaintiffsRe,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  \App\Cases  $cases
-     * @return Response
+     * @param Lawsuit $lawsuit
+     * @return void
      */
-    public function update(Request $request, Cases $cases)
+    public function update(Request $request, Lawsuit $lawsuit)
     {
         //
     }
@@ -142,11 +155,14 @@ class LawsuitsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cases  $cases
-     * @return Response
+     * @param Lawsuit $lawsuit
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function destroy(Cases $cases)
+    public function destroy(Lawsuit $lawsuit)
     {
-
+        $lawsuit->delete();
+        $message = ['status'=>'success', 'message'=> 'Lawsuit delete successfully!'];
+        return response()->json(['url'=> route('lawsuits.index'), 'message' => $message], 200);
     }
 }

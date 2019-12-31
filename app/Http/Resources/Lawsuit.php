@@ -8,7 +8,6 @@ use App\Http\Resources\Defendant as DefendantResource;
 use App\Http\Resources\DefendantRepresentative as DefendantRepresentativeResource;
 use App\Http\Resources\Plaintiff as PlaintiffResource;
 use App\Http\Resources\PlaintiffRepresentative as PlaintiffRepresentativeResource;
-//use App\Http\Resources\DefendantRepresentative as DefendantRepresentativeResource;
 
 class Lawsuit extends JsonResource
 {
