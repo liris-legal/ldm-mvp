@@ -122,7 +122,13 @@
 
       },
 			deleteLawsuit(lawsuit_id){
-        axios.post(`/lawsuits/` + lawsuit_id, );
+        axios.delete('/lawsuits/'+ lawsuit_id)
+        	.then(res => {
+					  window.location.href = 'lawsuits/';
+					})
+				.catch(error => {
+          console.log(error.toJSON())
+				});
 			},
 
       /**
@@ -132,7 +138,6 @@
       hidden() {
         this.i = 1;
         this.activeIndex = undefined;
-        console.log('click me')
       },
     }
   }
