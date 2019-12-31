@@ -43,7 +43,7 @@
 							<v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="clickBTN(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
 						</div>
 						<v-list class="sub-menu" :class="{ 'actived': activeIndex === index}">
-							<v-list-item>
+							<v-list-item @click="renameLawsuit(lawsuit.id)" v-on:click.stop="">
 								<v-list-item-title>名前を変更</v-list-item-title>
 							</v-list-item>
 							<v-list-item @click="deleteLawsuit(lawsuit.id)" v-on:click.stop="">
@@ -81,11 +81,6 @@
         dataReceived: null
       }
     },
-		computed: {
-			testData() {
-			
-			}
-		},
     methods: {
       /**
        * @function clickTR
@@ -136,6 +131,10 @@
         this.i = 1;
         this.activeIndex = undefined;
         this.dataReceived = lawsuit_id;
+			},
+
+      renameLawsuit(lawsuit_id){
+        return window.location.href = 'lawsuits/' + lawsuit_id + '/edit';
 			},
 
       /**

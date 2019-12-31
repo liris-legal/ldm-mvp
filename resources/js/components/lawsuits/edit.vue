@@ -84,6 +84,9 @@
 <script>
   export default {
     name: "lawsuits-create",
+		props: {
+      lawsuit: { type: Object, required: true }
+		},
     data() {
       return {
         number: '',
@@ -194,6 +197,9 @@
           }
         }
       }
+    },
+		mounted() {
+      console.log(this.lawsuit)
     }
   }
 </script>
