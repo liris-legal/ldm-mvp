@@ -134,3 +134,54 @@
         padding-right: 20px;
     }
 }
+
+// Notificaiton
+@mixin mixin_notification{
+    .mixin-notification{
+        max-width: 500px;
+        border-radius: 4px;
+        padding: 1em 1em 0;
+        z-index: 3;
+        top: 0;
+        position: absolute;
+        transform: translateY(150%);
+        margin: 0 auto;
+        display: block;
+        background-color: #fff;
+        left: 0;
+        right: 0;
+
+        .notification-danger{
+            display: block;
+            margin: 0 auto;
+            padding: 1em 1em 0;
+
+            .label-delete {
+                margin-bottom: 1.5em;
+            }
+
+            .button-notification{
+                margin: 3em 0 0;
+
+                .button-content {
+                    padding: .4em 1em;
+                    .btn-danger{
+                        background-color: #CC1414;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+.overlay{
+    background-color: #222222;
+    top: 48px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-filter: opacity(0.78);
+    filter: opacity(0.5);
+}
+@include mixin_notification;
