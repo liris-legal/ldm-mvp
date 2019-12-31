@@ -38,7 +38,7 @@
 						<div class="col-6"><div class="pl-3">-</div></div>
 						<v-spacer></v-spacer>
 						<div class="col-6 text-right col-btn font-weight-600 text-size-20">
-							<v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="clickBTN(index)" v-on:click.stop="">...</v-btn>
+							<v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="clickBTN(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
 						</div>
 						<v-list class="sub-menu" :class="{ 'actived': activeIndex === index}">
 							<v-list-item>
@@ -60,6 +60,12 @@
   import ClickOutside from 'vue-click-outside'
   export default {
     name: "Index",
+    directives: {
+      /**
+       * ClickOutside: Clicks Outside an Element
+       */
+      ClickOutside
+    },
     props: {
       lawsuits: { type: Array, required: false, default: () => [] }
     },
@@ -117,7 +123,17 @@
       },
 			deleteLawsuit(lawsuit_id){
         axios.post(`/lawsuits/` + lawsuit_id, );
-			}
+			},
+
+      /**
+       * @function hidden
+       * @description To hidden a block
+       */
+      hidden() {
+        this.i = 1;
+        this.activeIndex = undefined;
+        console.log('click me')
+      },
     }
   }
 </script>
