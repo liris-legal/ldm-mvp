@@ -9,65 +9,79 @@
 		<v-form class="form-group clearfix" method="POST">
 			<v-container class="form-group-content">
 				<v-row class="ma-0">
-					<v-col cols="12 row form-control">
+					<v-col cols="12 row form-control pa-2">
 						<v-col class="col-3 pa-0 label"><label class="font-weight-600">事件種類</label></v-col>
 						<v-col class="col-9 pa-2 input">{{type_lawsuits[0].name}}</v-col>
 					</v-col>
-					<v-col cols="12" class="row form-control">
+					<v-col cols="12" class="row form-control pa-2">
 						<v-col class="col-3 pa-0 label"><label for="number-lawsuit" class="font-weight-600">事件番号</label></v-col>
-						<v-col class="col-9 pa-0 input"><input v-model="lawsuit.number" id="number-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
+						<v-col class="col-9 pa-0 input">
+							<input v-model="lawsuit.number" id="number-lawsuit" type="text" class="input-form-group col-md-12">
+							<small class="has-error" v-if="error">{{ error.errors.number[0] }}</small>
+						</v-col>
 					</v-col>
-					<v-col cols="12" class="row form-control">
+					<v-col cols="12" class="row form-control pa-2">
 						<v-col class="col-3 pa-0 label"><label for="name-lawsuit" class="font-weight-600">事件名</label></v-col>
-						<v-col class="col-9 pa-0 input"><input v-model="lawsuit.name" id="name-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
+						<v-col class="col-9 pa-0 input">
+							<input v-model="lawsuit.name" id="name-lawsuit" type="text" class="input-form-group col-md-12">
+							<small class="has-error" v-if="error">{{ error.errors.name[0] }}</small>
+						</v-col>
 					</v-col>
-					<v-col cols="12" class="row form-control">
+					<v-col cols="12" class="row form-control pa-2">
 						<v-col class="col-3 pa-0 label"><label for="courts-lawsuit" class="font-weight-600">裁判所・部署</label></v-col>
-						<v-col class="col-9 pa-0 input"><input v-model="lawsuit.courts_departments" id="courts-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
+						<v-col class="col-9 pa-0 input">
+							<input v-model="lawsuit.courts_departments" id="courts-lawsuit" type="text" class="input-form-group col-md-12">
+							<small class="has-error" v-if="error">{{ error.errors.courts_departments[0] }}</small>
+						</v-col>
 					</v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(plaintiff, i) in lawsuit.plaintiffs" :key="plaintiff.i">
+					<v-col cols="12" class="row form-control pa-2" v-for="(plaintiff, i) in lawsuit.plaintiffs" :key="plaintiff.i">
 						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-lawsuit' + i" class="font-weight-600">原告{{ convertString('plaintiffs', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
 							<input v-model="lawsuit.plaintiffs.name = plaintiff.name" :id="'plaintiff-lawsuit' + i" type="text" class="input-form-group col-md-12">
 							<v-btn v-on:click="addValue('plaintiffs')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
 							<v-btn v-if="lawsuit.plaintiffs.length > 1" v-on:click="removeValue('plaintiffs', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
+							<small class="has-error" v-if="error">{{ catchError('plaintiffs', --i) }}</small>
 						</v-col>
 					</v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(plaintiff_representative, i) in lawsuit.plaintiff_representatives" :key="plaintiff_representative.i">
+					<v-col cols="12" class="row form-control pa-2" v-for="(plaintiff_representative, i) in lawsuit.plaintiff_representatives" :key="plaintiff_representative.i">
 						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-representative-lawsuit' + i" class="font-weight-600">原告代理人{{ convertString('plaintiff_representatives', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
 							<input v-model="lawsuit.plaintiff_representatives.name = plaintiff_representative.name" :id="'plaintiff-representative-lawsuit' + i" type="text" class="input-form-group col-md-12">
 							<v-btn v-on:click="addValue('plaintiff_representatives')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
 							<v-btn v-if="lawsuit.plaintiff_representatives.length > 1" v-on:click="removeValue('plaintiff_representatives', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
+							<small class="has-error" v-if="error">{{ catchError('plaintiff_representatives', --i) }}</small>
 						</v-col>
 					</v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(defendant, i) in lawsuit.defendants" :key="defendant.i">
+					<v-col cols="12" class="row form-control pa-2" v-for="(defendant, i) in lawsuit.defendants" :key="defendant.i">
 						<v-col class="col-3 pa-0 label"><label :for="'defendant-lawsuit' + i" class="font-weight-600">被告{{ convertString('defendants', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
 							<input v-model="lawsuit.defendants.name = defendant.name" :id="'defendant-lawsuit' + i" type="text" class="input-form-group col-md-12">
 							<v-btn v-on:click="addValue('defendants')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
 							<v-btn v-if="lawsuit.defendants.length > 1" v-on:click="removeValue('defendants', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
+							<small class="has-error" v-if="error">{{ catchError('defendants', --i) }}</small>
 						</v-col>
 					</v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(defendant_representative, i) in lawsuit.defendant_representatives" :key="defendant_representative.i">
+					<v-col cols="12" class="row form-control pa-2" v-for="(defendant_representative, i, rorr) in lawsuit.defendant_representatives" :key="defendant_representative.i">
 						<v-col class="col-3 pa-0 label"><label :for="'defendant-representative-lawsuit' + i" class="font-weight-600">被告代理人{{ convertString('defendant_representatives', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
 							<input v-model="lawsuit.defendant_representatives.name = defendant_representative.name" :id="'defendant-representative-lawsuit' + i" type="text" class="input-form-group col-md-12">
 							<v-btn v-on:click="addValue('defendant_representatives')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
 							<v-btn v-if="lawsuit.defendant_representatives.length > 1" v-on:click="removeValue('defendant_representatives', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
+							<small class="has-error" v-if="error">{{ catchError('defendant_representatives', --i) }}</small>
 						</v-col>
 					</v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(other_party, i) in lawsuit.other_parties" :key="other_party.i">
+					<v-col cols="12" class="row form-control pa-2" v-for="(other_party, i) in lawsuit.other_parties" :key="other_party.i">
 						<v-col class="col-3 pa-0 label"><label :for="'other-party-lawsuit' + i" class="font-weight-600">その他当事者{{ convertString('other_parties', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
 							<input v-model="lawsuit.other_parties.name = other_party.name" :id="'other-party-lawsuit' + i" type="text" class="input-form-group col-md-12">
 							<v-btn v-on:click="addValue('other_parties')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
 							<v-btn v-if="lawsuit.other_parties.length > 1" v-on:click="removeValue('other_parties', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
+							<small class="has-error" v-if="error">{{ catchError('other_parties', --i) }}</small>
 						</v-col>
 					</v-col>
 				</v-row>
@@ -100,8 +114,9 @@
           defendants: [{ name: '' }],
           defendant_representatives: [{ name: '' }],
           other_parties: [{ name: '' }],
-		},
-        civil_lawsuits: {}
+				},
+        civil_lawsuits: {},
+				error: {}|undefined
       }
     },
 	methods: {
@@ -234,12 +249,22 @@
             console.log(res);
             // window.location.href="/lawsuits";
           })
-          .catch(err => { console.log(err);	});
+          .catch(err => {
+            // if(err.status === 422){
+              return this.error = err.response.data;
+						// }
+					});
       },
+			catchError(field_name, index) {
+        let arrayValidation = this.error.errors[field_name + "." + index];
+        if(arrayValidation){
+          return arrayValidation[0];
+				}
+			}
     },
     mounted() {
       this.civil_lawsuits = this.type_lawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];
-      this.lawsuit.type_lawsuit_id = this.civil_lawsuits.id
+      this.lawsuit.type_lawsuit_id = this.civil_lawsuits.id;
     }
   }
 </script>

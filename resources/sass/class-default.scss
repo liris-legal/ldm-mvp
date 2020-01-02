@@ -18,6 +18,13 @@
     border-radius: 4px;
     padding: 5px 10px;
 }
+.has-error {
+    display: block;
+    color: $color___error;
+    text-transform: capitalize;
+    font-size: 12px;
+    padding-top: 2px;
+}
 @mixin background-text($background, $textColor){
     background-color: $background !important;
     color: $textColor !important;
