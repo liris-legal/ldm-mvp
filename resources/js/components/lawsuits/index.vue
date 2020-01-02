@@ -61,6 +61,9 @@
 </template>
 
 <script>
+  /**
+   * Index: Clicks Outside an Element
+   */
   import ClickOutside from 'vue-click-outside';
   export default {
     name: "Index",
@@ -73,7 +76,7 @@
     data() {
       return {
         activeIndex: undefined,
-        i: 1,
+        count: 1,
         isShowDelete: false,
         dataReceived: null,
         lawsuits: {}
@@ -98,8 +101,8 @@
        * @description show a sub-menu
        */
       showSubmenu(index) {
-        this.i++;
-        if(this.i % 2 === 0){
+        this.count++;
+        if(this.count % 2 === 0){
           this.activeIndex = index;
         } else {
           this.activeIndex = undefined;
@@ -124,20 +127,24 @@
       renameLawsuit(lawsuit_id){
         return window.location.href = 'lawsuits/' + lawsuit_id + '/edit/';
       },
-      
+  
+      /**
+       * @function deleteLawsuit
+       * @description delete a lawsuit
+       */
       deleteLawsuit(lawsuit_id){
         this.isShowDelete = true;
-        this.i = 1;
+        this.count = 1;
         this.activeIndex = undefined;
         this.dataReceived = lawsuit_id;
       },
       
       /**
        * @function hidden
-       * @description To hidden a block
+       * @description To hidden a sub-menu
        */
       hidden() {
-        this.i = 1;
+        this.count = 1;
         this.activeIndex = undefined;
         this.isShowDelete = false;
       },
