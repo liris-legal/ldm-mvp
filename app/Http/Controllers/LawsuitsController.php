@@ -12,6 +12,8 @@ use App\Models\Defendant;
 use App\Models\DefendantRepresentative;
 use App\Models\Submitter;
 use App\Models\TypeLawsuit;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -125,9 +127,10 @@ class LawsuitsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @param Lawsuit $lawsuit
+     * @return void
      */
-    public function update(Request $request)
+    public function update(Request $request, Lawsuit $lawsuit)
     {
         //
     }

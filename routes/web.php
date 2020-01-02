@@ -19,3 +19,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::resource('type-lawsuits', 'TypeLawsuitsController');
     Route::resource('lawsuits', 'LawsuitsController');
 });
+
+Route::get('/viewer', function () {
+    return view('viewer');
+});

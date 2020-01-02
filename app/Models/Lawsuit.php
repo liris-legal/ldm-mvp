@@ -13,7 +13,7 @@ class Lawsuit extends Model
      */
     public function typeLawsuit()
     {
-        return $this->belongsTo('App\Models\TypeCase', 'type_lawsuit_id');
+        return $this->belongsTo('App\Models\TypeLawsuit', 'type_lawsuit_id');
     }
 
     /**

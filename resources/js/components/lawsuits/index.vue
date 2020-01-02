@@ -46,3 +46,9 @@
     }
   }
 </script>
+<style lang="scss">
+	.unset-relative{
+		position: unset !important;
+		pointer-events: none;
+	}
+</style>

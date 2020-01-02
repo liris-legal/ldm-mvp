@@ -192,3 +192,9 @@
         }
     }
 }
+.box-shadow-delete-active{
+    margin: 0 auto;
+    background-color: hsla(0, 1%, 6%, 0.61) !important;
+    filter: blur(2px);
+    pointer-events: none;
+}
