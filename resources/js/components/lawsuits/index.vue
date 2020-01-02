@@ -2,7 +2,7 @@
   <div class="container-fluid cases-page">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-30">民事事件</h2>
+        <h2 class="title-name text-size-30">民事事件{{typeof isShowDelete}}</h2>
         <h3 class="description"/>
       </v-col>
     </v-row>
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <template v-for="(lawsuit, index) in lawsuits">
-          <tr class="d-flex" @click="clickTR(lawsuit.id)" :key="lawsuit.id">
+          <tr class="d-flex" @click="redirectToLink(lawsuit.id)" :key="lawsuit.id">
             <td scope="col" class="col col-3">{{ lawsuit.number }}</td>
             <td scope="col" class="col col-3">{{ lawsuit.name }}</td>
             <td scope="col" class="col col-3">{{ lawsuit.courts_departments }}</td>
@@ -37,10 +37,10 @@
             <td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiffs) }}</td>
             <td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiff_representatives) }}</td>
             <td scope="col" class="col col-3 d-flex pa-0 last-child-table" :class="{'unset-relative': isShowDelete}">
-              <div class="col-6"><div class="pl-3">-</div></div>
+              <div class="col-6"><div class="pl-3">{{ convertString(lawsuit.other_parties) }}</div></div>
               <v-spacer></v-spacer>
               <div class="col-6 text-right col-btn font-weight-600 text-size-20">
-                <v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="clickBTN(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
+                <v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="showSubmenu(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
               </div>
               <v-list class="sub-menu" :class="{ 'actived': activeIndex === index}">
                 <v-list-item @click="renameLawsuit(lawsuit.id)" v-on:click.stop="">
@@ -52,15 +52,18 @@
               </v-list>
             </td>
           </tr>
-          <app-delete-item :dataType="'lawsuits'" v-on:cancelSubmit="isShowDelete = $event"  v-if="isShowDelete" :data="dataReceived" />
         </template>
         </tbody>
       </table>
     </div>
+    <app-delete-item :dataType="'lawsuits'" v-on:cancelSubmit="isShowDelete = $event" v-if="isShowDelete" :data="dataReceived" />
   </div>
 </template>
 
 <script>
+  /**
+   * Index: Clicks Outside an Element
+   */
   import ClickOutside from 'vue-click-outside';
   export default {
     name: "Index",
@@ -73,7 +76,7 @@
     data() {
       return {
         activeIndex: undefined,
-        i: 1,
+        count: 1,
         isShowDelete: false,
         dataReceived: null,
         lawsuits: {}
@@ -86,33 +89,24 @@
     },
     methods: {
       /**
-       * @function clickTR
-       * @description To click to a link
+       * @function redirectToLink
+       * @description redirect to a link
        */
-      clickTR(lawsuit_id) {
+      redirectToLink(lawsuit_id) {
         return window.location.href = 'lawsuits/' + lawsuit_id;
       },
       
       /**
-       * @function clickBTN
-       * @description To click to a button
+       * @function showSubmenu
+       * @description show a sub-menu
        */
-      clickBTN(index) {
-        this.i++;
-        if(this.i % 2 === 0){
+      showSubmenu(index) {
+        this.count++;
+        if(this.count % 2 === 0){
           this.activeIndex = index;
         } else {
           this.activeIndex = undefined;
         }
-      },
-      
-      /**
-       * @function checkRoute
-       * @description Check route and active class when click on url
-       * @return boolean
-       */
-      checkRoute($url) {
-        return window.location.pathname === $url;
       },
       
       /**
@@ -133,23 +127,30 @@
       renameLawsuit(lawsuit_id){
         return window.location.href = 'lawsuits/' + lawsuit_id + '/edit/';
       },
-      
+  
+      /**
+       * @function deleteLawsuit
+       * @description delete a lawsuit
+       */
       deleteLawsuit(lawsuit_id){
         this.isShowDelete = true;
-        this.i = 1;
+        this.count = 1;
         this.activeIndex = undefined;
         this.dataReceived = lawsuit_id;
       },
       
       /**
        * @function hidden
-       * @description To hidden a block
+       * @description To hidden a sub-menu
        */
       hidden() {
-        this.i = 1;
+        this.count = 1;
         this.activeIndex = undefined;
         this.isShowDelete = false;
       },
+    },
+    mounted() {
+      console.log(this.dataReceived)
     }
   }
 </script>
