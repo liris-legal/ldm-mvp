@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <template v-for="(lawsuit, index) in lawsuits">
-          <tr class="d-flex" @click="clickTR(lawsuit.id)" :key="lawsuit.id">
+          <tr class="d-flex" @click="redirectToLink(lawsuit.id)" :key="lawsuit.id">
             <td scope="col" class="col col-3">{{ lawsuit.number }}</td>
             <td scope="col" class="col col-3">{{ lawsuit.name }}</td>
             <td scope="col" class="col col-3">{{ lawsuit.courts_departments }}</td>
@@ -40,7 +40,7 @@
               <div class="col-6"><div class="pl-3">-</div></div>
               <v-spacer></v-spacer>
               <div class="col-6 text-right col-btn font-weight-600 text-size-20">
-                <v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="clickBTN(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
+                <v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="showSubmenu(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
               </div>
               <v-list class="sub-menu" :class="{ 'actived': activeIndex === index}">
                 <v-list-item @click="renameLawsuit(lawsuit.id)" v-on:click.stop="">
@@ -86,33 +86,24 @@
     },
     methods: {
       /**
-       * @function clickTR
-       * @description To click to a link
+       * @function redirectToLink
+       * @description redirect to a link
        */
-      clickTR(lawsuit_id) {
+      redirectToLink(lawsuit_id) {
         return window.location.href = 'lawsuits/' + lawsuit_id;
       },
       
       /**
-       * @function clickBTN
-       * @description To click to a button
+       * @function showSubmenu
+       * @description show a sub-menu
        */
-      clickBTN(index) {
+      showSubmenu(index) {
         this.i++;
         if(this.i % 2 === 0){
           this.activeIndex = index;
         } else {
           this.activeIndex = undefined;
         }
-      },
-      
-      /**
-       * @function checkRoute
-       * @description Check route and active class when click on url
-       * @return boolean
-       */
-      checkRoute($url) {
-        return window.location.pathname === $url;
       },
       
       /**
