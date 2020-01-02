@@ -42,10 +42,12 @@ class LawsuitsApiController extends Controller
      */
     public function storeParties(Request $request, $submitter, $lawsuit, $party, $model)
     {
-        foreach ($request->get($party) as $item) {
-            $data = ['name' => $item, 'submitter_id' => $submitter->id, 'lawsuit_id' => $lawsuit->id];
-            $class = "App\Models\\".$model;
-            $class::create($data);
+        if ($request->has($party)) {
+            foreach ($request->get($party) as $item) {
+                $data = ['name' => $item, 'submitter_id' => $submitter->id, 'lawsuit_id' => $lawsuit->id];
+                $class = "App\Models\\".$model;
+                $class::create($data);
+            }
         }
     }
 

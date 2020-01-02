@@ -19,7 +19,6 @@ export default new Vuetify({
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('app-top-bar', require('./components/app-bar/top.vue').default);
 Vue.component('app-bottom-bar', require('./components/app-bar/bottom-fixed.vue').default);
 Vue.component('app-home', require('./components/home.vue').default);
@@ -38,9 +37,6 @@ Vue.component('app-delete-item', require('./components/globals/delete-an-item.vu
 // Global Mixin defined
 Vue.mixin({
   methods: {
-    foo: function () {
-      console.log('foo')
-    },
     /**
      * Add a new item to an array
      * @param lawsuit an instance lawsuit object
@@ -48,27 +44,7 @@ Vue.mixin({
      */
     pushToParties(lawsuit, parties) {
       let item = {name: ''};
-      switch (parties) {
-        case 'plaintiffs':
-          lawsuit.plaintiffs.push(item);
-          break;
-        case 'plaintiff_representatives':
-          lawsuit.plaintiff_representatives.push(item);
-          break;
-        case 'defendants':
-          lawsuit.defendants.push(item);
-          break;
-        case 'defendant_representatives':
-          lawsuit.defendant_representatives.push(item);
-          break;
-        case 'other_parties':
-          lawsuit.other_parties.push(item);
-          break;
-        default: {
-          console.error('Not found parties');
-          break;
-        }
-      }
+      return lawsuit[parties].push(item);
     },
 
     /**
@@ -78,27 +54,7 @@ Vue.mixin({
      * @param index - Ordinal number element input of the typeSubmitter
      * */
     removeItemFromParties(lawsuit, parties, index) {
-      switch (parties) {
-        case 'plaintiffs':
-          lawsuit.plaintiffs.splice(index, 1);
-          break;
-        case 'plaintiff_representatives':
-          lawsuit.plaintiff_representatives.splice(index, 1);
-          break;
-        case 'defendants':
-          lawsuit.defendants.splice(index, 1);
-          break;
-        case 'defendant_representatives':
-          lawsuit.defendant_representatives.splice(index, 1);
-          break;
-        case 'other_parties':
-          lawsuit.other_parties.splice(index, 1);
-          break;
-        default: {
-          console.error('Not found parties');
-          break;
-        }
-      }
+      return lawsuit[parties].splice(index, 1);
     },
 
     /**
@@ -122,7 +78,8 @@ Vue.mixin({
      * */
     convertObjectDataToArrayRequest(formData, key){
       for (let i = 0; i < this.lawsuit[key].length; i++) {
-        formData.append(key+'[]', this.lawsuit[key][i].name);
+        if (this.lawsuit[key][i].name.length > 0)
+          formData.append(key+'[]', this.lawsuit[key][i].name);
       }
       return formData
     },
