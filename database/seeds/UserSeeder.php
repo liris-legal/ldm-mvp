@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TypeDocumentSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,16 +14,15 @@ class TypeDocumentSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         $time = Carbon\Carbon::now();
 
-        DB::table('type_documents')->truncate();
+        DB::table('users')->truncate();
         $rows = [
-            [ '主張書面', $time],
-            [ '証拠書面', $time],
-            [ 'その他の書面', $time],
+            ['8968e76a-4945-40e8-a77a-29261f7cd2f3', 'thai.le.connectiv@gmail.com', $time ],
         ];
         foreach ($rows as $row) {
-            DB::table('type_documents')->insert([
-                'name' => $row[0],
-                'created_at' => $row[1],
+            DB::table('users')->insert([
+                'cognito_username' => $row[0],
+                'email' => $row[1],
+                'created_at' => $row[2],
             ]);
         }
         Schema::enableForeignKeyConstraints();

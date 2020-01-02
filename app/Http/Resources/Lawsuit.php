@@ -22,17 +22,33 @@ class Lawsuit extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'type_case_id' => $this->type_case_id,
-            'number' => $this->number,
-            'name' => $this->name,
-            'courts_departments' => $this->courts_departments,
-            'defendants'    => DefendantResource::collection($this->defendants),
-            'defendant_representatives' => DefendantRepresentativeResource::collection($this->defendantRepresentatives),
-            'plaintiffs' => PlaintiffResource::collection($this->plaintiffs),
-            'plaintiff_representatives' => PlaintiffRepresentativeResource::collection($this->plaintiffRepresentatives),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'id'                        => $this->id,
+            'type_case_id'              => $this->type_case_id,
+            'number'                    => $this->number,
+            'name'                      => $this->name,
+            'courts_departments'        => $this->courts_departments,
+            'defendants'                => $this->defendants->map(
+                function ($defendant) {
+                    return new DefendantResource($defendant);
+                }
+            ),
+            'defendant_representatives' => $this->defendantRepresentatives->map(
+                function ($defendant) {
+                    return new DefendantRepresentativeResource($defendant);
+                }
+            ),
+            'plaintiffs'                => $this->plaintiffs->map(
+                function ($defendant) {
+                    return new PlaintiffResource($defendant);
+                }
+            ),
+            'plaintiff_representatives' => $this->plaintiffRepresentatives->map(
+                function ($defendant) {
+                    return new PlaintiffRepresentativeResource($defendant);
+                }
+            ),
+            'created_at'                => $this->created_at,
+            'updated_at'                => $this->updated_at,
         ];
     }
 }

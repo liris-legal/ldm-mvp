@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TypeLawsuit extends Model
 {
-    public $fillable = ['name'];
-    public $timestamps = true;
+    public $fillable = ['name', 'description'];
 
     /**
      * Get all lawsuit for type lawsuit.

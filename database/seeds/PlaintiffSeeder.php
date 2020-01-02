@@ -12,10 +12,23 @@ class PlaintiffSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('plaintiffs')->insert([
-            [ 'id' => '1' ,'name' => 'ABCDE株式会社', 'submitter_id' => '1', 'lawsuit_id' => '1', 'created_at' => '2019-11-26 19:21:38', 'updated_at' => '2019-11-26 19:21:38' ],
-            [ 'id' => '2' ,'name' => 'ABHGJ株式会社', 'submitter_id' => '1', 'lawsuit_id' => '2', 'created_at' => '2019-11-26 19:21:38', 'updated_at' => '2019-11-26 19:21:38' ],
-            [ 'id' => '3' ,'name' => 'JJKDE株式会社', 'submitter_id' => '1', 'lawsuit_id' => '1', 'created_at' => '2019-11-26 19:21:38', 'updated_at' => '2019-11-26 19:21:38' ],
-        ]);
+        Schema::disableForeignKeyConstraints();
+        $time = Carbon\Carbon::now();
+
+        DB::table('plaintiffs')->truncate();
+        $rows = [
+            [ 'ABCDE株式会社', 1, 1, $time],
+            [ 'ABHGJ株式会社', 1, 2, $time],
+            [ 'JJKDE株式会社', 1, 1, $time],
+        ];
+        foreach ($rows as $row) {
+            DB::table('plaintiffs')->insert([
+                'name' => $row[0],
+                'submitter_id' => $row[1],
+                'lawsuit_id' => $row[2],
+                'created_at' => $row[3],
+            ]);
+        }
+        Schema::enableForeignKeyConstraints();
     }
 }

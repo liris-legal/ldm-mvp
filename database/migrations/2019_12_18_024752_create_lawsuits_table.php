@@ -23,6 +23,8 @@ class CreateLawsuitsTable extends Migration
 
             $table->foreign('type_lawsuit_id')->references('id')->on('type_lawsuits')->onDelete('cascade');
         });
+
+        DB::statement('ALTER TABLE lawsuits CHANGE type_lawsuit_id type_lawsuit_id int(6) zerofill NOT NULL');
     }
 
     /**
