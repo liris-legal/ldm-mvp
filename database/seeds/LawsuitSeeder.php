@@ -12,9 +12,23 @@ class LawsuitSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('lawsuits')->insert([
-            [ 'id' => '1' ,'type_lawsuit_id' => '1', 'number' => '平成31年（ワ）第○○号', 'name' => '損害賠償請求事件', 'courts_departments' => '東京地方裁判所', 'created_at' => '2019-11-26 19:21:38', 'updated_at' => '2019-11-26 19:21:38' ],
-            [ 'id' => '2' ,'type_lawsuit_id' => '1', 'number' => '平成32年（ワ）第○○号', 'name' => '損害賠償請求事件2', 'courts_departments' => '東京地方裁判所', 'created_at' => '2019-11-26 19:21:39', 'updated_at' => '2019-11-26 19:21:39' ],
-        ]);
+        Schema::disableForeignKeyConstraints();
+        $time = Carbon\Carbon::now();
+
+        DB::table('lawsuits')->truncate();
+        $rows = [
+            [ 1, '00001', '損害賠償請求01 事件', '東京地方裁判所', $time],
+            [ 1, '00002', '損害賠償請求02 事件', '東京地方裁判所', $time],
+        ];
+        foreach ($rows as $row) {
+            DB::table('lawsuits')->insert([
+                'type_lawsuit_id' => $row[0],
+                'number' => $row[1],
+                'name' => $row[2],
+                'courts_departments' => $row[3],
+                'created_at' => $row[4],
+            ]);
+        }
+        Schema::enableForeignKeyConstraints();
     }
 }

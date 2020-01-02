@@ -1,5 +1,7 @@
 @extends('layouts.app')
-@section('title', '名前を変更')
+@section('title', '事件を編集画面')
 @section('content')
-    <lawsuits-edit :lawsuit="{{ $lawsuit }}"></lawsuits-edit>
+    <lawsuits-edit :type_lawsuits="{{ $typeLawsuits }}"
+                   :lawsuit="{{ $lawsuit}}"
+    ></lawsuits-edit>
 @endsection

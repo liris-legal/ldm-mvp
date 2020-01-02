@@ -14,10 +14,13 @@ class CreateTypeLawsuitTable extends Migration
     public function up()
     {
         Schema::create('type_lawsuits', function (Blueprint $table) {
-            $table->Increments('id');
+            $table->Increments('id')->zerofill();
             $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE type_lawsuits CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
     }
 
     /**
