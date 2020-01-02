@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\storeLawsuit;
+use App\Http\Requests\StoreLawsuit;
 use App\Models\Lawsuit;
 use App\Http\Resources\Lawsuit as LawsuitResource;
 use App\Models\OtherParty;
@@ -65,10 +65,10 @@ class LawsuitsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param storeLawsuit $request
+     * @param StoreLawsuit $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(storeLawsuit $request)
+    public function store(StoreLawsuit $request)
     {
         $data = $request->all();
         $data['created_at'] = now();

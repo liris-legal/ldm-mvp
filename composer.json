@@ -12,7 +12,7 @@
         "aws/aws-sdk-php": "^3.128",
         "caouecs/laravel-lang": "~4.0",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "^6.2",
+        "laravel/framework": "^6.9",
         "laravel/tinker": "^1.0",
         "ext-json": "*"
     },
