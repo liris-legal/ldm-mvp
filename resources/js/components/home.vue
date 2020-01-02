@@ -11,7 +11,7 @@
       </v-col>
     </v-row>
     <app-thead :thead="thead" />
-    <app-document-2-two-columns
+    <app-document-two-columns
       v-for="document in documents"
       :key="document.id"
       :document="document"

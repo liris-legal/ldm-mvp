@@ -49,7 +49,8 @@
       ClickOutside
     },
 	  props: {
-      user: { type: Object, required: true, default: () => {} }
+      user: { type: Object, required: true, default: () => {} },
+      route_logout: { type: String, required: true, default: () => '' }
 		},
 	  data() {
 	    return {
@@ -59,13 +60,12 @@
 		methods: {
 	    /**
 			 * @function logout
-			 * @async
 			 * @description user logout.
 			 */
-	    async logout() {
-				await axios({
+	    logout() {
+				axios({
 					method: 'post',
-					url: 'logout'
+					url: this.route_logout
 				})
 				.then( res => {location.reload() })
 				.catch( err => {
