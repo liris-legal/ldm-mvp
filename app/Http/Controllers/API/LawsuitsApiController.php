@@ -99,15 +99,58 @@ class LawsuitsApiController extends Controller
     }
 
     /**
+     * Update the specified resource party.
+     *
+     * @param Request $request
+     * @param $submitter
+     * @param $lawsuit
+     * @param $partyMethod
+     * @param $party
+     * @param $model
+     */
+    public function updateParties(Request $request, $submitter, $lawsuit, $partyMethod, $party, $model)
+    {
+        $lawsuit->$partyMethod()->delete();
+        $this->storeParties($request, $submitter, $lawsuit, $party, $model);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StoreLawsuit $request
+     * @param Lawsuit $lawsuit
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(StoreLawsuit $request, Lawsuit $lawsuit)
     {
-        //
+        $data = $request->all();
+        $data['updated_at'] = now();
+        $lawsuit->fill($data)->save();
+        // $lawsuit->update($data);
+
+        $submitters = Submitter::all();
+        $this->updateParties($request, $submitters[0], $lawsuit, 'plaintiffs', 'plaintiffs', 'Plaintiff');
+        $this->updateParties(
+            $request,
+            $submitters[0],
+            $lawsuit,
+            'plaintiffRepresentatives',
+            'plaintiff_representatives',
+            'PlaintiffRepresentative'
+        );
+        $this->updateParties($request, $submitters[1], $lawsuit, 'defendants', 'defendants', 'Defendant');
+        $this->updateParties(
+            $request,
+            $submitters[1],
+            $lawsuit,
+            'defendantRepresentatives',
+            'defendant_representatives',
+            'DefendantRepresentative'
+        );
+        $this->updateParties($request, $submitters[3], $lawsuit, 'otherParties', 'other_parties', 'OtherParty');
+
+        $message = ['status' => 'success', 'content' => '事件を編集しました。'];
+        return response()->json(['url' => route('lawsuits.index'), 'message' => $message], 200);
     }
 
     /**

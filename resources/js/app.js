@@ -8,14 +8,16 @@ import Vue from 'vue'
  * Vuetify
  */
 import Vuetify from 'vuetify'
-Vue.use(Vuetify)
+
+Vue.use(Vuetify);
 export default new Vuetify({
-    icons: {
-        iconfont: 'mdiSvg',
-    },
+  icons: {
+    iconfont: 'mdiSvg',
+  },
 })
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
+const files = require.context('./', true, /\.vue$/i);
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('app-top-bar', require('./components/app-bar/top.vue').default);
@@ -33,6 +35,100 @@ Vue.component('app-case-8', require('./components/globals/app-case-8.vue').defau
 Vue.component('app-type-lawsuit', require('./components/globals/app-type-lawsuit.vue').default);
 Vue.component('app-delete-item', require('./components/globals/delete-an-item.vue').default);
 
+// Global Mixin defined
+Vue.mixin({
+  methods: {
+    foo: function () {
+      console.log('foo')
+    },
+    /**
+     * Add a new item to an array
+     * @param lawsuit an instance lawsuit object
+     * @param parties type of parties
+     */
+    pushToParties(lawsuit, parties) {
+      let item = {name: ''};
+      switch (parties) {
+        case 'plaintiffs':
+          lawsuit.plaintiffs.push(item);
+          break;
+        case 'plaintiff_representatives':
+          lawsuit.plaintiff_representatives.push(item);
+          break;
+        case 'defendants':
+          lawsuit.defendants.push(item);
+          break;
+        case 'defendant_representatives':
+          lawsuit.defendant_representatives.push(item);
+          break;
+        case 'other_parties':
+          lawsuit.other_parties.push(item);
+          break;
+        default: {
+          console.error('Not found parties');
+          break;
+        }
+      }
+    },
+
+    /**
+     * Remove an item in parties
+     * @param lawsuit an instance lawsuit object
+     * @param parties type of parties
+     * @param index - Ordinal number element input of the typeSubmitter
+     * */
+    removeItemFromParties(lawsuit, parties, index) {
+      switch (parties) {
+        case 'plaintiffs':
+          lawsuit.plaintiffs.splice(index, 1);
+          break;
+        case 'plaintiff_representatives':
+          lawsuit.plaintiff_representatives.splice(index, 1);
+          break;
+        case 'defendants':
+          lawsuit.defendants.splice(index, 1);
+          break;
+        case 'defendant_representatives':
+          lawsuit.defendant_representatives.splice(index, 1);
+          break;
+        case 'other_parties':
+          lawsuit.other_parties.splice(index, 1);
+          break;
+        default: {
+          console.error('Not found parties');
+          break;
+        }
+      }
+    },
+
+    /**
+     * Counter item of parties add index to title
+     * @param parties type of parties
+     * @param index Ordinal number element of parties
+     * @return {number||string}
+     * */
+    countParties(parties, index) {
+      if (index)
+        return parties.length <= 1 ? '' : index;
+      else
+        return parties.length
+    },
+
+    /**
+     * Convert Object To Array
+     * @param formData - an instance formData
+     * @param key - an string key object
+     * @return {Array}
+     * */
+    convertObjectDataToArrayRequest(formData, key){
+      for (let i = 0; i < this.lawsuit[key].length; i++) {
+        formData.append(key+'[]', this.lawsuit[key][i].name);
+      }
+      return formData
+    },
+  }
+});
+
 const app = new Vue({
-    el: '#app',
+  el: '#app',
 });

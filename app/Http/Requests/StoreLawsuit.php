@@ -33,16 +33,16 @@ class StoreLawsuit extends FormRequest
             'plaintiffs.*' => 'bail|required|string|distinct|between:1,100',
 
             'plaintiff_representatives' => 'bail|array|between:1,30',
-            'plaintiff_representatives.*' => 'bail|required|string|distinct|between:1,100',
+            'plaintiff_representatives.*' => 'bail|string|distinct|between:1,100',
 
             'defendants' => 'bail|array|between:1,30',
             'defendants.*' => 'bail|required|string|distinct|between:1,100',
 
             'defendant_representatives' => 'bail|array|between:1,30',
-            'defendant_representatives.*' => 'bail|required|string|distinct|between:1,100',
+            'defendant_representatives.*' => 'bail|string|distinct|between:1,100',
 
             'other_parties' => 'bail|array|between:1,30',
-            'other_parties.*' => 'bail|required|string|distinct|between:1,100',
+            'other_parties.*' => 'bail|string|distinct|between:1,100',
         ];
     }
 }

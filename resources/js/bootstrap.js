@@ -7,9 +7,10 @@ window._ = require('lodash');
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+  window.$ = window.jQuery = require('jquery');
 
-} catch (e) {}
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -25,7 +26,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 let domain = process.env.MIX_API_DOMAIN;
 let prefix = process.env.MIX_API_PREFIX;
 let version = process.env.MIX_API_VERSION;
-window.axios.defaults.baseURL = domain + '/' + prefix + '/'+ version;
+window.axios.defaults.baseURL = domain + '/' + prefix + '/' + version;
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -36,9 +37,9 @@ window.axios.defaults.baseURL = domain + '/' + prefix + '/'+ version;
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
