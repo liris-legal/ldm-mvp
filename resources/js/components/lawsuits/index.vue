@@ -41,9 +41,25 @@
     components: {
       rangRowLawsuit
     },
-    props: {
-      lawsuits: {type: Array, required: true, default: () => []}
-    }
+    data() {
+      return {
+        lawsuits: {},
+      }
+    },
+    created() {
+      /**
+       * @function
+       * @description fetch list lawsuits data from API
+       */
+      axios.get('lawsuits')
+        .then(res => {
+          this.lawsuits = res.data.data;
+          console.log(this.lawsuits)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
   }
 </script>
 <style lang="scss">

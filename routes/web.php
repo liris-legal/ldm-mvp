@@ -17,7 +17,7 @@ Route::post('register', 'Auth\RegisterController@register')->name('auth.register
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('type-lawsuits', 'TypeLawsuitsController');
-    Route::resource('lawsuits', 'LawsuitsController');
+    Route::resource('lawsuits', 'LawsuitsController')->only(['index', 'create', 'edit']);
 });
 
 Route::get('/viewer', function () {
