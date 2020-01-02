@@ -64,7 +64,7 @@
 							<small class="has-error" v-if="error">{{ catchError('defendants', --i) }}</small>
 						</v-col>
 					</v-col>
-
+					
 					<v-col cols="12" class="row form-control pa-2" v-for="(defendant_representative, i, rorr) in lawsuit.defendant_representatives" :key="defendant_representative.i">
 						<v-col class="col-3 pa-0 label"><label :for="'defendant-representative-lawsuit' + i" class="font-weight-600">被告代理人{{ convertString('defendant_representatives', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
@@ -133,18 +133,18 @@
           case 'plaintiff_representatives':
             this.lawsuit.plaintiff_representatives.push(item);
             break;
-		  case 'defendants':
-            this.lawsuit.defendants.push(item);
-            break;
-		  case 'defendant_representatives':
-            this.lawsuit.defendant_representatives.push(item);
-            break;
-		  case 'other_parties':
-            this.lawsuit.other_parties.push(item);
-            break;
-          default: {}
-        }
-      },
+					case 'defendants':
+								this.lawsuit.defendants.push(item);
+								break;
+					case 'defendant_representatives':
+								this.lawsuit.defendant_representatives.push(item);
+								break;
+					case 'other_parties':
+								this.lawsuit.other_parties.push(item);
+								break;
+							default: {}
+						}
+					},
 
       /**
        * Remove element input of the typeSubmitter
@@ -164,16 +164,16 @@
           if(this.lawsuit.defendants.length > 1){
             this.lawsuit.defendants.splice(index, 1);
           }
-		} else if(submitter === 'defendant_representatives'){
-          if(this.lawsuit.defendant_representatives.length > 1){
-            this.lawsuit.defendant_representatives.splice(index, 1);
-          }
-		} else if(submitter === 'other_parties'){
-          if(this.lawsuit.other_parties.length > 1){
-            this.lawsuit.other_parties.splice(index, 1);
-          }
-      }
-    },
+				} else if(submitter === 'defendant_representatives'){
+							if(this.lawsuit.defendant_representatives.length > 1){
+								this.lawsuit.defendant_representatives.splice(index, 1);
+							}
+				} else if(submitter === 'other_parties'){
+							if(this.lawsuit.other_parties.length > 1){
+								this.lawsuit.other_parties.splice(index, 1);
+							}
+					}
+				},
 
       /**
        * Change display of value
