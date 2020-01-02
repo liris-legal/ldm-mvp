@@ -86,7 +86,7 @@
     name: "lawsuit-edit",
       props: {
         typeLawsuits: {required: true, type: Array, default: []},
-        lawsuitId: {required: true, type: Number, default: 0},
+        lawsuitId: {required: true, type: String, default: '0'},
       },
     data() {
       return {
