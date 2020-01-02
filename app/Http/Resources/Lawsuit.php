@@ -8,6 +8,7 @@ use App\Http\Resources\Defendant as DefendantResource;
 use App\Http\Resources\DefendantRepresentative as DefendantRepresentativeResource;
 use App\Http\Resources\Plaintiff as PlaintiffResource;
 use App\Http\Resources\PlaintiffRepresentative as PlaintiffRepresentativeResource;
+use App\Http\Resources\OtherParty as OtherPartyResource;
 
 class Lawsuit extends JsonResource
 {
@@ -23,7 +24,7 @@ class Lawsuit extends JsonResource
     {
         return [
             'id'                        => $this->id,
-            'type_case_id'              => $this->type_case_id,
+            'type_lawsuit_id'              => $this->type_lawsuit_id,
             'number'                    => $this->number,
             'name'                      => $this->name,
             'courts_departments'        => $this->courts_departments,
@@ -45,6 +46,11 @@ class Lawsuit extends JsonResource
             'plaintiff_representatives' => $this->plaintiffRepresentatives->map(
                 function ($defendant) {
                     return new PlaintiffRepresentativeResource($defendant);
+                }
+            ),
+            'other_parties' => $this->otherParties->map(
+                function ($party) {
+                    return new OtherPartyResource($party);
                 }
             ),
             'created_at'                => $this->created_at,
