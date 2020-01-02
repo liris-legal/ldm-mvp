@@ -15,23 +15,23 @@
 					</v-col>
 					<v-col cols="12" class="row form-control">
 						<v-col class="col-3 pa-0 label"><label for="number-lawsuit" class="font-weight-600">事件番号</label></v-col>
-						<v-col class="col-9 pa-0 input"><input v-model="number" id="number-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
+						<v-col class="col-9 pa-0 input"><input v-model="lawsuit.number" id="number-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
 					</v-col>
 					<v-col cols="12" class="row form-control">
 						<v-col class="col-3 pa-0 label"><label for="name-lawsuit" class="font-weight-600">事件名</label></v-col>
-						<v-col class="col-9 pa-0 input"><input v-model="name" id="name-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
+						<v-col class="col-9 pa-0 input"><input v-model="lawsuit.name" id="name-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
 					</v-col>
 					<v-col cols="12" class="row form-control">
 						<v-col class="col-3 pa-0 label"><label for="courts-lawsuit" class="font-weight-600">裁判所・部署</label></v-col>
-						<v-col class="col-9 pa-0 input"><input v-model="courts" id="courts-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
+						<v-col class="col-9 pa-0 input"><input v-model="lawsuit.courts_departments" id="courts-lawsuit" type="text" class="input-form-group col-md-12"></v-col>
 					</v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(plaintiff, i) in plaintiffs" :key="plaintiff.i">
-						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-lawsuit' + i" class="font-weight-600">原告{{ convertString('plaintiffs', ++i) }}</label></v-col>
+					<v-col cols="12" class="row form-control" v-for="(plaintiff, index) in plaintiffs" :key="index">
+						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-lawsuit' + index" class="font-weight-600">原告{{ convertString('plaintiffs', ++index) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
-							<input v-model="plaintiffs.value = plaintiff.value" :id="'plaintiff-lawsuit' + i" type="text" class="input-form-group col-md-12">
+							<input v-model="plaintiff.name" :id="'plaintiff-lawsuit' + index" type="text" class="input-form-group col-md-12">
 							<v-btn v-on:click="addValue('plaintiffs')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
-							<v-btn v-on:click="removeValue('plaintiffs', --i)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
+							<v-btn v-on:click="removeValue('plaintiffs', --index)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
 						</v-col>
 					</v-col>
 
@@ -83,21 +83,19 @@
 
 <script>
   export default {
-    name: "lawsuits-create",
+    name: "lawsuits-edit",
       props: {
         type_lawsuits: {required: true, type: Array, default: []},
-        lawsuit: {required: true, type: Object, default: {}},
+        lawsuit_id: {required: true, type: Number, default: 0},
       },
     data() {
       return {
-        number: '',
-        name: '',
-        courts: '',
-        plaintiffs: [{ value: ''}],
-        plaintiff_representatives: [{ value: ''}],
-        defendants: [{ value: '' }],
-        defendant_representatives: [{ value: '' }],
-        other_parties: [{ value: '' }],
+        lawsuit: {},
+        plaintiffs: [],
+        plaintiff_representatives: [],
+        defendants: [],
+        defendant_representatives: [],
+        other_parties: [],
       }
     },
     methods: {
@@ -199,8 +197,27 @@
         }
       }
     },
+    created() {
+      /**
+       * @function
+       * @description fetch lawsuit data from API
+       */
+      axios.get('lawsuits/' + this.lawsuit_id)
+        .then(res => {
+          this.lawsuit = res.data.data;
+          this.plaintiffs = this.lawsuit.plaintiffs;
+          this.plaintiff_representatives = this.lawsuit.plaintiff_representatives;
+          this.defendants = this.lawsuit.defendants;
+          this.defendant_representatives = this.lawsuit.defendant_representatives;
+          this.other_parties = this.lawsuit.other_parties;
+          console.log(this.lawsuit)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
 		mounted() {
-      console.log(this.lawsuit)
+      console.log('mounted')
     }
   }
 </script>

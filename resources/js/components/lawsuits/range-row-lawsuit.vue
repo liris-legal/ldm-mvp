@@ -25,7 +25,7 @@
         <v-list-item :href="'lawsuits/' + lawsuit.id + '/edit'">
           <v-list-item-title>事件を変更</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="deleteLawsuit(lawsuit.id)">
+        <v-list-item @click="deleteLawsuit(index, lawsuit.id)">
           <v-list-item-title>事件を削除</v-list-item-title>
         </v-list-item>
       </v-list>
