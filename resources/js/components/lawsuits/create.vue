@@ -250,9 +250,9 @@
             // window.location.href="/lawsuits";
           })
           .catch(err => {
-            // if(err.status === 422){
+            if(err.response.status === 422){
               return this.error = err.response.data;
-						// }
+						}
 					});
       },
 			catchError(field_name, index) {
