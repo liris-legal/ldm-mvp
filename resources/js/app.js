@@ -29,8 +29,7 @@ Vue.component('lawsuits-edit', require('./components/lawsuits/edit.vue').default
 
 // component global
 Vue.component('app-thead', require('./components/globals/app-thead.vue').default);
-Vue.component('app-document-2', require('./components/globals/app-document-2.vue').default);
-Vue.component('app-case-8', require('./components/globals/app-case-8.vue').default);
+Vue.component('app-document-two-columns', require('./components/globals/app-document-two-columns.vue').default);
 Vue.component('app-type-lawsuit', require('./components/globals/app-type-lawsuit.vue').default);
 Vue.component('app-delete-item', require('./components/globals/delete-an-item.vue').default);
 

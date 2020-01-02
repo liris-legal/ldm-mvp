@@ -1,5 +1,5 @@
 <template>
-  <div class="app-document-2">
+  <div class="app-document-two-columns">
     <a
       href="#"
       class="document-link"
