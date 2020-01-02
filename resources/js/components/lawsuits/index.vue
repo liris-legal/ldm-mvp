@@ -2,7 +2,7 @@
   <div class="container-fluid cases-page">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-30">民事事件</h2>
+        <h2 class="title-name text-size-30">民事事件{{typeof isShowDelete}}</h2>
         <h3 class="description"/>
       </v-col>
     </v-row>
@@ -37,7 +37,7 @@
             <td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiffs) }}</td>
             <td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiff_representatives) }}</td>
             <td scope="col" class="col col-3 d-flex pa-0 last-child-table" :class="{'unset-relative': isShowDelete}">
-              <div class="col-6"><div class="pl-3">-</div></div>
+              <div class="col-6"><div class="pl-3">{{ convertString(lawsuit.other_parties) }}</div></div>
               <v-spacer></v-spacer>
               <div class="col-6 text-right col-btn font-weight-600 text-size-20">
                 <v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="showSubmenu(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
@@ -52,11 +52,11 @@
               </v-list>
             </td>
           </tr>
-          <app-delete-item :dataType="'lawsuits'" v-on:cancelSubmit="isShowDelete = $event"  v-if="isShowDelete" :data="dataReceived" />
         </template>
         </tbody>
       </table>
     </div>
+    <app-delete-item :dataType="'lawsuits'" v-on:cancelSubmit="isShowDelete = $event" v-if="isShowDelete" :data="dataReceived" />
   </div>
 </template>
 
@@ -148,6 +148,9 @@
         this.activeIndex = undefined;
         this.isShowDelete = false;
       },
+    },
+    mounted() {
+      console.log(this.dataReceived)
     }
   }
 </script>
