@@ -162,7 +162,7 @@
                             right: 5px !important;
                             @extend %subs-menu;
                         }
-                        .activated{
+                        .actived{
                             visibility: visible;
                         }
                     }
@@ -174,7 +174,7 @@
 .form-group{
     .form-group-content{
         background-color: $color___white;
-        padding: 2em 4em;
+        padding: 2em 4em 4em;
         .form-control {
             .label{
 
