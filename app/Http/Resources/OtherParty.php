@@ -18,6 +18,7 @@ class OtherParty extends JsonResource
             'id'                =>  $this->id,
             'name'              =>  $this->name,
             'type_author_id'    =>  $this->submitter_id,
+            'description'       =>  $this->typeAuthor->description
         ];
     }
 }

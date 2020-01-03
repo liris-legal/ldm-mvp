@@ -2,7 +2,7 @@
   <div class="container-fluid cases-page">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-30">民事事件{{typeof isShowDelete}}</h2>
+        <h2 class="title-name text-size-30">民事事件</h2>
         <h3 class="description"/>
       </v-col>
     </v-row>

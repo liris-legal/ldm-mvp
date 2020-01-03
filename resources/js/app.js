@@ -10,10 +10,15 @@ import notificationStore from './store/notification';
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
 
-/**
- * Component registration
- * @see: https://vuejs.org/v2/guide/components-registration.html
- */
+import VueRouter from 'vue-router'
+import { routes }  from './routes';
+
+Vue.use(VueRouter)
+const router = new VueRouter({
+  mode: 'history',
+  routes
+})
+
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
@@ -26,12 +31,15 @@ Vue.component('lawsuits-create', require('./components/lawsuits/create.vue').def
 Vue.component('lawsuits-edit', require('./components/lawsuits/edit.vue').default);
 Vue.component('lawsuits-show', require('./components/lawsuits/show.vue').default);
 
-// component global
+// component globals
 Vue.component('app-thead', require('./components/globals/app-thead.vue').default);
 Vue.component('app-document-two-columns', require('./components/globals/app-document-two-columns.vue').default);
 Vue.component('app-type-lawsuit', require('./components/globals/app-type-lawsuit.vue').default);
 Vue.component('app-delete-item', require('./components/globals/delete-an-item.vue').default);
 Vue.component('lawsuit-header', require('./components/globals/lawsuit-header.vue').default);
+// component globals/tables
+Vue.component('thead-columns', require('./components/globals/tables/thead-columns.vue').default);
+Vue.component('documents-four-columns', require('./components/globals/tables/documents-four-columns.vue').default);
 
 // Global Mixin defined
 Vue.mixin({
