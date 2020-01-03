@@ -18,6 +18,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans+JP:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
