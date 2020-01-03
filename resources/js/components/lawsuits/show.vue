@@ -32,7 +32,8 @@
           </v-col>
         </v-row>
         <app-thead :thead="thead_evidence_document" />
-        <app-type-lawsuit :typeLawsuit="submitterDocument" />
+        <app-type-lawsuit v-if="lawsuit.defendants" :typeLawsuit="documentsOfSubmitter(lawsuit.defendants, 'defendant')" />
+        <app-type-lawsuit v-if="lawsuit.plaintiffs" :typeLawsuit="documentsOfSubmitter(lawsuit.plaintiffs, 'plaintiff')" />
       </div>
 
       <div class="other-documents">
@@ -55,6 +56,7 @@
    * Index: Clicks Outside an Element
    */
   import ClickOutside from 'vue-click-outside';
+import { log } from 'util';
   export default {
     data() {
       return {
@@ -69,22 +71,19 @@
         submitterDocument: {id: 1, name: '原告書面'}
 			}
     },
-    created() {
-      let self = this;
-      axios.get('lawsuits/'+self.$route.params.lawsuitId)
-      .then(res => { return self.lawsuit = res.data.data})
-      .catch(err => {console.log(err.response);
-      });
-    },
     methods: {
-      documentsOfSubmitter(submitter){
-        console.log('submiter: ', submitter);
-        console.log(this.lawsuit);
+      documentsOfSubmitter(array, valueCondition){
+        if(array !== undefined && array.length > 0) {
+          return array.find(item => { return item.submitter.description === valueCondition });
+        }
       }
     },
     mounted() {
-      let self = this;
-      this.documentsOfSubmitter(self.lawsuit.defentdants);
+      axios.get('lawsuits/'+this.$route.params.lawsuitId)
+      .then(res => {this.lawsuit = res.data.data;console.log(this.lawsuit);
+      })
+      .catch(err => {console.log(err.response);
+      });
     }
   }
 </script>
