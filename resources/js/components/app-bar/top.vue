@@ -64,16 +64,15 @@
 			 * @description user logout.
 			 */
 	    logout() {
-				axios({
-					method: 'post',
-					url: this.route_logout
-				})
-				.then( res => {location.reload() })
-				.catch( err => {
-				  if(err.response.status === 401){
-            console.log(err.response.data.message);
-					}
+				axios({method: 'post', url: this.route_logout})
+				.then( res => {
+          console.log(res);
+          // this.$store.dispatch('create_notification', res.data.message);
           location.reload();
+				})
+				.catch( err => {
+          console.log(err.response.data);
+          // location.reload();
 				});
 			},
       /**
