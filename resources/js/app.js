@@ -19,6 +19,10 @@ const router = new VueRouter({
   routes
 })
 
+/**
+ * Component registration
+ * @see: https://vuejs.org/v2/guide/components-registration.html
+ */
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
@@ -135,6 +139,7 @@ Vue.mixin({
 
 const app = new Vue({
   el: '#app',
+  router,
   vuetify: new Vuetify({
     icons: {
       iconfont: 'mdiSvg',
