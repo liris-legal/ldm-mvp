@@ -24,7 +24,7 @@
       >
         <v-btn
           value="favorites"
-          href="type-lawsuits"
+          :href="routeListTypeLawsuits"
           :class="{'v-btn--active': checkRoutes(['/type-lawsuits', '/lawsuits'])}"
         >
           <span>ファイル</span>
@@ -50,7 +50,7 @@
           class="list-item-add-button"
         >
           <a
-            href="lawsuits/create"
+            :href="routeCreateLawsuit"
             class="block-link"
           >
             <v-list-item>
@@ -79,6 +79,10 @@
 	 */
   export default {
     name: "BottomFixed",
+    props: {
+      routeCreateLawsuit: { type: String, required: true, default: () => '' },
+      routeListTypeLawsuits: { type: String, required: true, default: () => '' }
+    },
     directives: {
       /**
        * ClickOutside: Clicks Outside an Element
