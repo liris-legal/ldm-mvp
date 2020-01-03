@@ -50,7 +50,7 @@
           class="list-item-add-button"
         >
           <a
-            href="lawsuits/create"
+            :href="routeCreateLawsuit"
             class="block-link"
           >
             <v-list-item>
@@ -79,6 +79,9 @@
 	 */
   export default {
     name: "BottomFixed",
+    props: {
+      routeCreateLawsuit: { type: String, required: true, default: () => '' }
+    },
     directives: {
       /**
        * ClickOutside: Clicks Outside an Element

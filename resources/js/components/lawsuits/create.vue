@@ -64,7 +64,7 @@
 							<small class="has-error" v-if="error">{{ catchError('defendants', --i) }}</small>
 						</v-col>
 					</v-col>
-					
+
 					<v-col cols="12" class="row form-control pa-2" v-for="(defendant_representative, i, rorr) in lawsuit.defendant_representatives" :key="defendant_representative.i">
 						<v-col class="col-3 pa-0 label"><label :for="'defendant-representative-lawsuit' + i" class="font-weight-600">被告代理人{{ convertString('defendant_representatives', ++i) }}</label></v-col>
 						<v-col class="col-9 pa-0 input">
@@ -247,7 +247,8 @@
         axios.post(this.store_route, formData)
           .then(res => {
             console.log(res);
-            // window.location.href="/lawsuits";
+            // localStorage.setItem(res.data.message.status, res.data.message.content);
+            location.href = res.data.url;
           })
           .catch(err => {
             if(err.response.status === 422){
@@ -255,12 +256,6 @@
 						}
 					});
       },
-			catchError(field_name, index) {
-        let arrayValidation = this.error.errors[field_name + "." + index];
-        if(arrayValidation){
-          return arrayValidation[0];
-				}
-			}
     },
     mounted() {
       this.civil_lawsuits = this.type_lawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];

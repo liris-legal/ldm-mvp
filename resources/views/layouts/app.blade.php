@@ -28,7 +28,7 @@
         <div class="clearfix"></div>
         @yield('content')
         <div class="clearfix"></div>
-        <app-bottom-bar></app-bottom-bar>
+        <app-bottom-bar :route-create-lawsuit="'{{route('lawsuits.create')}}'"></app-bottom-bar>
     </div>
 </body>
 </html>
