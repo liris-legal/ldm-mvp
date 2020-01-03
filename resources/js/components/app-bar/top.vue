@@ -42,7 +42,7 @@
 	 * @property {Boolean} displayMenu - Is to show/hidden Menu App-nav-top
 	 */
   import ClickOutside from 'vue-click-outside'
-  import rangeAlerts from '../globals/vuetify-alerts'
+  import rangeAlerts from '../globals/range-alerts'
   import {mapState} from "vuex";
 
   export default {

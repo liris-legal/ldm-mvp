@@ -37,7 +37,7 @@
             <td scope="col" class="col col-3">{{ lawsuit.plaintiffs | parseName }}</td>
             <td scope="col" class="col col-3">{{ lawsuit.plaintiff_representatives | parseName }}</td>
             <td scope="col" class="col col-3 d-flex pa-0 last-child-table" :class="{'unset-relative': isShowDelete}">
-              <div class="col-6"><div class="pl-3">{{ lawsuit.other_parties | parseName }}</div></div>
+              <div class="col-6"><div class="">{{ lawsuit.other_parties | parseName }}</div></div>
               <v-spacer></v-spacer>
               <div class="col-6 text-right col-btn font-weight-600 text-size-20">
                 <v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="showSubmenu(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
@@ -143,7 +143,7 @@
       parseName(arrays) {
         if (arrays.length <= 0) return '-';
         arrays = arrays.map(value => {return value.name});
-        return arrays.join(', ');
+        return arrays.join('、 ');
       },
     }
   }
