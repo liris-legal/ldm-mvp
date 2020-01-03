@@ -1,19 +1,30 @@
 <template>
     <div class="container-fluid lawsuit-show">
-      <lawsuit-header />
+      <lawsuit-header :info="lawsuit" />
       <v-row class="clearfix pr-5 pt-2">
           <v-col class="text-right">
-              <v-btn v-ripple class="mr-0-auto btn-primary pa-3 height-auto text-size-18 font-weight-600">All View</v-btn>
+              <v-btn
+              v-ripple
+              class="mr-0-auto btn-primary pa-3 height-auto text-size-18 font-weight-600">
+              All View
+              </v-btn>
           </v-col>
       </v-row>
+
       <div class="claim">
         <v-row>
           <v-col class="col-12 header-content">
             <h3 class="description">最近表示</h3>
           </v-col>
         </v-row>
-        <app-thead :thead="thead_claim" />
+        <table class="table">
+          <thead-columns :thead="thead_claim" />
+          <tbody>
+            <documents-four-columns />
+          </tbody>
+        </table>
       </div>
+
       <div class="evidence-document">
         <v-row>
           <v-col class="col-12 header-content">
@@ -21,19 +32,21 @@
           </v-col>
         </v-row>
         <app-thead :thead="thead_evidence_document" />
-        <!-- <app-type-lawsuit
-          v-for="type_lawsuit in type_lawsuits"
-          :key="type_lawsuit.id"
-          :type_lawsuit="type_lawsuit"
-        /> -->
+        <app-type-lawsuit :typeLawsuit="submitterDocument" />
       </div>
+
       <div class="other-documents">
         <v-row>
           <v-col class="col-12 header-content">
             <h3 class="description">その他の書面</h3>
           </v-col>
         </v-row>
-        <app-thead :thead="thead_other_documents" />
+        <table class="table">
+          <thead-columns :thead="thead_claim" />
+          <tbody>
+            <documents-four-columns />
+          </tbody>
+        </table>
       </div>
     </div>
 </template>
@@ -42,24 +55,36 @@
    * Index: Clicks Outside an Element
    */
   import ClickOutside from 'vue-click-outside';
-import { log } from 'util';
   export default {
     data() {
       return {
         thead_claim: [
-          { id: 1, name: '書面名', class: 'col-4'},
-          { id: 2, name: '提出者', class: 'col-4'},
-          { id: 3, name: '提出日', class: 'col-4'},
+          { id: 1, label: '書面名', class: 'col-4'},
+          { id: 2, label: '提出者', class: 'col-4'},
+          { id: 3, label: '提出日', class: 'col-4'},
         ],
         thead_evidence_document: [{ id: 1, name: 'フォルダ名', class: 'col-12'}],
         thead_other_documents: [{ id: 1, name: '書面名', class: 'col-12'}],
+        lawsuit: {},
+        submitterDocument: {id: 1, name: '原告書面'}
 			}
     },
-    methods: {
-      
-    },
     created() {
-      axios.get('lawsuits/1').then(res => {console.log(res.data.data)});
+      let self = this;
+      axios.get('lawsuits/'+self.$route.params.lawsuitId)
+      .then(res => { return self.lawsuit = res.data.data})
+      .catch(err => {console.log(err.response);
+      });
+    },
+    methods: {
+      documentsOfSubmitter(submitter){
+        console.log('submiter: ', submitter);
+        console.log(this.lawsuit);
+      }
+    },
+    mounted() {
+      let self = this;
+      this.documentsOfSubmitter(self.lawsuit.defentdants);
     }
   }
 </script>

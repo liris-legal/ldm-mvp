@@ -198,3 +198,54 @@
     }
 }
 @include mixin_lawsuit_header();
+
+// tables
+@mixin mixin_thead_columns($textSizeName) {
+    .thead-columns {
+        border: 1px solid #DADDE6;
+        background-color: #FAFAFA;
+
+        .name{
+            @extend .#{$textSizeName};
+            margin-left: 40px;
+        }
+    }
+}
+@mixin mixin_documents_four_columns($textSizeName) {
+    .documents-four-columns {
+        cursor: pointer;
+        .name {
+            @extend .#{$textSizeName};
+            margin-left: 40px;
+            line-height: 40px;
+        }
+    }
+}
+.table {
+    width: 100%;
+    @include mixin_thead_columns(text-size-15);
+    tbody {
+        @include mixin_documents_four_columns(text-size-15);
+        &:nth-child(2n) {
+            td{
+                background-color: #e8e8e8;
+                border-top: 1px solid #DADDE6;
+                border-bottom: 1px solid #DADDE6;
+
+                &.last-column {
+                    position: relative;
+
+                    .sub-menu{
+                        visibility: hidden;
+                        top: 60px !important;
+                        right: 5px !important;
+                        @extend %subs-menu;
+                    }
+                    .actived{
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+    }
+}

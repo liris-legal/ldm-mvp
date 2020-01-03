@@ -16,6 +16,7 @@ class CreateSubmittersTable extends Migration
         Schema::create('submitters', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

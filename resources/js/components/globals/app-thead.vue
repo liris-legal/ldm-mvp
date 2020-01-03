@@ -18,7 +18,7 @@
   export default {
     name: "AppThead",
 		props: {
-            thead: { type: Array, required: true, default: function () { return [ { id: 1, name: 'Name', class: 'col-12' } ]} }
+      thead: { type: Array, required: true, default: function () { return [ { id: 1, name: 'Name', class: 'col-12' } ]} }
 		}
   }
 </script>

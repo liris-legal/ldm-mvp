@@ -2,11 +2,11 @@
   <div class="container-fluid cases-page">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-30">民事事件{{typeof isShowDelete}}</h2>
+        <h2 class="title-name text-size-30">民事事件</h2>
         <h3 class="description"/>
       </v-col>
     </v-row>
-    
+
     <div class="overflow overflow-x-auto">
       <div v-if="isShowDelete" class="overlay"></div>
       <table class="table">
@@ -95,7 +95,7 @@
       redirectToLink(lawsuit_id) {
         return window.location.href = 'lawsuits/' + lawsuit_id;
       },
-      
+
       /**
        * @function showSubmenu
        * @description show a sub-menu
@@ -108,7 +108,7 @@
           this.activeIndex = undefined;
         }
       },
-      
+
       /**
        * @function convertString
        * @description convert array to string
@@ -121,13 +121,13 @@
         } else {
           return '-'
         }
-        
+
       },
-  
+
       renameLawsuit(lawsuit_id){
         return window.location.href = 'lawsuits/' + lawsuit_id + '/edit/';
       },
-  
+
       /**
        * @function deleteLawsuit
        * @description delete a lawsuit
@@ -138,7 +138,7 @@
         this.activeIndex = undefined;
         this.dataReceived = lawsuit_id;
       },
-      
+
       /**
        * @function hidden
        * @description To hidden a sub-menu
