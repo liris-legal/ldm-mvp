@@ -4,8 +4,8 @@
       href="#"
       class="folder-link"
     >
-      <v-row v-ripple>
-        <v-col class="col-12 row">
+      <v-row v-ripple class="ma-0">
+        <v-col class="col-12 d-flex">
           <div class="name font-weight-600">{{ typeLawsuit.name }}</div>
           <v-spacer />
           <v-btn icon><v-icon>arrow_forward_ios</v-icon></v-btn>

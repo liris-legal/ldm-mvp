@@ -1,6 +1,6 @@
 <template>
   <div class="app-thead">
-    <v-row>
+    <v-row class="ma-0">
       <v-col
         v-for="th in thead"
         :key="th.id"
