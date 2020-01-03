@@ -1,20 +1,14 @@
 require('./bootstrap');
-
 window.Vue = require('vue');
 
 import Vue from 'vue'
+import notificationStore from './store/notification';
 
 /**
  * Vuetify
  */
 import Vuetify from 'vuetify'
-
 Vue.use(Vuetify);
-export default new Vuetify({
-  icons: {
-    iconfont: 'mdiSvg',
-  },
-})
 
 import VueRouter from 'vue-router'
 import { routes }  from './routes';
@@ -25,6 +19,10 @@ const router = new VueRouter({
   routes
 })
 
+/**
+ * Component registration
+ * @see: https://vuejs.org/v2/guide/components-registration.html
+ */
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
@@ -90,16 +88,67 @@ Vue.mixin({
      * @return {Array}
      * */
     convertObjectDataToArrayRequest(formData, key){
+      const partiesNullable = ['defendant_representatives', 'plaintiff_representatives', 'other_parties'];
       for (let i = 0; i < this.lawsuit[key].length; i++) {
-        if (this.lawsuit[key][i].name.length > 0)
+        if ( partiesNullable.includes(key) && this.lawsuit[key][i].name.length === 0 )
+          console.log('ignored');
+        else
           formData.append(key+'[]', this.lawsuit[key][i].name);
       }
       return formData
     },
+
+    /**
+     * Handle error to show message
+     *
+     * @param errors - an instance errors
+     * @param field_name - party name
+     * @param index - index of item in parties
+     * @return {string} an error message
+     * */
+    catchError(errors, field_name, index = NaN) {
+      let errorMessage, key;
+      key = !isNaN(index) ? field_name + "." + index : field_name;
+
+      if (errors.hasOwnProperty(key)){
+        errorMessage = errors[key];
+        key = key === 'courts_departments' ? 'courts departments' : key;
+        return errorMessage[0].replace(key, this.translateColumnName(field_name, 'en_ja'));
+      }
+    },
+
+    /**
+     * To translate party name
+     * mode en_ja: translate from english (英語) to japanese (日本語)
+     * mode ja_en: translate from japanese to english
+     *
+     * @param party - party name
+     * @param mode - mode to translate
+     * @return {string} a translated party name
+     * */
+    translateColumnName(party, mode) {
+      const parties = {number: '事件番号', name: '事件名', courts_departments: '裁判所・部署', plaintiffs: '原告',
+        plaintiff_representatives: '原告代理人', defendants: '被告', defendant_representatives: '被告代理人', other_parties: 'その他当事者'};
+
+      if (mode === 'en_ja'){
+        return parties[party]
+      }
+    }
   }
 });
 
 const app = new Vue({
   el: '#app',
   router,
+  vuetify: new Vuetify({
+    icons: {
+      iconfont: 'mdiSvg',
+    },
+  }),
+  // provide the store using the "store" option.
+  // this will inject the store instance to all child components.
+  store: notificationStore,
+  mounted(){
+    console.log('app mounted')
+  }
 });

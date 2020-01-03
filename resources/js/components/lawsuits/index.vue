@@ -28,26 +28,26 @@
         </thead>
         <tbody>
         <template v-for="(lawsuit, index) in lawsuits">
-          <tr class="d-flex" @click="redirectToLink(lawsuit.id)" :key="lawsuit.id">
+          <tr class="d-flex" @click="showLawsuit(lawsuit.id)" :key="lawsuit.id">
             <td scope="col" class="col col-3">{{ lawsuit.number }}</td>
             <td scope="col" class="col col-3">{{ lawsuit.name }}</td>
             <td scope="col" class="col col-3">{{ lawsuit.courts_departments }}</td>
-            <td scope="col" class="col col-3">{{ convertString(lawsuit.defendants) }}</td>
-            <td scope="col" class="col col-3">{{ convertString(lawsuit.defendant_representatives) }}</td>
-            <td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiffs) }}</td>
-            <td scope="col" class="col col-3">{{ convertString(lawsuit.plaintiff_representatives) }}</td>
+            <td scope="col" class="col col-3">{{ lawsuit.defendants | parseName }}</td>
+            <td scope="col" class="col col-3">{{ lawsuit.defendant_representatives | parseName }}</td>
+            <td scope="col" class="col col-3">{{ lawsuit.plaintiffs | parseName }}</td>
+            <td scope="col" class="col col-3">{{ lawsuit.plaintiff_representatives | parseName }}</td>
             <td scope="col" class="col col-3 d-flex pa-0 last-child-table" :class="{'unset-relative': isShowDelete}">
-              <div class="col-6"><div class="pl-3">{{ convertString(lawsuit.other_parties) }}</div></div>
+              <div class="col-6"><div class="">{{ lawsuit.other_parties | parseName }}</div></div>
               <v-spacer></v-spacer>
               <div class="col-6 text-right col-btn font-weight-600 text-size-20">
                 <v-btn :id="'lawsuit-sub-menu-' + lawsuit.id" icon @click="showSubmenu(index)" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
               </div>
               <v-list class="sub-menu" :class="{ 'actived': activeIndex === index}">
-                <v-list-item @click="renameLawsuit(lawsuit.id)" v-on:click.stop="">
-                  <v-list-item-title>名前を変更</v-list-item-title>
+                <v-list-item :href="'lawsuits/' + lawsuit.id + '/edit'" v-on:click.stop="">
+                  <v-list-item-title>事件を変更</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="deleteLawsuit(lawsuit.id)" v-on:click.stop="">
-                  <v-list-item-title>ファイルを削除</v-list-item-title>
+                  <v-list-item-title>事件を削除</v-list-item-title>
                 </v-list-item>
               </v-list>
             </td>
@@ -56,23 +56,17 @@
         </tbody>
       </table>
     </div>
-    <app-delete-item :dataType="'lawsuits'" v-on:cancelSubmit="isShowDelete = $event" v-if="isShowDelete" :data="dataReceived" />
+    <app-delete-item v-if="isShowDelete" dataType="lawsuits"
+                     v-on:cancelSubmit="isShowDelete = $event" :data="dataReceived"
+                     message="事件を削除してもよろしいですか" />
   </div>
 </template>
 
 <script>
-  /**
-   * Index: Clicks Outside an Element
-   */
   import ClickOutside from 'vue-click-outside';
+
   export default {
-    name: "Index",
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
-    },
+    name: "lawsuits-index",
     data() {
       return {
         activeIndex: undefined,
@@ -89,11 +83,12 @@
     },
     methods: {
       /**
-       * @function redirectToLink
-       * @description redirect to a link
+       * @function showLawsuit
+       * @description goto show lawsuit page
        */
-      redirectToLink(lawsuit_id) {
-        return window.location.href = 'lawsuits/' + lawsuit_id;
+      showLawsuit(lawsuit_id) {
+        console.log('goto show page');
+        location.href = 'lawsuits/' + lawsuit_id;
       },
 
       /**
@@ -107,25 +102,6 @@
         } else {
           this.activeIndex = undefined;
         }
-      },
-
-      /**
-       * @function convertString
-       * @description convert array to string
-       * @return string
-       */
-      convertString(arrays){
-        if(arrays.length > 0){
-          let values = arrays.map(value => { return value.name });
-          return values.join(', ');
-        } else {
-          return '-'
-        }
-
-      },
-
-      renameLawsuit(lawsuit_id){
-        return window.location.href = 'lawsuits/' + lawsuit_id + '/edit/';
       },
 
       /**
@@ -151,6 +127,24 @@
     },
     mounted() {
       console.log(this.dataReceived)
+    },
+    directives: {
+      /**
+       * ClickOutside: Clicks Outside an Element
+       */
+      ClickOutside
+    },
+    filters: {
+      /**
+       * @function parseName
+       * @description parse name in list Objects
+       * @return string
+       */
+      parseName(arrays) {
+        if (arrays.length <= 0) return '-';
+        arrays = arrays.map(value => {return value.name});
+        return arrays.join('、 ');
+      },
     }
   }
 </script>
