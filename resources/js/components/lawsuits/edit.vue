@@ -156,8 +156,8 @@
         axios.post('lawsuits/' + this.lawsuitId, formData)
           .then(res => {
             console.log(res.data);
-            // localStorage.setItem(res.data.message.status, res.data.message.content);
-            location.href = res.data.url;
+            this.$store.dispatch('create_notification', res.data.message);
+            // location.href = res.data.url;
           })
           .catch(err => {
             console.log(err.response.data);

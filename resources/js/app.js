@@ -1,21 +1,19 @@
 require('./bootstrap');
-
 window.Vue = require('vue');
 
 import Vue from 'vue'
+import notificationStore from './store/notification';
 
 /**
  * Vuetify
  */
 import Vuetify from 'vuetify'
-
 Vue.use(Vuetify);
-export default new Vuetify({
-  icons: {
-    iconfont: 'mdiSvg',
-  },
-})
 
+/**
+ * Component registration
+ * @see: https://vuejs.org/v2/guide/components-registration.html
+ */
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
@@ -129,5 +127,15 @@ Vue.mixin({
 
 const app = new Vue({
   el: '#app',
-
+  vuetify: new Vuetify({
+    icons: {
+      iconfont: 'mdiSvg',
+    },
+  }),
+  // provide the store using the "store" option.
+  // this will inject the store instance to all child components.
+  store: notificationStore,
+  mounted(){
+    console.log('app mounted')
+  }
 });

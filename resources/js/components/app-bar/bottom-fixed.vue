@@ -24,7 +24,7 @@
       >
         <v-btn
           value="favorites"
-          href="type-lawsuits"
+          :href="routeListTypeLawsuits"
           :class="{'v-btn--active': checkRoutes(['/type-lawsuits', '/lawsuits'])}"
         >
           <span>ファイル</span>
@@ -80,7 +80,8 @@
   export default {
     name: "BottomFixed",
     props: {
-      routeCreateLawsuit: { type: String, required: true, default: () => '' }
+      routeCreateLawsuit: { type: String, required: true, default: () => '' },
+      routeListTypeLawsuits: { type: String, required: true, default: () => '' }
     },
     directives: {
       /**

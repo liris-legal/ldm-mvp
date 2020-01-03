@@ -11,6 +11,7 @@
     >
       <v-icon>arrow_back_ios</v-icon>
     </v-btn>
+    <range-alerts v-if="notification" :notification="notification"/>
     <v-spacer />
     <v-btn
       v-click-outside="hidden"
@@ -41,13 +42,10 @@
 	 * @property {Boolean} displayMenu - Is to show/hidden Menu App-nav-top
 	 */
   import ClickOutside from 'vue-click-outside'
-	export default {
-    directives: {
-	    /**
-			 * ClickOutside: Clicks Outside an Element
-			 */
-      ClickOutside
-    },
+  import rangeAlerts from '../globals/vuetify-alerts'
+  import {mapState} from "vuex";
+
+  export default {
 	  props: {
       user: { type: Object, required: true, default: () => {} },
       route_logout: { type: String, required: true, default: () => '' }
@@ -57,6 +55,9 @@
         displayMenu: false
 			}
 		},
+    components: {
+      rangeAlerts
+    },
 		methods: {
 	    /**
 			 * @function logout
@@ -91,6 +92,15 @@
       checkRoute($url) {
         return window.location.pathname === $url;
       }
-		}
+		},
+    computed: {
+      ...mapState(['notification']),
+    },
+    directives: {
+      /**
+       * ClickOutside: Clicks Outside an Element
+       */
+      ClickOutside
+    },
   }
 </script>
