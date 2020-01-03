@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app" class="v-application">
-        <app-top-bar :user="{{Auth::user()}}"></app-top-bar>
+        <app-top-bar :user="{{Auth::user()}}" :route_logout="'{{ route('logout') }}'"></app-top-bar>
         <div class="clearfix"></div>
         @yield('content')
         <div class="clearfix"></div>

@@ -192,3 +192,9 @@
     filter: opacity(0.5);
 }
 @include mixin_notification;
+@mixin mixin_lawsuit_header() {
+    .lawsuit-header {
+        background-color: #d6d6d6;
+    }
+}
+@include mixin_lawsuit_header();

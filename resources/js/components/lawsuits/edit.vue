@@ -85,8 +85,8 @@
   export default {
     name: "lawsuit-edit",
       props: {
-        type_lawsuits: {required: true, type: Array, default: []},
-        lawsuit_id: {required: true, type: Number, default: 0},
+        typeLawsuits: {required: true, type: Array, default: []},
+        lawsuitId: {required: true, type: String, default: '0'},
       },
     data() {
       return {
@@ -103,7 +103,7 @@
        * @function
        * @description fetch lawsuit data from API
        */
-      axios.get('lawsuits/' + this.lawsuit_id)
+      axios.get('lawsuits/' + this.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
           this.lawsuit.plaintiffs = this.lawsuit.plaintiffs.length > 0 ? this.lawsuit.plaintiffs : this.plaintiffs;
@@ -138,7 +138,7 @@
         formData = this.convertObjectDataToArrayRequest(formData, 'other_parties');
         formData.append("_method", "PATCH");
 
-        axios.post('lawsuits/' + this.lawsuit_id, formData)
+        axios.post('lawsuits/' + this.lawsuitId, formData)
           .then(res => {
             console.log(res.data);
             // window.location.href = res.data.url;

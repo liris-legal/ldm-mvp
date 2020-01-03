@@ -46,10 +46,10 @@ class LawsuitsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Lawsuit $lawsuit
+     * @param  int  $lawsuitId
      * @return Response
      */
-    public function show(Lawsuit $lawsuit)
+    public function show($lawsuitId)
     {
         return view('content.lawsuits.show');
     }
