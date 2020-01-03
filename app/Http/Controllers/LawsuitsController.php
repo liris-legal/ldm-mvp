@@ -42,4 +42,15 @@ class LawsuitsController extends Controller
 
         return view('content.lawsuits.edit')->with(['typeLawsuits' => $typeLawsuits, 'lawsuitId' => $lawsuitId]);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $lawsuitId
+     * @return Response
+     */
+    public function show($lawsuitId)
+    {
+        return view('content.lawsuits.show');
+    }
 }

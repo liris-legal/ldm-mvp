@@ -26,12 +26,14 @@ Vue.component('type-lawsuits', require('./components/type-lawsuits/index.vue').d
 Vue.component('lawsuits-component', require('./components/lawsuits/index.vue').default);
 Vue.component('lawsuits-create', require('./components/lawsuits/create.vue').default);
 Vue.component('lawsuits-edit', require('./components/lawsuits/edit.vue').default);
+Vue.component('lawsuits-show', require('./components/lawsuits/show.vue').default);
 
 // component global
 Vue.component('app-thead', require('./components/globals/app-thead.vue').default);
 Vue.component('app-document-two-columns', require('./components/globals/app-document-two-columns.vue').default);
 Vue.component('app-type-lawsuit', require('./components/globals/app-type-lawsuit.vue').default);
 Vue.component('app-delete-item', require('./components/globals/delete-an-item.vue').default);
+Vue.component('lawsuit-header', require('./components/globals/lawsuit-header.vue').default);
 
 // Global Mixin defined
 Vue.mixin({
@@ -87,4 +89,5 @@ Vue.mixin({
 
 const app = new Vue({
   el: '#app',
+
 });

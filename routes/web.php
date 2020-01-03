@@ -15,7 +15,7 @@ Auth::routes();
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('type-lawsuits', 'TypeLawsuitsController');
-    Route::resource('lawsuits', 'LawsuitsController')->only(['index', 'create', 'edit']);
+    Route::resource('lawsuits', 'LawsuitsController')->only(['index', 'create', 'edit', 'show']);
 });
 
 Route::get('/viewer', function () {
