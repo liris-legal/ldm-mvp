@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\FileService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('FileService', function () {
+            return new FileService();
+        });
     }
 
     /**
