@@ -14,7 +14,8 @@
         "caouecs/laravel-lang": "~4.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.9",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "ext-intl": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -40,6 +41,9 @@
         }
     },
     "autoload": {
+        "files": [
+            "app/Http/Controllers/Helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/"
         },

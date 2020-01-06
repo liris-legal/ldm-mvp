@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid lawsuit-show">
-      <lawsuit-header :info="lawsuit" />
+      <lawsuit-header :lawsuit="lawsuit" />
       <v-row class="clearfix pr-5 pt-2">
           <v-col class="text-right">
               <v-btn
@@ -14,7 +14,7 @@
       <div class="claim">
         <v-row>
           <v-col class="col-12 header-content">
-            <h3 class="description">最近表示</h3>
+            <h3 class="description">主張書面</h3>
           </v-col>
         </v-row>
         <table class="table">
@@ -32,7 +32,7 @@
           </v-col>
         </v-row>
         <app-thead :thead="thead_evidence_document" />
-        <app-type-lawsuit :typeLawsuit="submitterDocument" />
+        <app-type-lawsuit v-for="submitter in submitters" :key="submitter.id" :typeLawsuit="submitter" />
       </div>
 
       <div class="other-documents">
@@ -51,10 +51,6 @@
     </div>
 </template>
 <script>
-  /**
-   * Index: Clicks Outside an Element
-   */
-  import ClickOutside from 'vue-click-outside';
   export default {
     data() {
       return {
@@ -66,25 +62,23 @@
         thead_evidence_document: [{ id: 1, name: 'フォルダ名', class: 'col-12'}],
         thead_other_documents: [{ id: 1, name: '書面名', class: 'col-12'}],
         lawsuit: {},
-        submitterDocument: {id: 1, name: '原告書面'}
+        submitters: [{id: 1, name: '原告書面'}, {id: 2, name: '被告書面'}]
 			}
     },
     created() {
-      let self = this;
-      axios.get('lawsuits/'+self.$route.params.lawsuitId)
-      .then(res => { return self.lawsuit = res.data.data})
+      axios.get('lawsuits/'+this.$route.params.lawsuitId)
+      .then(res => { return this.lawsuit = res.data.data})
       .catch(err => {console.log(err.response);
       });
     },
     methods: {
-      documentsOfSubmitter(submitter){
-        console.log('submiter: ', submitter);
-        console.log(this.lawsuit);
+      submitter(submitter){
+        console.log('submitter: ', submitter);
       }
     },
     mounted() {
-      let self = this;
-      this.documentsOfSubmitter(self.lawsuit.defentdants);
+      console.log('show lawsuit mounted');
+      // this.submitter(this.lawsuit.defendants);
     }
   }
 </script>

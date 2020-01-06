@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use App\Http\Resources\Document as DocumentResource;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $documents = Document::all();
+        $documents = Document::all()->map(function ($document) {
+            return new DocumentResource($document);
+        });
+
         return view('content.home', ['documents' => $documents]);
     }
 }

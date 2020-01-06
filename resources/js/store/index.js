@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-const notificationsStore = new Vuex.Store({
+const stores = new Vuex.Store({
   state: {
     notification: null
   },
@@ -28,4 +28,4 @@ const notificationsStore = new Vuex.Store({
   }
 });
 
-export default notificationsStore;
+export default stores;

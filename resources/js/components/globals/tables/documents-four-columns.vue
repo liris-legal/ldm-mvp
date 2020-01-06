@@ -18,7 +18,7 @@
         <v-list-item href="#">
           <v-list-item-title>名前を変更</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="deleteLawsuit(lawsuit.id)" v-on:click.stop="">
+        <v-list-item v-on:click.stop="">
           <v-list-item-title>ファイルを削除</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -58,20 +58,6 @@
        */
       redirectToLink() {
         // return window.location.href = '#';
-      },
-
-      /**
-       * @function convertString
-       * @description convert array to string
-       * @return string
-       */
-      convertString(arrays){
-        if(arrays.length > 0){
-          let values = arrays.map(value => { return value.name });
-          return values.join(', ');
-        } else {
-          return '-'
-        }
       },
 
       /**

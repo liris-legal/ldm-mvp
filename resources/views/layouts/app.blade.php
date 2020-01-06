@@ -30,7 +30,10 @@
         @yield('content')
         <div class="clearfix"></div>
         <app-bottom-bar :route-create-lawsuit="'{{route('lawsuits.create')}}'"
-                        :route-list-type-lawsuits="'{{route('type-lawsuits.index')}}'"></app-bottom-bar>
+                        :route-create-document="'{{route('documents.create', 0)}}'"
+                        :route-list-type-lawsuits="'{{route('type-lawsuits.index')}}'"
+        >
+        </app-bottom-bar>
     </div>
 </body>
 </html>
