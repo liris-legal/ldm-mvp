@@ -1,7 +1,7 @@
 <template>
   <tr v-ripple class="documents-four-columns d-flex pa-0" @click="redirectToLink(1)">
     <td scope="col" class="col col-4 pt-2 pb-2">
-      <div class="name">準備書面１</div>
+      <div class="name">lawsuit</div>
     </td>
     <td scope="col" class="col col-4 pt-2 pb-2">
       <div class="name">原告</div>
@@ -43,13 +43,7 @@
       return {
         isShowDelete: false,
         isShowSubmenu: false,
-        lawsuits: {}
       }
-    },
-    created() {
-      axios.get('lawsuits')
-        .then(res => {return this.lawsuits = res.data.data;})
-        .catch(error => {return error.response})
     },
     methods: {
       /**

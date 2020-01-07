@@ -14,7 +14,7 @@
       <div class="claim">
         <v-row>
           <v-col class="col-12 header-content">
-            <h3 class="description">主張書面</h3>
+            <h3 class="description">最近表示</h3>
           </v-col>
         </v-row>
         <table class="table">
@@ -32,7 +32,8 @@
           </v-col>
         </v-row>
         <app-thead :thead="thead_evidence_document" />
-        <app-type-lawsuit v-for="submitter in submitters" :key="submitter.id" :typeLawsuit="submitter" />
+        <app-type-lawsuit v-if="lawsuit.defendants" :typeLawsuit="documentsOfSubmitter(lawsuit.defendants, 'defendant')" />
+        <app-type-lawsuit v-if="lawsuit.plaintiffs" :typeLawsuit="documentsOfSubmitter(lawsuit.plaintiffs, 'plaintiff')" />
       </div>
 
       <div class="other-documents">
@@ -51,7 +52,17 @@
     </div>
 </template>
 <script>
+  /**
+   * Index: Clicks Outside an Element
+   */
+  import ClickOutside from 'vue-click-outside';
   export default {
+    directives: {
+      /**
+       * ClickOutside: Clicks Outside an Element
+       */
+      ClickOutside
+    },
     data() {
       return {
         thead_claim: [
@@ -62,23 +73,32 @@
         thead_evidence_document: [{ id: 1, name: 'フォルダ名', class: 'col-12'}],
         thead_other_documents: [{ id: 1, name: '書面名', class: 'col-12'}],
         lawsuit: {},
-        submitters: [{id: 1, name: '原告書面'}, {id: 2, name: '被告書面'}]
+        submitterDocument: {id: 1, name: '原告書面'}
 			}
     },
     created() {
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
-      .then(res => { return this.lawsuit = res.data.data})
+      .then(res => {return this.lawsuit = res.data.data;})
       .catch(err => {console.log(err.response);
       });
     },
     methods: {
-      submitter(submitter){
-        console.log('submitter: ', submitter);
+      /**
+			 * @function hidden
+			 * @description to hidden 作成 panel
+			 */
+      hidden() {
+				if(this.showAdd === true){
+          this.showAdd = false;
+          document.getElementById("btn-add-app").classList.remove('v-btn--active');
+				}
+      },
+
+      documentsOfSubmitter(array, valueCondition){
+        if(array !== undefined && array.length > 0) {
+          return array.find(item => { return item.submitter.description === valueCondition });
+        }
       }
     },
-    mounted() {
-      console.log('show lawsuit mounted');
-      // this.submitter(this.lawsuit.defendants);
-    }
   }
 </script>
