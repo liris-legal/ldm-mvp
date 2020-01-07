@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TypeDocument;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -24,7 +25,9 @@ class DocumentController extends Controller
      */
     public function create($lawsuitId)
     {
-        return view('content.documents.create', ['lawsuitId' => $lawsuitId]);
+        $typeDocuments = TypeDocument::all();
+
+        return view('content.documents.create', ['lawsuitId' => $lawsuitId, 'typeDocuments' => $typeDocuments]);
     }
 
     /**

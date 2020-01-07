@@ -16,6 +16,7 @@
               <v-select
                 v-model="document.submitter_id"
                 :items="submitters"
+                @change="onSelectSubmitter"
                 item-text="name"
                 item-value="id"
                 label="提出者"
@@ -29,7 +30,8 @@
             <v-col class="col-9 pa-0 input" id="document-type" >
               <v-select
                 v-model="document.type_document_id"
-                :items="type_documents"
+                :items="typeDocuments"
+                :disabled="disabled"
                 item-text="name"
                 item-value="id"
                 label="書面種類"
@@ -41,13 +43,13 @@
           <v-col cols="12" class="row form-control pa-2">
             <v-col class="col-3 pa-0 label"><label for="document-name" class="font-weight-600">書面名</label></v-col>
             <v-col class="col-9 pa-0 input">
-              <input id="document-name" type="text" class="input-form-group col-md-12">
+              <input v-model="document.name" id="document-name" type="text" class="input-form-group col-md-12">
             </v-col>
           </v-col>
-          <v-col cols="12" class="row form-control pa-2">
+          <v-col cols="12" class="row form-control pa-2" v-show="!disabled">
             <v-col class="col-3 pa-0 label"><label for="document-number" class="font-weight-600">書面番号</label></v-col>
             <v-col class="col-9 pa-0 input">
-              <input id="document-number" type="text" class="input-form-group col-md-12">
+              <input v-model="document.number"  id="document-number" type="text" class="input-form-group col-md-12">
             </v-col>
           </v-col>
           <v-col cols="12" class="row form-control pa-2">
@@ -93,11 +95,11 @@
     props: {
       storeRoute: { required: true, type: String, default: ''},
       lawsuitId: {required: true,  type: String, default: ''},
+      typeDocuments: {required: true,  type: Array, default: () => []},
     },
     data() {
       return {
         document: {
-          type_lawsuit_id: 1,
           number: '',
           name: '',
           type_document_id: 0,
@@ -110,12 +112,8 @@
           { id: 3, name: '裁判所' },
           { id: 4, name: 'その他' },
         ],
-        type_documents: [
-          { id: 1, name: '主張書面' },
-          { id: 2, name: '証拠書面' },
-          { id: 3, name: 'その他の書面' },
-        ],
         datePicker: false,
+        disabled: false,
         file: null,
         errors: []
       }
@@ -143,7 +141,7 @@
       },
       /**
        * postData is used to create document
-       * @return {object} contains a message status and redirect url
+       * @return {object}
        */
       postData() {
         /**
@@ -169,7 +167,8 @@
       },
 
       /**
-       * @function to format date YYYY-MM-DD
+       * @function formatDate
+       * @description to format date YYYY-MM-DD
        * @return string|null
        */
       formatDate (date) {
@@ -178,8 +177,21 @@
         const [year, month, day] = date.split('-');
         return `${year}-${month}-${day}`
       },
-    },
 
+      /**
+       * @function onSelectSubmitter
+       * @return string|null
+       */
+      onSelectSubmitter() {
+        console.log('selected: ' + this.document.submitter_id);
+        if (this.document.submitter_id === 3 || this.document.submitter_id === 4 ){
+          this.document.type_document_id = 3;
+          this.disabled = true;
+        }else{
+          this.disabled = false;
+        }
+      },
+    },
     mounted() {
       console.log('create document mounted')
       // this.civil_lawsuits = this.type_lawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];
