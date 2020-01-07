@@ -1,7 +1,90 @@
 <template>
-  <h1>
-    create document
-  </h1>
+  <div class="container-fluid lawsuit-create clearfix">
+    <v-row>
+      <v-col class="col-12 header-content">
+        <h2 class="title-name text-size-30">ファイルをアップロード</h2>
+        <h3 class="description"/>
+      </v-col>
+    </v-row>
+    <v-form class="form-group clearfix" method="POST">
+      <v-app>
+      <v-container class="form-group-content">
+        <v-row class="ma-0">
+          <v-col cols="12" class="row form-control pa-2">
+            <v-col class="col-3 pa-0 label"><label for="submitter" class="font-weight-600">提出者</label></v-col>
+            <v-col class="col-9 pa-0 input" id="submitter">
+              <v-select
+                v-model="document.submitter_id"
+                :items="submitters"
+                item-text="name"
+                item-value="id"
+                label="提出者"
+                single-line
+                outlined
+              />
+            </v-col>
+          </v-col>
+          <v-col cols="12" class="row form-control pa-2">
+            <v-col class="col-3 pa-0 label"><label for="document-type" class="font-weight-600">書面種類</label></v-col>
+            <v-col class="col-9 pa-0 input" id="document-type" >
+              <v-select
+                v-model="document.type_document_id"
+                :items="type_documents"
+                item-text="name"
+                item-value="id"
+                label="書面種類"
+                single-line
+                outlined
+              />
+            </v-col>
+          </v-col>
+          <v-col cols="12" class="row form-control pa-2">
+            <v-col class="col-3 pa-0 label"><label for="document-name" class="font-weight-600">書面名</label></v-col>
+            <v-col class="col-9 pa-0 input">
+              <input id="document-name" type="text" class="input-form-group col-md-12">
+            </v-col>
+          </v-col>
+          <v-col cols="12" class="row form-control pa-2">
+            <v-col class="col-3 pa-0 label"><label for="document-number" class="font-weight-600">書面番号</label></v-col>
+            <v-col class="col-9 pa-0 input">
+              <input id="document-number" type="text" class="input-form-group col-md-12">
+            </v-col>
+          </v-col>
+          <v-col cols="12" class="row form-control pa-2">
+            <v-col class="col-3 pa-0 label"><label for="date" class="font-weight-600">提出日</label></v-col>
+            <v-col class="col-9 pa-0 input" id="date">
+              <v-menu
+                ref="datePicker"
+                v-model="datePicker"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="document.created_at"
+                    append-icon="event"
+                    v-on="on"
+                    outlined
+                  />
+                </template>
+                <v-date-picker v-model="document.created_at" locale="ja-jp" :first-day-of-week="1" no-title @input="datePicker = false" />
+              </v-menu>
+            </v-col>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="text-center">
+            <input type="file" id="file-upload" style="display:none" @change="onFileChange">
+            <v-btn v-ripple class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600" @click.native="openFileDialog">アップロード</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+      </v-app>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -11,9 +94,105 @@
       storeRoute: { required: true, type: String, default: ''},
       lawsuitId: {required: true,  type: String, default: ''},
     },
+    data() {
+      return {
+        document: {
+          type_lawsuit_id: 1,
+          number: '',
+          name: '',
+          type_document_id: 0,
+          submitter_id: 0,
+          created_at: new Date().toISOString().substr(0, 10),
+        },
+        submitters: [
+          { id: 1, name: '原告' },
+          { id: 2, name: '被告' },
+          { id: 3, name: '裁判所' },
+          { id: 4, name: 'その他' },
+        ],
+        type_documents: [
+          { id: 1, name: '主張書面' },
+          { id: 2, name: '証拠書面' },
+          { id: 3, name: 'その他の書面' },
+        ],
+        datePicker: false,
+        file: null,
+        errors: []
+      }
+    },
+    methods: {
+      /**
+       * @function openFileDialog
+       * @description to open dialog select file
+       */
+      openFileDialog() {
+        document.getElementById('file-upload').click();
+      },
+
+      /**
+       * @function onFileChange
+       * @description to handle file selected and auto send submit request to create document
+       */
+      onFileChange(e) {
+        var self = this;
+        var files = e.target.files || e.dataTransfer.files;
+        if(files.length > 0){
+          self.file = files[0];
+        }
+        this.postData();
+      },
+      /**
+       * postData is used to create document
+       * @return {object} contains a message status and redirect url
+       */
+      postData() {
+        /**
+         * Create a new formData to store document
+         * */
+        let formData = new FormData();
+        formData.append('lawsuit_id', this.lawsuitId);
+        formData.append('number', this.document.number);
+        formData.append('name', this.document.name);
+        formData.append('file', this.file);
+        formData.append('type_document_id', this.document.type_document_id);
+        formData.append('submitter_id', this.document.submitter_id);
+
+        axios.post(this.storeRoute, formData)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            if(err.response.status === 422){
+              this.errors = err.response.data.errors;
+            }
+          });
+      },
+
+      /**
+       * @function to format date YYYY-MM-DD
+       * @return string|null
+       */
+      formatDate (date) {
+        if (!date) return null;
+
+        const [year, month, day] = date.split('-');
+        return `${year}-${month}-${day}`
+      },
+    },
+
+    mounted() {
+      console.log('create document mounted')
+      // this.civil_lawsuits = this.type_lawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];
+      // this.lawsuit.type_lawsuit_id = this.civil_lawsuits.id;
+    }
   }
 </script>
 
 <style scoped>
-
+  .form-control .input-form-group{
+    min-height: 56px;
+  }
+  .v-text-field__details {
+    display: none !important;
+  }
 </style>
