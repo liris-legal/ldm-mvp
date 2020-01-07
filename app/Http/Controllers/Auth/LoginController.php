@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Cognito\CognitoClient;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;

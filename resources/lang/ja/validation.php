@@ -94,7 +94,8 @@ return [
     'numeric'               => ':attributeには、数字を指定してください。',
     'password'              => 'パスワードが正しくありません。',
     'present'               => ':attributeが存在している必要があります。',
-    'regex'                 => ':attributeには、有効な正規表現を指定してください。',
+//    'regex'                 => ':attributeには、有効な正規表現を指定してください。',
+    'regex'                 => ':attributeの形式が無効です。',
     'required'              => ':attributeは、必ず指定してください。',
     'required_if'           => ':otherが:valueの場合、:attributeを指定してください。',
     'required_unless'       => ':otherが:values以外の場合、:attributeを指定してください。',
@@ -147,4 +148,6 @@ return [
 
     'attributes' => [],
     'cognito_user_unique' => '指定されたメールアドレスのユーザーは既に存在します。',
+    'uppercase' => ':attributeは、大文字でなければなりません。',
+    'lowercase' => ':attributeは、小文字でなければなりません。',
 ];

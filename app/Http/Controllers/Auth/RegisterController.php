@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Rules\Lowercase;
+use App\Rules\Uppercase;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 //use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -27,6 +30,8 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    const INVALID_PASSWORD         = 'InvalidPasswordException';
+
     /**
      * Where to redirect users after registration.
      *
@@ -34,6 +39,11 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
+    /**
+     * AuthManager instance
+     *
+     * @var Object
+     */
     protected $authManager;
 
     /**
@@ -48,7 +58,9 @@ class RegisterController extends Controller
     }
 
     /**
-     * register
+     * Register
+     * @param Request $request
+     * @return RedirectResponse|string
      */
     public function register(Request $request)
     {
@@ -56,14 +68,23 @@ class RegisterController extends Controller
 
         $this->validator($data)->validate();
 
-        // Cognito側の新規登録
-        $username = $this->authManager->register(
-            $data['email'],
-            $data['password'],
-            [
-                'email' => $data['email'],
-            ]
-        );
+        try {
+            // Cognito側の新規登録
+            $username = $this->authManager->register(
+                $data['email'],
+                $data['password'],
+                [
+                    'email' => $data['email'],
+                ]
+            );
+        } catch (CognitoIdentityProviderException $exception) {
+            if ($exception->getAwsErrorCode() === self::INVALID_PASSWORD) {
+                dd($exception);
+                return $exception->getAwsErrorMessage();
+            }
+
+            throw $exception;
+        }
 
         // Laravel側の新規登録
         $user = $this->create($data, $username);
@@ -74,14 +95,16 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'cognito_user_unique'],
-            'password' => ['required', 'string', 'min:5', 'confirmed'],
+            'email' => ['required', 'email', 'max:255', 'unique:users', 'cognito_user_unique'],
+            'password' => ['required', 'string', 'min:8', 'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,35}.+$/i'],
+            'password_confirmation' => 'required|min:8|max:32'
         ]);
     }
 
@@ -90,12 +113,12 @@ class RegisterController extends Controller
      *
      * @param array $data
      * @param $username
-     * @return \App\Models\User
+     * @return User
      */
     protected function create(array $data, $username)
     {
         return User::create([
-            'cognito_username' =>  $username,
+            'cognito_username' => $username,
             'email' => $data['email'],
         ]);
     }
