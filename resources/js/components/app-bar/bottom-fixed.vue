@@ -12,7 +12,7 @@
         <v-btn
           value="recent"
           href="/"
-          :class="{'v-btn--active': checkRoutes(['/'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['/'])}"
         >
           <span>ホーム</span>
           <v-icon>home</v-icon>
@@ -25,7 +25,7 @@
         <v-btn
           value="favorites"
           :href="routeListTypeLawsuits"
-          :class="{'v-btn--active': checkRoutes(['typeLawsuitsIndex', 'lawsuitsIndex', 'lawsuitsShow'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['typeLawsuitsIndex', 'lawsuitsIndex', 'lawsuitsShow'])}"
         >
           <span>ファイル</span>
           <v-icon>folder_open</v-icon>
@@ -40,7 +40,7 @@
           v-click-outside="hidden"
           value="nearby"
           @click="showAdd = !showAdd"
-          :class="{'v-btn--active': checkRoutes(['lawsuitsCreate'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['lawsuitsCreate'])}"
         >
           <span>作成</span>
           <v-icon>add</v-icon>
@@ -102,7 +102,7 @@
        * @description Check route and active class when click on url
        *
        * @param {Array} $array - Is a array has many paths
-       * @return boolean
+       * @return string
        */
       checkRoutes($array) {
         return $array.find( value => this.$route.name === value );
