@@ -21,6 +21,7 @@ class SubmitterSeeder extends Seeder
             [ '被告', 'defendant', $time],
             [ '被告代理人', 'defendant_representative', $time],
             [ 'その他', 'other_party', $time],
+            [ '裁判所', 'court', $time],
         ];
         foreach ($rows as $row) {
             DB::table('submitters')->insert([

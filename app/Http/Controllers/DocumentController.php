@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Submitter;
 use App\Models\TypeDocument;
 use Illuminate\Http\Request;
 
@@ -26,8 +27,13 @@ class DocumentController extends Controller
     public function create($lawsuitId)
     {
         $typeDocuments = TypeDocument::all();
+        $submitters = Submitter::all();
 
-        return view('content.documents.create', ['lawsuitId' => $lawsuitId, 'typeDocuments' => $typeDocuments]);
+        return view('content.documents.create', [
+            'lawsuitId' => $lawsuitId,
+            'typeDocuments' => $typeDocuments,
+            'submitters' => $submitters
+        ]);
     }
 
     /**

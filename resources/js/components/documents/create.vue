@@ -11,6 +11,7 @@
     <v-form
       class="form-group clearfix"
       method="POST"
+      enctype="multipart/form-data"
     >
       <v-app>
         <v-container class="form-group-content">
@@ -190,9 +191,9 @@
         },
         submitters: [
           { id: 1, name: '原告' },
-          { id: 2, name: '被告' },
-          { id: 3, name: '裁判所' },
-          { id: 4, name: 'その他' },
+          { id: 3, name: '被告' },
+          { id: 6, name: '裁判所' },
+          { id: 5, name: 'その他' },
         ],
         datePicker: false,
         disabled: false,

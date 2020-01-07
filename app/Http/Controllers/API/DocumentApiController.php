@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class DocumentApiController extends Controller
 {
@@ -25,7 +26,11 @@ class DocumentApiController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $upload = $request->file('file');
+        $fileName = $upload->getClientOriginalName();
+        $s3 = \Storage::disk('s3');
+        $filePath = 'uploads/documents/' . $fileName;
+        $s3->put($filePath, file_get_contents($upload), 'public');
     }
 
     /**
