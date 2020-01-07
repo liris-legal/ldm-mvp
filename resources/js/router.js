@@ -4,6 +4,7 @@
  * `Vue.extend()`, or just a component options object.
  *
  */
+import Index from './components/home.vue';
 import TypeLawsuitsIndex from './components/type-lawsuits/index.vue';
 import LawsuitsIndex from './components/lawsuits/index.vue';
 import LawsuitsShow from './components/lawsuits/show.vue';
@@ -12,6 +13,7 @@ import LawsuitsEdit from './components/lawsuits/edit.vue';
 import DocumentsCreate from './components/documents/create.vue';
 
 export const router = [
+  { path: '/', name:'index', component: Index },
   { path: '/type-lawsuits', name:'typeLawsuitsIndex', component: TypeLawsuitsIndex },
   { path: '/lawsuits', name:'lawsuitsIndex', component: LawsuitsIndex },
   { path: '/lawsuits/create', name:'lawsuitsCreate', component: LawsuitsCreate },

@@ -12,7 +12,7 @@
         <v-btn
           value="recent"
           href="/"
-          :class="{'v-btn--active': $route.name === checkRoutes(['/'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['index'])}"
         >
           <span>ホーム</span>
           <v-icon>home</v-icon>
