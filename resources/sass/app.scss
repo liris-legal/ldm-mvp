@@ -13,6 +13,10 @@ $body-font-family: "Noto Sans JP", sans-serif !important;
     display: block;
     height: 100vh;
 }
+// login/register
+.invalid-feedback{
+    font-size: 14px;
+}
 .v-application{
     background-color: $color___background;
     .login, .register{

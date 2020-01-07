@@ -146,5 +146,8 @@ return [
     */
 
     'attributes' => [],
-    'cognito_user_unique' => '指定されたメールアドレスのユーザーは既に存在します',
+    'cognito_user_unique' => 'The user with the specified email address already exists.',
+    'uppercase' => 'The :attribute must be uppercase.',
+    'lowercase' => 'The :attribute must be lowercase.',
+
 ];
