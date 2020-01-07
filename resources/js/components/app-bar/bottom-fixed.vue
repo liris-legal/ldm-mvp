@@ -25,7 +25,7 @@
         <v-btn
           value="favorites"
           :href="routeListTypeLawsuits"
-          :class="{'v-btn--active': checkRoutes(['/type-lawsuits', '/lawsuits'])}"
+          :class="{'v-btn--active': checkRoutes(['typeLawsuitsIndex', 'lawsuitsIndex', 'lawsuitsShow'])}"
         >
           <span>ファイル</span>
           <v-icon>folder_open</v-icon>
@@ -40,7 +40,7 @@
           v-click-outside="hidden"
           value="nearby"
           @click="showAdd = !showAdd"
-          :class="{'v-btn--active': checkRoutes(['/lawsuits/create'])}"
+          :class="{'v-btn--active': checkRoutes(['lawsuitsCreate'])}"
         >
           <span>作成</span>
           <v-icon>add</v-icon>
@@ -105,7 +105,7 @@
        * @return boolean
        */
       checkRoutes($array) {
-        return $array.find( value => window.location.pathname === value );
+        return $array.find( value => this.$route.name === value );
       },
 
       /**
@@ -116,9 +116,6 @@
         const routeCreateDocument = this.routeCreateDocument.replace('0', this.$route.params.lawsuitId);
         return this.$route.name === 'lawsuitsShow' ? routeCreateDocument : '#';
       }
-		},
-    mounted() {
-      // console.log('bottom mounted')
-    }
+		}
   }
 </script>
