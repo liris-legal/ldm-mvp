@@ -22,7 +22,6 @@ class Lawsuit extends JsonResource
      */
     public function toArray($request)
     {
-        setlocale(LC_TIME, 'ja_JP.utf8');
         $format = '%EC%Ey年（ワ）';
 
         return [
