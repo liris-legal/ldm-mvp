@@ -12,7 +12,10 @@
     >
       <v-icon>arrow_back_ios</v-icon>
     </v-btn>
-    <range-alerts v-if="notification" :notification="notification"/>
+    <range-alerts
+      v-if="notification"
+      :notification="notification"
+    />
     <v-spacer />
     <v-btn
       v-click-outside="hidden"
@@ -47,17 +50,26 @@
   import {mapState} from "vuex";
 
   export default {
+    directives: {
+      /**
+       * ClickOutside: Clicks Outside an Element
+       */
+      ClickOutside
+    },
+    components: {
+      rangeAlerts
+    },
 	  props: {
       user: { type: Object, required: true, default: () => {} },
-      route_logout: { type: String, required: true, default: () => '' }
+      routeLogout: { type: String, required: true, default: () => '' }
 		},
 	  data() {
 	    return {
         displayMenu: false
 			}
-		},
-    components: {
-      rangeAlerts
+    },
+    computed: {
+      ...mapState(['notification']),
     },
 		methods: {
 	    /**
@@ -65,7 +77,7 @@
 			 * @description user logout.
 			 */
 	    logout() {
-				axios({method: 'post', url: this.route_logout})
+				axios({method: 'post', url: this.routeLogout})
 				.then( res => {
           console.log(res);
           // this.$store.dispatch('create_notification', res.data.message);
@@ -92,15 +104,6 @@
       checkRoute($url) {
         return window.location.pathname === $url;
       }
-		},
-    computed: {
-      ...mapState(['notification']),
-    },
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
-    },
+		}
   }
 </script>

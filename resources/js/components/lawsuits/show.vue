@@ -1,55 +1,68 @@
 <template>
-    <div class="container-fluid lawsuit-show">
-      <lawsuit-header :lawsuit="lawsuit" />
-      <v-row class="clearfix pr-5 pt-2">
-          <v-col class="text-right">
-              <v-btn
-              v-ripple
-              class="mr-0-auto btn-primary pa-3 height-auto text-size-18 font-weight-600">
-              All View
-              </v-btn>
-          </v-col>
+  <div class="container-fluid lawsuit-show">
+    <lawsuit-header :lawsuit="lawsuit" />
+    <v-row class="clearfix pr-5 pt-2">
+      <v-col class="text-right">
+        <v-btn
+          v-ripple
+          class="mr-0-auto btn-primary pa-3 height-auto text-size-18 font-weight-600"
+        >
+          All View
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <div class="claim">
+      <v-row>
+        <v-col class="col-12 header-content">
+          <h3 class="description">
+            最近表示
+          </h3>
+        </v-col>
       </v-row>
-
-      <div class="claim">
-        <v-row>
-          <v-col class="col-12 header-content">
-            <h3 class="description">最近表示</h3>
-          </v-col>
-        </v-row>
-        <table class="table">
-          <thead-columns :thead="thead_claim" />
-          <tbody>
-            <documents-four-columns />
-          </tbody>
-        </table>
-      </div>
-
-      <div class="evidence-document">
-        <v-row>
-          <v-col class="col-12 header-content">
-            <h3 class="description">証拠書面</h3>
-          </v-col>
-        </v-row>
-        <app-thead :thead="thead_evidence_document" />
-        <app-type-lawsuit v-if="lawsuit.defendants" :typeLawsuit="documentsOfSubmitter(lawsuit.defendants, 'defendant')" />
-        <app-type-lawsuit v-if="lawsuit.plaintiffs" :typeLawsuit="documentsOfSubmitter(lawsuit.plaintiffs, 'plaintiff')" />
-      </div>
-
-      <div class="other-documents">
-        <v-row>
-          <v-col class="col-12 header-content">
-            <h3 class="description">その他の書面</h3>
-          </v-col>
-        </v-row>
-        <table class="table">
-          <thead-columns :thead="thead_claim" />
-          <tbody>
-            <documents-four-columns />
-          </tbody>
-        </table>
-      </div>
+      <table class="table">
+        <thead-columns :thead="thead_claim" />
+        <tbody>
+          <documents-four-columns />
+        </tbody>
+      </table>
     </div>
+
+    <div class="evidence-document">
+      <v-row>
+        <v-col class="col-12 header-content">
+          <h3 class="description">
+            証拠書面
+          </h3>
+        </v-col>
+      </v-row>
+      <app-thead :thead="thead_evidence_document" />
+      <app-type-lawsuit
+        v-if="lawsuit.defendants"
+        :type-lawsuit="documentsOfSubmitter(lawsuit.defendants, 'defendant')"
+      />
+      <app-type-lawsuit
+        v-if="lawsuit.plaintiffs"
+        :type-lawsuit="documentsOfSubmitter(lawsuit.plaintiffs, 'plaintiff')"
+      />
+    </div>
+
+    <div class="other-documents">
+      <v-row>
+        <v-col class="col-12 header-content">
+          <h3 class="description">
+            その他の書面
+          </h3>
+        </v-col>
+      </v-row>
+      <table class="table">
+        <thead-columns :thead="thead_claim" />
+        <tbody>
+          <documents-four-columns />
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 <script>
   /**
@@ -82,6 +95,9 @@
       .catch(err => {console.log(err.response);
       });
     },
+    mounted() {
+      console.log(this.lawsuit);
+    },
     methods: {
       /**
 			 * @function hidden
@@ -99,10 +115,6 @@
           return array.find(item => { return item.submitter.description === valueCondition });
         }
       }
-    },
-    mounted() {
-      console.log(this.lawsuit);
-
     }
   }
 </script>

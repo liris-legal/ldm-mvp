@@ -1,20 +1,34 @@
 <template>
-	<div class="mixin-notification">
-		<div class="notification-danger">
-			<div class="notification-content">
-				<div class="label-delete text-size-20">削除</div>
-				<div class="text-size-18">{{ message }}</div>
-			</div>
-			<div class="row button-notification label-size-15">
-				<div class="col-6 text-center button-content button-left">
-					<button class="btn btn-success full-width cancel" @click="handleCancelSubmit">キャンセル</button>
-				</div>
-				<div class="col-6 text-center button-content button-right">
-					<button class="btn btn-danger full-width accept" @click="handleDeleteSubmit">削除</button>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="mixin-notification">
+    <div class="notification-danger">
+      <div class="notification-content">
+        <div class="label-delete text-size-20">
+          削除
+        </div>
+        <div class="text-size-18">
+          {{ message }}
+        </div>
+      </div>
+      <div class="row button-notification label-size-15">
+        <div class="col-6 text-center button-content button-left">
+          <button
+            class="btn btn-success full-width cancel"
+            @click="handleCancelSubmit"
+          >
+            キャンセル
+          </button>
+        </div>
+        <div class="col-6 text-center button-content button-right">
+          <button
+            class="btn btn-danger full-width accept"
+            @click="handleDeleteSubmit"
+          >
+            削除
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

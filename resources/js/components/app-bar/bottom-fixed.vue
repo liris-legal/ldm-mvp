@@ -39,8 +39,8 @@
           id="btn-add-app"
           v-click-outside="hidden"
           value="nearby"
-          @click="showAdd = !showAdd"
           :class="{'v-btn--active': $route.name === checkRoutes(['lawsuitsCreate'])}"
+          @click="showAdd = !showAdd"
         >
           <span>作成</span>
           <v-icon>add</v-icon>
@@ -69,16 +69,16 @@
 	 */
   export default {
     name: "BottomFixed",
-    props: {
-      routeCreateLawsuit: { type: String, required: true, default: () => '' },
-      routeListTypeLawsuits: { type: String, required: true, default: () => '' },
-      routeCreateDocument: { type: String, required: true, default: () => '' },
-    },
     directives: {
       /**
        * ClickOutside: Clicks Outside an Element
        */
       ClickOutside
+    },
+    props: {
+      routeCreateLawsuit: { type: String, required: true, default: () => '' },
+      routeListTypeLawsuits: { type: String, required: true, default: () => '' },
+      routeCreateDocument: { type: String, required: true, default: () => '' },
     },
     data() {
       return {

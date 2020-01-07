@@ -4,7 +4,10 @@
       :href="routeLawsuitsIndex"
       class="folder-link"
     >
-      <v-row v-ripple class="ma-0">
+      <v-row
+        v-ripple
+        class="ma-0"
+      >
         <v-col class="col-12 d-flex">
           <div class="name font-weight-600">{{ displayName }}</div>
           <v-spacer />

@@ -2,14 +2,18 @@
   <div class="range-alert">
     <div class="col-5">
       <!-- dynamic component -->
-      <transition name="fade" mode="out-in" appear>
+      <transition
+        name="fade"
+        mode="out-in"
+        appear
+      >
         <v-alert
           v-if="notification"
           dismissible
           :value="true"
           :type="notification.type"
         >
-          {{notification.message}}
+          {{ notification.message }}
         </v-alert>
       </transition>
     </div>
@@ -18,7 +22,7 @@
 
 <script>
   export default {
-    name: "range-alerts",
+    name: "RangeAlerts",
     props: {
       notification: { type: Object, required: true, default: () => {} },
     },
@@ -27,6 +31,10 @@
         type: 'true',
       }
     },
+    mounted() {
+      console.log('notification mounted');
+      setTimeout(this.cleanNotification, 5000)
+    },
     methods: {
       cleanNotification(){
         if (this.notification) {
@@ -34,10 +42,6 @@
           console.log('removed notification')
         }
       }
-    },
-    mounted() {
-      console.log('notification mounted');
-      setTimeout(this.cleanNotification, 5000)
     }
   }
 </script>

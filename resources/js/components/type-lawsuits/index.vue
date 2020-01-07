@@ -13,7 +13,7 @@
     <app-type-lawsuit
       v-for="type_lawsuit in typeLawsuits"
       :key="type_lawsuit.id"
-      :typeLawsuit="type_lawsuit"
+      :type-lawsuit="type_lawsuit"
       :route-lawsuits-index="routeLawsuitsIndex"
     />
   </div>
@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    name: "list-type-lawsuits",
+    name: "ListTypeLawsuits",
 		props: {
       typeLawsuits: {type: Array, required: true, default: () => []},
       routeLawsuitsIndex: {type: String, required: true, default: () => ''}
