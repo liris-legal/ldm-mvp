@@ -100,5 +100,9 @@
         }
       }
     },
+    mounted() {
+      console.log(this.lawsuit);
+
+    }
   }
 </script>
