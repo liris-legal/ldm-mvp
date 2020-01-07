@@ -1,18 +1,18 @@
 <template>
-  <div class="container-fluid lawsuit-create clearfix">
+  <div class="container-fluid document-create clearfix">
     <v-row>
       <v-col class="col-12 header-content">
         <h2 class="title-name text-size-30">
           ファイルをアップロード
         </h2>
-        <h3 class="description" />
+        <h3 class="description"/>
       </v-col>
     </v-row>
-    <v-form
-      class="form-group clearfix"
-      method="POST"
-    >
-      <v-app>
+    <v-app>
+      <v-form
+        class="form-group clearfix"
+        method="POST"
+      >
         <v-container class="form-group-content">
           <v-row class="ma-0">
             <v-col
@@ -131,14 +131,16 @@
                 >
                   <template v-slot:activator="{ on }">
                     <v-text-field
-                      v-model="document.created_at"
+                      class="selector"
+                      v-model="dateFormatted"
+                      @blur="date = parseDate(dateFormatted)"
                       append-icon="event"
                       outlined
                       v-on="on"
                     />
                   </template>
                   <v-date-picker
-                    v-model="document.created_at"
+                    v-model="date"
                     locale="ja-jp"
                     :first-day-of-week="1"
                     no-title
@@ -166,8 +168,8 @@
             </v-col>
           </v-row>
         </v-container>
-      </v-app>
-    </v-form>
+      </v-form>
+    </v-app>
   </div>
 </template>
 
@@ -186,7 +188,6 @@
           name: '',
           type_document_id: 0,
           submitter_id: 0,
-          created_at: new Date().toISOString().substr(0, 10),
         },
         submitters: [
           { id: 1, name: '原告' },
@@ -194,6 +195,8 @@
           { id: 3, name: '裁判所' },
           { id: 4, name: 'その他' },
         ],
+        date: new Date().toISOString().substr(0, 10),
+        dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
         datePicker: false,
         disabled: false,
         file: null,
@@ -219,7 +222,7 @@
       onFileChange(e) {
         var self = this;
         var files = e.target.files || e.dataTransfer.files;
-        if(files.length > 0){
+        if (files.length > 0) {
           self.file = files[0];
         }
         this.postData();
@@ -239,13 +242,14 @@
         formData.append('file', this.file);
         formData.append('type_document_id', this.document.type_document_id);
         formData.append('submitter_id', this.document.submitter_id);
+        formData.append('created_at', this.date);
 
         axios.post(this.storeRoute, formData)
           .then(res => {
             console.log(res);
           })
           .catch(err => {
-            if(err.response.status === 422){
+            if (err.response.status === 422) {
               this.errors = err.response.data.errors;
             }
           });
@@ -253,38 +257,62 @@
 
       /**
        * @function formatDate
-       * @description to format date YYYY-MM-DD
+       * @description to format japanese date YYYY年MM月DD日
        * @return string|null
        */
-      formatDate (date) {
+      formatDate(date) {
         if (!date) return null;
 
         const [year, month, day] = date.split('-');
-        return `${year}-${month}-${day}`
+        return `${year}年${month}月${day}日`
       },
+      /**
+       * @function parseDate
+       * @description format japanese date YYYY年MM月DD日 to ISO Date YYYY-MM-DD
+       * @return string|null
+       */
+      parseDate (date) {
+        if (!date) return null;
 
+        const year = date.split('年')[0];
+
+        date = date.replace(year+'年', '');
+        const month = date.split('月')[0];
+
+        date = date.replace(month+'月', '');
+        const day = date.split('日')[0];
+
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+      },
       /**
        * @function onSelectSubmitter
        * @return string|null
        */
       onSelectSubmitter() {
         console.log('selected: ' + this.document.submitter_id);
-        if (this.document.submitter_id === 3 || this.document.submitter_id === 4 ){
+        if (this.document.submitter_id === 3 || this.document.submitter_id === 4) {
           this.document.type_document_id = 3;
           this.disabled = true;
-        }else{
+        } else {
           this.disabled = false;
         }
       },
-    }
+    },
+    computed: {
+      computedDateFormatted () {
+        return this.formatDate(this.date)
+      },
+    },
+    watch: {
+      date (val) {
+        this.dateFormatted = this.formatDate(this.date)
+      },
+    },
   }
 </script>
 
 <style scoped>
-  .form-control .input-form-group{
+  .form-control .input-form-group {
     min-height: 56px;
-  }
-  .v-text-field__details {
-    display: none !important;
   }
 </style>
