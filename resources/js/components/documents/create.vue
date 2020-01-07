@@ -2,88 +2,170 @@
   <div class="container-fluid lawsuit-create clearfix">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-30">ファイルをアップロード</h2>
-        <h3 class="description"/>
+        <h2 class="title-name text-size-30">
+          ファイルをアップロード
+        </h2>
+        <h3 class="description" />
       </v-col>
     </v-row>
-    <v-form class="form-group clearfix" method="POST">
+    <v-form
+      class="form-group clearfix"
+      method="POST"
+    >
       <v-app>
-      <v-container class="form-group-content">
-        <v-row class="ma-0">
-          <v-col cols="12" class="row form-control pa-2">
-            <v-col class="col-3 pa-0 label"><label for="submitter" class="font-weight-600">提出者</label></v-col>
-            <v-col class="col-9 pa-0 input" id="submitter">
-              <v-select
-                v-model="document.submitter_id"
-                :items="submitters"
-                @change="onSelectSubmitter"
-                item-text="name"
-                item-value="id"
-                label="提出者"
-                single-line
-                outlined
-              />
-            </v-col>
-          </v-col>
-          <v-col cols="12" class="row form-control pa-2">
-            <v-col class="col-3 pa-0 label"><label for="document-type" class="font-weight-600">書面種類</label></v-col>
-            <v-col class="col-9 pa-0 input" id="document-type" >
-              <v-select
-                v-model="document.type_document_id"
-                :items="typeDocuments"
-                :disabled="disabled"
-                item-text="name"
-                item-value="id"
-                label="書面種類"
-                single-line
-                outlined
-              />
-            </v-col>
-          </v-col>
-          <v-col cols="12" class="row form-control pa-2">
-            <v-col class="col-3 pa-0 label"><label for="document-name" class="font-weight-600">書面名</label></v-col>
-            <v-col class="col-9 pa-0 input">
-              <input v-model="document.name" id="document-name" type="text" class="input-form-group col-md-12">
-            </v-col>
-          </v-col>
-          <v-col cols="12" class="row form-control pa-2" v-show="!disabled">
-            <v-col class="col-3 pa-0 label"><label for="document-number" class="font-weight-600">書面番号</label></v-col>
-            <v-col class="col-9 pa-0 input">
-              <input v-model="document.number"  id="document-number" type="text" class="input-form-group col-md-12">
-            </v-col>
-          </v-col>
-          <v-col cols="12" class="row form-control pa-2">
-            <v-col class="col-3 pa-0 label"><label for="date" class="font-weight-600">提出日</label></v-col>
-            <v-col class="col-9 pa-0 input" id="date">
-              <v-menu
-                ref="datePicker"
-                v-model="datePicker"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
+        <v-container class="form-group-content">
+          <v-row class="ma-0">
+            <v-col
+              cols="12"
+              class="row form-control pa-2"
+            >
+              <v-col class="col-3 pa-0 label">
+                <label
+                  for="submitter"
+                  class="font-weight-600"
+                >提出者</label>
+              </v-col>
+              <v-col
+                id="submitter"
+                class="col-9 pa-0 input"
               >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="document.created_at"
-                    append-icon="event"
-                    v-on="on"
-                    outlined
-                  />
-                </template>
-                <v-date-picker v-model="document.created_at" locale="ja-jp" :first-day-of-week="1" no-title @input="datePicker = false" />
-              </v-menu>
+                <v-select
+                  v-model="document.submitter_id"
+                  :items="submitters"
+                  item-text="name"
+                  item-value="id"
+                  label="提出者"
+                  single-line
+                  outlined
+                  @change="onSelectSubmitter"
+                />
+              </v-col>
             </v-col>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="text-center">
-            <input type="file" id="file-upload" style="display:none" @change="onFileChange">
-            <v-btn v-ripple class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600" @click.native="openFileDialog">アップロード</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+            <v-col
+              cols="12"
+              class="row form-control pa-2"
+            >
+              <v-col class="col-3 pa-0 label">
+                <label
+                  for="document-type"
+                  class="font-weight-600"
+                >書面種類</label>
+              </v-col>
+              <v-col
+                id="document-type"
+                class="col-9 pa-0 input"
+              >
+                <v-select
+                  v-model="document.type_document_id"
+                  :items="typeDocuments"
+                  :disabled="disabled"
+                  item-text="name"
+                  item-value="id"
+                  label="書面種類"
+                  single-line
+                  outlined
+                />
+              </v-col>
+            </v-col>
+            <v-col
+              cols="12"
+              class="row form-control pa-2"
+            >
+              <v-col class="col-3 pa-0 label">
+                <label
+                  for="document-name"
+                  class="font-weight-600"
+                >書面名</label>
+              </v-col>
+              <v-col class="col-9 pa-0 input">
+                <input
+                  id="document-name"
+                  v-model="document.name"
+                  type="text"
+                  class="input-form-group col-md-12"
+                >
+              </v-col>
+            </v-col>
+            <v-col
+              v-show="!disabled"
+              cols="12"
+              class="row form-control pa-2"
+            >
+              <v-col class="col-3 pa-0 label">
+                <label
+                  for="document-number"
+                  class="font-weight-600"
+                >書面番号</label>
+              </v-col>
+              <v-col class="col-9 pa-0 input">
+                <input
+                  id="document-number"
+                  v-model="document.number"
+                  type="text"
+                  class="input-form-group col-md-12"
+                >
+              </v-col>
+            </v-col>
+            <v-col
+              cols="12"
+              class="row form-control pa-2"
+            >
+              <v-col class="col-3 pa-0 label">
+                <label
+                  for="date"
+                  class="font-weight-600"
+                >提出日</label>
+              </v-col>
+              <v-col
+                id="date"
+                class="col-9 pa-0 input"
+              >
+                <v-menu
+                  ref="datePicker"
+                  v-model="datePicker"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="document.created_at"
+                      append-icon="event"
+                      outlined
+                      v-on="on"
+                    />
+                  </template>
+                  <v-date-picker
+                    v-model="document.created_at"
+                    locale="ja-jp"
+                    :first-day-of-week="1"
+                    no-title
+                    @input="datePicker = false"
+                  />
+                </v-menu>
+              </v-col>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="text-center">
+              <input
+                id="file-upload"
+                type="file"
+                style="display:none"
+                @change="onFileChange"
+              >
+              <v-btn
+                v-ripple
+                class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600"
+                @click.native="openFileDialog"
+              >
+                アップロード
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-app>
     </v-form>
   </div>
@@ -117,6 +199,9 @@
         file: null,
         errors: []
       }
+    },
+    mounted() {
+      console.log('create document mounted')
     },
     methods: {
       /**
@@ -191,9 +276,6 @@
           this.disabled = false;
         }
       },
-    },
-    mounted() {
-      console.log('create document mounted')
     }
   }
 </script>
