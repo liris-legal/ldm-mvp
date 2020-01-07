@@ -1,8 +1,16 @@
 <template>
   <thead class="thead-columns">
     <tr class="d-flex">
-      <th :class="th.class" v-for="th in thead" :key="th.id" scope="col" class="text-left">
-        <div class="name font-weight-600">{{ th.label }}</div>
+      <th
+        v-for="th in thead"
+        :key="th.id"
+        :class="th.class"
+        scope="col"
+        class="text-left"
+      >
+        <div class="name font-weight-600">
+          {{ th.label }}
+        </div>
       </th>
     </tr>
   </thead>

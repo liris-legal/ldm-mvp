@@ -1,24 +1,54 @@
 <template>
-  <tr v-ripple class="documents-four-columns d-flex pa-0" @click="redirectToLink(1)">
-    <td scope="col" class="col col-4 pt-2 pb-2">
-      <div class="name">準備書面１</div>
+  <tr
+    v-ripple
+    class="documents-four-columns d-flex pa-0"
+    @click="redirectToLink(1)"
+  >
+    <td
+      scope="col"
+      class="col col-4 pt-2 pb-2"
+    >
+      <div class="name">
+        lawsuit
+      </div>
     </td>
-    <td scope="col" class="col col-4 pt-2 pb-2">
-      <div class="name">原告</div>
+    <td
+      scope="col"
+      class="col col-4 pt-2 pb-2"
+    >
+      <div class="name">
+        原告
+      </div>
     </td>
-    <td scope="col" class="col col-4 d-flex pt-2 pb-2 last-column" :class="{'unset-relative': isShowDelete}">
+    <td
+      scope="col"
+      class="col col-4 d-flex pt-2 pb-2 last-column"
+      :class="{'unset-relative': isShowDelete}"
+    >
       <div class="col-6 pa-0">
-        <div class="name">2019年12月31日</div>
+        <div class="name">
+          2019年12月31日
+        </div>
       </div>
       <v-spacer />
       <div class="col-6 pa-0 text-right col-btn font-weight-600 text-size-20">
-        <v-btn icon @click="isShowSubmenu = !isShowSubmenu" v-on:click.stop="" v-click-outside="hidden">...</v-btn>
+        <v-btn
+          v-click-outside="hidden"
+          icon
+          @click="isShowSubmenu = !isShowSubmenu"
+          @click.stop=""
+        >
+          ...
+        </v-btn>
       </div>
-      <v-list class="sub-menu" :class="{ 'actived': isShowSubmenu}">
+      <v-list
+        class="sub-menu"
+        :class="{ 'actived': isShowSubmenu}"
+      >
         <v-list-item href="#">
           <v-list-item-title>名前を変更</v-list-item-title>
         </v-list-item>
-        <v-list-item v-on:click.stop="">
+        <v-list-item @click.stop="">
           <v-list-item-title>ファイルを削除</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -43,13 +73,7 @@
       return {
         isShowDelete: false,
         isShowSubmenu: false,
-        lawsuits: {}
       }
-    },
-    created() {
-      axios.get('lawsuits')
-        .then(res => {return this.lawsuits = res.data.data;})
-        .catch(error => {return error.response})
     },
     methods: {
       /**

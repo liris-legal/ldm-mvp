@@ -1,105 +1,320 @@
 <template>
-	<div class="container-fluid lawsuit-create clearfix">
-		<v-row>
-			<v-col class="col-12 header-content">
-				<h2 class="title-name text-size-30">新件を作成</h2>
-				<h3 class="description"/>
-			</v-col>
-		</v-row>
-		<v-form class="form-group clearfix">
-			<v-container class="form-group-content">
-				<v-row class="ma-0">
-					<v-col cols="12 row form-control">
-						<v-col class="col-3 pa-0 label"><label class="font-weight-600">事件種類</label></v-col>
-						<v-col class="col-9 pa-2 input">民事事件</v-col>
-					</v-col>
-					<v-col cols="12" class="row form-control">
-						<v-col class="col-3 pa-0 label"><label for="number-lawsuit" class="font-weight-600">事件番号</label></v-col>
-						<v-col class="col-9 pa-0 input">
-              <input v-model.trim="lawsuit.number" id="number-lawsuit" type="text" class="input-form-group col-md-12">
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'number') }}</small>
+  <div class="container-fluid lawsuit-create clearfix">
+    <v-row>
+      <v-col class="col-12 header-content">
+        <h2 class="title-name text-size-30">
+          新件を作成
+        </h2>
+        <h3 class="description" />
+      </v-col>
+    </v-row>
+    <v-form class="form-group clearfix">
+      <v-container class="form-group-content">
+        <v-row class="ma-0">
+          <v-col cols="12 row form-control">
+            <v-col class="col-3 pa-0 label">
+              <label class="font-weight-600">事件種類</label>
             </v-col>
-					</v-col>
-					<v-col cols="12" class="row form-control">
-						<v-col class="col-3 pa-0 label"><label for="name-lawsuit" class="font-weight-600">事件名</label></v-col>
-						<v-col class="col-9 pa-0 input">
-              <input v-model.trim="lawsuit.name" id="name-lawsuit" type="text" class="input-form-group col-md-12">
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'name') }}</small>
+            <v-col class="col-9 pa-2 input">
+              民事事件
             </v-col>
-					</v-col>
-					<v-col cols="12" class="row form-control">
-						<v-col class="col-3 pa-0 label"><label for="courts-lawsuit" class="font-weight-600">裁判所・部署</label></v-col>
-						<v-col class="col-9 pa-0 input">
-              <input v-model.trim="lawsuit.courts_departments" id="courts-lawsuit" type="text" class="input-form-group col-md-12">
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'courts_departments') }}</small>
+          </v-col>
+          <v-col
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="number-lawsuit"
+                class="font-weight-600"
+              >事件番号</label>
             </v-col>
-					</v-col>
+            <v-col class="col-9 pa-0 input">
+              <input
+                id="number-lawsuit"
+                v-model.trim="lawsuit.number"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'number') }}</small>
+            </v-col>
+          </v-col>
+          <v-col
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="name-lawsuit"
+                class="font-weight-600"
+              >事件名</label>
+            </v-col>
+            <v-col class="col-9 pa-0 input">
+              <input
+                id="name-lawsuit"
+                v-model.trim="lawsuit.name"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'name') }}</small>
+            </v-col>
+          </v-col>
+          <v-col
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="courts-lawsuit"
+                class="font-weight-600"
+              >裁判所・部署</label>
+            </v-col>
+            <v-col class="col-9 pa-0 input">
+              <input
+                id="courts-lawsuit"
+                v-model.trim="lawsuit.courts_departments"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'courts_departments') }}</small>
+            </v-col>
+          </v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(plaintiff, index) in lawsuit.plaintiffs" :key="'plaintiffs'+index">
-						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-lawsuit' + index" class="font-weight-600">原告{{ countParties(lawsuit.plaintiffs, ++index) }}</label></v-col>
-						<v-col class="col-9 pa-0 input">
-							<input v-model.trim="plaintiff.name" :id="'plaintiff-lawsuit' + index" type="text" class="input-form-group col-md-12">
-							<v-btn v-on:click="pushToParties(lawsuit, 'plaintiffs')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
-							<v-btn v-show="countParties(lawsuit.plaintiffs) > 1" v-on:click="removeItemFromParties(lawsuit, 'plaintiffs', --index)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'plaintiffs', --index) }}</small>
-						</v-col>
-					</v-col>
-
-					<v-col cols="12" class="row form-control" v-for="(plaintiff_representative, index) in lawsuit.plaintiff_representatives" :key="'plaintiff_representatives' + index">
-						<v-col class="col-3 pa-0 label"><label :for="'plaintiff-representative-lawsuit' + index" class="font-weight-600">原告代理人{{ countParties(lawsuit.plaintiff_representatives, ++index) }}</label></v-col>
-						<v-col class="col-9 pa-0 input">
-							<input v-model.trim="plaintiff_representative.name" :id="'plaintiff-representative-lawsuit' + index" type="text" class="input-form-group col-md-12">
-							<v-btn v-on:click="pushToParties(lawsuit, 'plaintiff_representatives')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
-							<v-btn v-show="countParties(lawsuit.plaintiff_representatives) > 1" v-on:click="removeItemFromParties(lawsuit, 'plaintiff_representatives', --index)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'plaintiff_representatives', --index) }}</small>
-						</v-col>
-					</v-col>
-
-					<v-col cols="12" class="row form-control" v-for="(defendant, index) in lawsuit.defendants" :key="'defendant' + index">
-						<v-col class="col-3 pa-0 label"><label :for="'defendant-lawsuit' + index" class="font-weight-600">被告{{ countParties(lawsuit.defendants, ++index) }}</label></v-col>
-						<v-col class="col-9 pa-0 input">
-							<input v-model.trim="defendant.name" :id="'defendant-lawsuit' + index" type="text" class="input-form-group col-md-12">
-							<v-btn v-on:click="pushToParties(lawsuit, 'defendants')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
-							<v-btn v-show="countParties(lawsuit.defendants) > 1" v-on:click="removeItemFromParties(lawsuit, 'defendants', --index)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'defendants', --index) }}</small>
+          <v-col
+            v-for="(plaintiff, index) in lawsuit.plaintiffs"
+            :key="'plaintiffs'+index"
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                :for="'plaintiff-lawsuit' + index"
+                class="font-weight-600"
+              >原告{{ countParties(lawsuit.plaintiffs, ++index) }}</label>
             </v-col>
-					</v-col>
-
-					<v-col cols="12" class="row form-control" v-for="(defendant_representative, index) in lawsuit.defendant_representatives" :key="'defendant_representative' +index">
-						<v-col class="col-3 pa-0 label"><label :for="'defendant-representative-lawsuit' + index" class="font-weight-600">被告代理人{{ countParties(lawsuit.defendant_representatives, ++index) }}</label></v-col>
-						<v-col class="col-9 pa-0 input">
-							<input v-model.trim="defendant_representative.name" :id="'defendant-representative-lawsuit' + index" type="text" class="input-form-group col-md-12">
-							<v-btn v-on:click="pushToParties(lawsuit, 'defendant_representatives')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
-							<v-btn v-show="countParties(lawsuit.defendant_representatives) > 1" v-on:click="removeItemFromParties(lawsuit, 'defendant_representatives', --index)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'defendant_representatives', --index) }}</small>
+            <v-col class="col-9 pa-0 input">
+              <input
+                :id="'plaintiff-lawsuit' + index"
+                v-model.trim="plaintiff.name"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <v-btn
+                icon
+                class="icon-add"
+                @click="pushToParties(lawsuit, 'plaintiffs')"
+              >
+                <v-icon>add_circle_outline</v-icon>
+              </v-btn>
+              <v-btn
+                v-show="countParties(lawsuit.plaintiffs) > 1"
+                icon
+                class="icon-clear"
+                @click="removeItemFromParties(lawsuit, 'plaintiffs', --index)"
+              >
+                <v-icon>remove_circle_outline</v-icon>
+              </v-btn>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'plaintiffs', --index) }}</small>
             </v-col>
-					</v-col>
+          </v-col>
 
-					<v-col cols="12" class="row form-control" v-for="(other_party, index) in lawsuit.other_parties" :key="'other_party' + index">
-						<v-col class="col-3 pa-0 label"><label :for="'other-party-lawsuit' + index" class="font-weight-600">その他当事者{{ countParties(lawsuit.other_parties, ++index) }}</label></v-col>
-						<v-col class="col-9 pa-0 input">
-							<input v-model.trim="other_party.name" :id="'other-party-lawsuit' + index" type="text" class="input-form-group col-md-12">
-							<v-btn v-on:click="pushToParties( lawsuit, 'other_parties')" icon class="icon-add"><v-icon>add_circle_outline</v-icon></v-btn>
-							<v-btn v-show="countParties(lawsuit.other_parties) > 1" v-on:click="removeItemFromParties( lawsuit, 'other_parties', --index)" icon class="icon-clear"><v-icon>remove_circle_outline</v-icon></v-btn>
-              <small class="has-error" v-if="errors">{{ catchError(errors, 'other_parties', --index) }}</small>
+          <v-col
+            v-for="(plaintiff_representative, index) in lawsuit.plaintiff_representatives"
+            :key="'plaintiff_representatives' + index"
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                :for="'plaintiff-representative-lawsuit' + index"
+                class="font-weight-600"
+              >原告代理人{{ countParties(lawsuit.plaintiff_representatives, ++index) }}</label>
             </v-col>
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col class="text-center">
-						<v-btn v-ripple class="col-8 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600" v-on:click="postData">保存</v-btn>
-					</v-col>
-				</v-row>
-			</v-container>
-		</v-form>
-	</div>
+            <v-col class="col-9 pa-0 input">
+              <input
+                :id="'plaintiff-representative-lawsuit' + index"
+                v-model.trim="plaintiff_representative.name"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <v-btn
+                icon
+                class="icon-add"
+                @click="pushToParties(lawsuit, 'plaintiff_representatives')"
+              >
+                <v-icon>add_circle_outline</v-icon>
+              </v-btn>
+              <v-btn
+                v-show="countParties(lawsuit.plaintiff_representatives) > 1"
+                icon
+                class="icon-clear"
+                @click="removeItemFromParties(lawsuit, 'plaintiff_representatives', --index)"
+              >
+                <v-icon>remove_circle_outline</v-icon>
+              </v-btn>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'plaintiff_representatives', --index) }}</small>
+            </v-col>
+          </v-col>
+
+          <v-col
+            v-for="(defendant, index) in lawsuit.defendants"
+            :key="'defendant' + index"
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                :for="'defendant-lawsuit' + index"
+                class="font-weight-600"
+              >被告{{ countParties(lawsuit.defendants, ++index) }}</label>
+            </v-col>
+            <v-col class="col-9 pa-0 input">
+              <input
+                :id="'defendant-lawsuit' + index"
+                v-model.trim="defendant.name"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <v-btn
+                icon
+                class="icon-add"
+                @click="pushToParties(lawsuit, 'defendants')"
+              >
+                <v-icon>add_circle_outline</v-icon>
+              </v-btn>
+              <v-btn
+                v-show="countParties(lawsuit.defendants) > 1"
+                icon
+                class="icon-clear"
+                @click="removeItemFromParties(lawsuit, 'defendants', --index)"
+              >
+                <v-icon>remove_circle_outline</v-icon>
+              </v-btn>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'defendants', --index) }}</small>
+            </v-col>
+          </v-col>
+
+          <v-col
+            v-for="(defendant_representative, index) in lawsuit.defendant_representatives"
+            :key="'defendant_representative' +index"
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                :for="'defendant-representative-lawsuit' + index"
+                class="font-weight-600"
+              >被告代理人{{ countParties(lawsuit.defendant_representatives, ++index) }}</label>
+            </v-col>
+            <v-col class="col-9 pa-0 input">
+              <input
+                :id="'defendant-representative-lawsuit' + index"
+                v-model.trim="defendant_representative.name"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <v-btn
+                icon
+                class="icon-add"
+                @click="pushToParties(lawsuit, 'defendant_representatives')"
+              >
+                <v-icon>add_circle_outline</v-icon>
+              </v-btn>
+              <v-btn
+                v-show="countParties(lawsuit.defendant_representatives) > 1"
+                icon
+                class="icon-clear"
+                @click="removeItemFromParties(lawsuit, 'defendant_representatives', --index)"
+              >
+                <v-icon>remove_circle_outline</v-icon>
+              </v-btn>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'defendant_representatives', --index) }}</small>
+            </v-col>
+          </v-col>
+
+          <v-col
+            v-for="(other_party, index) in lawsuit.other_parties"
+            :key="'other_party' + index"
+            cols="12"
+            class="row form-control"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                :for="'other-party-lawsuit' + index"
+                class="font-weight-600"
+              >その他当事者{{ countParties(lawsuit.other_parties, ++index) }}</label>
+            </v-col>
+            <v-col class="col-9 pa-0 input">
+              <input
+                :id="'other-party-lawsuit' + index"
+                v-model.trim="other_party.name"
+                type="text"
+                class="input-form-group col-md-12"
+              >
+              <v-btn
+                icon
+                class="icon-add"
+                @click="pushToParties( lawsuit, 'other_parties')"
+              >
+                <v-icon>add_circle_outline</v-icon>
+              </v-btn>
+              <v-btn
+                v-show="countParties(lawsuit.other_parties) > 1"
+                icon
+                class="icon-clear"
+                @click="removeItemFromParties( lawsuit, 'other_parties', --index)"
+              >
+                <v-icon>remove_circle_outline</v-icon>
+              </v-btn>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'other_parties', --index) }}</small>
+            </v-col>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="text-center">
+            <v-btn
+              v-ripple
+              class="col-8 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600"
+              @click="postData"
+            >
+              保存
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 
 <script>
   export default {
-    name: "lawsuit-edit",
+    name: "LawsuitEdit",
       props: {
-        typeLawsuits: {required: true, type: Array, default: []},
+        typeLawsuits: {required: true, type: Array, default: () => []},
         lawsuitId: {required: true, type: String, default: '0'},
       },
     data() {
@@ -130,6 +345,9 @@
         .catch(error => {
           console.log(error);
         });
+    },
+		mounted() {
+      console.log('edit mounted');
     },
     methods:{
       /**
@@ -164,9 +382,6 @@
             this.errors = err.response.data.errors;
           });
       },
-    },
-		mounted() {
-      console.log('edit mounted');
     }
   }
 </script>

@@ -18,7 +18,7 @@
 
 <script>
   export default {
-    name: "range-document",
+    name: "RangeDocument",
     props: {
       document: { type: Object, required: true, default: () => {} },
       columnOfClass: { type: Object, required: true, default: () => {} }

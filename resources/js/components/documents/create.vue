@@ -91,7 +91,7 @@
 
 <script>
   export default {
-    name: "document-create",
+    name: "DocumentCreate",
     props: {
       storeRoute: { required: true, type: String, default: ''},
       lawsuitId: {required: true,  type: String, default: ''},
