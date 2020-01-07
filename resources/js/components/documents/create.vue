@@ -194,8 +194,6 @@
     },
     mounted() {
       console.log('create document mounted')
-      // this.civil_lawsuits = this.type_lawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];
-      // this.lawsuit.type_lawsuit_id = this.civil_lawsuits.id;
     }
   }
 </script>
