@@ -17,8 +17,8 @@ class DefendantSeeder extends Seeder
 
         DB::table('defendants')->truncate();
         $rows = [
-            [ 'KLMNO株式会社', 2, 1, $time],
-            [ 'LMNOP株式会社', 2, 2, $time],
+            [ 'KLMNO株式会社', 3, 1, $time],
+            [ 'LMNOP株式会社', 3, 2, $time],
         ];
         foreach ($rows as $row) {
             DB::table('defendants')->insert([

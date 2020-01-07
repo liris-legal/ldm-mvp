@@ -12,7 +12,7 @@
         <v-btn
           value="recent"
           href="/"
-          :class="{'v-btn--active': checkRoutes(['/'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['index'])}"
         >
           <span>ホーム</span>
           <v-icon>home</v-icon>
@@ -25,7 +25,7 @@
         <v-btn
           value="favorites"
           :href="routeListTypeLawsuits"
-          :class="{'v-btn--active': checkRoutes(['/type-lawsuits', '/lawsuits'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['typeLawsuitsIndex', 'lawsuitsIndex', 'lawsuitsShow'])}"
         >
           <span>ファイル</span>
           <v-icon>folder_open</v-icon>
@@ -40,7 +40,7 @@
           v-click-outside="hidden"
           value="nearby"
           @click="showAdd = !showAdd"
-          :class="{'v-btn--active': checkRoutes(['/lawsuits/create'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['lawsuitsCreate'])}"
         >
           <span>作成</span>
           <v-icon>add</v-icon>
@@ -102,10 +102,10 @@
        * @description Check route and active class when click on url
        *
        * @param {Array} $array - Is a array has many paths
-       * @return boolean
+       * @return string
        */
       checkRoutes($array) {
-        return $array.find( value => window.location.pathname === value );
+        return $array.find( value => this.$route.name === value );
       },
 
       /**
@@ -116,9 +116,6 @@
         const routeCreateDocument = this.routeCreateDocument.replace('0', this.$route.params.lawsuitId);
         return this.$route.name === 'lawsuitsShow' ? routeCreateDocument : '#';
       }
-		},
-    mounted() {
-      // console.log('bottom mounted')
-    }
+		}
   }
 </script>
