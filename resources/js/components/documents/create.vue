@@ -30,14 +30,13 @@
                 class="col-9 pa-0 input"
               >
                 <v-select
-                  v-model="document.submitter_id"
+                  v-model="submitter_id"
                   :items="submitters"
                   item-text="name"
                   item-value="id"
                   label="提出者"
                   single-line
                   outlined
-                  @change="onSelectSubmitter"
                 />
               </v-col>
             </v-col>
@@ -56,7 +55,7 @@
                 class="col-9 pa-0 input"
               >
                 <v-select
-                  v-model="document.type_document_id"
+                  v-model="type_document_id"
                   :items="typeDocuments"
                   :disabled="disabled"
                   item-text="name"
@@ -78,16 +77,25 @@
                 >書面名</label>
               </v-col>
               <v-col class="col-9 pa-0 input">
-                <input
-                  id="document-name"
+                <v-select v-if="type_document_id === 2"
                   v-model="document.name"
-                  type="text"
-                  class="input-form-group col-md-12"
+                  :items="nameEvidenceDocuments.filter(item => item.submitter_id === submitter_id)"
+                  label="書面名"
+                  item-text="name"
+                  item-value="name"
+                  single-line
+                  outlined
+                />
+                <input v-else
+                       id="document-name"
+                       v-model="document.name"
+                       type="text"
+                       class="input-form-group col-md-12"
                 >
               </v-col>
             </v-col>
             <v-col
-              v-show="!disabled"
+              v-if="type_document_id === 2"
               cols="12"
               class="row form-control pa-2"
             >
@@ -101,7 +109,7 @@
                 <input
                   id="document-number"
                   v-model="document.number"
-                  type="text"
+                  type="number"
                   class="input-form-group col-md-12"
                 >
               </v-col>
@@ -186,14 +194,20 @@
         document: {
           number: '',
           name: '',
-          type_document_id: 0,
-          submitter_id: 0,
         },
+        type_document_id: 1,
+        submitter_id: 1,
         submitters: [
           { id: 1, name: '原告' },
           { id: 2, name: '被告' },
           { id: 3, name: '裁判所' },
           { id: 4, name: 'その他' },
+        ],
+        nameEvidenceDocuments: [
+          { id: 1, name: '証拠説明書', submitter_id: 1 },
+          { id: 2, name: '甲号証', submitter_id: 1 },
+          { id: 3, name: '証拠説明書', submitter_id: 2 },
+          { id: 4, name: '乙号証', submitter_id: 2 },
         ],
         date: new Date().toISOString().substr(0, 10),
         dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
@@ -240,8 +254,8 @@
         formData.append('number', this.document.number);
         formData.append('name', this.document.name);
         formData.append('file', this.file);
-        formData.append('type_document_id', this.document.type_document_id);
-        formData.append('submitter_id', this.document.submitter_id);
+        formData.append('type_document_id', this.type_document_id);
+        formData.append('submitter_id', this.submitter_id);
         formData.append('created_at', this.date);
 
         axios.post(this.storeRoute, formData)
@@ -285,13 +299,13 @@
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
       },
       /**
-       * @function onSelectSubmitter
-       * @return string|null
+       * @function onChangeSubmitter
+       * @description to handle change submitter
        */
-      onSelectSubmitter() {
-        console.log('selected: ' + this.document.submitter_id);
-        if (this.document.submitter_id === 3 || this.document.submitter_id === 4) {
-          this.document.type_document_id = 3;
+      onChangeSubmitter(submitter_id) {
+        console.log('changed: ' + submitter_id);
+        if (submitter_id === 3 || submitter_id === 4) {
+          this.type_document_id = 3;
           this.disabled = true;
         } else {
           this.disabled = false;
@@ -306,6 +320,9 @@
     watch: {
       date (val) {
         this.dateFormatted = this.formatDate(this.date)
+      },
+      submitter_id (val) {
+        this.onChangeSubmitter(val);
       },
     },
   }
