@@ -87,7 +87,6 @@
        * @description goto show lawsuit page
        */
       showLawsuit(lawsuit_id) {
-        console.log('goto show page');
         location.href = 'lawsuits/' + lawsuit_id;
       },
 
@@ -124,9 +123,6 @@
         this.activeIndex = undefined;
         this.isShowDelete = false;
       },
-    },
-    mounted() {
-      console.log(this.dataReceived)
     },
     directives: {
       /**
