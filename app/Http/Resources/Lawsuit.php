@@ -22,9 +22,11 @@ class Lawsuit extends JsonResource
      */
     public function toArray($request)
     {
+        $format = '%EC%Ey年（ワ）';
+
         return [
             'id'                        => $this->id,
-            'type_lawsuit_id'              => $this->type_lawsuit_id,
+            'type_lawsuit_id'           => $this->type_lawsuit_id,
             'number'                    => $this->number,
             'name'                      => $this->name,
             'courts_departments'        => $this->courts_departments,
@@ -53,8 +55,9 @@ class Lawsuit extends JsonResource
                     return new OtherPartyResource($party);
                 }
             ),
-            'created_at'                => $this->created_at,
-            'updated_at'                => $this->updated_at,
+            'created_at'                       => $this->created_at->isoFormat('LL'),
+            'updated_at'                       => $this->updated_at ? $this->updated_at->isoFormat('LL') : null,
+            'created_at_wareki'                => $this->created_at->formatLocalized($format),
         ];
     }
 }

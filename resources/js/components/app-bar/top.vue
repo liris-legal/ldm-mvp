@@ -8,6 +8,7 @@
     <v-btn
       v-if="!checkRoute('/')"
       icon
+      @click="goBack()"
     >
       <v-icon>arrow_back_ios</v-icon>
     </v-btn>

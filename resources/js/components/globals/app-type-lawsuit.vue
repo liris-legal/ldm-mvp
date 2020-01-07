@@ -1,7 +1,7 @@
 <template>
   <div class="app-type-lawsuits">
     <a
-      href="#"
+      :href="routeLawsuitsIndex"
       class="folder-link"
     >
       <v-row v-ripple class="ma-0">
@@ -18,7 +18,12 @@
 <script>
   export default {
     props: {
-      typeLawsuit: { type: Object, required: true}
+      typeLawsuit: { type: Object, required: true, default: () => {}},
+      routeLawsuitsIndex: {type: String, required: false, default: () => '#'},
+    },
+    mounted() {
+      console.log('app-type-lawsuits mounted');
+      console.log(this.typeLawsuit)
     }
   }
 </script>

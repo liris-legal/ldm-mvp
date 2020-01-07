@@ -134,18 +134,6 @@
        */
       ClickOutside
     },
-    filters: {
-      /**
-       * @function parseName
-       * @description parse name in list Objects
-       * @return string
-       */
-      parseName(arrays) {
-        if (arrays.length <= 0) return '-';
-        arrays = arrays.map(value => {return value.name});
-        return arrays.join('、 ');
-      },
-    }
   }
 </script>
 <style lang="scss">

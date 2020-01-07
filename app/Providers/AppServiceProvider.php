@@ -29,5 +29,11 @@ class AppServiceProvider extends ServiceProvider
     {
         //　追加
         Validator::extendImplicit('cognito_user_unique', 'App\Validators\CognitoUserUniqueValidator@validate');
+
+        // Localization Carbon
+        \Carbon\Carbon::setLocale(config('app.locale'));
+
+        // Localization datetime
+        setlocale(LC_TIME, 'ja_JP.utf8');
     }
 }

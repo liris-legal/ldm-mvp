@@ -9,7 +9,7 @@
           <div class="name">{{ document.name }}</div>
         </v-col>
         <v-col :class="columnOfClass.class2">
-          <div class="date">{{ document.updated_at }}</div>
+          <div class="date">{{ document.created_at }}</div>
         </v-col>
       </v-row>
     </a>
@@ -18,7 +18,7 @@
 
 <script>
   export default {
-    name: "AppDocument2",
+    name: "range-document",
     props: {
       document: { type: Object, required: true, default: () => {} },
       columnOfClass: { type: Object, required: true, default: () => {} }
