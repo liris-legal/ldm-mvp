@@ -10,14 +10,12 @@ import stores from "./store";
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
 
+/**
+ * VueRouter
+ */
 import VueRouter from 'vue-router'
-import { router }  from './router';
-
 Vue.use(VueRouter);
-const routers = new VueRouter({
-  mode: 'history',
-  routes: router
-});
+import router  from './router';
 
 /**
  * Component registration
@@ -40,7 +38,9 @@ Vue.component('lawsuits-edit', require('./components/lawsuits/edit.vue').default
 Vue.component('lawsuits-show', require('./components/lawsuits/show.vue').default);
 
 // document
+Vue.component('document-index', require('./components/documents/index.vue').default);
 Vue.component('document-create', require('./components/documents/create.vue').default);
+Vue.component('document-edit', require('./components/documents/edit.vue').default);
 
 // component globals
 Vue.component('app-thead', require('./components/globals/app-thead.vue').default);
@@ -51,6 +51,7 @@ Vue.component('lawsuit-header', require('./components/globals/lawsuit-header.vue
 // component globals/tables
 Vue.component('thead-columns', require('./components/globals/tables/thead-columns.vue').default);
 Vue.component('documents-four-columns', require('./components/globals/tables/documents-four-columns.vue').default);
+Vue.component('range-table-row', require('./components/globals/tables/range-table-row.vue').default);
 
 // Global Mixin defined
 import {mixin} from "./mixin";
@@ -58,7 +59,7 @@ Vue.mixin(mixin);
 
 const app = new Vue({
   el: '#app',
-  router: routers,
+  router: router,
   vuetify: new Vuetify({
     icons: {
       iconfont: 'mdiSvg',
@@ -69,5 +70,5 @@ const app = new Vue({
   store: stores,
   mounted(){
     console.log('app mounted')
-  }
+  },
 });

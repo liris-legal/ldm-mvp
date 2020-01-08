@@ -57,18 +57,8 @@
 </template>
 
 <script>
-  /**
-   * Index: Clicks Outside an Element
-   */
-  import ClickOutside from 'vue-click-outside';
   export default {
-    name: "Index",
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
-    },
+    name: "document-four-columns",
     data() {
       return {
         isShowDelete: false,

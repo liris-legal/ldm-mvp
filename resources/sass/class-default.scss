@@ -221,10 +221,22 @@
         }
     }
 }
+// range-table-row components
+@mixin mixin_range_row_item($textSizeName) {
+    .range--row-item {
+        cursor: pointer;
+        .name {
+            @extend .#{$textSizeName};
+            margin-left: 40px;
+            line-height: 40px;
+        }
+    }
+}
 .table {
     width: 100%;
     @include mixin_thead_columns(text-size-15);
     tbody {
+        @include mixin_range_row_item(text-size-15);
         @include mixin_documents_four_columns(text-size-15);
         &:nth-child(2n) {
             td{
