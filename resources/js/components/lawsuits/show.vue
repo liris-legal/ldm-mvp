@@ -16,12 +16,12 @@
       <v-row>
         <v-col class="col-12 header-content">
           <h3 class="description">
-            最近表示
+            主張書面
           </h3>
         </v-col>
       </v-row>
       <table class="table">
-        <thead-columns :thead="thead_claim" />
+        <thead-columns :thead="thead_label" />
         <tbody>
           <documents-four-columns />
         </tbody>
@@ -38,12 +38,15 @@
       </v-row>
       <app-thead :thead="thead_evidence_document" />
       <app-type-lawsuit
-        v-if="lawsuit.defendants"
-        :type-lawsuit="documentsOfSubmitter(lawsuit.defendants, 'defendant')"
-      />
-      <app-type-lawsuit
         v-if="lawsuit.plaintiffs"
-        :type-lawsuit="documentsOfSubmitter(lawsuit.plaintiffs, 'plaintiff')"
+        :route-text="submitterOfDocument(lawsuit.plaintiffs, 'plaintiff')"
+        :route-link="routeDefendantDocumentsIndex"
+      />
+
+      <app-type-lawsuit
+        v-if="lawsuit.defendants"
+        :route-text="submitterOfDocument(lawsuit.defendants, 'defendant')"
+        :route-link="routePlaintiffDocumentsIndex"
       />
     </div>
 
@@ -56,7 +59,7 @@
         </v-col>
       </v-row>
       <table class="table">
-        <thead-columns :thead="thead_claim" />
+        <thead-columns :thead="thead_label" />
         <tbody>
           <documents-four-columns />
         </tbody>
@@ -65,20 +68,27 @@
   </div>
 </template>
 <script>
-  /**
-   * Index: Clicks Outside an Element
-   */
-  import ClickOutside from 'vue-click-outside';
   export default {
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
+    name: "Lawsuit-show",
+    props: {
+      routePlaintiffDocumentsIndex: {
+        required: true,
+        type: String,
+        default() {
+          return ''
+        }
+      },
+      routeDefendantDocumentsIndex: {
+        required: true,
+        type: String,
+        default() {
+          return ''
+        }
+      },
     },
     data() {
       return {
-        thead_claim: [
+        thead_label: [
           { id: 1, label: '書面名', class: 'col-4'},
           { id: 2, label: '提出者', class: 'col-4'},
           { id: 3, label: '提出日', class: 'col-4'},
@@ -86,7 +96,6 @@
         thead_evidence_document: [{ id: 1, name: 'フォルダ名', class: 'col-12'}],
         thead_other_documents: [{ id: 1, name: '書面名', class: 'col-12'}],
         lawsuit: {},
-        submitterDocument: {id: 1, name: '原告書面'}
 			}
     },
     created() {
@@ -96,23 +105,18 @@
       });
     },
     mounted() {
-      console.log(this.lawsuit);
+      // console.log(this.lawsuit);
     },
     methods: {
       /**
-			 * @function hidden
-			 * @description to hidden 作成 panel
-			 */
-      hidden() {
-				if(this.showAdd === true){
-          this.showAdd = false;
-          document.getElementById("btn-add-app").classList.remove('v-btn--active');
-				}
-      },
-
-      documentsOfSubmitter(array, valueCondition){
-        if(array !== undefined && array.length > 0) {
-          return array.find(item => { return item.submitter.description === valueCondition });
+       * @function submitterOfDocument
+       * @description get submitter of document
+       * @return string
+       */
+      submitterOfDocument(documents, condition){
+        if(documents !== undefined && documents.length > 0) {
+          const document = documents.find(document => { return document.submitter.description === condition });
+          return document.submitter.name + '書面'
         }
       }
     }

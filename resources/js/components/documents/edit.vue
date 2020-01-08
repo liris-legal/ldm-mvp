@@ -1,9 +1,9 @@
 <template>
-  <div class="container-fluid document document--create clearfix">
+  <div class="container-fluid document document--edit clearfix">
     <v-row>
       <v-col class="col-12 header-content">
         <h2 class="title-name text-size-30">
-          ファイルをアップロード
+          名前を変更
         </h2>
         <h3 class="description"/>
       </v-col>
@@ -160,19 +160,12 @@
           </v-row>
           <v-row>
             <v-col class="text-center">
-              <input
-                id="file-upload"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                style="display:none"
-                @change="onFileChange"
-              >
               <v-btn
                 v-ripple
                 class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600"
-                @click.native="openFileDialog"
+                @click.native="postData"
               >
-                アップロード
+                保存
               </v-btn>
             </v-col>
           </v-row>
@@ -184,18 +177,16 @@
 
 <script>
   export default {
-    name: "DocumentCreate",
+    name: "Document-edit",
     props: {
-      storeRoute: { required: true, type: String, default: ''},
+      updateRoute: { required: true, type: String, default: ''},
       lawsuitId: {required: true,  type: String, default: ''},
+      documentId: {required: true,  type: String, default: ''},
       typeDocuments: {required: true,  type: Array, default: () => []},
     },
     data() {
       return {
-        document: {
-          number: '',
-          name: '',
-        },
+        document: {},
         type_document_id: 1,
         submitter_id: 1,
         submitters: [
@@ -223,26 +214,6 @@
     },
     methods: {
       /**
-       * @function openFileDialog
-       * @description to open dialog select file
-       */
-      openFileDialog() {
-        document.getElementById('file-upload').click();
-      },
-
-      /**
-       * @function onFileChange
-       * @description to handle file selected and auto send submit request to create document
-       */
-      onFileChange(e) {
-        var self = this;
-        var files = e.target.files || e.dataTransfer.files;
-        if (files.length > 0) {
-          self.file = files[0];
-        }
-        this.postData();
-      },
-      /**
        * postData is used to create document
        * @return {object}
        */
@@ -251,15 +222,14 @@
          * Create a new formData to store document
          * */
         let formData = new FormData();
-        formData.append('lawsuit_id', this.lawsuitId);
-        formData.append('number', this.document.number);
         formData.append('name', this.document.name);
-        formData.append('file', this.file);
+        formData.append('number', this.document.number);
         formData.append('type_document_id', this.type_document_id);
         formData.append('submitter_id', this.submitter_id);
         formData.append('created_at', this.date);
+        formData.append("_method", "PATCH");
 
-        axios.post(this.storeRoute, formData)
+        axios.post(this.updateRoute, formData)
           .then(res => {
             console.log(res);
           })
@@ -312,6 +282,22 @@
           this.disabled = false;
         }
       },
+    },
+    created() {
+      /**
+       * @function
+       * @description fetch document data from API
+       */
+      axios.get('documents/' + this.documentId)
+        .then(res => {
+          this.document = res.data.data;
+          this.type_document_id = this.document.type_document_id;
+          this.submitter_id = this.document.submitter_id;
+          this.date = new Date(this.document.created_at).toISOString().substr(0, 10);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     computed: {
       computedDateFormatted () {

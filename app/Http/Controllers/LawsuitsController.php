@@ -51,6 +51,6 @@ class LawsuitsController extends Controller
      */
     public function show($lawsuitId)
     {
-        return view('content.lawsuits.show');
+        return view('content.lawsuits.show')->with(['lawsuitId' => $lawsuitId]);
     }
 }

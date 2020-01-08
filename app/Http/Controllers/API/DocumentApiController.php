@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\Document as DocumentResource;
+use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocument;
@@ -46,6 +48,19 @@ class DocumentApiController extends Controller
                 'file' => 'mimes:' . $allowedfileExtension
             ]);
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Document $document
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Document $document)
+    {
+        return response([
+            'data' => new DocumentResource($document)
+        ]);
     }
 
     /**

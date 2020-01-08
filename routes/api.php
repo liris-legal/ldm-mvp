@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function ($router) {
     Route::resource('lawsuits', 'API\LawsuitsApiController')->except(['create', 'edit']);
-    Route::resource('documents', 'API\DocumentApiController')->except(['create', 'edit', 'show']);
+    Route::resource('documents', 'API\DocumentApiController')->except(['create', 'edit']);
 
     Route::apiResources([
 //        'lawsuits' => 'API\LawsuitsApiController',

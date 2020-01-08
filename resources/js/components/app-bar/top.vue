@@ -45,17 +45,10 @@
 	 * top-bar component include infomation person of user and logout.
 	 * @property {Boolean} displayMenu - Is to show/hidden Menu App-nav-top
 	 */
-  import ClickOutside from 'vue-click-outside'
   import rangeAlerts from '../globals/range-alerts'
   import {mapState} from "vuex";
 
   export default {
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
-    },
     components: {
       rangeAlerts
     },

@@ -62,19 +62,12 @@
 </template>
 
 <script>
-  import ClickOutside from 'vue-click-outside'
 	/**
 	 * bottom-fixed is component
 	 * @property {Boolean} showAdd - Is to show/hidden a block.
 	 */
   export default {
     name: "BottomFixed",
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
-    },
     props: {
       routeCreateLawsuit: { type: String, required: true, default: () => '' },
       routeListTypeLawsuits: { type: String, required: true, default: () => '' },

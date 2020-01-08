@@ -193,16 +193,8 @@
 </template>
 
 <script>
-  import ClickOutside from 'vue-click-outside';
-
   export default {
     name: "LawsuitsIndex",
-    directives: {
-      /**
-       * ClickOutside: Clicks Outside an Element
-       */
-      ClickOutside
-    },
     data() {
       return {
         activeIndex: undefined,

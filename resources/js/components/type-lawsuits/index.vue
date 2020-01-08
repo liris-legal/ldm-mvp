@@ -13,8 +13,8 @@
     <app-type-lawsuit
       v-for="type_lawsuit in typeLawsuits"
       :key="type_lawsuit.id"
-      :type-lawsuit="type_lawsuit"
-      :route-lawsuits-index="routeLawsuitsIndex"
+      :route-text="type_lawsuit.name"
+      :route-link="routeLawsuitsIndex"
     />
   </div>
 </template>

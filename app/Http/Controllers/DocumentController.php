@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Submitter;
+use App\Http\Resources\Document as DocumentResource;
+use App\Models\Document;
 use App\Models\TypeDocument;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,13 @@ class DocumentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $lawsuitId
+     * @param $submitter
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($lawsuitId, $submitter)
     {
-        //
+        return view('content.documents.index', ['lawsuitId' => $lawsuitId, 'submitter' => $submitter]);
     }
 
     /**
@@ -37,24 +40,21 @@ class DocumentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $lawsuitId
+     * @param $documentId
+     * @param $submitter
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($lawsuitId, $documentId)
     {
-        //
+        $typeDocuments = TypeDocument::all();
+
+        return view('content.documents.edit', [
+                'lawsuitId' => $lawsuitId,
+                'documentId' => $documentId,
+                'typeDocuments' => $typeDocuments,
+            ]);
     }
 }
