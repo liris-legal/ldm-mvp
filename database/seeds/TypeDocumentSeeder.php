@@ -16,14 +16,15 @@ class TypeDocumentSeeder extends Seeder
 
         DB::table('type_documents')->truncate();
         $rows = [
-            [ '主張書面', $time],
-            [ '証拠書面', $time],
-            [ 'その他の書面', $time],
+            [ '主張書面', 'claim', $time],
+            [ '証拠書面', 'evidence', $time],
+            [ 'その他の書面', 'other', $time],
         ];
         foreach ($rows as $row) {
             DB::table('type_documents')->insert([
                 'name' => $row[0],
-                'created_at' => $row[1],
+                'description' => $row[1],
+                'created_at' => $row[2],
             ]);
         }
         Schema::enableForeignKeyConstraints();

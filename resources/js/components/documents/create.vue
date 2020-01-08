@@ -163,6 +163,7 @@
               <input
                 id="file-upload"
                 type="file"
+                accept=".pdf,.doc,.docx"
                 style="display:none"
                 @change="onFileChange"
               >

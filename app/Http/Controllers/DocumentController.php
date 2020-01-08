@@ -30,8 +30,13 @@ class DocumentController extends Controller
     public function create($lawsuitId)
     {
         $typeDocuments = TypeDocument::all();
+        $submitters = Submitter::all();
 
-        return view('content.documents.create', ['lawsuitId' => $lawsuitId, 'typeDocuments' => $typeDocuments]);
+        return view('content.documents.create', [
+            'lawsuitId' => $lawsuitId,
+            'typeDocuments' => $typeDocuments,
+            'submitters' => $submitters
+        ]);
     }
 
     /**
