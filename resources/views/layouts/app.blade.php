@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-    <div id="app" class="v-application">
+    <v-app id="app">
         <app-top-bar :user="{{Auth::user()}}" :route-logout="'{{ route('logout') }}'"></app-top-bar>
         <div class="clearfix"></div>
         @yield('content')
@@ -34,6 +34,6 @@
                         :route-list-type-lawsuits="'{{route('type-lawsuits.index')}}'"
         >
         </app-bottom-bar>
-    </div>
+    </v-app>
 </body>
 </html>
