@@ -39,7 +39,7 @@
           id="btn-add-app"
           v-click-outside="hidden"
           value="nearby"
-          :class="{'v-btn--active': $route.name === checkRoutes(['lawsuitsCreate'])}"
+          :class="{'v-btn--active': $route.name === checkRoutes(['lawsuitsCreate', 'documentsCreate'])}"
           @click="showAdd = !showAdd"
         >
           <span>作成</span>
