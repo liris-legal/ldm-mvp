@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Cognito\CognitoClient;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -88,5 +87,22 @@ class LoginController extends Controller
             return $this->sendFailedLoginResponse($request);
         }
         return $this->sendFailedLoginResponse($request);
+    }
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $message = ['status' => 'success', 'content' => 'ログアウトしました。'];
+
+        return $this->loggedOut($request) ?:
+            response()->json(['url' => route('login'), 'message' => $message], 200);
     }
 }

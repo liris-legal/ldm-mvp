@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\FileService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('FileService', function () {
+            return new FileService();
+        });
     }
 
     /**
@@ -26,5 +29,11 @@ class AppServiceProvider extends ServiceProvider
     {
         //　追加
         Validator::extendImplicit('cognito_user_unique', 'App\Validators\CognitoUserUniqueValidator@validate');
+
+        // Localization Carbon
+        \Carbon\Carbon::setLocale(config('app.locale'));
+
+        // Localization datetime
+        setlocale(LC_TIME, 'ja_JP.utf8');
     }
 }

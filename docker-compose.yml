@@ -1,42 +1,27 @@
 version: "2"
 
 services:
-  php72:
-    image: connectivdocker/php:7.2
-    container_name: liris-php72
+  php-apache:
+    build: ./docker/php-apache
+    container_name: liris-web
     networks:
       internal:
-        ipv4_address: 172.23.0.72
+        ipv4_address: 172.23.0.2
+    ports:
+      - 80:80
+      - 443:443
     links:
     - mysql
     volumes:
     - ./:/var/www/html/liris
-    restart: always
-
-
-  httpd:
-    image: httpd:2.4.33-alpine
-    container_name: liris-httpd
-    networks:
-      internal:
-        ipv4_address: 172.23.0.89
-    ports:
-    - 80:80
-    - 443:443
-    volumes:
-    - ./docker/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
-    - ./docker/conf/virtualhosts:/usr/local/apache2/conf/extra/vhosts
-    - ./docker/conf/ssl:/usr/local/apache2/ssl
-    - ./docker/logs/httpd:/var/log/httpd
-    links:
-    - php72
-    volumes_from:
-    - php72
+    - ./docker/php-apache/conf/virtualhosts:/etc/apache2/sites-available
+    - ./docker/php-apache/conf/ssl:/usr/local/apache2/ssl
+    - ./docker/logs/httpd:/var/log/apache2
     restart: always
 
   mysql:
     image: connectivdocker/mysql
-    container_name: liris-mysql
+    container_name: liris-db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: docker

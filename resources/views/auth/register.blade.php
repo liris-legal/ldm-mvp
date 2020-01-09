@@ -8,20 +8,8 @@
                 <div class="card-header text-center"><img src="{{ asset('images/logo.svg') }}" alt=""></div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('auth.register') }}">
+                    <form method="POST" action="{{route('register')}}">
                         @csrf
-{{--                        <div class="form-group row">--}}
-{{--                            <div class="col-md-12 text-center">--}}
-{{--                                <input id="name" type="text" class="fix-form-control form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="あなたの名を入力してください" autofocus>--}}
-
-{{--                                @error('name')--}}
-{{--                                    <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @enderror--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
                         <div class="form-group row">
                             <div class="col-md-12 text-center">
                                 <input id="email" type="email" class="fix-form-control form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="メールアドレスを入力してください">

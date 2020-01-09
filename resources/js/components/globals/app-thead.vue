@@ -1,6 +1,6 @@
 <template>
   <div class="app-thead">
-    <v-row>
+    <v-row class="ma-0">
       <v-col
         v-for="th in thead"
         :key="th.id"
@@ -18,7 +18,7 @@
   export default {
     name: "AppThead",
 		props: {
-            thead: { type: Array, required: true, default: function () { return [ { id: 1, name: 'Name', class: 'col-12' } ]} }
+      thead: { type: Array, required: true, default: function () { return [ { id: 1, name: 'Name', class: 'col-12' } ]} }
 		}
   }
 </script>

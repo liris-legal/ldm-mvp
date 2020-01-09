@@ -1,13 +1,10 @@
 @servers(['develop' => ['ubuntu@3.112.199.228'],  'local' => ['tahi@192.168.1.1']])
 
 @setup
-    echo "[SETUP] path in development server";
+    echo "[SETUP] environments in development server";
     $base_path              = '/home/ubuntu/LDM';
-
-    echo "[SETUP] docker container in development server";
-    $container              = 'liris-php72';
-
-    $work_dir          = '/var/www/html/liris';
+    $container              = 'liris-web';
+    $work_dir               = '/var/www/html/liris';
 @endsetup
 
 

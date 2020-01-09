@@ -18,6 +18,13 @@
     border-radius: 4px;
     padding: 5px 10px;
 }
+.has-error {
+    display: block;
+    color: $color___error;
+    text-transform: capitalize;
+    font-size: 12px;
+    padding-top: 2px;
+}
 @mixin background-text($background, $textColor){
     background-color: $background !important;
     color: $textColor !important;
@@ -76,9 +83,9 @@
     }
 }
 
-// component app-document-2
+// component app-document-two-columns
 @mixin app_document($textSizeName) {
-    .app-document-2{
+    .app-document-two-columns{
         color: #404040;
         border: 1px solid #DADDE6;
         background-color: #FFFFFF;
@@ -132,5 +139,125 @@
         border: 1px solid #C2C4CC;
         padding: 5px 10px;
         padding-right: 20px;
+    }
+}
+
+// Notificaiton
+@mixin mixin_notification{
+    .mixin-notification{
+        max-width: 500px;
+        border-radius: 4px;
+        padding: 1em 1em 0;
+        z-index: 3;
+        top: 0;
+        position: absolute;
+        transform: translateY(150%);
+        margin: 0 auto;
+        display: block;
+        background-color: #fff;
+        left: 0;
+        right: 0;
+
+        .notification-danger{
+            display: block;
+            margin: 0 auto;
+            padding: 1em 1em 0;
+
+            .label-delete {
+                margin-bottom: 1.5em;
+            }
+
+            .button-notification{
+                margin: 3em 0 0;
+
+                .button-content {
+                    padding: .4em 1em;
+                    .btn-danger{
+                        background-color: #CC1414;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+.overlay{
+    background-color: #222222;
+    top: 48px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-filter: opacity(0.78);
+    filter: opacity(0.5);
+}
+@include mixin_notification;
+@mixin mixin_lawsuit_header() {
+    .lawsuit-header {
+        background-color: #d6d6d6;
+    }
+}
+@include mixin_lawsuit_header();
+
+// tables
+@mixin mixin_thead_columns($textSizeName) {
+    .thead-columns {
+        border: 1px solid #DADDE6;
+        background-color: #FAFAFA;
+
+        .name{
+            @extend .#{$textSizeName};
+            margin-left: 40px;
+        }
+    }
+}
+@mixin mixin_documents_four_columns($textSizeName) {
+    .documents-four-columns {
+        cursor: pointer;
+        .name {
+            @extend .#{$textSizeName};
+            margin-left: 40px;
+            line-height: 40px;
+        }
+    }
+}
+// range-table-row components
+@mixin mixin_range_row_item($textSizeName) {
+    .range--row-item {
+        cursor: pointer;
+        .name {
+            @extend .#{$textSizeName};
+            margin-left: 40px;
+            line-height: 40px;
+        }
+    }
+}
+.table {
+    width: 100%;
+    @include mixin_thead_columns(text-size-15);
+    tbody {
+        @include mixin_range_row_item(text-size-15);
+        @include mixin_documents_four_columns(text-size-15);
+        &:nth-child(2n) {
+            td{
+                background-color: #e8e8e8;
+                border-top: 1px solid #DADDE6;
+                border-bottom: 1px solid #DADDE6;
+
+                &.last-column {
+                    position: relative;
+
+                    .sub-menu{
+                        visibility: hidden;
+                        top: 60px !important;
+                        right: 5px !important;
+                        @extend %subs-menu;
+                    }
+                    .actived{
+                        visibility: visible;
+                    }
+                }
+            }
+        }
     }
 }

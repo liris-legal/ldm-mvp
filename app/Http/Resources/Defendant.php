@@ -18,7 +18,8 @@ class Defendant extends JsonResource
         return [
             'id'                =>  $this->id,
             'name'              =>  $this->name,
-            'type_author_id'    =>  $this->submitter_id,
+            // 'type_author_id'    =>  $this->submitter_id,
+            'submitter'       =>  $this->typeAuthor
         ];
     }
 }

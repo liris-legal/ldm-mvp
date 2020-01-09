@@ -9,7 +9,7 @@ class Document extends Model
     public $fillable = ['url', 'name', 'number', 'submitter_id', 'type_document_id'];
     public $timestamps = true;
 
-    public function typeAuthor()
+    public function submiter()
     {
         return $this->belongsTo('App\Models\Submitter', 'submitter_id');
     }

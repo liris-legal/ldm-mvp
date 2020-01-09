@@ -2,11 +2,21 @@
 @import 'colors';
 @import 'size';
 @import "class-default";
+@import "vuetify-custom";
 
-// Defind styles for app
+$body-font-family: "Noto Sans JP", sans-serif !important;
+.v-application, .v-application .headline, .v-application .title {
+    font-family: $body-font-family;
+}
+
+// Defined styles for app
 .v-application{
     display: block;
     height: 100vh;
+}
+// login/register
+.invalid-feedback{
+    font-size: 14px;
 }
 .v-application{
     background-color: $color___background;
@@ -162,7 +172,7 @@
                             right: 5px !important;
                             @extend %subs-menu;
                         }
-                        .activated{
+                        .actived{
                             visibility: visible;
                         }
                     }
@@ -174,7 +184,7 @@
 .form-group{
     .form-group-content{
         background-color: $color___white;
-        padding: 2em 4em;
+        padding: 2em 4em 4em;
         .form-control {
             .label{
 
@@ -191,4 +201,10 @@
             }
         }
     }
+}
+.box-shadow-delete-active{
+    margin: 0 auto;
+    background-color: hsla(0, 1%, 6%, 0.61) !important;
+    filter: blur(2px);
+    pointer-events: none;
 }

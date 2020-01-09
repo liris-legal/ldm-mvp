@@ -8,9 +8,14 @@
     <v-btn
       v-if="!checkRoute('/')"
       icon
+      @click="goBack()"
     >
       <v-icon>arrow_back_ios</v-icon>
     </v-btn>
+    <range-alerts
+      v-if="notification"
+      :notification="notification"
+    />
     <v-spacer />
     <v-btn
       v-click-outside="hidden"
@@ -40,39 +45,40 @@
 	 * top-bar component include infomation person of user and logout.
 	 * @property {Boolean} displayMenu - Is to show/hidden Menu App-nav-top
 	 */
-  import ClickOutside from 'vue-click-outside'
-	export default {
-    directives: {
-	    /**
-			 * ClickOutside: Clicks Outside an Element
-			 */
-      ClickOutside
+  import rangeAlerts from '../globals/range-alerts'
+  import {mapState} from "vuex";
+
+  export default {
+    components: {
+      rangeAlerts
     },
 	  props: {
-      user: { type: Object, required: true, default: () => {} }
+      user: { type: Object, required: true, default: () => {} },
+      routeLogout: { type: String, required: true, default: () => '' }
 		},
 	  data() {
 	    return {
         displayMenu: false
 			}
-		},
+    },
+    computed: {
+      ...mapState(['notification']),
+    },
 		methods: {
 	    /**
 			 * @function logout
-			 * @async
 			 * @description user logout.
 			 */
-	    async logout() {
-				await axios({
-					method: 'post',
-					url: 'logout'
-				})
-				.then( res => {location.reload() })
-				.catch( err => {
-				  if(err.response.status === 401){
-            console.log(err.response.data.message);
-					}
+	    logout() {
+				axios({method: 'post', url: this.routeLogout})
+				.then( res => {
+          console.log(res);
+          // this.$store.dispatch('create_notification', res.data.message);
           location.reload();
+				})
+				.catch( err => {
+          console.log(err.response.data);
+          // location.reload();
 				});
 			},
       /**
