@@ -91,6 +91,10 @@
                        type="text"
                        class="input-form-group col-md-12"
                 >
+                <small
+                  v-if="errors"
+                  class="has-error"
+                >{{ catchError(errors, 'name') }}</small>
               </v-col>
             </v-col>
             <v-col
@@ -111,6 +115,10 @@
                   type="number"
                   class="input-form-group col-md-12"
                 >
+                <small
+                  v-if="errors"
+                  class="has-error"
+                >{{ catchError(errors, 'number') }}</small>
               </v-col>
             </v-col>
             <v-col
@@ -154,6 +162,10 @@
                     @input="datePicker = false"
                   />
                 </v-menu>
+                <small
+                  v-if="errors"
+                  class="has-error"
+                >{{ catchError(errors, 'file') }}</small>
               </v-col>
             </v-col>
           </v-row>
