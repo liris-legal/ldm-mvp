@@ -26,7 +26,7 @@ class StoreDocument extends FormRequest
     {
         $rules = [
             'name'    =>  'bail|required|max:150',
-            'url'    =>  'bail|size:2048|unique:documents',
+            'file'    =>  'bail|required|mimes:pdf,doc,docx|max:204800',
             'type_document_id'    =>  'bail|required',
             'submitter_id'    =>  'bail|required',
         ];

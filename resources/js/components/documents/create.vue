@@ -96,6 +96,10 @@
                   single-line
                   outlined
                 />
+                <small
+                  v-if="errors"
+                  class="has-error"
+                >{{ catchError(errors, 'name') }}</small>
               </v-col>
             </v-col>
             <v-col
@@ -114,10 +118,14 @@
                   v-model="document.number"
                   type="number"
                   class="col-md-12"
-                  dense
                   single-line
                   outlined
+                  dense
                 />
+                <small
+                  v-if="errors"
+                  class="has-error"
+                >{{ catchError(errors, 'number') }}</small>
               </v-col>
             </v-col>
             <v-col
@@ -162,6 +170,10 @@
                     @input="datePicker = false"
                   />
                 </v-menu>
+                <small
+                  v-if="errors"
+                  class="has-error"
+                >{{ catchError(errors, 'file') }}</small>
               </v-col>
             </v-col>
           </v-row>
