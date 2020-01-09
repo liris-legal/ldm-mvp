@@ -22,7 +22,7 @@
       icon
       @click="displayMenu = !displayMenu"
     >
-      <v-icon>apps</v-icon>
+      <v-icon>format_align_justify</v-icon>
     </v-btn>
     <v-list
       v-show="displayMenu"
