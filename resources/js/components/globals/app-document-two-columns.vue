@@ -9,7 +9,7 @@
           <div class="name">{{ document.name }}</div>
         </v-col>
         <v-col :class="columnOfClass.class2">
-          <div class="date">{{ document.created_at }}</div>
+          <div class="date">{{ document.created_at_wareki }}</div>
         </v-col>
       </v-row>
     </a>
