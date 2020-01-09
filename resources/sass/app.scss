@@ -53,22 +53,20 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
         }
     }
 }
-//.top-bar{
-    .list-menu-top-bar, %subs-menu{
-        position: absolute;
-        z-index: 9999;
-        right: 5px;
-        top: 115%;
-        @include background-text(#fff, #404040);
-        .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
-            cursor: pointer;
-            @include background-text(inherit, #404040);
-            &:hover{
-                @include background-text(#F5F7FA, #404040);
-            }
+.list-menu-top-bar, %subs-menu{
+    position: absolute;
+    z-index: 9999;
+    right: 5px;
+    top: 115%;
+    @include background-text(#fff, #404040);
+    .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
+        cursor: pointer;
+        @include background-text(inherit, #404040);
+        &:hover{
+            @include background-text(#F5F7FA, #404040);
         }
     }
-//}
+}
 .bottom-bar{
     .col-4{
         padding: 3px;

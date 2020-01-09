@@ -1,7 +1,9 @@
 <template>
   <v-app-bar
     color="#0B104D"
-    dense
+    fixed
+    elevate-on-scroll
+    height="46"
     dark
     class="top-bar"
   >

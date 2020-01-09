@@ -29,7 +29,9 @@
         <v-app>
             <app-top :user="{{Auth::user()}}" :route-logout="'{{ route('logout') }}'"></app-top>
             <div class="clearfix"></div>
-            @yield('content')
+            <v-content class="content-wrapper">
+                @yield('content')
+            </v-content>
             <div class="clearfix"></div>
             <app-bottom :route-create-lawsuit="'{{route('lawsuits.create')}}'"
                             :route-create-document="'{{route('documents.create', 0)}}'"
