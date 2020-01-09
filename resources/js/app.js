@@ -24,8 +24,8 @@ import router  from './router';
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('app-top-bar', require('./components/app-bar/top.vue').default);
-Vue.component('app-bottom-bar', require('./components/app-bar/bottom-fixed.vue').default);
+Vue.component('app-top', require('./components/apps/app-top.vue').default);
+Vue.component('app-bottom', require('./components/apps/app-bottom.vue').default);
 Vue.component('app-home', require('./components/home.vue').default);
 
 // type-lawsuits
@@ -62,6 +62,7 @@ const app = new Vue({
   router: router,
   vuetify: new Vuetify({
     icons: {
+      // provide the v-select icon using the mdi icon
       iconfont: 'mdiSvg',
     },
   }),

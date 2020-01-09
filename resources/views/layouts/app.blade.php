@@ -17,23 +17,26 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Noto+Sans+JP:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+    <!-- Hiragino Sans GB Fonts -->
+    <link rel="stylesheet" href="{{asset('css/fonts.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-    <v-app id="app">
-        <app-top-bar :user="{{Auth::user()}}" :route-logout="'{{ route('logout') }}'"></app-top-bar>
-        <div class="clearfix"></div>
-        @yield('content')
-        <div class="clearfix"></div>
-        <app-bottom-bar :route-create-lawsuit="'{{route('lawsuits.create')}}'"
-                        :route-create-document="'{{route('documents.create', 0)}}'"
-                        :route-list-type-lawsuits="'{{route('type-lawsuits.index')}}'"
-        >
-        </app-bottom-bar>
-    </v-app>
+    <div id="app">
+        <v-app>
+            <app-top :user="{{Auth::user()}}" :route-logout="'{{ route('logout') }}'"></app-top>
+            <div class="clearfix"></div>
+            @yield('content')
+            <div class="clearfix"></div>
+            <app-bottom :route-create-lawsuit="'{{route('lawsuits.create')}}'"
+                            :route-create-document="'{{route('documents.create', 0)}}'"
+                            :route-list-type-lawsuits="'{{route('type-lawsuits.index')}}'"
+            >
+            </app-bottom>
+        </v-app>
+    </div>
 </body>
 </html>
