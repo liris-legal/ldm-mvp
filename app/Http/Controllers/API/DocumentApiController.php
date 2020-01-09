@@ -7,11 +7,9 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocument;
-use App\Models\Document;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
 use Aws\Api\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Filesystem\Filesystem;
 
 class DocumentApiController extends Controller
@@ -72,6 +70,7 @@ class DocumentApiController extends Controller
     public function store(StoreDocument $request)
     {
         $store = $request->all();
+
         $this->validationFile($request, 'file', "pdf,doc,docx");
         $store['created_at'] = now();
 
@@ -79,7 +78,7 @@ class DocumentApiController extends Controller
         $fileName = str_replace(' ', '-', $upload->getClientOriginalName());
         $filename_hash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
         $filePath = '/uploads/documents/' . $filename_hash;
-        // \Storage::disk('s3')->put($filePath, file_get_contents($upload), 'public');
+        \Storage::disk('s3')->put($filePath, file_get_contents($upload), 'public');
         $store['url'] = $this->S3_DOCUMENTS . $filePath;
 
         $submitter = Submitter::findOrFail($request->submitter_id);
@@ -88,18 +87,23 @@ class DocumentApiController extends Controller
         if ($submitter && ( $submitter->description == 'plaintiff' || $submitter->description == 'defendant' )) {
             if ($typeDocument->description == 'evidence') {
                 $this->validationField($request, 'number', 'bail|required');
-                Document::create($store);
+                $document = Document::create($store);
             } else {
                 $store['number'] = 'NULL';
-                Document::create($store);
+                $document = Document::create($store);
             }
         } else {
             $store['number'] = 'NULL';
-            Document::create($store);
+            $document = Document::create($store);
         }
-
         $message = ['status' => 'success', 'content' => 'ドキュメント正常に作成されました'];
-        return response()->json(['url'=> route('documents.index'), 'message' => $message], 200);
+        return response()->json([
+            'url'=> route('documents.index', [
+                    'lawsuit' => $store['lawsuit_id'],
+                    'submitter' => $document['submitter_id']
+                ]),
+            'message' => $message
+        ], 200);
     }
 
     /**
