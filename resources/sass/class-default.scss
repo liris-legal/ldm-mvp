@@ -41,7 +41,9 @@
     @include app-btn();
 }
 .btn-primary{
-    @include background-text($color___primary, $color___white);
+    @include background-text($color___btn___primary, $color___white);
+    text-transform: capitalize;
+    padding: 14.5px 25px !important;
 }
 .dark-link{
     @include background-text(transparent, #636363);
@@ -80,7 +82,7 @@
         background-color: #FAFAFA;
 
         .name{
-            @extend .#{$textSizeName};
+            font-size: $textSizeName !important;
             margin-left: 40px;
         }
     }
@@ -101,7 +103,7 @@
             text-decoration: none;
 
             .name, .date{
-                @extend .#{$textSizeName};
+                font-size: $textSizeName !important;
                 margin-left: 40px;
             }
         }
@@ -123,7 +125,7 @@
             text-decoration: none;
 
             .name{
-                @extend .#{$textSizeName};
+                font-size: $textSizeName !important;
                 margin-left: 40px;
                 line-height: 40px;
                 height: 0px;
@@ -132,7 +134,7 @@
     }
 }
 .form-control{
-    @extend .text-size-18;
+    @include text_size(18px);
     label{
         line-height: 40px;
     }
@@ -209,7 +211,7 @@
         background-color: #FAFAFA;
 
         .name{
-            @extend .#{$textSizeName};
+            font-size: $textSizeName !important;
             margin-left: 40px;
         }
     }
@@ -218,7 +220,7 @@
     .documents-four-columns {
         cursor: pointer;
         .name {
-            @extend .#{$textSizeName};
+            font-size: $textSizeName !important;
             margin-left: 40px;
             line-height: 40px;
         }
@@ -229,7 +231,7 @@
     .range--row-item {
         cursor: pointer;
         .name {
-            @extend .#{$textSizeName};
+            font-size: $textSizeName !important;
             margin-left: 40px;
             line-height: 40px;
         }
@@ -237,10 +239,10 @@
 }
 .table {
     width: 100%;
-    @include mixin_thead_columns(text-size-15);
+    @include mixin_thead_columns(12px);
     tbody {
-        @include mixin_range_row_item(text-size-15);
-        @include mixin_documents_four_columns(text-size-15);
+        @include mixin_range_row_item(14px);
+        @include mixin_documents_four_columns(14px);
         &:nth-child(2n) {
             td{
                 background-color: #e8e8e8;

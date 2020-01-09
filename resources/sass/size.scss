@@ -1,24 +1,22 @@
 // Size
-.text-size-30{
-    font-size: 30px !important;
+@mixin text_size($size) {
+    .font-size-#{$size} { //font-size-14
+        font-size: $size + px !important;
+    }
 }
-.text-size-22{
-    font-size: 22px !important;
-}
-.text-size-20{
-    font-size: 20px !important;
-}
-.text-size-18{
-    font-size: 18px !important;
-}
-.text-size-15{
-    font-size: 15px !important;
-}
-.text-size-12{
-    font-size: 12px !important;
-}
+@include text_size(12);
+@include text_size(14);
+@include text_size(15);
+@include text_size(16);
+@include text_size(18);
+@include text_size(20);
+@include text_size(22);
+@include text_size(30);
 
 // Weight
-.font-weight-600{
-    font-weight: 600 !important;
+@mixin font_weight($weight:600) {
+    .font-weight-#{$weight}{
+        font-weight: $weight !important;
+    }
 }
+@include font_weight();

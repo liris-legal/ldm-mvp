@@ -8,7 +8,7 @@
       class="col col-6 pt-2 pb-2"
     >
       <div class="name">
-        {{document.name}}
+        {{ document.name }}
       </div>
     </td>
     <td
@@ -18,7 +18,7 @@
     >
       <div class="col-6 pa-0">
         <div class="name">
-          {{document.created_at}}
+          {{ document.created_at }}
         </div>
       </div>
       <template v-if="subMenu">
