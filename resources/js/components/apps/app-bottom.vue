@@ -2,6 +2,7 @@
   <v-bottom-navigation
     fixed
     light
+    height="56"
     class="bottom-bar"
   >
     <v-row>
