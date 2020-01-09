@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Document as DocumentResource;
 use App\Models\Document;
+use App\Models\Submitter;
 use App\Models\TypeDocument;
 use Illuminate\Http\Request;
 

@@ -7,7 +7,6 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocument;
-use App\Models\Document;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
 use Aws\Api\Validator;

@@ -4,10 +4,8 @@
 @import "class-default";
 @import "vuetify-custom";
 
-$body-font-family: "Noto Sans JP", sans-serif !important;
-.v-application, .v-application .headline, .v-application .title {
-    font-family: $body-font-family;
-}
+// Fonts
+$body-font-family: "Hiragino Sans GB", sans-serif !important;
 
 // Defined styles for app
 .v-application{
