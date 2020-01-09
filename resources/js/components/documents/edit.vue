@@ -8,8 +8,7 @@
         <h3 class="description"/>
       </v-col>
     </v-row>
-    <v-app>
-      <v-form
+    <v-form
         class="form-group clearfix"
         method="POST"
       >
@@ -171,7 +170,6 @@
           </v-row>
         </v-container>
       </v-form>
-    </v-app>
   </div>
 </template>
 

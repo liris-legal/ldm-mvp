@@ -60,7 +60,12 @@ Vue.mixin(mixin);
 const app = new Vue({
   el: '#app',
   router: router,
-  vuetify: new Vuetify({}),
+  vuetify: new Vuetify({
+    icons: {
+      // provide the v-select icon using the mdi icon
+      iconfont: 'mdiSvg',
+    },
+  }),
   // provide the store using the "store" option.
   // this will inject the store instance to all child components.
   store: stores,
