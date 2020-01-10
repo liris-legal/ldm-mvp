@@ -14,10 +14,6 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 
 class DocumentApiController extends Controller
 {
-    public function __construct()
-    {
-        $this->S3_DOCUMENTS = env('AWS_URL', 'local');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +36,6 @@ class DocumentApiController extends Controller
     {
         $extension = $request[$name]->getClientOriginalExtension();
         $checkType = in_array($extension, [$allowedfileExtension]);
-        // dd($checkType);
         if (!$checkType) {
             return $request->validate([
                 'file' => 'mimes:' . $allowedfileExtension
@@ -64,44 +59,43 @@ class DocumentApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreDocument $request)
     {
         $store = $request->all();
 
-        $this->validationFile($request, 'file', "pdf,doc,docx");
-        $store['created_at'] = now();
+//        $this->validationFile($request, 'file', "pdf,doc,docx");
 
         $upload = $request->file('file');
         $fileName = str_replace(' ', '-', $upload->getClientOriginalName());
         $filename_hash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
         $filePath = '/uploads/documents/' . $filename_hash;
         \Storage::disk('s3')->put($filePath, file_get_contents($upload), 'public');
-        $store['url'] = $this->S3_DOCUMENTS . $filePath;
+        $store['url'] = $filePath;
 
         $submitter = Submitter::findOrFail($request->submitter_id);
         $typeDocument = TypeDocument::findOrFail($request->type_document_id);
 
-        if ($submitter && ( $submitter->description == 'plaintiff' || $submitter->description == 'defendant' )) {
+        if ($submitter && ($submitter->description == 'plaintiff' || $submitter->description == 'defendant')) {
             if ($typeDocument->description == 'evidence') {
-                $this->validationField($request, 'number', 'bail|required');
-                $document = Document::create($store);
+                $this->validationField($request, 'number', 'bail|required|numeric');
             } else {
                 $store['number'] = 'NULL';
-                $document = Document::create($store);
             }
         } else {
             $store['number'] = 'NULL';
-            $document = Document::create($store);
         }
+
+        Document::create($store);
+
         $message = ['status' => 'success', 'content' => 'ドキュメント正常に作成されました'];
         return response()->json([
-            'url'=> route('documents.index', [
-                    'lawsuit' => $store['lawsuit_id'],
-                    'submitter' => $document['submitter_id']
-                ]),
+            'url' => route('documents.index', [
+                'lawsuit' => $store['lawsuit_id'],
+                'submitter' => $submitter->name
+            ]),
             'message' => $message
         ], 200);
     }
@@ -109,8 +103,8 @@ class DocumentApiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -121,7 +115,7 @@ class DocumentApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

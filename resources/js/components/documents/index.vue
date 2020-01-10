@@ -5,7 +5,7 @@
       <v-col class="text-right">
         <v-btn
           v-ripple
-          class="mr-0-auto btn-primary pa-3 height-auto text-size-18 font-weight-600"
+          class="mr-0-auto btn-primary height-auto text-size-18 font-weight-600"
         >
           All View
         </v-btn>
@@ -15,7 +15,7 @@
     <div class="evidence-statement">
       <v-row>
         <v-col class="col-12 header-content">
-          <h3 class="description">
+          <h3 class="description font-size-18">
             証拠説明書
           </h3>
         </v-col>
@@ -35,7 +35,7 @@
     <div class="evidence-document">
       <v-row>
         <v-col class="col-12 header-content">
-          <h3 class="description">
+          <h3 class="description font-size-18">
             {{submitter === 'plaintiff' ? "甲" : "乙"}}号証
           </h3>
         </v-col>

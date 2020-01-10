@@ -2,7 +2,7 @@
   <div class="container-fluid cases-page">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-30">
+        <h2 class="title-name text-size-18">
           民事事件
         </h2>
         <h3 class="description" />

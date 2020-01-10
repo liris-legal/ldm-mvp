@@ -120,9 +120,9 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
             margin-top: 1em;
         }
     }
-    @include app_thead(text-size-15);
-    @include app_document(text-size-18);
-    @include app-type-lawsuits(text-size-15);
+    @include app_thead(12px);
+    @include app_document(14px);
+    @include app-type-lawsuits(15px);
 }
 
 // list cases component
@@ -186,7 +186,7 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
         padding: 2em 4em 4em;
         .form-control {
             .label{
-
+                font-size: 14px !important;
             }
             .input {
                 position: relative;
@@ -197,6 +197,7 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
                 .icon-clear{
                     right: -70px;
                 }
+                font-size: 16px;
             }
         }
     }
@@ -206,4 +207,9 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
     background-color: hsla(0, 1%, 6%, 0.61) !important;
     filter: blur(2px);
     pointer-events: none;
+}
+
+.input input {
+    font-size: 16px;
+    font-family: $body-font-family;
 }

@@ -2,7 +2,7 @@
   <div class="container-fluid document document--create clearfix">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-30">
+        <h2 class="title-name text-size-18">
           ファイルをアップロード
         </h2>
         <h3 class="description"/>
@@ -35,6 +35,7 @@
                   item-value="id"
                   label="提出者"
                   single-line
+                  dense
                   outlined
                 />
               </v-col>
@@ -62,6 +63,7 @@
                   label="書面種類"
                   single-line
                   outlined
+                  dense
                 />
               </v-col>
             </v-col>
@@ -84,13 +86,16 @@
                   item-value="name"
                   single-line
                   outlined
+                  dense
                 />
-                <input v-else
-                       id="document-name"
-                       v-model="document.name"
-                       type="text"
-                       class="input-form-group col-md-12"
-                >
+                <v-text-field v-else
+                  id="document-name"
+                  v-model="document.name"
+                  class="col-md-12"
+                  dense
+                  single-line
+                  outlined
+                />
                 <small
                   v-if="errors"
                   class="has-error"
@@ -108,13 +113,15 @@
                   class="font-weight-600"
                 >書面番号</label>
               </v-col>
-              <v-col class="col-9 pa-0 input">
-                <input
-                  id="document-number"
+              <v-col class="col-9 pa-0 input" id="document-number">
+                <v-text-field
                   v-model="document.number"
                   type="number"
-                  class="input-form-group col-md-12"
-                >
+                  class="col-md-12"
+                  single-line
+                  outlined
+                  dense
+                />
                 <small
                   v-if="errors"
                   class="has-error"
@@ -152,6 +159,7 @@
                       append-icon="event"
                       outlined
                       v-on="on"
+                      dense
                     />
                   </template>
                   <v-date-picker
