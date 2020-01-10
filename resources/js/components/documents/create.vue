@@ -5,197 +5,201 @@
         <h2 class="title-name text-size-18">
           ファイルをアップロード
         </h2>
-        <h3 class="description"/>
+        <h3 class="description" />
       </v-col>
     </v-row>
     <v-form
-        class="form-group clearfix"
-        method="POST"
-      >
-        <v-container class="form-group-content">
-          <v-row class="ma-0">
+      class="form-group clearfix"
+      method="POST"
+    >
+      <v-container class="form-group-content">
+        <v-row class="ma-0">
+          <v-col
+            cols="12"
+            class="row form-control pa-2"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="submitter"
+                class="font-weight-600"
+              >提出者</label>
+            </v-col>
             <v-col
-              cols="12"
-              class="row form-control pa-2"
+              id="submitter"
+              class="col-9 pa-0 input"
             >
-              <v-col class="col-3 pa-0 label">
-                <label
-                  for="submitter"
-                  class="font-weight-600"
-                >提出者</label>
-              </v-col>
-              <v-col
-                id="submitter"
-                class="col-9 pa-0 input"
+              <v-select
+                v-model="submitter_id"
+                :items="submitters"
+                item-text="name"
+                item-value="id"
+                label="提出者"
+                single-line
+                dense
+                outlined
+              />
+            </v-col>
+          </v-col>
+          <v-col
+            cols="12"
+            class="row form-control pa-2"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="document-type"
+                class="font-weight-600"
+              >書面種類</label>
+            </v-col>
+            <v-col
+              id="document-type"
+              class="col-9 pa-0 input"
+            >
+              <v-select
+                v-model="type_document_id"
+                :items="typeDocuments"
+                :disabled="disabled"
+                item-text="name"
+                item-value="id"
+                label="書面種類"
+                single-line
+                outlined
+                dense
+              />
+            </v-col>
+          </v-col>
+          <v-col
+            cols="12"
+            class="row form-control pa-2"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="document-name"
+                class="font-weight-600"
+              >書面名</label>
+            </v-col>
+            <v-col class="col-9 pa-0 input" id="document-name">
+              <v-select
+                v-if="type_document_id === 2"
+                v-model="document.name"
+                :items="nameEvidenceDocuments.filter(item => item.submitter_id === submitter_id)"
+                label="書面名"
+                item-text="name"
+                item-value="name"
+                single-line
+                outlined
+                dense
+              />
+              <v-text-field
+                v-else
+                v-model="document.name"
+                class="col-md-12"
+                dense
+                single-line
+                outlined
+              />
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'name') }}</small>
+            </v-col>
+          </v-col>
+          <v-col
+            v-if="type_document_id === 2"
+            cols="12"
+            class="row form-control pa-2"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="document-number"
+                class="font-weight-600"
+              >書面番号</label>
+            </v-col>
+            <v-col
+              id="document-number"
+              class="col-9 pa-0 input"
+            >
+              <v-text-field
+                v-model="document.number"
+                type="number"
+                class="col-md-12"
+                single-line
+                outlined
+                dense
+              />
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'number') }}</small>
+            </v-col>
+          </v-col>
+          <v-col
+            cols="12"
+            class="row form-control pa-2"
+          >
+            <v-col class="col-3 pa-0 label">
+              <label
+                for="date"
+                class="font-weight-600"
+              >提出日</label>
+            </v-col>
+            <v-col
+              id="date"
+              class="col-9 pa-0 input"
+            >
+              <v-menu
+                ref="datePicker"
+                v-model="datePicker"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
               >
-                <v-select
-                  v-model="submitter_id"
-                  :items="submitters"
-                  item-text="name"
-                  item-value="id"
-                  label="提出者"
-                  single-line
-                  dense
-                  outlined
-                />
-              </v-col>
-            </v-col>
-            <v-col
-              cols="12"
-              class="row form-control pa-2"
-            >
-              <v-col class="col-3 pa-0 label">
-                <label
-                  for="document-type"
-                  class="font-weight-600"
-                >書面種類</label>
-              </v-col>
-              <v-col
-                id="document-type"
-                class="col-9 pa-0 input"
-              >
-                <v-select
-                  v-model="type_document_id"
-                  :items="typeDocuments"
-                  :disabled="disabled"
-                  item-text="name"
-                  item-value="id"
-                  label="書面種類"
-                  single-line
-                  outlined
-                  dense
-                />
-              </v-col>
-            </v-col>
-            <v-col
-              cols="12"
-              class="row form-control pa-2"
-            >
-              <v-col class="col-3 pa-0 label">
-                <label
-                  for="document-name"
-                  class="font-weight-600"
-                >書面名</label>
-              </v-col>
-              <v-col class="col-9 pa-0 input">
-                <v-select v-if="type_document_id === 2"
-                  v-model="document.name"
-                  :items="nameEvidenceDocuments.filter(item => item.submitter_id === submitter_id)"
-                  label="書面名"
-                  item-text="name"
-                  item-value="name"
-                  single-line
-                  outlined
-                  dense
-                />
-                <v-text-field v-else
-                  id="document-name"
-                  v-model="document.name"
-                  class="col-md-12"
-                  dense
-                  single-line
-                  outlined
-                />
-                <small
-                  v-if="errors"
-                  class="has-error"
-                >{{ catchError(errors, 'name') }}</small>
-              </v-col>
-            </v-col>
-            <v-col
-              v-if="type_document_id === 2"
-              cols="12"
-              class="row form-control pa-2"
-            >
-              <v-col class="col-3 pa-0 label">
-                <label
-                  for="document-number"
-                  class="font-weight-600"
-                >書面番号</label>
-              </v-col>
-              <v-col class="col-9 pa-0 input" id="document-number">
-                <v-text-field
-                  v-model="document.number"
-                  type="number"
-                  class="col-md-12"
-                  single-line
-                  outlined
-                  dense
-                />
-                <small
-                  v-if="errors"
-                  class="has-error"
-                >{{ catchError(errors, 'number') }}</small>
-              </v-col>
-            </v-col>
-            <v-col
-              cols="12"
-              class="row form-control pa-2"
-            >
-              <v-col class="col-3 pa-0 label">
-                <label
-                  for="date"
-                  class="font-weight-600"
-                >提出日</label>
-              </v-col>
-              <v-col
-                id="date"
-                class="col-9 pa-0 input"
-              >
-                <v-menu
-                  ref="datePicker"
-                  v-model="datePicker"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  max-width="290px"
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      class="selector"
-                      v-model="dateFormatted"
-                      @blur="date = parseDate(dateFormatted)"
-                      append-icon="event"
-                      outlined
-                      v-on="on"
-                      dense
-                    />
-                  </template>
-                  <v-date-picker
-                    v-model="date"
-                    locale="ja-jp"
-                    :first-day-of-week="1"
-                    no-title
-                    @input="datePicker = false"
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="dateFormatted"
+                    class="selector"
+                    append-icon="event"
+                    outlined
+                    dense
+                    @blur="date = parseDate(dateFormatted)"
+                    v-on="on"
                   />
-                </v-menu>
-                <small
-                  v-if="errors"
-                  class="has-error"
-                >{{ catchError(errors, 'file') }}</small>
-              </v-col>
+                </template>
+                <v-date-picker
+                  v-model="date"
+                  locale="ja-jp"
+                  :first-day-of-week="1"
+                  no-title
+                  @input="datePicker = false"
+                />
+              </v-menu>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'file') }}</small>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="text-center">
-              <input
-                id="file-upload"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                style="display:none"
-                @change="onFileChange"
-              >
-              <v-btn
-                v-ripple
-                class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600"
-                @click.native="openFileDialog"
-              >
-                アップロード
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="text-center">
+            <input
+              id="file-upload"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              style="display:none"
+              @change="onFileChange"
+            >
+            <v-btn
+              v-ripple
+              class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600"
+              @click.native="openFileDialog"
+            >
+              アップロード
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-form>
   </div>
 </template>
@@ -235,6 +239,19 @@
         file: null,
         errors: []
       }
+    },
+    computed: {
+      computedDateFormatted () {
+        return this.formatDate(this.date)
+      },
+    },
+    watch: {
+      date (val) {
+        this.dateFormatted = this.formatDate(this.date)
+      },
+      submitter_id (val) {
+        this.onChangeSubmitter(val);
+      },
     },
     mounted() {
       console.log('create document mounted')
@@ -329,19 +346,6 @@
         } else {
           this.disabled = false;
         }
-      },
-    },
-    computed: {
-      computedDateFormatted () {
-        return this.formatDate(this.date)
-      },
-    },
-    watch: {
-      date (val) {
-        this.dateFormatted = this.formatDate(this.date)
-      },
-      submitter_id (val) {
-        this.onChangeSubmitter(val);
       },
     },
   }

@@ -23,10 +23,11 @@
       <table class="table">
         <thead-columns :thead="theadLabels" />
         <tbody>
-          <range-table-row v-for="document in explainDocuments"
-                           :key="'explain-document-'+document.id"
-                           :document="document"
-                           :sub-menu="Boolean(false)"
+          <range-table-row
+            v-for="document in explainDocuments"
+            :key="'explain-document-'+document.id"
+            :document="document"
+            :sub-menu="Boolean(false)"
           />
         </tbody>
       </table>
@@ -36,18 +37,19 @@
       <v-row>
         <v-col class="col-12 header-content">
           <h3 class="description font-size-18">
-            {{submitter === 'plaintiff' ? "甲" : "乙"}}号証
+            {{ submitter === 'plaintiff' ? "甲" : "乙" }}号証
           </h3>
         </v-col>
       </v-row>
       <table class="table">
         <thead-columns :thead="theadLabels" />
         <tbody>
-          <range-table-row v-for="document in evidenceDocuments"
-                           :key="'evidence-document-'+document.id"
-                           :document="document"
-                           :submitter="submitter"
-                           :lawsuit-id="parseInt($route.params.lawsuitId)"
+          <range-table-row
+            v-for="document in evidenceDocuments"
+            :key="'evidence-document-'+document.id"
+            :document="document"
+            :submitter="submitter"
+            :lawsuit-id="parseInt($route.params.lawsuitId)"
           />
         </tbody>
       </table>
@@ -56,7 +58,7 @@
 </template>
 <script>
   export default {
-    name: "document-index",
+    name: "DocumentIndex",
     props: {
       lawsuitId: {
         required: true,

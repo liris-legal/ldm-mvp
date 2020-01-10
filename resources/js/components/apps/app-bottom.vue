@@ -68,7 +68,7 @@
 	 * @property {Boolean} showAdd - Is to show/hidden a block.
 	 */
   export default {
-    name: "App-Bottom",
+    name: "AppBottom",
     props: {
       routeCreateLawsuit: { type: String, required: true, default: () => '' },
       routeListTypeLawsuits: { type: String, required: true, default: () => '' },

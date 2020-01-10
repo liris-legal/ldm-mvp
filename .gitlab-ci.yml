@@ -84,7 +84,7 @@ unit_test:
     - vendor/bin/phpunit --colors --debug
 
     # ES linter
-    - ./node_modules/.bin/eslint --ext .js,.vue resources/js
+    - ./node_modules/.bin/eslint --ext .js,.vue resources
 
 deploy_staging:
   stage: deploy

@@ -1,5 +1,8 @@
 <template>
-  <div class="app-type-lawsuits" v-if="routeText">
+  <div
+    v-if="routeText"
+    class="app-type-lawsuits"
+  >
     <a
       :href="routeLink"
       class="folder-link"

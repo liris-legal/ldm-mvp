@@ -58,7 +58,7 @@
 
 <script>
   export default {
-    name: "document-four-columns",
+    name: "DocumentFourColumns",
     data() {
       return {
         isShowDelete: false,

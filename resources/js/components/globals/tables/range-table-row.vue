@@ -25,10 +25,10 @@
         <v-spacer />
         <div class="col-6 pa-0 text-right col-btn font-weight-600 text-size-20">
           <v-btn
+            v-click-outside="hidden"
             icon
             @click="isShowSubmenu = !isShowSubmenu"
             @click.stop=""
-            v-click-outside="hidden"
           >
             ...
           </v-btn>
@@ -54,7 +54,7 @@
 
 <script>
   export default {
-    name: "range-row-item",
+    name: "RangeRowItem",
     props: {
       lawsuitId: {required: false,  type: Number, default: () => 0},
       document: {required: true,  type: Object, default: () => {}},
@@ -67,6 +67,9 @@
         isShowDelete: false,
       }
     },
+    mounted() {
+      // console.log('range-row-item mounted');
+    },
     methods: {
       /**
        * @function hidden
@@ -76,9 +79,6 @@
         this.isShowSubmenu = false;
         this.isShowDelete = false;
       },
-    },
-    mounted() {
-      // console.log('range-row-item mounted');
     }
   }
 </script>

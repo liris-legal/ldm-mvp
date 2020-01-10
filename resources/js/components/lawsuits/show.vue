@@ -69,7 +69,7 @@
 </template>
 <script>
   export default {
-    name: "Lawsuit-show",
+    name: "LawsuitShow",
     props: {
       routePlaintiffDocumentsIndex: {
         required: true,
