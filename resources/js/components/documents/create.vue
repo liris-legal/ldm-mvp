@@ -96,6 +96,7 @@
                 dense
                 single-line
                 outlined
+                required
               />
               <small
                 v-if="errors"
@@ -125,6 +126,7 @@
                 single-line
                 outlined
                 dense
+                required
               />
               <small
                 v-if="errors"
@@ -183,13 +185,15 @@
         </v-row>
         <v-row>
           <v-col class="text-center">
-            <input
+            <v-file-input
+              v-model="file"
               id="file-upload"
               type="file"
               accept=".pdf,.doc,.docx"
               style="display:none"
-              @change="onFileChange"
-            >
+              show-size
+              :rules="rules"
+            />
             <v-btn
               v-ripple
               class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600"
@@ -211,6 +215,7 @@
       storeRoute: { required: true, type: String, default: ''},
       lawsuitId: {required: true,  type: String, default: ''},
       typeDocuments: {required: true,  type: Array, default: () => []},
+      submitters: {required: true,  type: Array, default: () => []},
     },
     data() {
       return {
@@ -220,23 +225,20 @@
         },
         type_document_id: 1,
         submitter_id: 1,
-        submitters: [
-          { id: 1, name: '原告' },
-          { id: 2, name: '被告' },
-          { id: 3, name: '裁判所' },
-          { id: 4, name: 'その他' },
-        ],
         nameEvidenceDocuments: [
           { id: 1, name: '証拠説明書', submitter_id: 1 },
           { id: 2, name: '甲号証', submitter_id: 1 },
-          { id: 3, name: '証拠説明書', submitter_id: 2 },
-          { id: 4, name: '乙号証', submitter_id: 2 },
+          { id: 3, name: '証拠説明書', submitter_id: 3 },
+          { id: 4, name: '乙号証', submitter_id: 3 },
         ],
         date: new Date().toISOString().substr(0, 10),
         dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
         datePicker: false,
         disabled: false,
         file: null,
+        rules: [
+          value => !value || value.size < 2048000 || 'File size should be less than 2048 MB!',
+        ],
         errors: []
       }
     },
@@ -252,6 +254,9 @@
       submitter_id (val) {
         this.onChangeSubmitter(val);
       },
+      file (val){
+        if (val) this.postData();
+      },
     },
     mounted() {
       console.log('create document mounted')
@@ -265,18 +270,6 @@
         document.getElementById('file-upload').click();
       },
 
-      /**
-       * @function onFileChange
-       * @description to handle file selected and auto send submit request to create document
-       */
-      onFileChange(e) {
-        var self = this;
-        var files = e.target.files || e.dataTransfer.files;
-        if (files.length > 0) {
-          self.file = files[0];
-        }
-        this.postData();
-      },
       /**
        * postData is used to create document
        * @return {object}
@@ -297,6 +290,9 @@
         axios.post(this.storeRoute, formData)
           .then(res => {
             console.log(res);
+            this.$store.dispatch('create_notification', res.data.message);
+            this.file = null;
+            setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             if (err.response.status === 422) {
@@ -340,7 +336,7 @@
        */
       onChangeSubmitter(submitter_id) {
         console.log('changed: ' + submitter_id);
-        if (submitter_id === 3 || submitter_id === 4) {
+        if (this.submitters.find(s => s.id === submitter_id && (s.description === 'court' || s.description === 'other_party'))) {
           this.type_document_id = 3;
           this.disabled = true;
         } else {
@@ -351,8 +347,3 @@
   }
 </script>
 
-<style scoped>
-  .form-control .input-form-group {
-    min-height: 56px;
-  }
-</style>

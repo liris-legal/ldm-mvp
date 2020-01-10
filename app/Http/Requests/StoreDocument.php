@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use App\Models\Submitter;
+use App\Models\TypeDocument;
 
 class StoreDocument extends FormRequest
 {
@@ -24,12 +25,22 @@ class StoreDocument extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name'    =>  'bail|required|max:150',
-            'file'    =>  'bail|required|mimes:pdf,doc,docx|max:204800',
-            'type_document_id'    =>  'bail|required',
-            'submitter_id'    =>  'bail|required',
+        $submitter = Submitter::findOrFail($this->submitter_id);
+        $typeDocument = TypeDocument::findOrFail($this->type_document_id);
+        return ($submitter->description == 'plaintiff' || $submitter->description == 'defendant')
+        && ($typeDocument->description == 'evidence') ? [
+            'number' => 'bail|required|numeric',
+            'name' => 'bail|required|max:150',
+            'file' => 'bail|required|mimes:pdf,doc,docx|max:204800',
+            'type_document_id' => 'bail|required',
+            'submitter_id' => 'bail|required',
+            'created_at' => 'bail|required',
+        ] : [
+            'name' => 'bail|required|max:150',
+            'file' => 'bail|required|mimes:pdf,doc,docx|max:204800',
+            'type_document_id' => 'bail|required',
+            'submitter_id' => 'bail|required',
+            'created_at' => 'bail|required',
         ];
-        return $rules;
     }
 }
