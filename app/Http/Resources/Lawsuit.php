@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Defendant as DefendantResource;
+use App\Http\Resources\Document as DocumentResource;
 use App\Http\Resources\DefendantRepresentative as DefendantRepresentativeResource;
 use App\Http\Resources\Plaintiff as PlaintiffResource;
 use App\Http\Resources\PlaintiffRepresentative as PlaintiffRepresentativeResource;
@@ -55,6 +56,9 @@ class Lawsuit extends JsonResource
                     return new OtherPartyResource($party);
                 }
             ),
+            'documents' => $this->documents->map(function ($document) {
+                return new DocumentResource($document);
+            }),
             'created_at'                       => $this->created_at->isoFormat('LL'),
             'updated_at'                       => $this->updated_at ? $this->updated_at->isoFormat('LL') : null,
             'created_at_wareki'                => $this->created_at->formatLocalized($format),

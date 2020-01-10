@@ -55,4 +55,12 @@ class Lawsuit extends Model
     {
         return $this->hasMany('App\Models\OtherParty');
     }
+
+    /**
+     * Get all other parties for Cases.
+     */
+    public function documents()
+    {
+        return $this->hasMany('App\Models\Document');
+    }
 }

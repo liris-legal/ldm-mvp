@@ -19,6 +19,7 @@ class DocumentController extends Controller
      */
     public function index($lawsuitId, $submitter)
     {
+        $documents = Document::where('type_document_id', 1)->whereAnd('submitter_id', 1)->get();
         return view('content.documents.index', ['lawsuitId' => $lawsuitId, 'submitter' => $submitter]);
     }
 
