@@ -25,6 +25,7 @@ class CreateLawsuitsTable extends Migration
         });
 
         DB::statement('ALTER TABLE lawsuits CHANGE type_lawsuit_id type_lawsuit_id int(6) zerofill NOT NULL');
+        DB::statement('ALTER TABLE lawsuits CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
     }
 
     /**
