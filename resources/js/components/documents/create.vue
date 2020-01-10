@@ -256,6 +256,7 @@
       },
       file (val){
         if (val) this.postData();
+        this.file = null;
       },
     },
     mounted() {
@@ -291,7 +292,6 @@
           .then(res => {
             console.log(res);
             this.$store.dispatch('create_notification', res.data.message);
-            this.file = null;
             setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
