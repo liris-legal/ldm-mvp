@@ -24,8 +24,8 @@ class CreateDocumentsTable extends Migration
             $table->timestamps();
 
             $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
-            $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
             $table->foreign('type_document_id')->references('id')->on('type_documents')->onDelete('cascade');
+            $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
 
         DB::statement('ALTER TABLE documents CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT NOT NULL');

@@ -20,11 +20,11 @@ class Defendant extends JsonResource
             'id'                =>  $this->id,
             'name'              =>  $this->name,
             'type_author_id'    =>  $this->submitter_id,
-            'documents'         =>  $this->typeAuthor->documents->map(
-                function ($document) {
-                    return new DocumentResource($document);
-                }
-            )
+            // 'documents'         =>  $this->submitter->documents->map(
+            //     function ($document) {
+            //         return new DocumentResource($document);
+            //     }
+            // )
         ];
     }
 }

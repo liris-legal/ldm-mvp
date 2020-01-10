@@ -19,8 +19,16 @@ class Plaintiff extends Model
     /**
      * Get type author for the Plaintiff.
      */
-    public function typeAuthor()
+    public function submitter()
     {
         return $this->belongsTo('App\Models\Submitter', 'submitter_id');
+    }
+
+    /**
+     * Get documents for plaintiff.
+     */
+    public function documents()
+    {
+        return $this->hasMany('App\Models\Document');
     }
 }

@@ -22,7 +22,7 @@ class Document extends JsonResource
             'name'                     =>  $this->name,
             'url'                      =>  $this->url,
             'type_document'            =>  $this->typeDocument,
-            'submitter_description'    =>  $this->submiter->description,
+            'submitter_description'    =>  $this->submitter->description,
             'created_at'               =>  $this->created_at,
             'created_at_wareki'        =>  $this->created_at->isoFormat('YYYY年MM月DD日'),
             'updated_at'               =>  $this->updated_at ? $this->updated_at->isoFormat('LL') : null,

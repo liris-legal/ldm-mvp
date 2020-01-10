@@ -13,7 +13,7 @@ class Submitter extends Model
      */
     public function plaintiffs()
     {
-        return $this->hasMany('App\Models\Plaintiff', 'submitter_id');
+        return $this->hasMany('App\Models\Plaintiff');
     }
 
     /**
@@ -21,7 +21,7 @@ class Submitter extends Model
      */
     public function plaintiffRepresentatives()
     {
-        return $this->hasMany('App\Models\PlaintiffRepresentative', 'submitter_id');
+        return $this->hasMany('App\Models\PlaintiffRepresentative');
     }
 
     /**
@@ -29,7 +29,7 @@ class Submitter extends Model
      */
     public function defendants()
     {
-        return $this->hasMany('App\Models\Defendant', 'submitter_id');
+        return $this->hasMany('App\Models\Defendant');
     }
 
     /**
@@ -37,15 +37,15 @@ class Submitter extends Model
      */
     public function defendantsRepresentatives()
     {
-        return $this->hasMany('App\Models\DefendantsRepresentative', 'submitter_id');
+        return $this->hasMany('App\Models\DefendantsRepresentative');
     }
 
     /**
      * Get all plaintiffs for submitter.
      */
-    public function otherParty()
+    public function otherParties()
     {
-        return $this->hasMany('App\Models\OtherParty', 'submitter_id');
+        return $this->hasMany('App\Models\OtherParty');
     }
 
     /**
@@ -53,6 +53,6 @@ class Submitter extends Model
      */
     public function documents()
     {
-        return $this->hasMany('App\Models\Document', 'submitter_id');
+        return $this->hasMany('App\Models\Document');
     }
 }
