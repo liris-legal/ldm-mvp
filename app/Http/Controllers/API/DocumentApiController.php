@@ -7,10 +7,7 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocument;
-use App\Models\Submitter;
-use App\Models\TypeDocument;
-use Aws\Api\Validator;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Storage;
 
 class DocumentApiController extends Controller
 {
@@ -22,25 +19,6 @@ class DocumentApiController extends Controller
     public function index()
     {
         //
-    }
-
-    public function validationField(Request $request, $name, $validates)
-    {
-        $validator = $request->validate([
-            $name => $validates
-        ]);
-        return $validator;
-    }
-
-    public function validationFile(Request $request, $name, $allowedfileExtension)
-    {
-        $extension = $request[$name]->getClientOriginalExtension();
-        $checkType = in_array($extension, [$allowedfileExtension]);
-        if (!$checkType) {
-            return $request->validate([
-                'file' => 'mimes:' . $allowedfileExtension
-            ]);
-        }
     }
 
     /**
@@ -64,38 +42,20 @@ class DocumentApiController extends Controller
      */
     public function store(StoreDocument $request)
     {
-        $store = $request->all();
+        $data = $request->all();
 
-//        $this->validationFile($request, 'file', "pdf,doc,docx");
+        $file = $request->file('file');
+        $fileName = str_replace(' ', '-', $file->getClientOriginalName());
+        $filenameHash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
+        $filePath = '/uploads/documents/' . $filenameHash;
+        Storage::put($filePath, file_get_contents($file), 'public');
+        $data['url'] = $filenameHash;
 
-        $upload = $request->file('file');
-        $fileName = str_replace(' ', '-', $upload->getClientOriginalName());
-        $filename_hash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
-        $filePath = '/uploads/documents/' . $filename_hash;
-        \Storage::disk('s3')->put($filePath, file_get_contents($upload), 'public');
-        $store['url'] = $filePath;
+        Document::create($data);
 
-        $submitter = Submitter::findOrFail($request->submitter_id);
-        $typeDocument = TypeDocument::findOrFail($request->type_document_id);
-
-        if ($submitter && ($submitter->description == 'plaintiff' || $submitter->description == 'defendant')) {
-            if ($typeDocument->description == 'evidence') {
-                $this->validationField($request, 'number', 'bail|required|numeric');
-            } else {
-                $store['number'] = 'NULL';
-            }
-        } else {
-            $store['number'] = 'NULL';
-        }
-
-        Document::create($store);
-
-        $message = ['status' => 'success', 'content' => 'ドキュメント正常に作成されました'];
+        $message = ['status' => 'success', 'content' => 'ファイルをアップロードしました。'];
         return response()->json([
-            'url' => route('documents.index', [
-                'lawsuit' => $store['lawsuit_id'],
-                'submitter' => $submitter->name
-            ]),
+            'url' => route('lawsuits.show', $data['lawsuit_id']),
             'message' => $message
         ], 200);
     }

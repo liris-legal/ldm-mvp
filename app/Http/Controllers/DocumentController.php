@@ -31,7 +31,7 @@ class DocumentController extends Controller
     public function create($lawsuitId)
     {
         $typeDocuments = TypeDocument::all();
-        $submitters = Submitter::all();
+        $submitters = Submitter::where('description', 'NOT LIKE', '%representative')->get();
 
         return view('content.documents.create', [
             'lawsuitId' => $lawsuitId,
@@ -45,7 +45,6 @@ class DocumentController extends Controller
      *
      * @param $lawsuitId
      * @param $documentId
-     * @param $submitter
      * @return \Illuminate\Http\Response
      */
     public function edit($lawsuitId, $documentId)

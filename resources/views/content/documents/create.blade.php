@@ -3,6 +3,7 @@
 @section('content')
     <document-create :lawsuit-id="'{{ $lawsuitId }}'"
                      :type-documents="{{ $typeDocuments }}"
+                     :submitters="{{ $submitters }}"
                      :store-route="'{{route('documents.store')}}'"
     >
     </document-create>
