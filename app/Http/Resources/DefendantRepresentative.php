@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Document as DocumentResource;
 
 class DefendantRepresentative extends JsonResource
 {
@@ -17,8 +18,12 @@ class DefendantRepresentative extends JsonResource
         return [
             'id'                =>  $this->id,
             'name'              =>  $this->name,
-            // 'type_author_id'    =>  $this->submitter_id,
-            'submitter'       =>  $this->typeAuthor
+            'type_author_id'    =>  $this->submitter_id,
+            'documents'         =>  $this->typeAuthor->documents->map(
+                function ($document) {
+                    return new DocumentResource($document);
+                }
+            )
         ];
     }
 }

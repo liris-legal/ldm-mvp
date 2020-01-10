@@ -9,7 +9,7 @@ class Submitter extends Model
     public $fillable = ['name'];
 
     /**
-     * Get all plaintiffs for type Author.
+     * Get all plaintiffs for submitter.
      */
     public function plaintiffs()
     {
@@ -17,7 +17,7 @@ class Submitter extends Model
     }
 
     /**
-     * Get all plaintiffs for type Author.
+     * Get all plaintiffs for submitter.
      */
     public function plaintiffRepresentatives()
     {
@@ -25,7 +25,7 @@ class Submitter extends Model
     }
 
     /**
-     * Get all plaintiffs for type Author.
+     * Get all plaintiffs for submitter.
      */
     public function defendants()
     {
@@ -33,7 +33,7 @@ class Submitter extends Model
     }
 
     /**
-     * Get all plaintiffs for type Author.
+     * Get all plaintiffs for submitter.
      */
     public function defendantsRepresentatives()
     {
@@ -41,10 +41,18 @@ class Submitter extends Model
     }
 
     /**
-     * Get all plaintiffs for type Author.
+     * Get all plaintiffs for submitter.
      */
     public function otherParty()
     {
         return $this->hasMany('App\Models\OtherParty', 'submitter_id');
+    }
+
+    /**
+     * Get all documents for submitter.
+     */
+    public function documents()
+    {
+        return $this->hasMany('App\Models\Document', 'submitter_id');
     }
 }
