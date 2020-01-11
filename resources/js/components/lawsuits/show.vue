@@ -5,7 +5,9 @@
       <v-col class="text-right">
         <v-btn
           v-ripple
-          class="mr-0-auto btn-primary pa-3 height-auto font-size-18 font-weight-600"
+          height="50"
+          width="120"
+          class="mr-0-auto btn-primary pa-3 height-auto font-size-16 font-weight-600"
         >
           All View
         </v-btn>

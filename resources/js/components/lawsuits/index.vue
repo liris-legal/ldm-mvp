@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid cases-page">
+  <div class="container-fluid lawsuit-index">
     <v-row>
       <v-col class="col-12 header-content">
         <h2 class="title-name font-size-30">
@@ -138,13 +138,11 @@
                 class="col col-3 d-flex pa-0 last-child-table"
                 :class="{'unset-relative': isShowDelete}"
               >
-                <div class="col-6">
-                  <div class="">
-                    {{ lawsuit.other_parties | parseName }}
-                  </div>
+                <div class="col-md-6 col-lg-6">
+                  {{ lawsuit.other_parties | parseName }}
                 </div>
                 <v-spacer />
-                <div class="col-6 text-right col-btn font-weight-600 font-size-20">
+                <div class="col-6 text-right col-btn font-weight-600 font-size-14">
                   <v-btn
                     :id="'lawsuit-sub-menu-' + lawsuit.id"
                     v-click-outside="hidden"
@@ -152,26 +150,29 @@
                     @click="showSubmenu(index)"
                     @click.stop=""
                   >
-                    ...
+                    <v-icon>more_horiz</v-icon>
                   </v-btn>
                 </div>
                 <v-list
+                  min-width="178"
                   class="sub-menu"
                   :class="{ 'actived': activeIndex === index}"
                 >
                   <v-list-item
+                    dense
                     :href="'lawsuits/' + lawsuit.id + '/edit'"
                     @click.stop=""
                   >
-                    <v-list-item-title>
+                    <v-list-item-title class="font-size-14">
                       事件を変更
                     </v-list-item-title>
                   </v-list-item>
                   <v-list-item
+                    dense
                     @click="deleteLawsuit(lawsuit.id)"
                     @click.stop=""
                   >
-                    <v-list-item-title>
+                    <v-list-item-title class="font-size-14">
                       事件を削除
                     </v-list-item-title>
                   </v-list-item>
