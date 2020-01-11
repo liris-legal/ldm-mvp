@@ -38,7 +38,7 @@
           @click="isShowSubmenu = !isShowSubmenu"
           @click.stop=""
         >
-          ...
+          <v-icon>more_horiz</v-icon>
         </v-btn>
       </div>
       <v-list

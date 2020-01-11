@@ -1,5 +1,6 @@
 <template>
   <tr
+    v-if="document"
     v-ripple
     class="range--row-item d-flex pa-0"
   >
@@ -8,7 +9,7 @@
       class="col col-6 pt-2 pb-2"
     >
       <div class="name">
-        {{ document.name }}
+        {{ documentName }}
       </div>
     </td>
     <td
@@ -21,8 +22,8 @@
           {{ document.created_at_wareki }}
         </div>
       </div>
+      <v-spacer />
       <template v-if="subMenu">
-        <v-spacer />
         <div class="col-6 pa-0 text-right col-btn font-weight-600 font-size-20">
           <v-btn
             v-click-outside="hidden"
@@ -30,7 +31,7 @@
             @click="isShowSubmenu = !isShowSubmenu"
             @click.stop=""
           >
-            ...
+            <v-icon>more_horiz</v-icon>
           </v-btn>
         </div>
         <v-list
@@ -48,7 +49,35 @@
           </v-list-item>
         </v-list>
       </template>
+      <template v-else>
+        <div class="col-6 pa-0 text-right col-btn font-weight-600 font-size-20">
+          <v-btn
+            disabled
+            icon
+          >
+            <v-icon>more_horiz</v-icon>
+          </v-btn>
+        </div>
+      </template>
     </td>
+  </tr>
+  <tr
+    v-else
+    v-ripple
+    class="range--row-item d-flex pa-0"
+  >
+    <td
+      scope="col"
+      class="col col-6 pt-2 pb-2"
+    >
+      <div class="name">
+        データが見つかりません！
+      </div>
+    </td>
+    <td
+      scope="col"
+      class="col col-6 pt-2 pb-2"
+    />
   </tr>
 </template>
 
@@ -56,10 +85,11 @@
   export default {
     name: "RangeRowItem",
     props: {
-      lawsuitId: {required: false,  type: Number, default: () => 0},
-      document: {required: true,  type: Object, default: () => {}},
-      submitter: {required: false,  type: String, default: () => '#'},
-      subMenu: {required: false,  type: Boolean, default: () => true},
+      lawsuitId: {required: false, type: Number, default: () => 0},
+      document: {required: false, type: Object, default: () => {}},
+      documentName: {required: false, type: String, default: () => ''},
+      submitter: {required: false, type: String, default: () => '#'},
+      subMenu: {required: false, type: Boolean, default: () => true},
     },
     data() {
       return {

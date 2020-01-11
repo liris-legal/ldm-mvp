@@ -77,7 +77,10 @@
                 class="font-weight-600"
               >書面名</label>
             </v-col>
-            <v-col class="col-9 pa-0 input" id="document-name">
+            <v-col
+              id="document-name"
+              class="col-9 pa-0 input"
+            >
               <v-select
                 v-if="type_document_id === 2"
                 v-model="document.name"
@@ -186,8 +189,8 @@
         <v-row>
           <v-col class="text-center">
             <v-file-input
-              v-model="file"
               id="file-upload"
+              v-model="file"
               type="file"
               accept=".pdf,.doc,.docx"
               style="display:none"

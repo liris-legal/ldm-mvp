@@ -40,13 +40,13 @@
       <app-type-lawsuit
         v-if="lawsuit.plaintiffs"
         :route-text="submitterOfDocument(lawsuit.plaintiffs, 'plaintiff')"
-        :route-link="routeDefendantDocumentsIndex"
+        :route-link="routePlaintiffDocumentsIndex"
       />
 
       <app-type-lawsuit
         v-if="lawsuit.defendants"
         :route-text="submitterOfDocument(lawsuit.defendants, 'defendant')"
-        :route-link="routePlaintiffDocumentsIndex"
+        :route-link="routeDefendantDocumentsIndex"
       />
     </div>
 
