@@ -21,9 +21,19 @@
         </v-col>
       </v-row>
       <table class="table">
-        <thead-columns :thead="thead_label" />
+        <thead-columns :thead="tableHeadLabels" />
         <tbody>
-          <documents-four-columns />
+        <template v-if="claimDocuments.length > 0">
+          <range-row-item-four-columns
+            v-for="document in claimDocuments"
+            :key="'claim-document-'+document.id"
+            :document="document"
+            :lawsuit-id="lawsuit.id"
+          />
+        </template>
+        <template v-else>
+          <range-row-item-four-columns />
+        </template>
         </tbody>
       </table>
     </div>
@@ -59,9 +69,19 @@
         </v-col>
       </v-row>
       <table class="table">
-        <thead-columns :thead="thead_label" />
+        <thead-columns :thead="tableHeadLabels" />
         <tbody>
-          <documents-four-columns />
+          <template v-if="otherDocuments.length > 0">
+            <range-row-item-four-columns
+              v-for="document in otherDocuments"
+              :key="'other-document-'+document.id"
+              :document="document"
+              :sub-menu="Boolean(false)"
+            />
+          </template>
+          <template v-else>
+            <range-row-item-four-columns />
+          </template>
         </tbody>
       </table>
     </div>
@@ -88,7 +108,7 @@
     },
     data() {
       return {
-        thead_label: [
+        tableHeadLabels: [
           { id: 1, label: '書面名', class: 'col-4'},
           { id: 2, label: '提出者', class: 'col-4'},
           { id: 3, label: '提出日', class: 'col-4'},
@@ -96,11 +116,17 @@
         thead_evidence_document: [{ id: 1, name: 'フォルダ名', class: 'col-12'}],
         thead_other_documents: [{ id: 1, name: '書面名', class: 'col-12'}],
         lawsuit: {},
+        claimDocuments: [],
+        otherDocuments: [],
 			}
     },
     created() {
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
-      .then(res => {return this.lawsuit = res.data.data;})
+      .then(res => {
+        this.lawsuit = res.data.data;
+        this.claimDocuments = this.lawsuit.documents.filter(d => d.type.description === 'claim' );
+        this.otherDocuments = this.lawsuit.documents.filter(d => d.type.description === 'other');
+      })
       .catch(err => {console.log(err.response);
       });
     },

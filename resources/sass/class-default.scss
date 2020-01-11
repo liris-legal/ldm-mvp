@@ -216,8 +216,10 @@
         }
     }
 }
-@mixin mixin_documents_four_columns($textSizeName) {
-    .documents-four-columns {
+
+// range-table-row components
+@mixin mixin_range_row_item($textSizeName) {
+    .range--row-item {
         cursor: pointer;
         .name {
             font-size: $textSizeName !important;
@@ -225,10 +227,8 @@
             line-height: 40px;
         }
     }
-}
-// range-table-row components
-@mixin mixin_range_row_item($textSizeName) {
-    .range--row-item {
+
+    .range--row-item-four-columns {
         cursor: pointer;
         .name {
             font-size: $textSizeName !important;
@@ -242,7 +242,6 @@
     @include mixin_thead_columns(12px);
     tbody {
         @include mixin_range_row_item(14px);
-        @include mixin_documents_four_columns(14px);
         &:nth-child(2n) {
             td{
                 background-color: #e8e8e8;

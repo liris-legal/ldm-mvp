@@ -36,6 +36,7 @@
                 label="提出者"
                 single-line
                 outlined
+                dense
               />
             </v-col>
           </v-col>
@@ -62,6 +63,7 @@
                 label="書面種類"
                 single-line
                 outlined
+                dense
               />
             </v-col>
           </v-col>
@@ -75,7 +77,9 @@
                 class="font-weight-600"
               >書面名</label>
             </v-col>
-            <v-col class="col-9 pa-0 input">
+            <v-col
+              id="document-name"
+              class="col-9 pa-0 input">
               <v-select
                 v-if="type_document_id === 2"
                 v-model="document.name"
@@ -85,14 +89,21 @@
                 item-value="name"
                 single-line
                 outlined
+                dense
               />
-              <input
+              <v-text-field
                 v-else
-                id="document-name"
                 v-model="document.name"
-                type="text"
-                class="input-form-group col-md-12"
-              >
+                class="col-md-12"
+                dense
+                single-line
+                outlined
+                required
+              />
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'name') }}</small>
             </v-col>
           </v-col>
           <v-col
@@ -100,19 +111,30 @@
             cols="12"
             class="row form-control pa-2"
           >
-            <v-col class="col-3 pa-0 label">
+            <v-col
+              class="col-3 pa-0 label">
               <label
                 for="document-number"
                 class="font-weight-600"
               >書面番号</label>
             </v-col>
-            <v-col class="col-9 pa-0 input">
-              <input
-                id="document-number"
+            <v-col
+              id="document-number"
+              class="col-9 pa-0 input"
+            >
+              <v-text-field
                 v-model="document.number"
                 type="number"
-                class="input-form-group col-md-12"
-              >
+                class="col-md-12"
+                single-line
+                outlined
+                required
+                dense
+              />
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'number') }}</small>
             </v-col>
           </v-col>
           <v-col
@@ -140,12 +162,13 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    v-on="on"
                     v-model="dateFormatted"
                     class="selector"
                     append-icon="event"
-                    outlined
                     @blur="date = parseDate(dateFormatted)"
-                    v-on="on"
+                    outlined
+                    dense
                   />
                 </template>
                 <v-date-picker
@@ -156,6 +179,10 @@
                   @input="datePicker = false"
                 />
               </v-menu>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'file') }}</small>
             </v-col>
           </v-col>
         </v-row>
@@ -183,29 +210,23 @@
       lawsuitId: {required: true,  type: String, default: ''},
       documentId: {required: true,  type: String, default: ''},
       typeDocuments: {required: true,  type: Array, default: () => []},
+      submitters: {required: true,  type: Array, default: () => []},
     },
     data() {
       return {
         document: {},
         type_document_id: 1,
         submitter_id: 1,
-        submitters: [
-          { id: 1, name: '原告' },
-          { id: 2, name: '被告' },
-          { id: 3, name: '裁判所' },
-          { id: 4, name: 'その他' },
-        ],
         nameEvidenceDocuments: [
           { id: 1, name: '証拠説明書', submitter_id: 1 },
           { id: 2, name: '甲号証', submitter_id: 1 },
-          { id: 3, name: '証拠説明書', submitter_id: 2 },
-          { id: 4, name: '乙号証', submitter_id: 2 },
+          { id: 3, name: '証拠説明書', submitter_id: 3 },
+          { id: 4, name: '乙号証', submitter_id: 3 },
         ],
         date: new Date().toISOString().substr(0, 10),
         dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
         datePicker: false,
         disabled: false,
-        file: null,
         errors: []
       }
     },
@@ -233,12 +254,15 @@
       axios.get('documents/' + this.documentId)
         .then(res => {
           this.document = res.data.data;
-          this.type_document_id = this.document.type_document_id;
-          this.submitter_id = this.document.submitter_id;
+          this.type_document_id = this.document.type.id;
+          this.submitter_id = this.document.submitter.id;
           this.date = new Date(this.document.created_at).toISOString().substr(0, 10);
         })
-        .catch(error => {
-          console.log(error);
+        .catch(err => {
+          console.log(err);
+          if (err.response.status === 422) {
+            this.errors = err.response.data.errors;
+          }
         });
     },
     methods: {
@@ -270,41 +294,12 @@
       },
 
       /**
-       * @function formatDate
-       * @description to format japanese date YYYY年MM月DD日
-       * @return string|null
-       */
-      formatDate(date) {
-        if (!date) return null;
-
-        const [year, month, day] = date.split('-');
-        return `${year}年${month}月${day}日`
-      },
-      /**
-       * @function parseDate
-       * @description format japanese date YYYY年MM月DD日 to ISO Date YYYY-MM-DD
-       * @return string|null
-       */
-      parseDate (date) {
-        if (!date) return null;
-
-        const year = date.split('年')[0];
-
-        date = date.replace(year+'年', '');
-        const month = date.split('月')[0];
-
-        date = date.replace(month+'月', '');
-        const day = date.split('日')[0];
-
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-      },
-      /**
        * @function onChangeSubmitter
        * @description to handle change submitter
        */
       onChangeSubmitter(submitter_id) {
         console.log('changed: ' + submitter_id);
-        if (submitter_id === 3 || submitter_id === 4) {
+        if (this.submitters.find(s => s.id === submitter_id && (s.description === 'court' || s.description === 'other_party'))) {
           this.type_document_id = 3;
           this.disabled = true;
         } else {

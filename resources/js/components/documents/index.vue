@@ -95,8 +95,8 @@
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
-          const evidenceDocument = this.lawsuit.documents.filter(d => d.submitter_description === this.submitter &&
-           d.type_document.description === 'evidence' );
+          const evidenceDocument = this.lawsuit.documents.filter(d => d.submitter.description === this.submitter &&
+           d.type.description === 'evidence' );
 
           const explainDocumentName = this.submitter === 'plaintiff' ? "甲号証" : "乙号証";
           this.evidenceDocuments = evidenceDocument.filter(d => d.name === explainDocumentName);

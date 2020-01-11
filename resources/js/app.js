@@ -50,7 +50,7 @@ Vue.component('app-delete-item', require('./components/globals/delete-an-item.vu
 Vue.component('lawsuit-header', require('./components/globals/lawsuit-header.vue').default);
 // component globals/tables
 Vue.component('thead-columns', require('./components/globals/tables/thead-columns.vue').default);
-Vue.component('documents-four-columns', require('./components/globals/tables/documents-four-columns.vue').default);
+Vue.component('range-row-item-four-columns', require('./components/globals/tables/range-row-item-four-columns.vue').default);
 Vue.component('range-table-row', require('./components/globals/tables/range-table-row.vue').default);
 
 // Global Mixin defined

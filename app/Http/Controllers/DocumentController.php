@@ -49,11 +49,13 @@ class DocumentController extends Controller
     public function edit($lawsuitId, $documentId)
     {
         $typeDocuments = TypeDocument::all();
+        $submitters = Submitter::where('description', 'NOT LIKE', '%representative')->get();
 
         return view('content.documents.edit', [
                 'lawsuitId' => $lawsuitId,
                 'documentId' => $documentId,
                 'typeDocuments' => $typeDocuments,
+                'submitters' => $submitters
             ]);
     }
 }
