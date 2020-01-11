@@ -18,12 +18,7 @@ class OtherParty extends JsonResource
         return [
             'id'                =>  $this->id,
             'name'              =>  $this->name,
-            'type_author_id'    =>  $this->submitter_id,
-            'documents'         =>  $this->typeAuthor->documents->map(
-                function ($document) {
-                    return new DocumentResource($document);
-                }
-            )
+            'submitter'         =>  $this->submitter
         ];
     }
 }

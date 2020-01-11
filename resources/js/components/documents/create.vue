@@ -2,7 +2,7 @@
   <div class="container-fluid document document--create clearfix">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-18">
+        <h2 class="title-name font-size-30">
           ファイルをアップロード
         </h2>
         <h3 class="description" />
@@ -196,7 +196,7 @@
             />
             <v-btn
               v-ripple
-              class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto text-size-18 font-weight-600"
+              class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-18 font-weight-600"
               @click.native="openFileDialog"
             >
               アップロード

@@ -34,12 +34,14 @@ class StoreDocument extends FormRequest
             'file' => 'bail|required|mimes:pdf,doc,docx|max:204800',
             'type_document_id' => 'bail|required',
             'submitter_id' => 'bail|required',
+            'lawsuit_id' => 'bail|required',
             'created_at' => 'bail|required',
         ] : [
             'name' => 'bail|required|max:150',
             'file' => 'bail|required|mimes:pdf,doc,docx|max:204800',
             'type_document_id' => 'bail|required',
             'submitter_id' => 'bail|required',
+            'lawsuit_id' => 'bail|required',
             'created_at' => 'bail|required',
         ];
     }

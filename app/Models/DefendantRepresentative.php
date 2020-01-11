@@ -19,7 +19,7 @@ class DefendantRepresentative extends Model
     /**
      * Get type author for the Defendant Representative.
      */
-    public function typeAuthor()
+    public function submitter()
     {
         return $this->belongsTo('App\Models\Submitter', 'submitter_id');
     }

@@ -2,7 +2,7 @@
   <div class="container-fluid cases-page">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-18">
+        <h2 class="title-name font-size-30">
           民事事件
         </h2>
         <h3 class="description" />
@@ -146,7 +146,7 @@
                   </div>
                 </div>
                 <v-spacer />
-                <div class="col-6 text-right col-btn font-weight-600 text-size-20">
+                <div class="col-6 text-right col-btn font-weight-600 font-size-20">
                   <v-btn
                     :id="'lawsuit-sub-menu-' + lawsuit.id"
                     v-click-outside="hidden"

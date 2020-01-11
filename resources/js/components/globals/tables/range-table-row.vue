@@ -18,12 +18,12 @@
     >
       <div class="col-6 pa-0">
         <div class="name">
-          {{ document.created_at }}
+          {{ document.created_at_wareki }}
         </div>
       </div>
       <template v-if="subMenu">
         <v-spacer />
-        <div class="col-6 pa-0 text-right col-btn font-weight-600 text-size-20">
+        <div class="col-6 pa-0 text-right col-btn font-weight-600 font-size-20">
           <v-btn
             v-click-outside="hidden"
             icon
