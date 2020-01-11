@@ -5,7 +5,7 @@
       <v-col class="text-right">
         <v-btn
           v-ripple
-          class="mr-0-auto btn-primary pa-3 height-auto text-size-18 font-weight-600"
+          class="mr-0-auto btn-primary pa-3 height-auto font-size-18 font-weight-600"
         >
           All View
         </v-btn>
@@ -15,7 +15,7 @@
     <div class="claim">
       <v-row>
         <v-col class="col-12 header-content">
-          <h3 class="description text-size-18">
+          <h3 class="description font-size-18">
             主張書面
           </h3>
         </v-col>
@@ -31,7 +31,7 @@
     <div class="evidence-document">
       <v-row>
         <v-col class="col-12 header-content">
-          <h3 class="description text-size-18">
+          <h3 class="description font-size-18">
             証拠書面
           </h3>
         </v-col>
@@ -53,7 +53,7 @@
     <div class="other-documents">
       <v-row>
         <v-col class="col-12 header-content">
-          <h3 class="description text-size-18">
+          <h3 class="description font-size-18">
             その他の書面
           </h3>
         </v-col>
