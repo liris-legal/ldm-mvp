@@ -11,18 +11,31 @@
       </v-col>
     </v-row>
     <app-thead :thead="thead" />
-    <app-document-two-columns
+    <div
       v-for="document in documents"
       :key="document.id"
-      :document="document"
-      :column-of-class="columnOfClass"
-    />
+      class="document-two-columns"
+    >
+      <a
+        href="#"
+        class="document-link"
+      >
+        <v-row v-ripple>
+          <v-col class="col-7">
+            <div class="name">{{ document.name }}</div>
+          </v-col>
+          <v-col class="col-5">
+            <div class="date">{{ document.created_at_wareki }}</div>
+          </v-col>
+        </v-row>
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "Home",
+    name: "HomeIndex",
 		props: {
       documents: { type: Array, required: true, default: () => [] }
 		},
@@ -32,7 +45,6 @@
           { id: 1, name: '書面名', class: 'col-7'},
           { id: 2, name: '表示日', class: 'col-5'}
         ],
-        columnOfClass: { class1: 'col-7', 'class2': 'col-5'},
 			}
 		}
   }

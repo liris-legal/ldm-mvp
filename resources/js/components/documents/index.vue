@@ -24,7 +24,7 @@
         <thead-columns :thead="theadLabels" />
         <tbody>
           <template v-if="explainDocuments.length > 0">
-            <range-table-row
+            <range-row-item
               v-for="document in explainDocuments"
               :key="'explain-document-'+document.id"
               :document="document"
@@ -33,7 +33,7 @@
             />
           </template>
           <template v-else>
-            <range-table-row />
+            <range-row-item />
           </template>
         </tbody>
       </table>
@@ -51,17 +51,16 @@
         <thead-columns :thead="theadLabels" />
         <tbody>
           <template v-if="evidenceDocuments.length > 0">
-            <range-table-row
+            <range-row-item
               v-for="document in evidenceDocuments"
               :key="'evidence-document-'+document.id"
               :document="document"
               :document-name="submitterKana+'第'+document.number+'号証'"
-              :submitter="submitter"
               :lawsuit-id="parseInt($route.params.lawsuitId)"
             />
           </template>
           <template v-else>
-            <range-table-row />
+            <range-row-item />
           </template>
         </tbody>
       </table>

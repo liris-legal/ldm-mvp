@@ -44,14 +44,12 @@ Vue.component('document-edit', require('./components/documents/edit.vue').defaul
 
 // component globals
 Vue.component('app-thead', require('./components/globals/app-thead.vue').default);
-Vue.component('app-document-two-columns', require('./components/globals/app-document-two-columns.vue').default);
 Vue.component('app-type-lawsuit', require('./components/globals/app-type-lawsuit.vue').default);
 Vue.component('app-delete-item', require('./components/globals/delete-an-item.vue').default);
 Vue.component('lawsuit-header', require('./components/globals/lawsuit-header.vue').default);
 // component globals/tables
 Vue.component('thead-columns', require('./components/globals/tables/thead-columns.vue').default);
-Vue.component('range-row-item-four-columns', require('./components/globals/tables/range-row-item-four-columns.vue').default);
-Vue.component('range-table-row', require('./components/globals/tables/range-table-row.vue').default);
+Vue.component('range-row-item', require('./components/globals/tables/range-table-row.vue').default);
 
 // Global Mixin defined
 import {mixin} from "./mixin";

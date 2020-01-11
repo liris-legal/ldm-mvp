@@ -24,15 +24,17 @@
         <thead-columns :thead="tableHeadLabels" />
         <tbody>
         <template v-if="claimDocuments.length > 0">
-          <range-row-item-four-columns
+          <range-row-item
             v-for="document in claimDocuments"
             :key="'claim-document-'+document.id"
             :document="document"
+            :document-name="document.name"
+            :number-columns="parseInt(3)"
             :lawsuit-id="lawsuit.id"
           />
         </template>
         <template v-else>
-          <range-row-item-four-columns />
+          <range-row-item />
         </template>
         </tbody>
       </table>
@@ -72,15 +74,18 @@
         <thead-columns :thead="tableHeadLabels" />
         <tbody>
           <template v-if="otherDocuments.length > 0">
-            <range-row-item-four-columns
+            <range-row-item
               v-for="document in otherDocuments"
               :key="'other-document-'+document.id"
               :document="document"
+              :document-name="document.name"
               :sub-menu="Boolean(false)"
+              :lawsuit-id="lawsuit.id"
+              :number-columns="parseInt(3)"
             />
           </template>
           <template v-else>
-            <range-row-item-four-columns />
+            <range-row-item />
           </template>
         </tbody>
       </table>

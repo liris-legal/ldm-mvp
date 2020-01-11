@@ -90,7 +90,7 @@
 
 // component app-document-two-columns
 @mixin app_document($textSizeName) {
-    .app-document-two-columns{
+    .document-two-columns{
         color: #404040;
         border: 1px solid #DADDE6;
         background-color: #FFFFFF;
@@ -220,15 +220,6 @@
 // range-table-row components
 @mixin mixin_range_row_item($textSizeName) {
     .range--row-item {
-        cursor: pointer;
-        .name {
-            font-size: $textSizeName !important;
-            margin-left: 40px;
-            line-height: 40px;
-        }
-    }
-
-    .range--row-item-four-columns {
         cursor: pointer;
         .name {
             font-size: $textSizeName !important;

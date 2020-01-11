@@ -6,16 +6,26 @@
   >
     <td
       scope="col"
-      class="col col-6 pt-2 pb-2"
+      class="col pt-2 pb-2"
+      :class="className"
     >
       <div class="name">
         {{ documentName }}
       </div>
     </td>
     <td
+      v-if="numberColumns === 3"
       scope="col"
-      class="col col-6 d-flex pt-2 pb-2 last-column"
-      :class="{'unset-relative': isShowDelete}"
+      class="col col-4 pt-2 pb-2"
+    >
+      <div class="name">
+        {{document.submitter.name}}
+      </div>
+    </td>
+    <td
+      scope="col"
+      class="col d-flex pt-2 pb-2 last-column"
+      :class="[{'unset-relative': isShowDelete}, className]"
     >
       <div class="col-6 pa-0">
         <div class="name">
@@ -68,15 +78,22 @@
   >
     <td
       scope="col"
-      class="col col-6 pt-2 pb-2"
+      class="col pt-2 pb-2"
+      :class="className"
     >
       <div class="name">
         データが見つかりません！
       </div>
     </td>
     <td
+      v-if="numberColumns"
       scope="col"
-      class="col col-6 pt-2 pb-2"
+      class="col col-4 pt-2 pb-2"
+    />
+    <td
+      scope="col"
+      class="col pt-2 pb-2"
+      :class="className"
     />
   </tr>
 </template>
@@ -88,14 +105,18 @@
       lawsuitId: {required: false, type: Number, default: () => 0},
       document: {required: false, type: Object, default: () => {}},
       documentName: {required: false, type: String, default: () => ''},
-      submitter: {required: false, type: String, default: () => '#'},
       subMenu: {required: false, type: Boolean, default: () => true},
+      numberColumns: {required: false, type: Number, default: () => 2},
     },
     data() {
       return {
         isShowSubmenu: false,
         isShowDelete: false,
+        className: 'col-6'
       }
+    },
+    created() {
+      this.className = 'col-' + (12/this.numberColumns);
     },
     mounted() {
       // console.log('range-row-item mounted');
