@@ -82,8 +82,10 @@
                 class="col col-3"
               >
                 {{
+                  lawsuit.created_at_wareki
+                }}{{
                   lawsuit.number
-                }}
+                }}号
               </td>
               <td
                 scope="col"
@@ -185,7 +187,7 @@
     <app-delete-item
       v-if="isShowDelete"
       :data-type="lawsuits"
-      message="事件を削除してもよろしいですか"
+      message="事件を削除してもよろしいですか？"
       :data="dataReceived"
       @cancelSubmit="isShowDelete = $event"
     />
