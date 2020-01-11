@@ -17,10 +17,10 @@ class DocumentSeeder extends Seeder
 
         DB::table('documents')->truncate();
         $rows = [
-            [ 'PQRST法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-1.pdf', '00001', 1, 1, $time],
-            [ 'ABCDE法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-2.pdf', '00002', 2, 2, $time],
-            [ 'XYZTW法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-3.pdf', '00003', 3, 3, $time],
-            [ 'NMBVC法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-4.pdf', '00004', 4, 4, $time],
+            [ 'PQRST法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-1.pdf', '00001', 1, 1, 1, $time],
+            [ 'ABCDE法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-2.pdf', '00002', 2, 2, 2, $time],
+            [ 'XYZTW法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-3.pdf', '00003', 3, 3, 1, $time],
+            [ 'NMBVC法律事務所', 'https://www.soundczech.cz/temp/lorem-ipsum-4.pdf', '00004', 4, 4, 2, $time],
         ];
         foreach ($rows as $row) {
             DB::table('documents')->insert([
@@ -29,7 +29,8 @@ class DocumentSeeder extends Seeder
                 'number' => $row[2],
                 'submitter_id' => $row[3],
                 'type_document_id' => $row[4],
-                'created_at' => $row[5],
+                'lawsuit_id' => $row[5],
+                'created_at' => $row[6],
             ]);
         }
         Schema::enableForeignKeyConstraints();

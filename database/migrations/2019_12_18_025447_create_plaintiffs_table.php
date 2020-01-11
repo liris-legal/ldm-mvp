@@ -17,12 +17,16 @@ class CreatePlaintiffsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedInteger('submitter_id');
-            $table->unsignedBigInteger('lawsuit_id');
+            $table->unsignedInteger('lawsuit_id');
             $table->timestamps();
 
-            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
             $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
+            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
         });
+
+        DB::statement('ALTER TABLE plaintiffs CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
+        DB::statement('ALTER TABLE plaintiffs CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
+        DB::statement('ALTER TABLE plaintiffs CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
     }
 
     /**

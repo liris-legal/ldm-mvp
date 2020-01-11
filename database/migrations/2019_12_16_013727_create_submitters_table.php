@@ -19,6 +19,8 @@ class CreateSubmittersTable extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE submitters CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
     }
 
     /**

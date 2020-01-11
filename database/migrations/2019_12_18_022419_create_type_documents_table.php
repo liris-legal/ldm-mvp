@@ -19,6 +19,8 @@ class CreateTypeDocumentsTable extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE type_documents CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
     }
 
     /**
