@@ -8,6 +8,7 @@
 $body-font-family: "Hiragino Sans GB", sans-serif !important;
 .v-application, .v-application .headline, .v-application .title {
     font-family: $body-font-family;
+    font-size: 14px;
 }
 
 // Defined styles for app
@@ -122,7 +123,7 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
     }
     @include app_thead(12px);
     @include app_document(14px);
-    @include app-type-lawsuits(15px);
+    @include app-type-lawsuits(14px);
 }
 
 // list cases component

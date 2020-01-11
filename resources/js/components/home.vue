@@ -5,7 +5,7 @@
         <h2 class="title-name font-size-30">
           ホーム
         </h2>
-        <h3 class="description">
+        <h3 class="description font-size-18">
           最近表示
         </h3>
       </v-col>

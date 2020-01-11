@@ -186,7 +186,7 @@
     </div>
     <app-delete-item
       v-if="isShowDelete"
-      :data-type="lawsuits"
+      :data-type="'lawsuits'"
       message="事件を削除してもよろしいですか？"
       :data="dataReceived"
       @cancelSubmit="isShowDelete = $event"

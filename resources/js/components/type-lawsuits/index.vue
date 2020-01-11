@@ -5,7 +5,7 @@
         <h2 class="title-name font-size-30">
           ファイル
         </h2>
-        <h3 class="description">
+        <h3 class="description font-size-18">
           事件種類
         </h3>
       </v-col>

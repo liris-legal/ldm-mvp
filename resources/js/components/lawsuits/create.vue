@@ -303,7 +303,7 @@
           <v-col class="text-center">
             <v-btn
               v-ripple
-              class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-18 font-weight-600"
+              class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
               @click="postData"
             >
               登録

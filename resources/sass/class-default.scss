@@ -152,7 +152,7 @@
     .mixin-notification{
         max-width: 500px;
         border-radius: 4px;
-        padding: 1em 1em 0;
+        padding: 1em;
         z-index: 3;
         top: 0;
         position: absolute;
@@ -166,13 +166,13 @@
         .notification-danger{
             display: block;
             margin: 0 auto;
-            padding: 1em 1em 0;
+            padding: 1em;
 
             .label-delete {
                 margin-bottom: 1.5em;
             }
 
-            .button-notification{
+            .button-notification {
                 margin: 3em 0 0;
 
                 .button-content {
