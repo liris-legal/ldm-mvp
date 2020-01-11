@@ -6,7 +6,7 @@
   >
     <td
       scope="col"
-      class="col pt-2 pb-2"
+      class="col"
       :class="className"
     >
       <div class="name">
@@ -16,7 +16,7 @@
     <td
       v-if="numberColumns === 3"
       scope="col"
-      class="col col-4 pt-2 pb-2"
+      class="col col-4"
     >
       <div class="name">
         {{document.submitter.name}}
@@ -24,7 +24,7 @@
     </td>
     <td
       scope="col"
-      class="col d-flex pt-2 pb-2 last-column"
+      class="col d-flex last-column"
       :class="[{'unset-relative': isShowDelete}, className]"
     >
       <div class="col-6 pa-0">
@@ -78,7 +78,7 @@
   >
     <td
       scope="col"
-      class="col pt-2 pb-2"
+      class="col"
       :class="className"
     >
       <div class="name">
@@ -88,11 +88,11 @@
     <td
       v-if="numberColumns"
       scope="col"
-      class="col col-4 pt-2 pb-2"
+      class="col col-4"
     />
     <td
       scope="col"
-      class="col pt-2 pb-2"
+      class="col"
       :class="className"
     />
   </tr>

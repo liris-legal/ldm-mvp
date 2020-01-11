@@ -119,6 +119,7 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
         .description {
             color: #808080;
             margin-top: 1em;
+            margin-bottom: 0.5em;
         }
     }
     @include app_thead(12px);

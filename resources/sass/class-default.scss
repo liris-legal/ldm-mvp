@@ -275,10 +275,13 @@ body {
 @mixin mixin_range_row_item($textSizeName) {
     .range--row-item {
         cursor: pointer;
-        .name {
-            font-size: $textSizeName !important;
-            margin-left: 40px;
-            line-height: 40px;
+        td {
+            padding: 3px;
+            .name {
+                font-size: $textSizeName !important;
+                margin-left: 40px;
+                line-height: 40px;
+            }
         }
     }
 }
@@ -290,7 +293,7 @@ body {
         @include mixin_range_row_item(14px);
         &:nth-child(2n) {
             td{
-                background-color: #e8e8e8;
+                //background-color: #e8e8e8;
                 border-top: 1px solid #DADDE6;
                 border-bottom: 1px solid #DADDE6;
 
