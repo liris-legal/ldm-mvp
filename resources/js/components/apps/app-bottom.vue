@@ -49,12 +49,23 @@
         <v-list
           v-if="showAdd"
           class="list-item-add-button"
+          min-width="205"
         >
-          <v-list-item :href="routeCreateLawsuit">
-            <v-list-item-title>新件を作成</v-list-item-title>
+          <v-list-item
+            :href="routeCreateLawsuit"
+            dense
+          >
+            <v-list-item-title class="font-size-14">
+              新件を作成
+            </v-list-item-title>
           </v-list-item>
-          <v-list-item :href="isLawsuitShow()">
-            <v-list-item-title>ファイルをアップロード</v-list-item-title>
+          <v-list-item
+            :href="isLawsuitShow()"
+            dense
+          >
+            <v-list-item-title class="font-size-14">
+              ファイルをアップロード
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-col>

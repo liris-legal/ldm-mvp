@@ -10,6 +10,8 @@
     <v-btn
       v-if="!checkRoute('/')"
       icon
+      height="36"
+      width="36"
       @click="goBack()"
     >
       <v-icon>arrow_back_ios</v-icon>
@@ -22,6 +24,8 @@
     <v-btn
       v-click-outside="hidden"
       icon
+      height="36"
+      width="36"
       @click="displayMenu = !displayMenu"
     >
       <v-icon>format_align_justify</v-icon>
@@ -29,12 +33,18 @@
     <v-list
       v-show="displayMenu"
       class="list-menu-top-bar"
+      min-width="205"
     >
-      <v-list-item>
-        <v-list-item-title>{{ user.email }}</v-list-item-title>
+      <v-list-item dense>
+        <v-list-item-title class="font-size-14">
+          {{ user.email }}
+        </v-list-item-title>
       </v-list-item>
-      <v-list-item>
-        <v-list-item-title @click="logout">
+      <v-list-item dense>
+        <v-list-item-title
+          class="font-size-14"
+          @click="logout"
+        >
           ログアウト
         </v-list-item-title>
       </v-list-item>
@@ -102,3 +112,8 @@
 		}
   }
 </script>
+<style lang="scss">
+  .v-toolbar__content{
+    padding-right: 6px;
+  }
+</style>
