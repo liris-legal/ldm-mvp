@@ -134,7 +134,7 @@
     }
 }
 .form-control{
-    @include text_size(18px);
+    @include font_size(18px);
     label{
         line-height: 40px;
     }

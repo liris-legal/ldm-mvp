@@ -43,7 +43,6 @@ class DocumentApiController extends Controller
     public function store(StoreDocument $request)
     {
         $data = $request->all();
-
         $file = $request->file('file');
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
         $filenameHash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;

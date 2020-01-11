@@ -2,10 +2,10 @@
   <div class="mixin-notification">
     <div class="notification-danger">
       <div class="notification-content">
-        <div class="label-delete text-size-20">
+        <div class="label-delete font-size-20">
           削除
         </div>
-        <div class="text-size-18">
+        <div class="font-size-18">
           {{ message }}
         </div>
       </div>

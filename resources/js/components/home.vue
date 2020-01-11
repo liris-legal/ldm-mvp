@@ -2,7 +2,7 @@
   <div class="container-fluid home-content">
     <v-row>
       <v-col class="col-12 header-content">
-        <h2 class="title-name text-size-18">
+        <h2 class="title-name font-size-30">
           ホーム
         </h2>
         <h3 class="description">
