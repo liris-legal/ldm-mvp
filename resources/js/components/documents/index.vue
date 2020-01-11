@@ -23,12 +23,33 @@
       <table class="table">
         <thead-columns :thead="theadLabels" />
         <tbody>
-          <range-table-row
-            v-for="document in explainDocuments"
-            :key="'explain-document-'+document.id"
-            :document="document"
-            :sub-menu="Boolean(false)"
-          />
+          <template v-if="explainDocuments.length > 0">
+            <range-table-row
+              v-for="document in explainDocuments"
+              :key="'explain-document-'+document.id"
+              :document="document"
+              :sub-menu="Boolean(false)"
+            />
+          </template>
+          <template v-else>
+            <tr
+              v-ripple
+              class="range--row-item d-flex pa-0"
+            >
+              <td
+                scope="col"
+                class="col col-6 pt-2 pb-2"
+              >
+                <div class="name">
+                  No content
+                </div>
+              </td>
+              <td
+                scope="col"
+                class="col col-6 pt-2 pb-2"
+              />
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -44,13 +65,34 @@
       <table class="table">
         <thead-columns :thead="theadLabels" />
         <tbody>
-          <range-table-row
-            v-for="document in evidenceDocuments"
-            :key="'evidence-document-'+document.id"
-            :document="document"
-            :submitter="submitter"
-            :lawsuit-id="parseInt($route.params.lawsuitId)"
-          />
+          <template v-if="evidenceDocuments.length > 0">
+            <range-table-row
+              v-for="document in evidenceDocuments"
+              :key="'evidence-document-'+document.id"
+              :document="document"
+              :submitter="submitter"
+              :lawsuit-id="parseInt($route.params.lawsuitId)"
+            />
+          </template>
+          <template v-else>
+            <tr
+              v-ripple
+              class="range--row-item d-flex pa-0"
+            >
+              <td
+                scope="col"
+                class="col col-6 pt-2 pb-2"
+              >
+                <div class="name">
+                  No content
+                </div>
+              </td>
+              <td
+                scope="col"
+                class="col col-6 pt-2 pb-2"
+              />
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -74,23 +116,22 @@
           { id: 2, label: '提出日', class: 'col-6'},
         ],
         lawsuit: {},
-        explainDocuments: [
-          { id: 1, name: '証拠説明書1', created_at: '2019年12月31日'},
-          { id: 2, name: '証拠説明書2', created_at: '2020年01月10日'},
-        ],
-        evidenceDocuments: [
-          { id: 4, name: '甲第4号証', created_at: '2019年12月31日'},
-          { id: 3, name: '甲第3号証', created_at: '2020年01月10日'},
-          { id: 2, name: '甲第2号証', created_at: '2020年01月10日'},
-          { id: 1, name: '甲第1号証', created_at: '2020年01月10日'},
-        ]
+        explainDocuments: [],
+        evidenceDocuments: []
       }
     },
     created() {
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
-        .then(res => {return this.lawsuit = res.data.data;})
-        .catch(err => {console.log(err.response);
-        });
+        .then(res => {
+          this.lawsuit = res.data.data;
+          const evidenceDocument = this.lawsuit.documents.filter(d => d.submitter_description === this.submitter &&
+           d.type_document.description === 'evidence' );
+
+          const explainDocumentName = this.submitter === 'plaintiff' ? "甲号証" : "乙号証";
+          this.evidenceDocuments = evidenceDocument.filter(d => d.name === explainDocumentName);
+          this.explainDocuments = evidenceDocument.filter(d => d.name === '証拠説明書');
+          })
+        .catch(err => {console.log(err.response);});
 
       /**
        * parse params to get submitter
@@ -100,8 +141,6 @@
     },
     mounted() {
       console.log(this.$route.name + ' mounted');
-    },
-    methods: {
     }
   }
 </script>

@@ -104,9 +104,6 @@
       .catch(err => {console.log(err.response);
       });
     },
-    mounted() {
-      // console.log(this.lawsuit);
-    },
     methods: {
       /**
        * @function submitterOfDocument

@@ -18,7 +18,7 @@
     >
       <div class="col-6 pa-0">
         <div class="name">
-          {{ document.created_at }}
+          {{ document.created_at_wareki }}
         </div>
       </div>
       <template v-if="subMenu">

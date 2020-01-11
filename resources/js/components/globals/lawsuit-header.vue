@@ -22,6 +22,6 @@
 export default {
   props: {
     lawsuit: {type: Object, required: true, default: () => {}}
-  },
+  }
 }
 </script>
