@@ -1,17 +1,44 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent min-width="358" max-width="360" min-height="242" max-height="250">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      min-width="358"
+      max-width="360"
+      min-height="242"
+      max-height="250"
+    >
       <v-card>
-        <v-card-title class="headline">{{ title }}</v-card-title>
+        <v-card-title class="headline">
+          {{ title }}
+        </v-card-title>
         <v-card-text>{{ message }}</v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-col class="text-center" cols="6" sm="6">
-            <v-btn class="dark--text" @click="dialog = false">キャンセル</v-btn>
+          <v-spacer />
+          <v-col
+            class="text-center"
+            cols="6"
+            sm="6"
+          >
+            <v-btn
+              class="dark--text"
+              @click="dialog = false"
+            >
+              キャンセル
+            </v-btn>
           </v-col>
 
-          <v-col class="text-center" cols="6" sm="6">
-            <v-btn color="red" @click="handleDeleteSubmit">削除</v-btn>
+          <v-col
+            class="text-center"
+            cols="6"
+            sm="6"
+          >
+            <v-btn
+              color="red"
+              @click="handleDeleteSubmit"
+            >
+              削除
+            </v-btn>
           </v-col>
         </v-card-actions>
       </v-card>

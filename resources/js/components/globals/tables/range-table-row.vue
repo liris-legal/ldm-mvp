@@ -71,15 +71,15 @@
   import subMenu from "../sub-menu"
   export default {
     name: "RangeRowItem",
+    components:{
+      subMenu
+    },
     props: {
       lawsuitId: {required: false, type: Number, default: () => 0},
       document: {required: false, type: Object, default: () => {}},
       documentName: {required: false, type: String, default: () => ''},
       subMenu: {required: false, type: Boolean, default: () => true},
       numberColumns: {required: false, type: Number, default: () => 2},
-    },
-    components:{
-      subMenu
     },
     data() {
       return {

@@ -67,7 +67,7 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="(lawsuit, index) in lawsuits">
+          <template v-for="(lawsuit) in lawsuits">
             <tr
               :key="lawsuit.id"
               class="d-flex"
@@ -158,13 +158,13 @@
   import subMenu from "../globals/sub-menu"
   export default {
     name: "LawsuitsIndex",
+    components:{
+      subMenu
+    },
     data() {
       return {
         lawsuits: {},
       }
-    },
-    components:{
-      subMenu
     },
     created() {
       axios.get('lawsuits')

@@ -31,8 +31,8 @@
       <v-icon>format_align_justify</v-icon>
     </v-btn>
     <v-list
-      :elevation="5"
       v-show="displayMenu"
+      :elevation="5"
       class="list-menu-top-bar"
       min-width="203"
     >
