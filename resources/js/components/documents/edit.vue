@@ -285,6 +285,8 @@
         axios.post(this.updateRoute, formData)
           .then(res => {
             console.log(res);
+            this.$store.dispatch('create_notification', res.data.message);
+            setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             if (err.response.status === 422) {

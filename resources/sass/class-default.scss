@@ -280,7 +280,7 @@ body {
             padding: 3px;
             .name {
                 font-size: $textSizeName !important;
-                margin-left: 40px;
+                margin-left: 48px;
                 line-height: 40px;
             }
         }
@@ -303,7 +303,7 @@ body {
 
                     .sub-menu{
                         visibility: hidden;
-                        top: 60px !important;
+                        top: 52px !important;
                         right: 5px !important;
                         @extend %subs-menu;
                     }
