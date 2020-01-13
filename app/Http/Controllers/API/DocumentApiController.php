@@ -25,11 +25,13 @@ class DocumentApiController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param $lawsuit
      * @param Document $document
      * @return \Illuminate\Http\Response
      */
-    public function show(Document $document)
+    public function show($lawsuit, $document)
     {
+        $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
         return response([
             'data' => new DocumentResource($document)
         ]);
