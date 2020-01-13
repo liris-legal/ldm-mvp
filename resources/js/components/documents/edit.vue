@@ -286,8 +286,7 @@
         formData.append('lawsuit_id', this.lawsuitId);
         formData.append('type_document_id', this.type_document_id);
         formData.append('submitter_id', this.submitter_id);
-        formData.append('updated_at', this.date || '');
-        formData.append('description', this.document.submitter.description);
+        formData.append('created_at', this.date || '');
         formData.append("_method", "PATCH");
 
         axios.post(this.updateRoute, formData)
