@@ -275,6 +275,7 @@ body {
 @mixin mixin_range_row_item($textSizeName) {
     .range--row-item {
         cursor: pointer;
+        background-color: $color___white;
         td {
             padding: 3px;
             .name {
