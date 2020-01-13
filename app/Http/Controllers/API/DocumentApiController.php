@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocument;
 use App\Http\Requests\UpdateDocument;
+use App\Models\Submitter;
 use Storage;
 
 class DocumentApiController extends Controller
@@ -70,15 +71,35 @@ class DocumentApiController extends Controller
     public function update(UpdateDocument $request, $id)
     {
         $document = Document::findOrFail($id);
-        if ($document) {
-            $data = $request->all();
-            $document->updated_at = $request->updated_at;
-            $document->fill($data)->save();
+        $number = $request['number'];
+        $document = Document::where([
+            ['number', $request['number']],
+            ['type_document_id', $request['type_document_id']],
+            ['submitter_id', $request['submitter_id']],
+            ['lawsuit_id', $request['lawsuit_id']]
+        ])->get();
+
+        if (count($document) >= 1) {
+            return $request->validate([
+                'number'    =>  'unique:documents,number'
+            ]);
         }
 
+        $data = $request->all();
+        $document->updated_at = now();
+        $document->fill($data)->save();
+
         $message = ['status' => 'success', 'content' => '文書が正常に更新します。'];
+        $submitter = Submitter::findOrFail($data['submitter_id']);
+
+        if ($submitter->description == 'plaintiff' || $submitter->description == 'defendant') {
+            return response()->json([
+                'url' => route('documents.index', [$data['lawsuit_id'], $submitter->description]),
+                'message' => $message
+            ], 200);
+        }
         return response()->json([
-            'url' => route('documents.index', [$data['lawsuit_id'], $data['description']]),
+            'url' => route('lawsuits.show', $data['lawsuit_id']),
             'message' => $message
         ], 200);
     }

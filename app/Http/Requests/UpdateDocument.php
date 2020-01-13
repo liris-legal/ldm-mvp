@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Document;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
+use App\Models\Lawsuit;
 
 class UpdateDocument extends FormRequest
 {
@@ -31,16 +33,16 @@ class UpdateDocument extends FormRequest
         && ($typeDocument->description == 'evidence') ? [
             'number' => 'bail|required|numeric',
             'name' => 'bail|required|max:150',
-            'type_document_id' => 'bail|required',
-            'submitter_id' => 'bail|required',
-            'lawsuit_id' => 'bail|required',
-            'updated_at' => 'bail|required|date_format:Y-m-d|before:today',
+            'type_document_id' => 'bail|required|exists:type_documents,id',
+            'submitter_id' => 'bail|required|exists:submitters,id',
+            'lawsuit_id' => 'bail|required|exists:lawsuits,id',
+            'created_at' => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ] : [
             'name' => 'bail|required|max:150',
-            'type_document_id' => 'bail|required',
-            'submitter_id' => 'bail|required',
-            'lawsuit_id' => 'bail|required',
-            'updated_at' => 'bail|required|date_format:Y-m-d|before:today',
+            'type_document_id' => 'bail|required|exists:type_documents,id',
+            'submitter_id' => 'bail|required|exists:submitters,id',
+            'lawsuit_id' => 'bail|required|exists:lawsuits,id',
+            'created_at' => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ];
     }
 }
