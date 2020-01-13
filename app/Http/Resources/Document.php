@@ -21,6 +21,7 @@ class Document extends JsonResource
             'number'                   =>  $this->number,
             'name'                     =>  $this->name,
             'url'                      =>  $this->url,
+            'lawsuit_id'               =>  $this->lawsuit_id,
             'type'                     =>  $this->typeDocument,
             'submitter'                =>  $this->submitter,
             'created_at'               =>  $this->created_at,
