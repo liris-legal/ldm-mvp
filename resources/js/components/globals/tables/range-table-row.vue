@@ -19,7 +19,7 @@
       class="col col-4"
     >
       <div class="name">
-        {{document.submitter.name}}
+        {{ document.submitter.name }}
       </div>
     </td>
     <td

@@ -79,7 +79,8 @@
             </v-col>
             <v-col
               id="document-name"
-              class="col-9 pa-0 input">
+              class="col-9 pa-0 input"
+            >
               <v-select
                 v-if="type_document_id === 2"
                 v-model="document.name"
@@ -112,7 +113,8 @@
             class="row form-control pa-2"
           >
             <v-col
-              class="col-3 pa-0 label">
+              class="col-3 pa-0 label"
+            >
               <label
                 for="document-number"
                 class="font-weight-600"
@@ -162,13 +164,13 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-on="on"
                     v-model="dateFormatted"
                     class="selector"
                     append-icon="event"
-                    @blur="date = parseDate(dateFormatted)"
                     outlined
                     dense
+                    v-on="on"
+                    @blur="date = parseDate(dateFormatted)"
                   />
                 </template>
                 <v-date-picker

@@ -25,19 +25,19 @@
       <table class="table">
         <thead-columns :thead="tableHeadLabels" />
         <tbody>
-        <template v-if="claimDocuments.length > 0">
-          <range-row-item
-            v-for="document in claimDocuments"
-            :key="'claim-document-'+document.id"
-            :document="document"
-            :document-name="document.name"
-            :number-columns="parseInt(3)"
-            :lawsuit-id="lawsuit.id"
-          />
-        </template>
-        <template v-else>
-          <range-row-item />
-        </template>
+          <template v-if="claimDocuments.length > 0">
+            <range-row-item
+              v-for="document in claimDocuments"
+              :key="'claim-document-'+document.id"
+              :document="document"
+              :document-name="document.name"
+              :number-columns="parseInt(3)"
+              :lawsuit-id="lawsuit.id"
+            />
+          </template>
+          <template v-else>
+            <range-row-item />
+          </template>
         </tbody>
       </table>
     </div>
