@@ -29,7 +29,7 @@
               :key="'explain-document-'+document.id"
               :document="document"
               :document-name="document.name+''+document.number"
-              :sub-menu="Boolean(false)"
+              :lawsuit-id="parseInt($route.params.lawsuitId)"
             />
           </template>
           <template v-else>
@@ -111,7 +111,7 @@
       this.submitterKana = this.submitter === 'plaintiff' ? "甲" : "乙"
     },
     mounted() {
-      console.log(this.$route.name + ' mounted');
+      // console.log(this.$route.name + ' mounted');
     }
   }
 </script>

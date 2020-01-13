@@ -33,6 +33,7 @@
       </div>
       <v-spacer />
       <sub-menu
+        :key="'sub-menu-'+document.id"
         :sub-menu="subMenu"
         :sub-link="'/lawsuits/'+lawsuitId+'/documents/'+document.id+'/edit'"
         :sub-id="document.id"
@@ -88,9 +89,6 @@
     },
     created() {
       this.className = 'col-' + (12/this.numberColumns);
-    },
-    mounted() {
-      console.log('range-row-item mounted');
     },
   }
 </script>

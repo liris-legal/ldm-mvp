@@ -177,10 +177,16 @@
                   v-model="date"
                   locale="ja-jp"
                   :first-day-of-week="1"
+                  :max="getEndDate"
                   no-title
                   @input="datePicker = false"
                 />
               </v-menu>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'created_at') }}</small>
+
               <small
                 v-if="errors"
                 class="has-error"
