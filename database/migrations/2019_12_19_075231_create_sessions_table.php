@@ -16,16 +16,11 @@ class CreateSessionsTable extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->unique();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('document_id')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->text('payload');
             $table->integer('last_activity');
         });
-
-        DB::statement('ALTER TABLE `sessions` CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT NOT NULL');
-        DB::statement('ALTER TABLE `sessions` CHANGE user_id user_id int(6) zerofill NOT NULL');
-        DB::statement('ALTER TABLE `sessions` CHANGE document_id document_id int(6) zerofill NOT NULL');
     }
 
     /**

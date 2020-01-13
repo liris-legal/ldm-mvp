@@ -129,7 +129,7 @@ body {
 
 // component app-document-two-columns
 @mixin app_document($textSizeName) {
-    .app-document-two-columns{
+    .document-two-columns{
         color: #404040;
         border: 1px solid #DADDE6;
         background-color: #FFFFFF;
@@ -196,7 +196,7 @@ body {
     .mixin-notification{
         max-width: 500px;
         border-radius: 4px;
-        padding: 1em 1em 0;
+        padding: 1em;
         z-index: 3;
         top: 0;
         position: absolute;
@@ -210,13 +210,13 @@ body {
         .notification-danger{
             display: block;
             margin: 0 auto;
-            padding: 1em 1em 0;
+            padding: 1em;
 
             .label-delete {
                 margin-bottom: 1.5em;
             }
 
-            .button-notification{
+            .button-notification {
                 margin: 3em 0 0;
 
                 .button-content {
@@ -270,24 +270,19 @@ body {
         }
     }
 }
-@mixin mixin_documents_four_columns($textSizeName) {
-    .documents-four-columns {
-        cursor: pointer;
-        .name {
-            font-size: $textSizeName !important;
-            margin-left: 40px;
-            line-height: 40px;
-        }
-    }
-}
+
 // range-table-row components
 @mixin mixin_range_row_item($textSizeName) {
     .range--row-item {
         cursor: pointer;
-        .name {
-            font-size: $textSizeName !important;
-            margin-left: 40px;
-            line-height: 40px;
+        background-color: $color___white;
+        td {
+            padding: 3px;
+            .name {
+                font-size: $textSizeName !important;
+                margin-left: 48px;
+                line-height: 40px;
+            }
         }
     }
 }
@@ -297,10 +292,9 @@ body {
     @include mixin_thead_columns(12px);
     tbody {
         @include mixin_range_row_item(14px);
-        @include mixin_documents_four_columns(14px);
         &:nth-child(2n) {
             td{
-                background-color: #e8e8e8;
+                //background-color: #e8e8e8;
                 border-top: 1px solid #DADDE6;
                 border-bottom: 1px solid #DADDE6;
 
@@ -309,7 +303,7 @@ body {
 
                     .sub-menu{
                         visibility: hidden;
-                        top: 60px !important;
+                        top: 52px !important;
                         right: 5px !important;
                         @extend %subs-menu;
                     }

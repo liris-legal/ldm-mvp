@@ -2,14 +2,14 @@
   <div class="mixin-notification">
     <div class="notification-danger">
       <div class="notification-content">
-        <div class="label-delete font-size-20">
+        <div class="label-delete font-size-16">
           削除
         </div>
-        <div class="font-size-18">
+        <div class="">
           {{ message }}
         </div>
       </div>
-      <div class="row button-notification label-size-15">
+      <div class="row button-notification">
         <div class="col-6 text-center button-content button-left">
           <button
             class="btn btn-success full-width cancel"
@@ -38,7 +38,7 @@
   export default {
     name: "AppDeleteAnItem",
     props: {
-      data: {type: Number, required: true},
+      data: {type: Number, required: true, default: 0},
       dataType: {type: String, required: true, default: ''},
       message: {type: String, default: 'ファイルを削除してもよろしいですか？'}
     },

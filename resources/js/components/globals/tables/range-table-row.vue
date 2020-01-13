@@ -1,28 +1,39 @@
 <template>
   <tr
+    v-if="document"
     v-ripple
     class="range--row-item d-flex pa-0"
   >
     <td
       scope="col"
-      class="col col-6 pt-2 pb-2"
+      class="col"
+      :class="className"
     >
       <div class="name">
-        {{ document.name }}
+        {{ documentName }}
+      </div>
+    </td>
+    <td
+      v-if="numberColumns === 3"
+      scope="col"
+      class="col col-4"
+    >
+      <div class="name">
+        {{ document.submitter.name }}
       </div>
     </td>
     <td
       scope="col"
-      class="col col-6 d-flex pt-2 pb-2 last-column"
-      :class="{'unset-relative': isShowDelete}"
+      class="col d-flex last-column"
+      :class="[{'unset-relative': isShowDelete}, className]"
     >
       <div class="col-6 pa-0">
         <div class="name">
           {{ document.created_at_wareki }}
         </div>
       </div>
+      <v-spacer />
       <template v-if="subMenu">
-        <v-spacer />
         <div class="col-6 pa-0 text-right col-btn font-weight-600 font-size-20">
           <v-btn
             v-click-outside="hidden"
@@ -30,10 +41,11 @@
             @click="isShowSubmenu = !isShowSubmenu"
             @click.stop=""
           >
-            ...
+            <v-icon>more_horiz</v-icon>
           </v-btn>
         </div>
         <v-list
+          :elevation="5"
           class="sub-menu"
           :class="{ 'actived': isShowSubmenu}"
         >
@@ -48,7 +60,42 @@
           </v-list-item>
         </v-list>
       </template>
+      <template v-else>
+        <div class="col-6 pa-0 text-right col-btn font-weight-600 font-size-20">
+          <v-btn
+            disabled
+            icon
+          >
+            <v-icon>more_horiz</v-icon>
+          </v-btn>
+        </div>
+      </template>
     </td>
+  </tr>
+  <tr
+    v-else
+    v-ripple
+    class="range--row-item d-flex pa-0"
+  >
+    <td
+      scope="col"
+      class="col"
+      :class="className"
+    >
+      <div class="name">
+        データが見つかりません！
+      </div>
+    </td>
+    <td
+      v-if="numberColumns"
+      scope="col"
+      class="col col-4"
+    />
+    <td
+      scope="col"
+      class="col"
+      :class="className"
+    />
   </tr>
 </template>
 
@@ -56,16 +103,21 @@
   export default {
     name: "RangeRowItem",
     props: {
-      lawsuitId: {required: false,  type: Number, default: () => 0},
-      document: {required: true,  type: Object, default: () => {}},
-      submitter: {required: false,  type: String, default: () => '#'},
-      subMenu: {required: false,  type: Boolean, default: () => true},
+      lawsuitId: {required: false, type: Number, default: () => 0},
+      document: {required: false, type: Object, default: () => {}},
+      documentName: {required: false, type: String, default: () => ''},
+      subMenu: {required: false, type: Boolean, default: () => true},
+      numberColumns: {required: false, type: Number, default: () => 2},
     },
     data() {
       return {
         isShowSubmenu: false,
         isShowDelete: false,
+        className: 'col-6'
       }
+    },
+    created() {
+      this.className = 'col-' + (12/this.numberColumns);
     },
     mounted() {
       // console.log('range-row-item mounted');

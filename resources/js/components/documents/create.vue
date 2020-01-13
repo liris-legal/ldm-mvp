@@ -77,7 +77,10 @@
                 class="font-weight-600"
               >書面名</label>
             </v-col>
-            <v-col class="col-9 pa-0 input" id="document-name">
+            <v-col
+              id="document-name"
+              class="col-9 pa-0 input"
+            >
               <v-select
                 v-if="type_document_id === 2"
                 v-model="document.name"
@@ -186,8 +189,8 @@
         <v-row>
           <v-col class="text-center">
             <v-file-input
-              v-model="file"
               id="file-upload"
+              v-model="file"
               type="file"
               accept=".pdf,.doc,.docx"
               style="display:none"
@@ -196,7 +199,7 @@
             />
             <v-btn
               v-ripple
-              class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-18 font-weight-600"
+              class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
               @click.native="openFileDialog"
             >
               アップロード
@@ -301,35 +304,6 @@
           });
       },
 
-      /**
-       * @function formatDate
-       * @description to format japanese date YYYY年MM月DD日
-       * @return string|null
-       */
-      formatDate(date) {
-        if (!date) return null;
-
-        const [year, month, day] = date.split('-');
-        return `${year}年${month}月${day}日`
-      },
-      /**
-       * @function parseDate
-       * @description format japanese date YYYY年MM月DD日 to ISO Date YYYY-MM-DD
-       * @return string|null
-       */
-      parseDate (date) {
-        if (!date) return null;
-
-        const year = date.split('年')[0];
-
-        date = date.replace(year+'年', '');
-        const month = date.split('月')[0];
-
-        date = date.replace(month+'月', '');
-        const day = date.split('日')[0];
-
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-      },
       /**
        * @function onChangeSubmitter
        * @description to handle change submitter

@@ -23,9 +23,21 @@
         </v-col>
       </v-row>
       <table class="table">
-        <thead-columns :thead="thead_label" />
+        <thead-columns :thead="tableHeadLabels" />
         <tbody>
-          <documents-four-columns />
+          <template v-if="claimDocuments.length > 0">
+            <range-row-item
+              v-for="document in claimDocuments"
+              :key="'claim-document-'+document.id"
+              :document="document"
+              :document-name="document.name"
+              :number-columns="parseInt(3)"
+              :lawsuit-id="lawsuit.id"
+            />
+          </template>
+          <template v-else>
+            <range-row-item />
+          </template>
         </tbody>
       </table>
     </div>
@@ -42,13 +54,13 @@
       <app-type-lawsuit
         v-if="lawsuit.plaintiffs"
         :route-text="submitterOfDocument(lawsuit.plaintiffs, 'plaintiff')"
-        :route-link="routeDefendantDocumentsIndex"
+        :route-link="routePlaintiffDocumentsIndex"
       />
 
       <app-type-lawsuit
         v-if="lawsuit.defendants"
         :route-text="submitterOfDocument(lawsuit.defendants, 'defendant')"
-        :route-link="routePlaintiffDocumentsIndex"
+        :route-link="routeDefendantDocumentsIndex"
       />
     </div>
 
@@ -61,9 +73,22 @@
         </v-col>
       </v-row>
       <table class="table">
-        <thead-columns :thead="thead_label" />
+        <thead-columns :thead="tableHeadLabels" />
         <tbody>
-          <documents-four-columns />
+          <template v-if="otherDocuments.length > 0">
+            <range-row-item
+              v-for="document in otherDocuments"
+              :key="'other-document-'+document.id"
+              :document="document"
+              :document-name="document.name"
+              :sub-menu="Boolean(false)"
+              :lawsuit-id="lawsuit.id"
+              :number-columns="parseInt(3)"
+            />
+          </template>
+          <template v-else>
+            <range-row-item />
+          </template>
         </tbody>
       </table>
     </div>
@@ -90,7 +115,7 @@
     },
     data() {
       return {
-        thead_label: [
+        tableHeadLabels: [
           { id: 1, label: '書面名', class: 'col-4'},
           { id: 2, label: '提出者', class: 'col-4'},
           { id: 3, label: '提出日', class: 'col-4'},
@@ -98,11 +123,17 @@
         thead_evidence_document: [{ id: 1, name: 'フォルダ名', class: 'col-12'}],
         thead_other_documents: [{ id: 1, name: '書面名', class: 'col-12'}],
         lawsuit: {},
+        claimDocuments: [],
+        otherDocuments: [],
 			}
     },
     created() {
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
-      .then(res => {return this.lawsuit = res.data.data;})
+      .then(res => {
+        this.lawsuit = res.data.data;
+        this.claimDocuments = this.lawsuit.documents.filter(d => d.type.description === 'claim' );
+        this.otherDocuments = this.lawsuit.documents.filter(d => d.type.description === 'other');
+      })
       .catch(err => {console.log(err.response);
       });
     },

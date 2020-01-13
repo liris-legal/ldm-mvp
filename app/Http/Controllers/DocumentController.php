@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Document as DocumentResource;
 use App\Models\Document;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
@@ -19,7 +18,6 @@ class DocumentController extends Controller
      */
     public function index($lawsuitId, $submitter)
     {
-        $documents = Document::where('type_document_id', 1)->whereAnd('submitter_id', 1)->get();
         return view('content.documents.index', ['lawsuitId' => $lawsuitId, 'submitter' => $submitter]);
     }
 
@@ -51,11 +49,13 @@ class DocumentController extends Controller
     public function edit($lawsuitId, $documentId)
     {
         $typeDocuments = TypeDocument::all();
+        $submitters = Submitter::where('description', 'NOT LIKE', '%representative')->get();
 
         return view('content.documents.edit', [
                 'lawsuitId' => $lawsuitId,
                 'documentId' => $documentId,
                 'typeDocuments' => $typeDocuments,
+                'submitters' => $submitters
             ]);
     }
 }

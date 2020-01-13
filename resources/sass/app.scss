@@ -8,6 +8,7 @@
 $body-font-family: "Hiragino Sans GB", sans-serif !important;
 .v-application, .v-application .headline, .v-application .title {
     font-family: $body-font-family;
+    font-size: 14px;
 }
 
 // Defined styles for app
@@ -118,11 +119,12 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
         .description {
             color: #808080;
             margin-top: 1em;
+            margin-bottom: 0.5em;
         }
     }
     @include app_thead(12px);
     @include app_document(14px);
-    @include app_type_lawsuits(15px);
+    @include app-type-lawsuits(14px);
 }
 
 // list lawsuits page
@@ -135,6 +137,7 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
             border-spacing: 0;
             thead {
                 tr.title{
+                    font-size: 12px !important;
                     text-align: left;
                     th{
                         background-color: #fff;

@@ -3,6 +3,7 @@
 @section('content')
     <document-edit :lawsuit-id="'{{ $lawsuitId }}'"
                    :document-id="'{{ $documentId }}'"
+                   :submitters="{{ $submitters }}"
                    :type-documents="{{ $typeDocuments }}"
                    :update-route="'{{route('documents.update', $documentId)}}'"
     >

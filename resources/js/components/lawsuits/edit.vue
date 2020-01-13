@@ -298,7 +298,7 @@
           <v-col class="text-center">
             <v-btn
               v-ripple
-              class="col-8 mr-0-auto btn btn-primary pa-3 height-auto font-size-18 font-weight-600"
+              class="col-8 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
               @click="postData"
             >
               保存
@@ -375,7 +375,7 @@
           .then(res => {
             console.log(res.data);
             this.$store.dispatch('create_notification', res.data.message);
-            // location.href = res.data.url;
+            setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             console.log(err.response.data);

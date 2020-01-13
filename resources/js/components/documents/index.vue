@@ -24,31 +24,16 @@
         <thead-columns :thead="theadLabels" />
         <tbody>
           <template v-if="explainDocuments.length > 0">
-            <range-table-row
+            <range-row-item
               v-for="document in explainDocuments"
               :key="'explain-document-'+document.id"
               :document="document"
+              :document-name="document.name+''+document.number"
               :sub-menu="Boolean(false)"
             />
           </template>
           <template v-else>
-            <tr
-              v-ripple
-              class="range--row-item d-flex pa-0"
-            >
-              <td
-                scope="col"
-                class="col col-6 pt-2 pb-2"
-              >
-                <div class="name">
-                  No content
-                </div>
-              </td>
-              <td
-                scope="col"
-                class="col col-6 pt-2 pb-2"
-              />
-            </tr>
+            <range-row-item />
           </template>
         </tbody>
       </table>
@@ -58,7 +43,7 @@
       <v-row>
         <v-col class="col-12 header-content">
           <h3 class="description font-size-18">
-            {{ submitter === 'plaintiff' ? "甲" : "乙" }}号証
+            {{ submitterKana }}号証
           </h3>
         </v-col>
       </v-row>
@@ -66,32 +51,16 @@
         <thead-columns :thead="theadLabels" />
         <tbody>
           <template v-if="evidenceDocuments.length > 0">
-            <range-table-row
+            <range-row-item
               v-for="document in evidenceDocuments"
               :key="'evidence-document-'+document.id"
               :document="document"
-              :submitter="submitter"
+              :document-name="submitterKana+'第'+document.number+'号証'"
               :lawsuit-id="parseInt($route.params.lawsuitId)"
             />
           </template>
           <template v-else>
-            <tr
-              v-ripple
-              class="range--row-item d-flex pa-0"
-            >
-              <td
-                scope="col"
-                class="col col-6 pt-2 pb-2"
-              >
-                <div class="name">
-                  No content
-                </div>
-              </td>
-              <td
-                scope="col"
-                class="col col-6 pt-2 pb-2"
-              />
-            </tr>
+            <range-row-item />
           </template>
         </tbody>
       </table>
@@ -111,6 +80,7 @@
     data() {
       return {
         submitter: '',
+        submitterKana: '',
         theadLabels: [
           { id: 1, label: '書面名', class: 'col-6'},
           { id: 2, label: '提出日', class: 'col-6'},
@@ -124,8 +94,8 @@
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
-          const evidenceDocument = this.lawsuit.documents.filter(d => d.submitter_description === this.submitter &&
-           d.type_document.description === 'evidence' );
+          const evidenceDocument = this.lawsuit.documents.filter(d => d.submitter.description === this.submitter &&
+           d.type.description === 'evidence' );
 
           const explainDocumentName = this.submitter === 'plaintiff' ? "甲号証" : "乙号証";
           this.evidenceDocuments = evidenceDocument.filter(d => d.name === explainDocumentName);
@@ -138,6 +108,7 @@
        *
        */
       this.submitter = this.$route.params.submitter;
+      this.submitterKana = this.submitter === 'plaintiff' ? "甲" : "乙"
     },
     mounted() {
       console.log(this.$route.name + ' mounted');

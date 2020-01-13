@@ -12,7 +12,7 @@
         class="ma-0"
       >
         <v-col class="col-12 d-flex">
-          <div class="name font-weight-600">{{ routeText }}</div>
+          <div class="name">{{ routeText }}</div>
           <v-spacer />
           <v-btn icon><v-icon>arrow_forward_ios</v-icon></v-btn>
         </v-col>
