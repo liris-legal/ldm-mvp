@@ -48,8 +48,9 @@
         </v-btn>
         <v-list
           v-if="showAdd"
+          :elevation="5"
           class="list-item-add-button"
-          min-width="205"
+          min-width="203"
         >
           <v-list-item
             :href="routeCreateLawsuit"

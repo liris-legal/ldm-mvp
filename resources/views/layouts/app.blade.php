@@ -31,6 +31,7 @@
             <div class="clearfix"></div>
             <v-content class="content-wrapper">
                 @yield('content')
+                <app-modal></app-modal>
             </v-content>
             <div class="clearfix"></div>
             <app-bottom :route-create-lawsuit="'{{route('lawsuits.create')}}'"

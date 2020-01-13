@@ -25,7 +25,6 @@
     <td
       scope="col"
       class="col d-flex last-column"
-      :class="[{'unset-relative': isShowDelete}, className]"
     >
       <div class="col-6 pa-0">
         <div class="name">
@@ -33,43 +32,12 @@
         </div>
       </div>
       <v-spacer />
-      <template v-if="subMenu">
-        <div class="col-6 pa-0 text-right col-btn font-weight-600 font-size-20">
-          <v-btn
-            v-click-outside="hidden"
-            icon
-            @click="isShowSubmenu = !isShowSubmenu"
-            @click.stop=""
-          >
-            <v-icon>more_horiz</v-icon>
-          </v-btn>
-        </div>
-        <v-list
-          :elevation="5"
-          class="sub-menu"
-          :class="{ 'actived': isShowSubmenu}"
-        >
-          <v-list-item
-            :href="'/lawsuits/'+lawsuitId+'/documents/'+document.id+'/edit'"
-            @click.stop=""
-          >
-            <v-list-item-title>名前を変更</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click.stop="">
-            <v-list-item-title>ファイルを削除</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </template>
-      <template v-else>
-        <div class="col-6 pa-0 text-right col-btn font-weight-600 font-size-20">
-          <v-btn
-            disabled
-            icon
-          >
-            <v-icon>more_horiz</v-icon>
-          </v-btn>
-        </div>
-      </template>
+      <sub-menu
+        :sub-menu="subMenu"
+        :sub-link="'/lawsuits/'+lawsuitId+'/documents/'+document.id+'/edit'"
+        :sub-id="document.id"
+        :sub-type="'documents'"
+      />
     </td>
   </tr>
   <tr
@@ -100,6 +68,7 @@
 </template>
 
 <script>
+  import subMenu from "../sub-menu"
   export default {
     name: "RangeRowItem",
     props: {
@@ -109,10 +78,11 @@
       subMenu: {required: false, type: Boolean, default: () => true},
       numberColumns: {required: false, type: Number, default: () => 2},
     },
+    components:{
+      subMenu
+    },
     data() {
       return {
-        isShowSubmenu: false,
-        isShowDelete: false,
         className: 'col-6'
       }
     },
@@ -120,18 +90,8 @@
       this.className = 'col-' + (12/this.numberColumns);
     },
     mounted() {
-      // console.log('range-row-item mounted');
+      console.log('range-row-item mounted');
     },
-    methods: {
-      /**
-       * @function hidden
-       * @description To hidden a sub-menu
-       */
-      hidden() {
-        this.isShowSubmenu = false;
-        this.isShowDelete = false;
-      },
-    }
   }
 </script>
 

@@ -9,11 +9,7 @@
       </v-col>
     </v-row>
 
-    <div class="overflow overflow-x-auto">
-      <div
-        v-if="isShowDelete"
-        class="overlay"
-      />
+    <div class="overflow-x-auto">
       <table class="table">
         <thead>
           <tr class="title d-flex">
@@ -138,74 +134,37 @@
               <td
                 scope="col"
                 class="col col-3 d-flex pa-0 last-child-table"
-                :class="{'unset-relative': isShowDelete}"
               >
                 <div class="col-md-6 col-lg-6">
                   {{ lawsuit.other_parties | parseName }}
                 </div>
                 <v-spacer />
-                <div class="col-6 text-right col-btn font-weight-600 font-size-14">
-                  <v-btn
-                    :id="'lawsuit-sub-menu-' + lawsuit.id"
-                    v-click-outside="hidden"
-                    icon
-                    @click="showSubmenu(index)"
-                    @click.stop=""
-                  >
-                    <v-icon>more_horiz</v-icon>
-                  </v-btn>
-                </div>
-                <v-list
-                  min-width="178"
-                  class="sub-menu"
-                  :class="{ 'actived': activeIndex === index}"
-                >
-                  <v-list-item
-                    dense
-                    :href="'lawsuits/' + lawsuit.id + '/edit'"
-                    @click.stop=""
-                  >
-                    <v-list-item-title class="font-size-14">
-                      事件を変更
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-list-item
-                    dense
-                    @click="deleteLawsuit(lawsuit.id)"
-                    @click.stop=""
-                  >
-                    <v-list-item-title class="font-size-14">
-                      事件を削除
-                    </v-list-item-title>
-                  </v-list-item>
-                </v-list>
+                <sub-menu
+                  :sub-link="'lawsuits/' + lawsuit.id + '/edit'"
+                  :sub-id="lawsuit.id"
+                  :sub-type="'lawsuits'"
+                  :sub-message="'事件を削除してもよろしいですか？'"
+                />
               </td>
             </tr>
           </template>
         </tbody>
       </table>
     </div>
-    <app-delete-item
-      v-if="isShowDelete"
-      :data-type="'lawsuits'"
-      message="事件を削除してもよろしいですか？"
-      :data="dataReceived"
-      @cancelSubmit="isShowDelete = $event"
-    />
   </div>
 </template>
 
 <script>
+  import subMenu from "../globals/sub-menu"
   export default {
     name: "LawsuitsIndex",
     data() {
       return {
-        activeIndex: undefined,
-        count: 1,
-        isShowDelete: false,
-        dataReceived: null,
-        lawsuits: {}
+        lawsuits: {},
       }
+    },
+    components:{
+      subMenu
     },
     created() {
       axios.get('lawsuits')
@@ -220,46 +179,6 @@
       showLawsuit(lawsuit_id) {
         location.href = 'lawsuits/' + lawsuit_id;
       },
-
-      /**
-       * @function showSubmenu
-       * @description show a sub-menu
-       */
-      showSubmenu(index) {
-        this.count++;
-        if(this.count % 2 === 0){
-          this.activeIndex = index;
-        } else {
-          this.activeIndex = undefined;
-        }
-      },
-
-      /**
-       * @function deleteLawsuit
-       * @description delete a lawsuit
-       */
-      deleteLawsuit(lawsuit_id){
-        this.isShowDelete = true;
-        this.count = 1;
-        this.activeIndex = undefined;
-        this.dataReceived = lawsuit_id;
-      },
-
-      /**
-       * @function hidden
-       * @description To hidden a sub-menu
-       */
-      hidden() {
-        this.count = 1;
-        this.activeIndex = undefined;
-        this.isShowDelete = false;
-      },
     }
   }
 </script>
-<style lang="scss">
-  .unset-relative{
-    position: unset !important;
-    pointer-events: none;
-  }
-</style>

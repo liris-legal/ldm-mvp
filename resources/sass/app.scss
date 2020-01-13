@@ -11,6 +11,43 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
     font-size: 14px;
 }
 
+html {
+    overflow: auto;
+}
+body {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    padding: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    /* Let's get this party started */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: $color___btn___primary;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }
+    &::-webkit-scrollbar-thumb:window-inactive {
+        background-color: $color___btn___primary;
+    }
+}
+
 // Defined styles for app
 .v-application{
     display: block;
@@ -57,7 +94,7 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
 .list-menu-top-bar, %subs-menu{
     position: absolute;
     z-index: 9999;
-    right: 5px;
+    right: 15px;
     top: 115%;
     @include background-text(#fff, #404040);
     .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
