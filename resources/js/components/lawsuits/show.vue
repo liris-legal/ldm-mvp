@@ -81,7 +81,6 @@
               :key="'other-document-'+document.id"
               :document="document"
               :document-name="document.name"
-              :sub-menu="Boolean(false)"
               :lawsuit-id="lawsuit.id"
               :number-columns="parseInt(3)"
             />
