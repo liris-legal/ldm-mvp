@@ -70,21 +70,19 @@ class DocumentApiController extends Controller
      */
     public function update(UpdateDocument $request, $id)
     {
-        $document = Document::findOrFail($id);
-        $number = $request['number'];
-        $document = Document::where([
+        $documents = Document::where([
             ['number', $request['number']],
             ['type_document_id', $request['type_document_id']],
             ['submitter_id', $request['submitter_id']],
             ['lawsuit_id', $request['lawsuit_id']]
         ])->get();
 
-        if (count($document) >= 1) {
+        if (count($documents) >= 1) {
             return $request->validate([
                 'number'    =>  'unique:documents,number'
             ]);
         }
-
+        $document = Document::findOrFail($id);
         $data = $request->all();
         $document->updated_at = now();
         $document->fill($data)->save();
