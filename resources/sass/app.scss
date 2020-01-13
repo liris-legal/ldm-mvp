@@ -177,10 +177,6 @@ $body-font-family: "Hiragino Sans GB", sans-serif !important;
                             top: 55px !important;
                             right: 5px !important;
                             @extend %subs-menu;
-
-                            // &:last-child, &:nth-last-child(2), &:nth-last-child(3){
-                            //     top: -102px !important;
-                            // }
                         }
                         .actived{
                             visibility: visible;
