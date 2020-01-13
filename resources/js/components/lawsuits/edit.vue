@@ -375,7 +375,7 @@
           .then(res => {
             console.log(res.data);
             this.$store.dispatch('create_notification', res.data.message);
-            // location.href = res.data.url;
+            setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             console.log(err.response.data);

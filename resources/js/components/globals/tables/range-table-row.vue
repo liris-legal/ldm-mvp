@@ -45,6 +45,7 @@
           </v-btn>
         </div>
         <v-list
+          :elevation="5"
           class="sub-menu"
           :class="{ 'actived': isShowSubmenu}"
         >
