@@ -7,6 +7,7 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocument;
+use App\Http\Requests\UpdateDocument;
 use Storage;
 
 class DocumentApiController extends Controller
@@ -66,9 +67,20 @@ class DocumentApiController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDocument $request, $id)
     {
-        //
+        $document = Document::findOrFail($id);
+        if ($document) {
+            $data = $request->all();
+            $document->updated_at = $request->updated_at;
+            $document->fill($data)->save();
+        }
+
+        $message = ['status' => 'success', 'content' => '文書が正常に更新します。'];
+        return response()->json([
+            'url' => route('documents.index', [$data['lawsuit_id'], $data['description']]),
+            'message' => $message
+        ], 200);
     }
 
     /**

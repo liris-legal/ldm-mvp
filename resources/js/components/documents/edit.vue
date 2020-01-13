@@ -209,7 +209,6 @@
     name: "DocumentEdit",
     props: {
       updateRoute: { required: true, type: String, default: ''},
-      lawsuitId: {required: true,  type: String, default: ''},
       documentId: {required: true,  type: String, default: ''},
       typeDocuments: {required: true,  type: Array, default: () => []},
       submitters: {required: true,  type: Array, default: () => []},
@@ -279,16 +278,18 @@
         let formData = new FormData();
         formData.append('name', this.document.name);
         formData.append('number', this.document.number);
+        formData.append('lawsuit_id', this.document.lawsuit_id);
         formData.append('type_document_id', this.type_document_id);
         formData.append('submitter_id', this.submitter_id);
-        formData.append('created_at', this.date);
+        formData.append('updated_at', this.date || '');
+        formData.append('description', this.document.submitter.description);
         formData.append("_method", "PATCH");
 
         axios.post(this.updateRoute, formData)
           .then(res => {
             console.log(res);
             this.$store.dispatch('create_notification', res.data.message);
-            setTimeout(function(){ location.href = res.data.url; }, 3000);
+            // setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             if (err.response.status === 422) {
