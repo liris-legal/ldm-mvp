@@ -44,22 +44,6 @@ class DocumentApiController extends Controller
      */
     public function store(UpdateDocument $request)
     {
-        // dd($request->all());
-        $documents = Document::where([
-            ['number', $request['number']],
-            ['type_document_id', $request['type_document_id']],
-            ['submitter_id', $request['submitter_id']],
-            ['lawsuit_id', $request['lawsuit_id'],
-            ['id', '!=', $request['id']]]
-        ])->get();
-        if (($request['submitter_id'] == 1 || $request['submitter_id'] == 3) && $request['type_document_id'] == 2) {
-            if ($documents) {
-                return $request->validate([
-                    'number'    =>  'unique:documents,number'
-                ]);
-            }
-        }
-
         $data = $request->all();
         $file = $request->file('file');
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
