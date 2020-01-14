@@ -140,6 +140,7 @@
                 </div>
                 <v-spacer />
                 <sub-menu
+                  :key="'lawsuits-sub-menu-'+lawsuit.id"
                   :sub-link="'lawsuits/' + lawsuit.id + '/edit'"
                   :sub-id="lawsuit.id"
                   :sub-type="'lawsuits'"

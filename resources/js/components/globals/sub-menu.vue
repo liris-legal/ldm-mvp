@@ -11,6 +11,7 @@
         </v-btn>
       </div>
       <v-list
+        v-click-outside="hidden"
         min-width="176"
         :elevation="5"
         class="sub-menu"
@@ -59,10 +60,25 @@
     data() {
       return {
         activated: false,
-
       }
     },
+    created() {
+      // Listening the event modal-delete
+      eventBus.$on('menu-activated', this.handler);
+    },
+    destroyed() {
+      // Stop listening the event modal-delete with handler
+      eventBus.$off('menu-activated', this.handler);
+    },
     methods:{
+      /**
+       * @function handler
+       * @description parse payload data
+       */
+      handler(payload){
+        if (this.$options._parentVnode.key !== payload)
+          this.activated = false;
+      },
       /**
        * @function sendEventDelete
        * @description To hidden a sub-menu
@@ -87,11 +103,8 @@
        * @description To show/hidden menu, remove `actived` other submenu
        */
       showMenu() {
-        let activatedMenu = document.getElementsByClassName('sub-menu actived');
-        if(activatedMenu.length > 0)
-          activatedMenu[0].classList.remove('actived');
-
         this.activated = !this.activated;
+        eventBus.$emit('menu-activated', this.$options._parentVnode.key);
       },
     }
   }

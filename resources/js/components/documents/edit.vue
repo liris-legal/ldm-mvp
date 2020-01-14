@@ -124,15 +124,32 @@
               id="document-number"
               class="col-9 pa-0 input"
             >
-              <v-text-field
-                v-model="document.number"
-                type="number"
-                class="col-md-12"
-                single-line
-                outlined
-                required
-                dense
-              />
+              <v-row class="ma-0 row-text-field">
+                <v-col cols="6" sm="6" md="4" class="pa-0 col-number">
+                  <v-text-field
+                    v-model="document.number"
+                    type="number"
+                    single-line
+                    outlined
+                    dense
+                    required
+                  />
+                </v-col>
+
+                <span
+                  class="mx-1 col-1 font-weight-600"
+                >の</span>
+
+                <v-col cols="6" sm="6" md="4" class="pa-0 col-number">
+                  <v-text-field
+                    type="number"
+                    single-line
+                    outlined
+                    dense
+                    required
+                  />
+                </v-col>
+              </v-row>
               <small
                 v-if="errors"
                 class="has-error"
@@ -177,10 +194,16 @@
                   v-model="date"
                   locale="ja-jp"
                   :first-day-of-week="1"
+                  :max="getEndDate"
                   no-title
                   @input="datePicker = false"
                 />
               </v-menu>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'created_at') }}</small>
+
               <small
                 v-if="errors"
                 class="has-error"
@@ -193,7 +216,7 @@
             <v-btn
               v-ripple
               class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
-              @click.native="postData"
+              @click="postData"
             >
               保存
             </v-btn>
@@ -209,6 +232,7 @@
     name: "DocumentEdit",
     props: {
       updateRoute: { required: true, type: String, default: ''},
+      lawsuitId: {required: true,  type: String, default: ''},
       documentId: {required: true,  type: String, default: ''},
       typeDocuments: {required: true,  type: Array, default: () => []},
       submitters: {required: true,  type: Array, default: () => []},
@@ -252,7 +276,7 @@
        * @function
        * @description fetch document data from API
        */
-      axios.get('documents/' + this.documentId)
+      axios.get('lawsuits/'+this.lawsuitId+'/documents/' + this.documentId)
         .then(res => {
           this.document = res.data.data;
           this.type_document_id = this.document.type.id;
@@ -261,9 +285,7 @@
         })
         .catch(err => {
           console.log(err);
-          if (err.response.status === 422) {
-            this.errors = err.response.data.errors;
-          }
+          alert('Not found data!');
         });
     },
     methods: {
@@ -278,7 +300,7 @@
         let formData = new FormData();
         formData.append('name', this.document.name);
         formData.append('number', this.document.number);
-        formData.append('lawsuit_id', this.document.lawsuit_id);
+        formData.append('lawsuit_id', this.lawsuitId);
         formData.append('type_document_id', this.type_document_id);
         formData.append('submitter_id', this.submitter_id);
         formData.append('created_at', this.date || '');
@@ -288,7 +310,7 @@
           .then(res => {
             console.log(res);
             this.$store.dispatch('create_notification', res.data.message);
-            // setTimeout(function(){ location.href = res.data.url; }, 3000);
+            setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             if (err.response.status === 422) {
@@ -315,7 +337,7 @@
 </script>
 
 <style scoped>
-  .form-control .input-form-group {
-    min-height: 56px;
+  .row-text-field .col-number{
+    max-width: 44.98%
   }
 </style>

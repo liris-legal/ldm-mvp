@@ -27,23 +27,30 @@ class UpdateDocument extends FormRequest
      */
     public function rules()
     {
-        // dd($this->document);
-        $submitter = Submitter::findOrFail($this->submitter_id);
-        $typeDocument = TypeDocument::findOrFail($this->type_document_id);
-        return ($submitter->description == 'plaintiff' || $submitter->description == 'defendant')
-        && ($typeDocument->description == 'evidence') ? [
-            'number' => 'bail|required|numeric',
-            'name' => 'bail|required|max:150',
-            'type_document_id' => 'bail|required|exists:type_documents,id',
-            'submitter_id' => 'bail|required|exists:submitters,id',
-            'lawsuit_id' => 'bail|required|exists:lawsuits,id',
-            'created_at' => 'bail|required|date_format:Y-m-d|before:tomorrow',
-        ] : [
-            'name' => 'bail|required|max:150',
-            'type_document_id' => 'bail|required|exists:type_documents,id',
-            'submitter_id' => 'bail|required|exists:submitters,id',
-            'lawsuit_id' => 'bail|required|exists:lawsuits,id',
-            'created_at' => 'bail|required|date_format:Y-m-d|before:tomorrow',
+        $rules = [
+            'name'              => 'bail|required|max:150',
+            'number'            => 'bail|numeric',
+            'file'              => 'bail|required|mimes:pdf,doc,docx|max:204800',
+            'type_document_id'  => 'bail|required|exists:type_documents,id',
+            'submitter_id'      => 'bail|required|exists:submitters,id',
+            'lawsuit_id'        => 'bail|required|exists:lawsuits,id',
+            'created_at'        => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ];
+
+        // update request
+        if (isset($this->document) && ($this->document->submitter_id == 1 || $this->document->submitter_id == 3)
+            && ($this->document->type_document_id == 2)) {
+            $rules['number'] = 'bail|required|numeric|unique:documents,number,'
+                . $this->document->id . ',id,lawsuit_id,' . $this->document->lawsuit_id
+                . ',submitter_id,' . $this->document->submitter_id . ',name,' . $this->document->name;
+            $rules['file'] = 'bail|mimes:pdf,doc,docx';
+        }
+
+        if (($this->submitter_id == 1 || $this->submitter_id == 3) && $this->type_document_id == 2) {
+            $rules['number'] = 'bail|required|numeric|unique:documents,number,NULL,id,lawsuit_id,' . $this->lawsuit_id
+            . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name;
+        }
+
+        return $rules;
     }
 }

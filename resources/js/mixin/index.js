@@ -17,4 +17,9 @@ export const mixin = {
      */
     ClickOutside
   },
+  computed: {
+    getEndDate() {
+      return new Date().toISOString().slice(0,10)
+    }
+  },
 };

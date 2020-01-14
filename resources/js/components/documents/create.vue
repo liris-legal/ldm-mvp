@@ -122,15 +122,32 @@
               id="document-number"
               class="col-9 pa-0 input"
             >
-              <v-text-field
-                v-model="document.number"
-                type="number"
-                class="col-md-12"
-                single-line
-                outlined
-                dense
-                required
-              />
+              <v-row class="ma-0 row-text-field">
+                <v-col cols="6" sm="6" md="4" class="pa-0 col-number">
+                  <v-text-field
+                    v-model="document.number"
+                    type="number"
+                    single-line
+                    outlined
+                    dense
+                    required
+                  />
+                </v-col>
+
+                <span
+                  class="mx-1 col-1 font-weight-600"
+                >の</span>
+
+                <v-col cols="6" sm="6" md="4" class="pa-0 col-number">
+                  <v-text-field
+                    type="number"
+                    single-line
+                    outlined
+                    dense
+                    required
+                  />
+                </v-col>
+              </v-row>
               <small
                 v-if="errors"
                 class="has-error"
@@ -175,10 +192,15 @@
                   v-model="date"
                   locale="ja-jp"
                   :first-day-of-week="1"
+                  :max="getEndDate"
                   no-title
                   @input="datePicker = false"
                 />
               </v-menu>
+              <small
+                v-if="errors"
+                class="has-error"
+              >{{ catchError(errors, 'created_at') }}</small>
               <small
                 v-if="errors"
                 class="has-error"
@@ -200,7 +222,7 @@
             <v-btn
               v-ripple
               class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
-              @click.native="openFileDialog"
+              @click="openFileDialog"
             >
               アップロード
             </v-btn>
@@ -240,7 +262,7 @@
         disabled: false,
         file: null,
         rules: [
-          value => !value || value.size < 2048000 || 'File size should be less than 2048 MB!',
+          value => !value || value.size < 2048000000 || 'File size should be less than 2048 MB!',
         ],
         errors: []
       }
@@ -259,7 +281,7 @@
       },
       file (val){
         if (val) this.postData();
-        this.file = null;
+        this.clearFile();
       },
     },
     mounted() {
@@ -272,6 +294,14 @@
        */
       openFileDialog() {
         document.getElementById('file-upload').click();
+      },
+      /**
+       * @function clearFile
+       * @description to clear selected file
+       */
+      clearFile() {
+        this.file = null;
+        document.getElementsByClassName(' v-input__icon--clear')[0].children[0].click()
       },
 
       /**
@@ -320,4 +350,9 @@
     },
   }
 </script>
+<style scoped>
+  .row-text-field .col-number{
+    max-width: 44.98%
+  }
+</style>
 

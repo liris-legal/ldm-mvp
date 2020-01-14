@@ -344,6 +344,7 @@
         })
         .catch(error => {
           console.log(error);
+          alert('Not found data!');
         });
     },
 		mounted() {

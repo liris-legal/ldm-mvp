@@ -81,8 +81,9 @@ export const methods = {
    * @return {string} a translated party name
    * */
   translateColumnName(party, mode) {
-    const parties = {number: '事件番号', name: '事件名', courts_departments: '裁判所・部署', plaintiffs: '原告',
-      plaintiff_representatives: '原告代理人', defendants: '被告', defendant_representatives: '被告代理人', other_parties: 'その他当事者'};
+    const parties = {number: '事件番号', name: '事件名', file: 'ファイル', courts_departments: '裁判所・部署', plaintiffs: '原告',
+      plaintiff_representatives: '原告代理人', defendants: '被告', defendant_representatives: '被告代理人',
+      other_parties: 'その他当事者', created_at: '提出日'};
 
     return mode === 'en_ja' && parties.hasOwnProperty(party) ? parties[party] : party;
   },
