@@ -3,6 +3,7 @@
     v-if="document"
     v-ripple
     class="range--row-item d-flex pa-0"
+    @click="showLawsuitDocument(lawsuitId)"
   >
     <td
       scope="col"
@@ -90,6 +91,15 @@
     created() {
       this.className = 'col-' + (12/this.numberColumns);
     },
+    methods: {
+      /**
+       * @function showLawsuitDocument
+       * @description goto show documents of lawsuit
+       */
+      showLawsuitDocument(lawsuit_id) {
+        location.href = '/lawsuits/' + lawsuit_id + '/documents';
+      },
+    }
   }
 </script>
 

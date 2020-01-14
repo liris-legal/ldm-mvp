@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lawsuit;
+use App\Models\Submitter;
+use App\Models\TypeDocument;
 use App\Models\TypeLawsuit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -51,6 +53,28 @@ class LawsuitsController extends Controller
      */
     public function show($lawsuitId)
     {
-        return view('content.lawsuits.show')->with(['lawsuitId' => $lawsuitId]);
+        $submitters = Submitter::where('description', 'NOT LIKE', '%representative')->get();
+        $typeDocuments = TypeDocument::all();
+
+        return view('content.lawsuits.show')->with([
+            'lawsuitId' => $lawsuitId,
+            'typeDocuments' => $typeDocuments,
+            'submitters' => $submitters
+        ]);
+    }
+
+    /**
+     * Display the documents of resource.
+     *
+     * @param  int  $lawsuitId
+     * @return Response
+     */
+    public function documentsShow($lawsuitId)
+    {
+        $typeDocuments = TypeDocument::all();
+
+        return view('content.lawsuits.document-show')->with([
+            'lawsuitId' => $lawsuitId, 'typeDocuments' => $typeDocuments
+        ]);
     }
 }
