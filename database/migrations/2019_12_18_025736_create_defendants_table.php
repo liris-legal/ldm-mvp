@@ -16,16 +16,13 @@ class CreateDefendantsTable extends Migration
         Schema::create('defendants', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedInteger('submitter_id');
             $table->unsignedInteger('lawsuit_id');
             $table->timestamps();
 
             $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
-            $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
 
         DB::statement('ALTER TABLE defendants CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
-        DB::statement('ALTER TABLE defendants CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
         DB::statement('ALTER TABLE defendants CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plaintiff extends Model
 {
-    public $fillable = ['name', 'submitter_id', 'lawsuit_id'];
+    public $fillable = ['name', 'lawsuit_id'];
 
     /**
      * Get lawsuit for the Plaintiff.
@@ -14,14 +14,6 @@ class Plaintiff extends Model
     public function lawsuit()
     {
         return $this->belongsTo('App\Models\Lawsuit', 'lawsuit_id');
-    }
-
-    /**
-     * Get type author for the Plaintiff.
-     */
-    public function submitter()
-    {
-        return $this->belongsTo('App\Models\Submitter', 'submitter_id');
     }
 
     /**

@@ -19,15 +19,14 @@ class DefendantRepresentativeSeeder extends Seeder
 
         DB::table($table)->truncate();
         $rows = [
-            [ 'PQRST法律事務所', 1, 1, $time],
-            [ 'PQRST法律事務所', 1, 2, $time],
+            [ 'PQRST法律事務所', 1, $time],
+            [ 'PQRST法律事務所', 2, $time],
         ];
         foreach ($rows as $row) {
             DB::table($table)->insert([
                 'name' => $row[0],
-                'submitter_id' => $row[1],
-                'lawsuit_id' => $row[2],
-                'created_at' => $row[3],
+                'lawsuit_id' => $row[1],
+                'created_at' => $row[2],
             ]);
         }
         Schema::enableForeignKeyConstraints();
