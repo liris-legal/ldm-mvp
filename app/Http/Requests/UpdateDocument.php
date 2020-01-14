@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Validator;
+use App\Models\Document;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
-use Illuminate\Validation\Rule;
+use App\Models\Lawsuit;
 
 class UpdateDocument extends FormRequest
 {

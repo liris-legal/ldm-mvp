@@ -32,17 +32,17 @@ class StoreDocument extends FormRequest
             'number' => 'bail|required|numeric',
             'name' => 'bail|required|max:150',
             'file' => 'bail|required|mimes:pdf,doc,docx|max:204800',
-            'type_document_id' => 'bail|required',
-            'submitter_id' => 'bail|required',
-            'lawsuit_id' => 'bail|required',
-            'created_at' => 'bail|required|date_format:Y-m-d|before:today',
+            'type_document_id' => 'bail|required|exists:type_documents,id',
+            'submitter_id' => 'bail|required|exists:submitters,id',
+            'lawsuit_id' => 'bail|required|exists:lawsuits,id',
+            'created_at' => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ] : [
             'name' => 'bail|required|max:150',
             'file' => 'bail|required|mimes:pdf,doc,docx|max:204800',
-            'type_document_id' => 'bail|required',
-            'submitter_id' => 'bail|required',
-            'lawsuit_id' => 'bail|required',
-            'created_at' => 'bail|required|date_format:Y-m-d|before:today',
+            'type_document_id' => 'bail|required|exists:type_documents,id',
+            'submitter_id' => 'bail|required|exists:submitters,id',
+            'lawsuit_id' => 'bail|required|exists:lawsuits,id',
+            'created_at' => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ];
     }
 }
