@@ -16,6 +16,7 @@ import LawsuitsEdit from './components/lawsuits/edit.vue';
 import DocumentsCreate from './components/documents/create.vue';
 import DocumentsEdit from './components/documents/edit.vue';
 import DocumentsIndex from './components/documents/index.vue';
+import LawsuitsDocumentShow from './components/lawsuits/documents-show';
 
 export default new Router({
   mode: 'history',
@@ -31,14 +32,15 @@ export default new Router({
     return goTo(scrollTo)
   },
   routes: [
-    { path: '/', name:'index', component: Index },
-    { path: '/type-lawsuits', name:'typeLawsuitsIndex', component: TypeLawsuitsIndex },
-    { path: '/lawsuits', name:'lawsuitsIndex', component: LawsuitsIndex },
-    { path: '/lawsuits/create', name:'lawsuitsCreate', component: LawsuitsCreate },
-    { path: '/lawsuits/:lawsuitId', name:'lawsuitsShow', component: LawsuitsShow },
-    { path: '/lawsuits/:lawsuitId/edit', name:'lawsuitsEdit', component: LawsuitsEdit },
-    { path: '/lawsuits/:lawsuitId/documents/create', name:'documentsCreate', component: DocumentsCreate },
-    { path: '/lawsuits/:lawsuitId/:submitter/documents', name:'documentsIndex', component: DocumentsIndex },
-    { path: '/lawsuits/:lawsuitId/documents/:documentId/edit', name:'documentsEdit', component: DocumentsEdit },
+    { path: '/', name: 'index', component: Index },
+    { path: '/type-lawsuits', name: 'typeLawsuitsIndex', component: TypeLawsuitsIndex },
+    { path: '/lawsuits', name: 'lawsuitsIndex', component: LawsuitsIndex },
+    { path: '/lawsuits/create', name: 'lawsuitsCreate', component: LawsuitsCreate },
+    { path: '/lawsuits/:lawsuitId', name: 'lawsuitsShow', component: LawsuitsShow },
+    { path: '/lawsuits/:lawsuitId/edit', name: 'lawsuitsEdit', component: LawsuitsEdit },
+    { path: '/lawsuits/:lawsuitId/documents/create', name: 'documentsCreate', component: DocumentsCreate },
+    { path: '/lawsuits/:lawsuitId/:submitter/documents', name: 'documentsIndex', component: DocumentsIndex },
+    { path: '/lawsuits/:lawsuitId/documents/:documentId/edit', name: 'documentsEdit', component: DocumentsEdit },
+    { path: '/lawsuits/:lawsuitId/documents', name: 'lawsuitsDocumentShow', component: LawsuitsDocumentShow },
   ],
 })

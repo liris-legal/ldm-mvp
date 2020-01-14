@@ -4,5 +4,7 @@
 <lawsuits-show
     :route-plaintiff-documents-index="'{{route('documents.index', [$lawsuitId, 'plaintiff'])}}'"
     :route-defendant-documents-index="'{{route('documents.index', [$lawsuitId, 'defendant'])}}'"
+    :type-documents="{{ $typeDocuments }}"
+    :submitters="{{ $submitters }}"
 ></lawsuits-show>
 @endsection

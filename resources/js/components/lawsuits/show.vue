@@ -53,13 +53,13 @@
       <app-thead :thead="thead_evidence_document" />
       <app-type-lawsuit
         v-if="lawsuit.plaintiffs"
-        :route-text="submitterOfDocument(lawsuit.plaintiffs, 'plaintiff')"
+        :route-text="parseParties(lawsuit.plaintiffs, 'plaintiff')"
         :route-link="routePlaintiffDocumentsIndex"
       />
 
       <app-type-lawsuit
         v-if="lawsuit.defendants"
-        :route-text="submitterOfDocument(lawsuit.defendants, 'defendant')"
+        :route-text="parseParties(lawsuit.defendants, 'defendant')"
         :route-link="routeDefendantDocumentsIndex"
       />
     </div>
@@ -111,6 +111,7 @@
           return ''
         }
       },
+      submitters: {required: true,  type: Array, default: () => []},
     },
     data() {
       return {
@@ -138,14 +139,14 @@
     },
     methods: {
       /**
-       * @function submitterOfDocument
+       * @function parseParties
        * @description get submitter of document
        * @return string
        */
-      submitterOfDocument(documents, condition){
-        if(documents !== undefined && documents.length > 0) {
-          const document = documents.find(document => { return document.submitter.description === condition });
-          return document.submitter.name + '書面'
+      parseParties(parties, condition){
+        if(parties && parties.length > 0) {
+          const submitter = this.submitters.find(submitter => { return submitter.description === condition });
+          return submitter.name + '書面'
         }
       }
     }

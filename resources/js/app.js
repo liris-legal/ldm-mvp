@@ -36,6 +36,7 @@ Vue.component('lawsuits-component', require('./components/lawsuits/index.vue').d
 Vue.component('lawsuits-create', require('./components/lawsuits/create.vue').default);
 Vue.component('lawsuits-edit', require('./components/lawsuits/edit.vue').default);
 Vue.component('lawsuits-show', require('./components/lawsuits/show.vue').default);
+Vue.component('lawsuits-document-show', require('./components/lawsuits/documents-show.vue').default);
 
 // document
 Vue.component('document-index', require('./components/documents/index.vue').default);
