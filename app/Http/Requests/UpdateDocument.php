@@ -30,29 +30,18 @@ class UpdateDocument extends FormRequest
         $rules = [
             'name'              => 'bail|required|max:150',
             'number'            => 'bail|max:100|min:1|nullable',
-            'file'              => 'bail|required|mimes:pdf,doc,docx|max:204800',
+            'file'              => 'bail|mimes:pdf,doc,docx|max:204800',
             'type_document_id'  => 'bail|required|exists:type_documents,id',
             'submitter_id'      => 'bail|required|exists:submitters,id',
             'lawsuit_id'        => 'bail|required|exists:lawsuits,id',
             'created_at'        => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ];
 
-        // update request
-        if (isset($this->document)) {
-            $rules['file'] = 'bail|mimes:pdf,doc,docx|max:204800';
-
-            if (($this->document->submitter_id == 1 || $this->document->submitter_id == 3)
+        if (($this->document->submitter_id == 1 || $this->document->submitter_id == 3)
             && ($this->document->type_document_id == 2)) {
                 $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,'
                 . $this->document->id . ',id,lawsuit_id,' . $this->document->lawsuit_id
                 . ',submitter_id,' . $this->document->submitter_id . ',name,' . $this->document->name;
-            }
-        }
-
-        // create request
-        if (($this->submitter_id == '1' || $this->submitter_id == '3') && $this->type_document_id == 2) {
-            $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id,lawsuit_id,' . $this->lawsuit_id
-            . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name;
         }
 
         return $rules;
