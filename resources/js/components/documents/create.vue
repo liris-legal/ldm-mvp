@@ -122,15 +122,32 @@
               id="document-number"
               class="col-9 pa-0 input"
             >
-              <v-text-field
-                v-model="document.number"
-                type="number"
-                class="col-md-12"
-                single-line
-                outlined
-                dense
-                required
-              />
+              <v-row class="ma-0 row-text-field">
+                <v-col cols="6" sm="6" md="4" class="pa-0 col-number">
+                  <v-text-field
+                    v-model="document.number"
+                    type="number"
+                    single-line
+                    outlined
+                    dense
+                    required
+                  />
+                </v-col>
+
+                <span
+                  class="mx-1 col-1 font-weight-600"
+                >の</span>
+
+                <v-col cols="6" sm="6" md="4" class="pa-0 col-number">
+                  <v-text-field
+                    type="number"
+                    single-line
+                    outlined
+                    dense
+                    required
+                  />
+                </v-col>
+              </v-row>
               <small
                 v-if="errors"
                 class="has-error"
@@ -333,4 +350,9 @@
     },
   }
 </script>
+<style scoped>
+  .row-text-field .col-number{
+    max-width: 44.98%
+  }
+</style>
 
