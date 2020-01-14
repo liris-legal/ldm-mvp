@@ -6,9 +6,7 @@ use App\Http\Resources\Document as DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreDocument;
 use App\Http\Requests\UpdateDocument;
-use App\Models\Submitter;
 use Storage;
 
 class DocumentApiController extends Controller
@@ -41,15 +39,15 @@ class DocumentApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param UpdateDocument $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreDocument $request)
+    public function store(UpdateDocument $request)
     {
         $data = $request->all();
         $file = $request->file('file');
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
-        $filenameHash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
+        $filenameHash = substr(hash('md5', date("mdYhms")), 0, 15) . '-' . $fileName;
         $filePath = '/uploads/documents/' . $filenameHash;
         Storage::put($filePath, file_get_contents($file), 'public');
         $data['url'] = $filenameHash;
@@ -66,40 +64,23 @@ class DocumentApiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateDocument $request
+     * @param Document $document
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateDocument $request, $id)
+    public function update(UpdateDocument $request, Document $document)
     {
-        $documents = Document::where([
-            ['number', $request['number']],
-            ['type_document_id', $request['type_document_id']],
-            ['submitter_id', $request['submitter_id']],
-            ['lawsuit_id', $request['lawsuit_id']]
-        ])->get();
-
-        if (count($documents) >= 1) {
-            return $request->validate([
-                'number'    =>  'unique:documents,number'
-            ]);
-        }
-        $document = Document::findOrFail($id);
-        $data = $request->all();
+        $data = $request->only(['name', 'number', 'type_document_id', 'submitter_id', 'created_at']);
         $document->updated_at = now();
         $document->fill($data)->save();
 
-        $message = ['status' => 'success', 'content' => '文書が正常に更新します。'];
-        $submitter = Submitter::findOrFail($data['submitter_id']);
+        $message = ['status' => 'success', 'content' => '文書が正常に更新しました。'];
+        $url = $document->submitter_id == 1 || $document->submitter_id == 3 ?
+            route('documents.index', [$document->lawsuit_id, $document->submitter->description]) :
+            route('lawsuits.show', $data['lawsuit_id']);
 
-        if ($submitter->description == 'plaintiff' || $submitter->description == 'defendant') {
-            return response()->json([
-                'url' => route('documents.index', [$data['lawsuit_id'], $submitter->description]),
-                'message' => $message
-            ], 200);
-        }
         return response()->json([
-            'url' => route('lawsuits.show', $data['lawsuit_id']),
+            'url' => $url,
             'message' => $message
         ], 200);
     }
