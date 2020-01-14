@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OtherParty extends Model
 {
-    public $fillable = ['name', 'submitter_id', 'lawsuit_id'];
+    public $fillable = ['name', 'lawsuit_id'];
 
     /**
      * Get case for the other party.
@@ -14,13 +14,5 @@ class OtherParty extends Model
     public function case()
     {
         return $this->belongsTo('App\Models\Cases', 'cases_id');
-    }
-
-    /**
-     * Get type author for the other party.
-     */
-    public function submitter()
-    {
-        return $this->belongsTo('App\Models\Submitter', 'submitter_id');
     }
 }

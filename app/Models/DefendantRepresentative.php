@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DefendantRepresentative extends Model
 {
-    public $fillable = ['name', 'submitter_id', 'lawsuit_id'];
+    public $fillable = ['name', 'lawsuit_id'];
 
     /**
      * Get lawsuit for the Defendant Representative.
@@ -14,13 +14,5 @@ class DefendantRepresentative extends Model
     public function lawsuit()
     {
         return $this->belongsTo('App\Models\lawsuit', 'lawsuit_id');
-    }
-
-    /**
-     * Get type author for the Defendant Representative.
-     */
-    public function submitter()
-    {
-        return $this->belongsTo('App\Models\Submitter', 'submitter_id');
     }
 }

@@ -17,16 +17,13 @@ class CreateOtherPartiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedInteger('lawsuit_id');
-            $table->unsignedInteger('submitter_id');
             $table->timestamps();
 
             $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
-            $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
 
         DB::statement('ALTER TABLE other_parties CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT NOT NULL');
         DB::statement('ALTER TABLE other_parties CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
-        DB::statement('ALTER TABLE other_parties CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
     }
 
     /**

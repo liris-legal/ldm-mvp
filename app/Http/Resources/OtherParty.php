@@ -17,8 +17,7 @@ class OtherParty extends JsonResource
     {
         return [
             'id'                =>  $this->id,
-            'name'              =>  $this->name,
-            'submitter'         =>  $this->submitter
+            'name'              =>  $this->name
         ];
     }
 }
