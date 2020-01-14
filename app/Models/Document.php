@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Document extends Model
 {
-    protected $fillable = ['url', 'name', 'number', 'lawsuit_id', 'submitter_id', 'type_document_id'];
-    public $timestamps = true;
+    protected $fillable = ['url', 'name', 'number', 'lawsuit_id', 'submitter_id', 'type_document_id', 'created_at'];
 
     public function submitter()
     {

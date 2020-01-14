@@ -27,6 +27,7 @@ class UpdateDocument extends FormRequest
      */
     public function rules()
     {
+        // dd($this->document);
         $submitter = Submitter::findOrFail($this->submitter_id);
         $typeDocument = TypeDocument::findOrFail($this->type_document_id);
         return ($submitter->description == 'plaintiff' || $submitter->description == 'defendant')

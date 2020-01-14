@@ -44,6 +44,22 @@ class DocumentApiController extends Controller
      */
     public function store(StoreDocument $request)
     {
+        // dd($request->all());
+        $documents = Document::where([
+            ['number', $request['number']],
+            ['type_document_id', $request['type_document_id']],
+            ['submitter_id', $request['submitter_id']],
+            ['lawsuit_id', $request['lawsuit_id'],
+            ['id', '!=', $request['id']]]
+        ])->get();
+        if (($request['submitter_id'] == 1 || $request['submitter_id'] == 3) && $request['type_document_id'] == 2) {
+            if ($documents) {
+                return $request->validate([
+                    'number'    =>  'unique:documents,number'
+                ]);
+            }
+        }
+
         $data = $request->all();
         $file = $request->file('file');
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
@@ -68,23 +84,26 @@ class DocumentApiController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDocument $request, $id)
+    public function update(UpdateDocument $request, Document $document)
     {
+        dd($document);
         $documents = Document::where([
             ['number', $request['number']],
             ['type_document_id', $request['type_document_id']],
             ['submitter_id', $request['submitter_id']],
-            ['lawsuit_id', $request['lawsuit_id']]
+            ['lawsuit_id', $request['lawsuit_id']],
+            ['id', '!=', $document->id]
         ])->get();
-
-        if (count($documents) >= 1) {
-            return $request->validate([
-                'number'    =>  'unique:documents,number'
-            ]);
+        if (($request['submitter_id'] == 1 || $request['submitter_id'] == 3) && $request['type_document_id'] == 2) {
+            if ($documents) {
+                return $request->validate([
+                    'number'    =>  'unique:documents,number'
+                ]);
+            }
         }
-        $document = Document::findOrFail($id);
+
         $data = $request->all();
-        $document->updated_at = now();
+        $document->timestamps = true;
         $document->fill($data)->save();
 
         $message = ['status' => 'success', 'content' => '文書が正常に更新します。'];

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
+use App\Models\Document;
 
 class StoreDocument extends FormRequest
 {
@@ -27,6 +28,13 @@ class StoreDocument extends FormRequest
     {
         $submitter = Submitter::findOrFail($this->submitter_id);
         $typeDocument = TypeDocument::findOrFail($this->type_document_id);
+        $documents = Document::where([
+            ['number', $this->number],
+            ['type_document_id', $this->type_document_id],
+            ['submitter_id', $this->submitter_id],
+            ['lawsuit_id', $this->lawsuit_id],
+            ['id', '!=', $this->id]
+        ])->get();
         return ($submitter->description == 'plaintiff' || $submitter->description == 'defendant')
         && ($typeDocument->description == 'evidence') ? [
             'number' => 'bail|required|numeric',
