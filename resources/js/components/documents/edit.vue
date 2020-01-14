@@ -199,7 +199,7 @@
             <v-btn
               v-ripple
               class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
-              @click.native="postData"
+              @click="postData"
             >
               保存
             </v-btn>

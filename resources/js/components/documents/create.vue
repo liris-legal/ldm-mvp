@@ -205,7 +205,7 @@
             <v-btn
               v-ripple
               class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
-              @click.native="openFileDialog"
+              @click="openFileDialog"
             >
               アップロード
             </v-btn>
@@ -245,7 +245,7 @@
         disabled: false,
         file: null,
         rules: [
-          value => !value || value.size < 2048000 || 'File size should be less than 2048 MB!',
+          value => !value || value.size < 2048000000 || 'File size should be less than 2048 MB!',
         ],
         errors: []
       }
@@ -264,7 +264,7 @@
       },
       file (val){
         if (val) this.postData();
-        this.file = null;
+        this.clearFile();
       },
     },
     mounted() {
@@ -277,6 +277,14 @@
        */
       openFileDialog() {
         document.getElementById('file-upload').click();
+      },
+      /**
+       * @function clearFile
+       * @description to clear selected file
+       */
+      clearFile() {
+        this.file = null;
+        document.getElementsByClassName(' v-input__icon--clear')[0].children[0].click()
       },
 
       /**
@@ -300,7 +308,7 @@
           .then(res => {
             console.log(res);
             this.$store.dispatch('create_notification', res.data.message);
-            // setTimeout(function(){ location.href = res.data.url; }, 3000);
+            setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             if (err.response.status === 422) {
