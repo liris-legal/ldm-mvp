@@ -98,9 +98,10 @@ class DocumentApiController extends Controller
      */
     public function destroy(Document $document)
     {
+        $this->fileService->deleteFileS3($document);
         $document->delete();
 
-        $url = $document->submitter_id == 1 || $document->submitter_id == 3 ?
+        $url = ($document->submitter_id == 1 || $document->submitter_id == 3) && ($document->type_document_id == 2) ?
             route('documents.index', [$document->lawsuit_id, $document->submitter->description]) :
             route('lawsuits.show', $document['lawsuit_id']);
 

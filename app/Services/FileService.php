@@ -75,9 +75,9 @@ class FileService
      * @param $file
      * @param $parentName
      */
-    public function deleteFileS3($file, $parentName)
+    public function deleteFileS3($file)
     {
-        $fullSrc = '/uploads/' . $parentName . '/' . $file->url;
+        $fullSrc = $this->AWS_FILE . '/uploads/documents/' . $file->url;
         if (Storage::disk('s3')->exists($fullSrc)) {
             Storage::disk('s3')->delete($fullSrc);
         }
