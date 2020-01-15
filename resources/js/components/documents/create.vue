@@ -123,7 +123,10 @@
               class="col-9 pa-0 input"
             >
               <v-row class="ma-0 row-text-field">
-                <v-col cols="5" class="pa-0">
+                <v-col
+                  cols="5"
+                  class="pa-0"
+                >
                   <v-text-field
                     v-model="document.number"
                     type="number"
@@ -141,7 +144,10 @@
                   の
                 </v-col>
 
-                <v-col cols="6" class="pa-0">
+                <v-col
+                  cols="6"
+                  class="pa-0"
+                >
                   <v-text-field
                     type="number"
                     single-line
