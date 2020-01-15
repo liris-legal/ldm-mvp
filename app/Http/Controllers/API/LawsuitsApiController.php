@@ -14,9 +14,18 @@ use App\Models\DefendantRepresentative;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Models\Document;
+use App\Services\FileService;
 
 class LawsuitsApiController extends Controller
 {
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -164,6 +173,10 @@ class LawsuitsApiController extends Controller
      */
     public function destroy(Lawsuit $lawsuit)
     {
+        $documents = Document::where('lawsuit_id', $lawsuit->id)->get();
+        $documents->map(function ($document) {
+            $this->fileService->deleteFileS3($document);
+        });
         $lawsuit->delete();
 
         $message = ['status' => 'success', 'content' => '事件を削除しました。'];
