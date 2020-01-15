@@ -9,3 +9,43 @@
         display: none;
     }
 }
+
+// lawsuit-document-show component
+.lawsuit-document-show{
+    .lawsuit-document-card {
+        background-color: $color___background_tabs;
+    }
+    .document-tabs .v-tab{
+        border: 1.3px solid #dee2e6;
+    }
+    .document-items{
+        min-height: 70vh;
+        height: auto;
+        .v-card {
+            margin-top: 4px;
+
+            // to vertical right tab-bar
+            .item-tabs {
+                .v-tabs-bar {
+                    float: right;
+                    position: absolute;
+                    right: 0;
+                    top: 4px;
+                    z-index: 99;
+                }
+                .v-tab{
+                    border: 1.3px solid #dee2e6;
+                    padding: 8px;
+                }
+            }
+        }
+    }
+    .v-tabs .activated {
+        background-color: $color___background_documents_tabs;
+    }
+    .v-tabs-items {
+        background-color: $color___background_tabs;
+    }
+
+}
+
