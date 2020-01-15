@@ -66,6 +66,10 @@
       evidenceDocumentTab,
       otherDocumentTab,
     },
+    mounted() {
+      // disable scroll-y
+      document.body.style.overflowY = "hidden";
+    },
     created() {
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {

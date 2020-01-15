@@ -26,3 +26,5 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 Route::get('/viewer', function () {
     return view('viewer');
 });
+
+Route::get('/iframe/{src}', 'HomeController@show');

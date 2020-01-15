@@ -27,7 +27,7 @@
           :key="'other-document-'+document.id"
         >
           <v-card flat>
-            <v-card-text>{{ document }}</v-card-text>
+            <iframe name="iframe" :src="'/iframe/'+ document.url" width="100%" height="100%" frameborder="0" style="height: 67vh;"></iframe>
           </v-card>
         </v-tab-item>
       </v-tabs-items>
