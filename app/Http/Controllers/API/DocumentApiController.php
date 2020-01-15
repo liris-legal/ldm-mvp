@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\StoreDocument;
 use App\Http\Resources\Document as DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
@@ -39,10 +40,10 @@ class DocumentApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param UpdateDocument $request
+     * @param StoreDocument $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(UpdateDocument $request)
+    public function store(StoreDocument $request)
     {
         $data = $request->all();
         $file = $request->file('file');

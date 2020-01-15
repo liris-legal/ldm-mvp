@@ -25,7 +25,8 @@
 
 @task('composer')
     echo "Build APP through docker"
-    docker exec {{ $container }} bash -c "cd {{ $work_dir }} && composer self-update && composer install --no-progress --no-interaction"
+    docker exec {{ $container }} bash -c "cd {{ $work_dir }} && composer self-update && \
+        composer install --no-progress --no-interaction && php artisan migrate:refresh --seed --force"
 @endtask
 
 @task('yarn')
