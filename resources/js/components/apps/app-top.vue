@@ -1,5 +1,6 @@
 <template>
   <v-app-bar
+    id="top-bar"
     color="#0B104D"
     fixed
     elevate-on-scroll
@@ -76,6 +77,17 @@
     },
     computed: {
       ...mapState(['notification']),
+    },
+    updated() {
+      let overlay = document.getElementById('app-overlay');
+      let bottomBar = document.getElementById('bottom-bar');
+      if (this.displayMenu === true) {
+        overlay.classList.add('app--overlay', 'top-bar');
+        bottomBar.style.zIndex = '4';
+      } else {
+        overlay.classList.remove('app--overlay', 'top-bar');
+        bottomBar.style.removeProperty('z-index');
+      }
     },
 		methods: {
 	    /**

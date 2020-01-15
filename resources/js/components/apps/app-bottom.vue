@@ -1,5 +1,6 @@
 <template>
   <v-bottom-navigation
+    id="bottom-bar"
     fixed
     light
     height="56"
@@ -90,7 +91,18 @@
       return {
         showAdd: false,
 			}
-		},
+    },
+    updated() {
+      let overlay = document.getElementById('app-overlay');
+      let topBar = document.getElementById("top-bar");
+      if (this.showAdd === true) {
+        overlay.classList.add('app--overlay', 'bottom-bar');
+        topBar.style.zIndex = '4';
+      } else {
+        overlay.classList.remove('app--overlay', 'bottom-bar');
+        topBar.style.removeProperty('z-index');
+      }
+    },
 		methods: {
       /**
 			 * @function hidden
@@ -125,3 +137,8 @@
 		}
   }
 </script>
+<style lang="scss">
+  .v-item-group.v-bottom-navigation--fixed {
+      z-index: 7;
+  }
+</style>
