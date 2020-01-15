@@ -1,5 +1,6 @@
 .content-wrapper{
     padding: 46px 0 48px !important;
+    @extend %background-dark;
 }
 .relative{
     position: relative;

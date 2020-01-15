@@ -164,6 +164,11 @@ body {
     @include app-type-lawsuits(14px);
 }
 
+// home page
+.home-content {
+    margin-bottom: 5em;
+}
+
 // list lawsuits page
 .lawsuit-index{
     .overflow-x-auto{
