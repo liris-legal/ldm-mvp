@@ -87,6 +87,7 @@
        * @description handleDeleteSubmit is handle function to delete data of item
        */
       handleDeleteSubmit() {
+        this.dialog = false;
         axios.delete(this.dataType +'/' + this.data)
         .then(res => {
           this.$store.dispatch('create_notification', res.data.message);

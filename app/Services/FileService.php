@@ -7,6 +7,16 @@ use Storage;
 
 class FileService
 {
+    protected $AWS_FILE;
+
+    /**
+     *  Function construct
+     */
+    public function __construct()
+    {
+        $this->AWS_FILE = env('AWS_FILE');
+    }
+
     /**
      * @description function is to image information in storage
      * @param $parent: parent model
@@ -27,20 +37,20 @@ class FileService
     }
 
     /**
-     * @description function is save file in storage S3
+     * @function createFileS3
+     * @description Is save file in storage S3
      *
      * @param \Illuminate\Http\Request $request
-     * @param $parentName: name's parent model
-     * @param $key: the photo
+     * @param $key: request name. ex: 'file'
      * @return String filename
      */
-    public function createFileS3($request, $key, $parentName)
+    public function createFileS3($request, $key)
     {
         $file = $request->file($key);
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
         $filenameHash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
 
-        $uploadDir = '/uploads/' . $parentName . '/';
+        $uploadDir = $this->AWS_FILE . '/uploads/documents/';
         $fullpath = $uploadDir . $filenameHash;
         Storage::put($fullpath, file_get_contents($file), 'public');
 
@@ -48,42 +58,29 @@ class FileService
     }
 
     /**
-     * Create image to database,
-     *
-     * @param $filenameHash
-     */
-    public function storeFileToDB($filenameHash)
-    {
-//        $image = new Image();
-//        $image->url = $filenameHash;
-//        return $image;
-    }
-
-    /**
-     * Delete image in S3 storage
+     * @function deleteFileS3
+     * @description Delete file in S3 storage
      *
      * @param $file
-     * @param $parentName
      */
-    public function deleteFileS3($file, $parentName)
+    public function deleteFileS3($file)
     {
-        $fullSrc = '/uploads/' . $parentName . '/' . $file->url;
+        $fullSrc = $this->AWS_FILE . '/uploads/documents/' . $file->url;
         if (Storage::disk('s3')->exists($fullSrc)) {
             Storage::disk('s3')->delete($fullSrc);
         }
     }
 
     /**
-     * Get image URL form S3 storage
+     * @function getFileUrlS3
+     * @description Get file URL form S3 storage
      *
      * @param $file
-     * @return File url
+     * @return String url
      */
-    public function getFileUrlS3($file)
+    public function getFileUrlS3($fileName)
     {
-        $parent = $this->getMorphClassName($file);
-
-        $fullSrc = '/uploads/' . $parent . '/' . $file->url;
+        $fullSrc = $this->AWS_FILE . '/uploads/documents/' . $fileName;
         if (Storage::disk('s3')->exists($fullSrc)) {
             return Storage::disk('s3')->url($fullSrc);
         }

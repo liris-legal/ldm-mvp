@@ -164,6 +164,11 @@ body {
     @include app-type-lawsuits(14px);
 }
 
+// home page
+.home-content {
+    margin-bottom: 5em;
+}
+
 // list lawsuits page
 .lawsuit-index{
     .overflow-x-auto{
@@ -284,4 +289,21 @@ body {
 .input input {
     font-size: 16px;
     font-family: $body-font-family;
+}
+.app--overlay{
+    background-color: $color___modal_background;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    &.top-bar {
+        top: 46px;
+        z-index: 5 !important;
+    }
+
+    &.bottom-bar {
+        top: 0;
+        z-index: 5 !important;
+    }
 }
