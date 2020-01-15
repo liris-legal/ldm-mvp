@@ -8,10 +8,18 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDocument;
+use App\Services\FileService;
 use Storage;
 
 class DocumentApiController extends Controller
 {
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,12 +54,8 @@ class DocumentApiController extends Controller
     public function store(StoreDocument $request)
     {
         $data = $request->all();
-        $file = $request->file('file');
-        $fileName = str_replace(' ', '-', $file->getClientOriginalName());
-        $filenameHash = substr(hash('md5', date("mdYhms")), 0, 15) . '-' . $fileName;
-        $filePath = '/uploads/documents/' . $filenameHash;
-        Storage::put($filePath, file_get_contents($file), 'public');
-        $data['url'] = $filenameHash;
+        // storage file on aws-s3
+        $data['url'] = $this->fileService->createFileS3($request, 'file');
 
         Document::create($data);
 
@@ -92,8 +96,15 @@ class DocumentApiController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Document $document)
     {
-        //
+        $document->delete();
+
+        $url = $document->submitter_id == 1 || $document->submitter_id == 3 ?
+            route('documents.index', [$document->lawsuit_id, $document->submitter->description]) :
+            route('lawsuits.show', $document['lawsuit_id']);
+
+        $message = ['status' => 'success', 'content' => 'ドキュメントは削除されました。'];
+        return response()->json(['url' => $url, 'message' => $message], 200);
     }
 }

@@ -7,6 +7,16 @@ use Storage;
 
 class FileService
 {
+    protected $AWS_FILE;
+
+    /**
+     *  Function construct
+     */
+    public function __construct()
+    {
+        $this->AWS_FILE = env('AWS_FILE');
+    }
+
     /**
      * @description function is to image information in storage
      * @param $parent: parent model
@@ -34,13 +44,13 @@ class FileService
      * @param $key: the photo
      * @return String filename
      */
-    public function createFileS3($request, $key, $parentName)
+    public function createFileS3($request, $key)
     {
         $file = $request->file($key);
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
         $filenameHash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
 
-        $uploadDir = '/uploads/' . $parentName . '/';
+        $uploadDir = $this->AWS_FILE . '/uploads/documents/';
         $fullpath = $uploadDir . $filenameHash;
         Storage::put($fullpath, file_get_contents($file), 'public');
 
