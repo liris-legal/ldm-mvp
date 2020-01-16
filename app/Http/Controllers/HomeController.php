@@ -41,6 +41,6 @@ class HomeController extends Controller
      */
     public function show($src)
     {
-        return view('content.iframe.pdf-viewer', ['src' => $src]);
+        return view('content.iframe.pdf-viewer');
     }
 }
