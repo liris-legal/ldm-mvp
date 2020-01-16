@@ -36,12 +36,12 @@ class HomeController extends Controller
     /**
      * Pdf viewer in the iframe
      *
-     * @param $src
+     * @param Request $request
      * @return Renderable
      */
-    public function show($src)
+    public function show(Request $request)
     {
-        $src = 'https://raw.githubusercontent.com/thaild/1LinkIntern/3d3d31045997a1b678cabfde931545375a75fef3/1link/book.pdf';
+        $src = $request->query('url', 'null');
         return view('content.iframe.pdf-viewer', ['src' => $src]);
     }
 }

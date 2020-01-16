@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         $rows = [
             ['8968e76a-4945-40e8-a77a-29261f7cd2f3', 'thai.le.connectiv@gmail.com', $time ],
             ['271d6beb-be76-48d7-bb93-24db5c408c8c', 'cong.du.connectiv+_1@gmail.com', $time ],
+            ['e478e148-5c63-4ba6-a6f3-0a523e4d3280', 'ryok.connectiv+01@gmail.com', $time ],
         ];
         foreach ($rows as $row) {
             DB::table('users')->insert([

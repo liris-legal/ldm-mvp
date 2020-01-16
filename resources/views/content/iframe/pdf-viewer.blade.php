@@ -3,12 +3,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
 </head>
 <body>
 <div class="content d-block">
     <div style="width:100vh;margin: 0 auto">
         <div id="pdf-viewer"></div>
+        <div>
+            <h2 class="message"></h2>
+        </div>
     </div>
 
     <input type="hidden" name="file-src" value="{{$src}}">
@@ -22,7 +25,7 @@
 
         // If absolute URL from the remote server is provided, configure the CORS
         // header on that server.
-        var book = $('input[name=file-src]').val();
+        var src = $('input[name=file-src]').val();
         var pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
@@ -66,13 +69,19 @@
         }
 
         // Asynchronous download of PDF
-        pdfjsLib.getDocument(book).promise.then(function(pdfDoc_) {
+        var loadingTask = pdfjsLib.getDocument(src);
+        loadingTask.promise.then(function(pdfDoc_) {
+            console.log('PDF loaded');
             pdfDoc = pdfDoc_;
 
             // Initial/first page rendering
             for (var i = 1; i <= pdfDoc.numPages; i++) {
                 renderPage(i);
             }
+        }, function (reason) {
+            // PDF loading error
+            console.error(reason);
+            $('.message')[0].innerText = "ERROR: " + reason.message;
         });
     </script>
 </div>
