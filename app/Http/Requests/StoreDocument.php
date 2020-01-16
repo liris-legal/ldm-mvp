@@ -36,10 +36,10 @@ class StoreDocument extends FormRequest
             'created_at'        => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ];
 
-        // create request
-        if (($this->submitter_id == 1 || $this->submitter_id == 3) && $this->type_document_id == 2) {
+        if (($this->submitter_id == '1' || $this->submitter_id == '3') && $this->type_document_id == 2) {
             $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id,lawsuit_id,'
-                . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name;
+            . $this->lawsuit_id
+            . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name;
         }
 
         return $rules;
