@@ -67,88 +67,11 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="(lawsuit) in lawsuits">
-            <tr
-              :key="lawsuit.id"
-              class="d-flex"
-              @click="showLawsuit(lawsuit.id)"
-            >
-              <td
-                scope="col"
-                class="col col-3"
-              >
-                {{
-                  lawsuit.created_at_wareki
-                }}{{
-                  lawsuit.number
-                }}号
-              </td>
-              <td
-                scope="col"
-                class="col col-3"
-              >
-                {{
-                  lawsuit.name
-                }}
-              </td>
-              <td
-                scope="col"
-                class="col col-3"
-              >
-                {{
-                  lawsuit.courts_departments
-                }}
-              </td>
-              <td
-                scope="col"
-                class="col col-3"
-              >
-                {{
-                  lawsuit.defendants | parseName
-                }}
-              </td>
-              <td
-                scope="col"
-                class="col col-3"
-              >
-                {{
-                  lawsuit.defendant_representatives | parseName
-                }}
-              </td>
-              <td
-                scope="col"
-                class="col col-3"
-              >
-                {{
-                  lawsuit.plaintiffs | parseName
-                }}
-              </td>
-              <td
-                scope="col"
-                class="col col-3"
-              >
-                {{
-                  lawsuit.plaintiff_representatives | parseName
-                }}
-              </td>
-              <td
-                scope="col"
-                class="col col-3 d-flex pa-0 last-child-table"
-              >
-                <div class="col-md-6 col-lg-6">
-                  {{ lawsuit.other_parties | parseName }}
-                </div>
-                <v-spacer />
-                <sub-menu
-                  :key="'lawsuits-sub-menu-'+lawsuit.id"
-                  :sub-link="'lawsuits/' + lawsuit.id + '/edit'"
-                  :sub-id="lawsuit.id"
-                  :sub-type="'lawsuits'"
-                  :sub-message="'事件を削除してもよろしいですか？'"
-                />
-              </td>
-            </tr>
-          </template>
+        <range-lawsuit-item
+          v-for="(lawsuit) in lawsuits"
+          :key="'lawsuit-item'+lawsuit.id"
+          :lawsuit="lawsuit"
+        />
         </tbody>
       </table>
     </div>
@@ -157,9 +80,11 @@
 
 <script>
   import subMenu from "../globals/sub-menu"
+  import rangeLawsuitItem from "../globals/tables/range-lawsuit-item"
   export default {
     name: "LawsuitsIndex",
     components:{
+      rangeLawsuitItem,
       subMenu
     },
     data() {
@@ -172,14 +97,5 @@
         .then(res => {return this.lawsuits = res.data.data;})
         .catch(error => {return error.response})
     },
-    methods: {
-      /**
-       * @function showLawsuit
-       * @description goto show lawsuit page
-       */
-      showLawsuit(lawsuit_id) {
-        location.href = 'lawsuits/' + lawsuit_id;
-      },
-    }
   }
 </script>

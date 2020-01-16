@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: "pdf-viewer",
+    name: "PdfViewer",
     props: {
       document: {required: true, type: Object, default: () => {}},
     },
