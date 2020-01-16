@@ -41,15 +41,14 @@
         :sub-link="'/lawsuits/'+lawsuitId+'/documents/'+document.id+'/edit'"
         :sub-id="document.id"
         :sub-type="'documents'"
-        v-on:update:overlay="overlay = $event"
+        @update:overlay="overlay = $event"
       />
     </td>
 
     <v-overlay
       :z-index="zIndex"
       :value="overlay"
-    >
-    </v-overlay>
+    />
   </tr>
   <tr
     v-else
@@ -99,9 +98,6 @@
         zIndex: 8,
       }
     },
-    created() {
-      this.className = 'col-' + (12/this.numberColumns);
-    },
     watch: {
       overlay(val){
         if (val){
@@ -112,6 +108,9 @@
             rowItems[i].classList.remove("cursor-unset");
         }
       }
+    },
+    created() {
+      this.className = 'col-' + (12/this.numberColumns);
     },
     mounted() {
       window.rowItems = document.getElementsByClassName('range--row-item');

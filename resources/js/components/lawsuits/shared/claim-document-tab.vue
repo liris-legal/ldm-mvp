@@ -27,7 +27,14 @@
           :key="'claim-document-'+document.id"
         >
           <v-card flat>
-            <iframe name="iframe" :src="'/iframe/'+ document.url" width="100%" height="100%" frameborder="0" style="height: 67vh;"></iframe>
+            <iframe
+              name="iframe"
+              :src="'/iframe/'+ document.url"
+              width="100%"
+              height="100%"
+              frameborder="0"
+              style="height: 67vh;"
+            />
           </v-card>
         </v-tab-item>
       </v-tabs-items>
@@ -37,7 +44,7 @@
 
 <script>
   export default {
-    name: "claim-document-tab",
+    name: "ClaimDocumentTab",
     props: {
       documents: {required: true, type: Array, default: () => []},
     },

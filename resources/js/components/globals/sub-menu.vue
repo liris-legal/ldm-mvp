@@ -62,6 +62,11 @@
         activated: false,
       }
     },
+    watch: {
+      activated(val){
+        this.$emit('update:overlay', val);
+      }
+    },
     created() {
       // Listening the event menu-activated
       eventBus.$on('menu-activated', this.handler);
@@ -69,11 +74,6 @@
     destroyed() {
       // Stop listening the event menu-activated with handler
       eventBus.$off('menu-activated', this.handler);
-    },
-    watch: {
-      activated(val){
-        this.$emit('update:overlay', val);
-      }
     },
     methods:{
       /**

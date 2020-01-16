@@ -22,11 +22,11 @@
         class="document-items"
       >
         <v-tab-item>
-          <evidence-document-item :documents="parseEvidenceDocuments('plaintiff')"/>
+          <evidence-document-item :documents="parseEvidenceDocuments('plaintiff')" />
         </v-tab-item>
 
         <v-tab-item>
-          <evidence-document-item :documents="parseEvidenceDocuments('defendant')"/>
+          <evidence-document-item :documents="parseEvidenceDocuments('defendant')" />
         </v-tab-item>
       </v-tabs-items>
     </v-container>
@@ -36,7 +36,10 @@
 <script>
   import evidenceDocumentItem from './evidence-document-item'
   export default {
-    name: "evidence-document-tab",
+    name: "EvidenceDocumentTab",
+    components:{
+      evidenceDocumentItem
+    },
     props: {
       documents: {required: true, type: Array, default: () => []},
     },
@@ -45,9 +48,6 @@
         documentsTab: null,
         documentLabels: ['原告書面', '被告書面'],
       }
-    },
-    components:{
-      evidenceDocumentItem
     },
     methods: {
       parseEvidenceDocuments(party){
