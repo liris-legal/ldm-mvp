@@ -67,11 +67,11 @@
           </tr>
         </thead>
         <tbody>
-        <range-lawsuit-item
-          v-for="(lawsuit) in lawsuits"
-          :key="'lawsuit-item'+lawsuit.id"
-          :lawsuit="lawsuit"
-        />
+          <range-lawsuit-item
+            v-for="(lawsuit) in lawsuits"
+            :key="'lawsuit-item'+lawsuit.id"
+            :lawsuit="lawsuit"
+          />
         </tbody>
       </table>
     </div>
@@ -79,13 +79,11 @@
 </template>
 
 <script>
-  import subMenu from "../globals/sub-menu"
   import rangeLawsuitItem from "../globals/tables/range-lawsuit-item"
   export default {
     name: "LawsuitsIndex",
     components:{
       rangeLawsuitItem,
-      subMenu
     },
     data() {
       return {

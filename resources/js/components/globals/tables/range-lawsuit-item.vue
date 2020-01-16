@@ -9,9 +9,9 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-      lawsuit.created_at_wareki
+        lawsuit.created_at_wareki
       }}{{
-      lawsuit.number
+        lawsuit.number
       }}号
     </td>
     <td
@@ -20,7 +20,7 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-      lawsuit.name
+        lawsuit.name
       }}
     </td>
     <td
@@ -29,7 +29,7 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-      lawsuit.courts_departments
+        lawsuit.courts_departments
       }}
     </td>
     <td
@@ -38,7 +38,7 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-      lawsuit.defendants | parseName
+        lawsuit.defendants | parseName
       }}
     </td>
     <td
@@ -47,7 +47,7 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-      lawsuit.defendant_representatives | parseName
+        lawsuit.defendant_representatives | parseName
       }}
     </td>
     <td
@@ -56,7 +56,7 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-      lawsuit.plaintiffs | parseName
+        lawsuit.plaintiffs | parseName
       }}
     </td>
     <td
@@ -65,7 +65,7 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-      lawsuit.plaintiff_representatives | parseName
+        lawsuit.plaintiff_representatives | parseName
       }}
     </td>
     <td
@@ -95,7 +95,7 @@
 
 <script>
   export default {
-    name: "range-lawsuit-item",
+    name: "RangeLawsuitItem",
     props: {
       lawsuit: {required: true, type: Object, default: () => {}},
     },
@@ -104,15 +104,6 @@
         overlay: false,
         zIndex: 8,
       }
-    },
-    methods: {
-      /**
-       * @function showLawsuit
-       * @description goto show lawsuit page
-       */
-      showLawsuit() {
-        location.href = 'lawsuits/' + this.lawsuit.id;
-      },
     },
     watch: {
       overlay(val){
@@ -127,6 +118,15 @@
     },
     mounted() {
       window.lawsuitItems = document.getElementsByClassName('lawsuit--item');
+    },
+    methods: {
+      /**
+       * @function showLawsuit
+       * @description goto show lawsuit page
+       */
+      showLawsuit() {
+        location.href = 'lawsuits/' + this.lawsuit.id;
+      },
     },
   }
 </script>
