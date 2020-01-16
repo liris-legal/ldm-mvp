@@ -50,7 +50,7 @@ Vue.component('app-modal', require('./components/globals/range-modal.vue').defau
 Vue.component('lawsuit-header', require('./components/globals/lawsuit-header.vue').default);
 // component globals/tables
 Vue.component('thead-columns', require('./components/globals/tables/thead-columns.vue').default);
-Vue.component('range-row-item', require('./components/globals/tables/range-table-row.vue').default);
+Vue.component('range-row-item', require('./components/globals/tables/range-row-item.vue').default);
 
 // Global Mixin defined
 import {mixin} from "./mixin";
@@ -69,6 +69,9 @@ const app = new Vue({
   // this will inject the store instance to all child components.
   store: stores,
   mounted(){
-    console.log('app mounted')
+    console.log('app mounted');
+    window.overlay = document.getElementById('app-overlay');
+    window.topBar = document.getElementById("top-bar");
+    window.bottomBar = document.getElementById('bottom-bar');
   },
 });

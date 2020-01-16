@@ -92,15 +92,15 @@
         showAdd: false,
 			}
     },
-    updated() {
-      let overlay = document.getElementById('app-overlay');
-      let topBar = document.getElementById("top-bar");
-      if (this.showAdd === true) {
-        overlay.classList.add('app--overlay', 'bottom-bar');
-        topBar.style.zIndex = '4';
-      } else {
-        overlay.classList.remove('app--overlay', 'bottom-bar');
-        topBar.style.removeProperty('z-index');
+    watch: {
+      showAdd(val) {
+        if (val){
+          topBar.style.zIndex = '4';
+          overlay.classList.add('app--overlay', 'bottom-bar');
+        } else {
+          overlay.classList.remove('app--overlay', 'bottom-bar');
+          topBar.style.removeProperty('z-index');
+        }
       }
     },
 		methods: {
