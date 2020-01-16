@@ -27,4 +27,4 @@ Route::get('/viewer', function () {
     return view('viewer');
 });
 
-Route::get('/iframe/{src}', 'HomeController@show');
+Route::get('/iframe', 'HomeController@show');

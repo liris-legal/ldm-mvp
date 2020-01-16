@@ -82,7 +82,7 @@
       displayMenu(val) {
         if (val){
           bottomBar.style.zIndex = '4';
-          setTimeout(function(){ overlay.classList.add('app--overlay', 'top-bar'); }, 300);
+          setTimeout(function(){ overlay.classList.add('app--overlay', 'top-bar'); }, 250);
         } else {
           overlay.classList.remove('app--overlay', 'top-bar');
           bottomBar.style.removeProperty('z-index');

@@ -49,3 +49,7 @@
 
 }
 
+// overlays
+.v-overlay--active {
+    pointer-events: none;
+}

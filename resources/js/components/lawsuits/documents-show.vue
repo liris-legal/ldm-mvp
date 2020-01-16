@@ -26,11 +26,11 @@
         <!-- △ 主張書面-->
 
         <!-- ▽ 証拠書面-->
-        <evidence-document-tab :documents="evidenceDocuments"/>
+        <evidence-document-tab :documents="evidenceDocuments" />
         <!-- △ 証拠書面-->
 
         <!-- ▽ その他の書面-->
-        <other-document-tab :documents="otherDocuments"/>
+        <other-document-tab :documents="otherDocuments" />
         <!-- △ その他の書面-->
       </v-tabs-items>
     </v-card>
@@ -43,6 +43,11 @@
 
   export default {
     name: "LawsuitDocumentShow",
+    components:{
+      claimDocumentTab,
+      evidenceDocumentTab,
+      otherDocumentTab,
+    },
     props: {
       typeDocuments: {required: true, type: Array, default: () => []},
     },
@@ -60,11 +65,6 @@
         evidenceDocuments: [],
         otherDocuments: [],
       }
-    },
-    components:{
-      claimDocumentTab,
-      evidenceDocumentTab,
-      otherDocumentTab,
     },
     mounted() {
       // disable scroll-y

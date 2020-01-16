@@ -27,7 +27,7 @@
           :key="'other-document-'+document.id"
         >
           <v-card flat>
-            <iframe name="iframe" :src="'/iframe/'+ document.url" width="100%" height="100%" frameborder="0" style="height: 67vh;"></iframe>
+            <pdf-viewer :document="document" />
           </v-card>
         </v-tab-item>
       </v-tabs-items>
@@ -37,7 +37,7 @@
 
 <script>
   export default {
-    name: "other-document-tab",
+    name: "OtherDocumentTab",
     props: {
       documents: {required: true, type: Array, default: () => []},
     },
@@ -46,9 +46,6 @@
         documentsTab: null,
       }
     },
-    mounted() {
-      console.log(this.$options.name + ' mounted');
-    }
   }
 </script>
 

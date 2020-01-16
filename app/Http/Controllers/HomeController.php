@@ -36,11 +36,12 @@ class HomeController extends Controller
     /**
      * Pdf viewer in the iframe
      *
-     * @param $src
+     * @param Request $request
      * @return Renderable
      */
-    public function show($src)
+    public function show(Request $request)
     {
-        return view('content.iframe.pdf-viewer');
+        $src = $request->query('url', 'null');
+        return view('content.iframe.pdf-viewer', ['src' => $src]);
     }
 }
