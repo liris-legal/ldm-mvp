@@ -7,33 +7,14 @@ use Storage;
 
 class FileService
 {
-    protected $AWS_FILE;
+    protected $awsFile;
 
     /**
      *  Function construct
      */
     public function __construct()
     {
-        $this->AWS_FILE = env('AWS_FILE');
-    }
-
-    /**
-     * @description function is to image information in storage
-     * @param $parent: parent model
-     * @param \Illuminate\Http\Request $request
-     * @param $key: photo
-     */
-    public function handleUploadedFile($parent, $request, $key)
-    {
-//        if ($request->hasFile($key)) {
-//            if ($image = $parent->image) {
-//                $this->deleteFileS3($image, $parentName);
-//                $parent->image()->delete();
-//            }
-//
-//            $filename = $this->createImageS3($request, $key, $parentName);
-//            $parent->image()->save($this->storeImageToDB($filename));
-//        }
+        $this->awsFile = env('AWS_FILE');
     }
 
     /**
@@ -50,7 +31,7 @@ class FileService
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
         $filenameHash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
 
-        $uploadDir = $this->AWS_FILE . '/uploads/documents/';
+        $uploadDir = $this->awsFile . '/uploads/documents/';
         $fullpath = $uploadDir . $filenameHash;
         Storage::put($fullpath, file_get_contents($file), 'public');
 
@@ -65,7 +46,7 @@ class FileService
      */
     public function deleteFileS3($file)
     {
-        $fullSrc = $this->AWS_FILE . '/uploads/documents/' . $file->url;
+        $fullSrc = $this->awsFile . '/uploads/documents/' . $file->url;
         if (Storage::disk('s3')->exists($fullSrc)) {
             Storage::disk('s3')->delete($fullSrc);
         }
@@ -80,7 +61,7 @@ class FileService
      */
     public function getFileUrlS3($fileName)
     {
-        $fullSrc = $this->AWS_FILE . '/uploads/documents/' . $fileName;
+        $fullSrc = $this->awsFile . '/uploads/documents/' . $fileName;
         if (Storage::disk('s3')->exists($fullSrc)) {
             return Storage::disk('s3')->url($fullSrc);
         }

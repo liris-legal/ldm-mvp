@@ -44,6 +44,4 @@ class HomeController extends Controller
         $src = 'https://raw.githubusercontent.com/thaild/1LinkIntern/3d3d31045997a1b678cabfde931545375a75fef3/1link/book.pdf';
         return view('content.iframe.pdf-viewer', ['src' => $src]);
     }
-
-
 }
