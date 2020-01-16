@@ -9,10 +9,8 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-        lawsuit.created_at_wareki
-      }}{{
         lawsuit.number
-      }}号
+      }}
     </td>
     <td
       scope="col"
@@ -38,24 +36,6 @@
       :class="{'x-overlays': overlay}"
     >
       {{
-        lawsuit.defendants | parseName
-      }}
-    </td>
-    <td
-      scope="col"
-      class="col col-3"
-      :class="{'x-overlays': overlay}"
-    >
-      {{
-        lawsuit.defendant_representatives | parseName
-      }}
-    </td>
-    <td
-      scope="col"
-      class="col col-3"
-      :class="{'x-overlays': overlay}"
-    >
-      {{
         lawsuit.plaintiffs | parseName
       }}
     </td>
@@ -66,6 +46,24 @@
     >
       {{
         lawsuit.plaintiff_representatives | parseName
+      }}
+    </td>
+    <td
+      scope="col"
+      class="col col-3"
+      :class="{'x-overlays': overlay}"
+    >
+      {{
+        lawsuit.defendants | parseName
+      }}
+    </td>
+    <td
+      scope="col"
+      class="col col-3"
+      :class="{'x-overlays': overlay}"
+    >
+      {{
+        lawsuit.defendant_representatives | parseName
       }}
     </td>
     <td
