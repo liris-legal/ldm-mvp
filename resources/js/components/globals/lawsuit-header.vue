@@ -10,16 +10,22 @@
     </v-col>
     <v-col class="col-lg-7 col-md-7 col-sm-6 col-xl-6 font-size-18">
       <p class="mb-0">
-        原告：{{ lawsuit.plaintiffs | parseName }}
+        原告：{{ lawsuit.plaintiffs | parseParties }}
       </p>
       <p class="mb-0">
-        被告：{{ lawsuit.defendants | parseName }}
+        被告：{{ lawsuit.defendants | parseParties }}
       </p>
     </v-col>
   </v-row>
 </template>
 <script>
 export default {
+  filters:{
+    parseParties(arrays){
+      if (arrays === undefined || arrays.length <= 0) return '-';
+      return arrays[0].name;
+    }
+  },
   props: {
     lawsuit: {type: Object, required: true, default: () => {}}
   }
