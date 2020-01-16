@@ -270,6 +270,7 @@
         datePicker: false,
         disabled: false,
         file: null,
+        selected: null,
         rules: [
           value => !value || value.size < 2048000000 || 'File size should be less than 2048 MB!',
         ],
@@ -289,7 +290,7 @@
         this.onChangeSubmitter(val);
       },
       file (val){
-        if (val) this.postData();
+        if (val && this.selected) this.postData();
         this.clearFile();
       },
     },
@@ -303,6 +304,7 @@
        */
       openFileDialog() {
         document.getElementById('file-upload').click();
+        this.selected = true;
       },
       /**
        * @function clearFile
@@ -310,7 +312,9 @@
        */
       clearFile() {
         this.file = null;
-        document.getElementsByClassName(' v-input__icon--clear')[0].children[0].click()
+        this.selected = null;
+        let clearIcon = document.getElementsByClassName(' v-input__icon--clear');
+        if(clearIcon.length) clearIcon[0].children[0].click()
       },
 
       /**
@@ -348,7 +352,6 @@
        * @description to handle change submitter
        */
       onChangeSubmitter(submitter_id) {
-        console.log('changed: ' + submitter_id);
         if (this.submitters.find(s => s.id === submitter_id && (s.description === 'court' || s.description === 'other_party'))) {
           this.type_document_id = 3;
           this.disabled = true;
