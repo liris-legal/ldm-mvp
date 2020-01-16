@@ -8,7 +8,7 @@
     <td
       scope="col"
       class="col"
-      :class="className"
+      :class="{className, 'x-overlays': overlay}"
     >
       <div class="name">
         {{ documentName }}
@@ -18,6 +18,7 @@
       v-if="numberColumns === 3"
       scope="col"
       class="col col-4"
+      :class="{'x-overlays': overlay}"
     >
       <div class="name">
         {{ document.submitter.name }}
@@ -26,6 +27,7 @@
     <td
       scope="col"
       class="col d-flex last-column"
+      :class="{'x-overlays': overlay}"
     >
       <div class="col-6 pa-0">
         <div class="name">
@@ -39,8 +41,15 @@
         :sub-link="'/lawsuits/'+lawsuitId+'/documents/'+document.id+'/edit'"
         :sub-id="document.id"
         :sub-type="'documents'"
+        v-on:update:overlay="overlay = $event"
       />
     </td>
+
+    <v-overlay
+      :z-index="zIndex"
+      :value="overlay"
+    >
+    </v-overlay>
   </tr>
   <tr
     v-else
@@ -85,11 +94,27 @@
     },
     data() {
       return {
-        className: 'col-6'
+        className: 'col-6',
+        overlay: false,
+        zIndex: 8,
       }
     },
     created() {
       this.className = 'col-' + (12/this.numberColumns);
+    },
+    watch: {
+      overlay(val){
+        if (val){
+          for(let i = 0; i < rowItems.length; i++)
+            rowItems[i].classList.add("cursor-unset");
+        }else{
+          for(let i = 0; i < rowItems.length; i++)
+            rowItems[i].classList.remove("cursor-unset");
+        }
+      }
+    },
+    mounted() {
+      window.rowItems = document.getElementsByClassName('range--row-item');
     },
     methods: {
       /**
@@ -102,4 +127,15 @@
     }
   }
 </script>
+
+<style scoped>
+  .x-overlays {
+    z-index: 10;
+    position: relative;
+    background-color: #FFF;
+  }
+  .cursor-unset {
+    cursor: unset !important;
+  }
+</style>
 
