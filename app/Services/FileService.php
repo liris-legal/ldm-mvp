@@ -7,6 +7,10 @@ use Storage;
 
 class FileService
 {
+    /**
+     *  AWS URL
+     * @var string
+     */
     protected $awsFile;
 
     /**
@@ -29,7 +33,7 @@ class FileService
     {
         $file = $request->file($key);
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
-        $filenameHash = substr(hash('md5', date("mdYhms")), 0, 10) . '-' . $fileName;
+        $filenameHash = substr(hash('md5', date("mdYhms")), 0, 15) . '-' . $fileName;
 
         $uploadDir = $this->awsFile . '/uploads/documents/';
         $fullpath = $uploadDir . $filenameHash;
@@ -47,8 +51,8 @@ class FileService
     public function deleteFileS3($file)
     {
         $fullSrc = $this->awsFile . '/uploads/documents/' . $file->url;
-        if (Storage::disk('s3')->exists($fullSrc)) {
-            Storage::disk('s3')->delete($fullSrc);
+        if (Storage::exists($fullSrc)) {
+            Storage::delete($fullSrc);
         }
     }
 
@@ -56,14 +60,14 @@ class FileService
      * @function getFileUrlS3
      * @description Get file URL form S3 storage
      *
-     * @param $file
+     * @param $fileName
      * @return String url
      */
     public function getFileUrlS3($fileName)
     {
         $fullSrc = $this->awsFile . '/uploads/documents/' . $fileName;
-        if (Storage::disk('s3')->exists($fullSrc)) {
-            return Storage::disk('s3')->url($fullSrc);
+        if (Storage::exists($fullSrc)) {
+            return Storage::url($fullSrc);
         }
 
         return null;

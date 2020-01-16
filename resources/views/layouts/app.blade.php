@@ -35,11 +35,11 @@
                 <app-modal></app-modal>
             </v-content>
             <div class="clearfix"></div>
-            <app-bottom :route-create-lawsuit="'{{route('lawsuits.create')}}'"
-                            :route-create-document="'{{route('documents.create', 0)}}'"
-                            :route-list-type-lawsuits="'{{route('type-lawsuits.index')}}'"
-            >
-            </app-bottom>
+            <app-bottom
+                :route-create-lawsuit="'{{route('lawsuits.create')}}'"
+                :route-create-document="'{{route('documents.create', 0)}}'"
+                :route-list-type-lawsuits="'{{route('type-lawsuits.index')}}'"
+            ></app-bottom>
         </v-app>
     </div>
 </body>

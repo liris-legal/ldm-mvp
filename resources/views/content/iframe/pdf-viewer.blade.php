@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+    <title>PDF Viewer</title>
 </head>
 <body>
 <div class="content d-block">
