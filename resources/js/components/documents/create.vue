@@ -127,13 +127,13 @@
                   cols="5"
                   class="pa-0"
                 >
-                  <v-text-field
+                  <v-select
                     v-model="document.number"
-                    type="number"
+                    :items="numbers"
+                    label="書面番号"
                     single-line
                     outlined
                     dense
-                    required
                   />
                 </v-col>
 
@@ -148,12 +148,11 @@
                   cols="6"
                   class="pa-0"
                 >
-                  <v-text-field
-                    type="number"
+                  <v-select
+                    :items="numbers"
                     single-line
                     outlined
                     dense
-                    required
                   />
                 </v-col>
               </v-row>
@@ -254,9 +253,10 @@
     data() {
       return {
         document: {
-          number: '',
+          number: 1,
           name: '',
         },
+        numbers: new Array(100).join().split(',').map(function(item, index){ return ++index;}),
         type_document_id: 1,
         submitter_id: 1,
         nameEvidenceDocuments: [

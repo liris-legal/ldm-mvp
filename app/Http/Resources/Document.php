@@ -22,7 +22,7 @@ class Document extends JsonResource
             'id'                       =>  $this->id,
             'number'                   =>  $this->number,
             'name'                     =>  $this->name,
-            'url'                      =>  (new FileService())->getFileUrlS3($this->url),
+            // 'url'                      =>  (new FileService())->getFileUrlS3($this->url),
             'lawsuit_id'               =>  $this->lawsuit_id,
             'type'                     =>  $this->typeDocument,
             'submitter'                =>  $this->submitter,
