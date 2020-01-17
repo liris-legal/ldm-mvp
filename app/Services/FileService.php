@@ -36,7 +36,7 @@ class FileService
         $filenameHash = substr(hash('md5', date("mdYhms")), 0, 15) . '-' . $fileName;
 
         $uploadDir = '/uploads/documents/' . $filenameHash;
-        Storage::disk('s3')->put($uploadDir, file_get_contents($file), 'public');
+        Storage::put($uploadDir, file_get_contents($file), 'public');
 
         return $filenameHash;
     }
@@ -49,7 +49,7 @@ class FileService
      */
     public function deleteFileS3($file)
     {
-        $fullSrc = $this->awsFile . '/uploads/documents/' . $file;
+        $fullSrc = '/uploads/documents/' . $file;
         if (Storage::exists($fullSrc)) {
             Storage::delete($fullSrc);
         }
@@ -64,7 +64,7 @@ class FileService
      */
     public function getFileUrlS3($fileName)
     {
-        $fullSrc = $this->awsFile . '/uploads/documents/' . $fileName;
+        $fullSrc = '/uploads/documents/' . $fileName;
         return Storage::exists($fullSrc) ? Storage::url($fullSrc) : null;
     }
 }
