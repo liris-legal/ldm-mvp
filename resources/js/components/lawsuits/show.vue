@@ -124,6 +124,7 @@
         thead_other_documents: [{ id: 1, name: '書面名', class: 'col-12'}],
         lawsuit: {},
         claimDocuments: [],
+        evidenceDocuments: [],
         otherDocuments: [],
 			}
     },
@@ -132,6 +133,7 @@
       .then(res => {
         this.lawsuit = res.data.data;
         this.claimDocuments = this.lawsuit.documents.filter(d => d.type.description === 'claim' );
+        this.evidenceDocuments = this.lawsuit.documents.filter(d => d.type.description === 'evidence' );
         this.otherDocuments = this.lawsuit.documents.filter(d => d.type.description === 'other');
       })
       .catch(err => {console.log(err.response);
@@ -141,12 +143,13 @@
       /**
        * @function parseParties
        * @description get submitter of document
-       * @return string
+       * @return string|null
        */
       parseParties(parties, condition){
         if(parties && parties.length > 0) {
-          const submitter = this.submitters.find(submitter => { return submitter.description === condition });
-          return submitter.name + '書面'
+          const hasDocument = this.evidenceDocuments.find(d => { return d.submitter.description === condition });
+          if (hasDocument) return hasDocument.submitter.name + '書面';
+          return null;
         }
       }
     }

@@ -50,31 +50,6 @@
       :value="overlay"
     />
   </tr>
-  <tr
-    v-else
-    v-ripple
-    class="range--row-item d-flex pa-0"
-  >
-    <td
-      scope="col"
-      class="col"
-      :class="className"
-    >
-      <div class="name">
-        データが見つかりません！
-      </div>
-    </td>
-    <td
-      v-if="numberColumns"
-      scope="col"
-      class="col col-4"
-    />
-    <td
-      scope="col"
-      class="col"
-      :class="className"
-    />
-  </tr>
 </template>
 
 <script>
