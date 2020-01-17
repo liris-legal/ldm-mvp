@@ -305,8 +305,13 @@
               v-ripple
               class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
               @click="postData"
+              :loading="loading"
+              :disabled="loading"
             >
               登録
+              <template v-slot:loader>
+                <span>登録・・・</span>
+              </template>
             </v-btn>
           </v-col>
         </v-row>
@@ -345,6 +350,8 @@
           defendant_representatives: [{ name: '' }],
           other_parties: [{ name: '' }],
 				},
+        loader: null,
+        loading: false,
         civil_lawsuits: {},
 				errors: {}|undefined
       }
@@ -353,12 +360,26 @@
       this.civil_lawsuits = this.typeLawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];
       this.lawsuit.type_lawsuit_id = this.civil_lawsuits.id;
     },
-	methods: {
-     /**
-     * postData is used to edit lawsuit
-     * @return {object} contains a message status and redirect url
-     */
+    watch: {
+      /**
+       * to make btn loader processing
+       */
+      loader () {
+        const l = this.loader;
+        this[l] = !this[l];
+
+        setTimeout(() => (this[l] = false), 3000);
+
+        this.loader = null
+      },
+    },
+	  methods: {
+      /**
+      * postData is used to edit lawsuit
+      * @return {object} contains a message status and redirect url
+      */
       postData() {
+        this.loader = 'loading';
         /**
          * Create a new formData to store menu
          * */
