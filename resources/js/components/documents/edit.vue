@@ -288,6 +288,7 @@
       axios.get('lawsuits/'+this.lawsuitId+'/documents/' + this.documentId)
         .then(res => {
           this.document = res.data.data;
+          this.document.number = this.document.number ? parseInt(this.document.number) : this.document.number;
           this.type_document_id = this.document.type.id;
           this.submitter_id = this.document.submitter.id;
           this.date = new Date(this.document.created_at).toISOString().substr(0, 10);

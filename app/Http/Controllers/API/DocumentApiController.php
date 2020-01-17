@@ -4,14 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\StoreDocument;
 use App\Http\Resources\Document as DocumentResource;
-use App\Http\Resources\DocumentFull as DocumentFullResource;
+use App\Http\Resources\DocumentUrl as DocumentUrlResource;
 use App\Models\Document;
-use App\Models\Lawsuit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDocument;
 use App\Services\FileService;
-use Storage;
 
 class DocumentApiController extends Controller
 {
@@ -25,15 +23,12 @@ class DocumentApiController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $lawsuitId
      * @return \Illuminate\Http\Response
      */
-    public function index(Lawsuit $lawsuit)
+    public function index($lawsuitId)
     {
-        return response([
-            'data' => Document::where('lawsuit_id', $lawsuit->id)->get()->map(function ($document) {
-                return new DocumentFullResource($document);
-            })
-        ]);
+        //
     }
 
     /**
@@ -48,6 +43,20 @@ class DocumentApiController extends Controller
         $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
         return response([
             'data' => new DocumentResource($document)
+        ]);
+    }
+    /**
+     * Display the Url of specified resource.
+     *
+     * @param $lawsuit
+     * @param Document $document
+     * @return \Illuminate\Http\Response
+     */
+    public function showUrl($lawsuit, $document)
+    {
+        $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
+        return response([
+            'data' => new DocumentUrlResource($document)
         ]);
     }
 
