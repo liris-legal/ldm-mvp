@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\StoreDocument;
 use App\Http\Resources\Document as DocumentResource;
+use App\Http\Resources\DocumentFull as DocumentFullResource;
 use App\Models\Document;
+use App\Models\Lawsuit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDocument;
@@ -25,9 +27,13 @@ class DocumentApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Lawsuit $lawsuit)
     {
-        //
+        return response([
+            'data' => Document::where('lawsuit_id', $lawsuit->id)->get()->map(function ($document) {
+                return new DocumentFullResource($document);
+            })
+        ]);
     }
 
     /**
@@ -98,7 +104,7 @@ class DocumentApiController extends Controller
      */
     public function destroy(Document $document)
     {
-        $this->fileService->deleteFileS3($document);
+        $this->fileService->deleteFileS3($document->url);
         $document->delete();
 
         $url = ($document->submitter_id == 1 || $document->submitter_id == 3) && ($document->type_document_id == 2) ?

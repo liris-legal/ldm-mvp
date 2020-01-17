@@ -18,7 +18,7 @@ class FileService
      */
     public function __construct()
     {
-        $this->awsFile = env('AWS_FILE');
+        $this->awsFile = env('AWS_URL');
     }
 
     /**
@@ -35,9 +35,8 @@ class FileService
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
         $filenameHash = substr(hash('md5', date("mdYhms")), 0, 15) . '-' . $fileName;
 
-        $uploadDir = $this->awsFile . '/uploads/documents/';
-        $fullpath = $uploadDir . $filenameHash;
-        Storage::put($fullpath, file_get_contents($file), 'public');
+        $uploadDir = '/uploads/documents/' . $filenameHash;
+        Storage::put($uploadDir, file_get_contents($file), 'public');
 
         return $filenameHash;
     }
@@ -50,7 +49,7 @@ class FileService
      */
     public function deleteFileS3($file)
     {
-        $fullSrc = $this->awsFile . '/uploads/documents/' . $file->url;
+        $fullSrc = '/uploads/documents/' . $file;
         if (Storage::exists($fullSrc)) {
             Storage::delete($fullSrc);
         }
@@ -65,11 +64,7 @@ class FileService
      */
     public function getFileUrlS3($fileName)
     {
-        $fullSrc = $this->awsFile . '/uploads/documents/' . $fileName;
-        if (Storage::exists($fullSrc)) {
-            return Storage::url($fullSrc);
-        }
-
-        return null;
+        $fullSrc = '/uploads/documents/' . $fileName;
+        return Storage::exists($fullSrc) ? Storage::url($fullSrc) : null;
     }
 }

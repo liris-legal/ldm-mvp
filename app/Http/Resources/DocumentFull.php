@@ -2,18 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Controllers\Helpers;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 use App\Services\FileService;
 
-class Document extends JsonResource
+class DocumentFull extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function toArray($request)
@@ -22,6 +20,7 @@ class Document extends JsonResource
             'id'                       =>  $this->id,
             'number'                   =>  $this->number,
             'name'                     =>  $this->name,
+            'url'                      =>  (new FileService())->getFileUrlS3($this->url),
             'lawsuit_id'               =>  $this->lawsuit_id,
             'type'                     =>  $this->typeDocument,
             'submitter'                =>  $this->submitter,
