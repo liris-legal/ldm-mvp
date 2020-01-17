@@ -9,11 +9,11 @@
         height="40"
         hide-slider
       >
-        <v-tab
-          v-for="(label, index) in documentLabels"
-          :key="index"
-        >
-          {{ label }}
+        <v-tab v-if="parseParties(documents, 'plaintiff')">
+          {{ parseParties(documents, 'plaintiff') }}
+        </v-tab>
+        <v-tab v-if="parseParties(documents, 'defendant')">
+          {{ parseParties(documents, 'defendant') }}
         </v-tab>
       </v-tabs>
 
@@ -46,13 +46,29 @@
     data() {
       return {
         documentsTab: null,
-        documentLabels: ['原告書面', '被告書面'],
       }
     },
     methods: {
+      /**
+       * @function parseEvidenceDocuments
+       * @description get evidence documents of party
+       * @return array
+       */
       parseEvidenceDocuments(party){
         return this.documents.filter(d => d.submitter.description === party );
       },
+      /**
+       * @function parseParties
+       * @description get submitter of document
+       * @return string|null
+       */
+      parseParties(parties, condition){
+        if(parties && parties.length > 0) {
+          const hasDocument = parties.find(d => { return d.submitter.description === condition });
+          if (hasDocument) return hasDocument.submitter.name + '書面';
+          return null;
+        }
+      }
     },
   }
 </script>

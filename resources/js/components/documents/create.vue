@@ -295,7 +295,7 @@
       },
     },
     mounted() {
-      console.log('create document mounted')
+      // console.log('create document mounted')
     },
     methods: {
       /**

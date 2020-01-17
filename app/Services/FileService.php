@@ -33,7 +33,7 @@ class FileService
     {
         $file = $request->file($key);
         $fileName = str_replace(' ', '-', $file->getClientOriginalName());
-        $filenameHash = substr(hash('md5', date("mdYhms")), 0, 15) . '-' . $fileName;
+        $filenameHash = date("Ymdhmst") . '-' . $fileName;
 
         $uploadDir = '/uploads/documents/' . $filenameHash;
         Storage::put($uploadDir, file_get_contents($file), 'public');
