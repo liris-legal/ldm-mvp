@@ -256,7 +256,7 @@
           number: 1,
           name: '',
         },
-        numbers: [ ...Array(101).keys() ],
+        numbers: new Array(100).join().split(',').map(function(item, index){ return ++index;}),
         type_document_id: 1,
         submitter_id: 1,
         nameEvidenceDocuments: [
