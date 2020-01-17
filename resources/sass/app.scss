@@ -186,7 +186,7 @@ body {
                         border-top: 1px solid #DADDE6;
                         border-bottom: 1px solid #DADDE6;
                         font-size: 12px !important;
-                        padding: 3px 20px;
+                        padding: 3px 0px 3px 20px;
                     }
                 }
             }
@@ -305,5 +305,30 @@ body {
 
     &.bottom-bar {
         z-index: 5 !important;
+    }
+}
+/*
+ * Custom Responsive
+ * Medium: 960px > < 1264px*
+ * Small: 600px > < 960px
+ */
+@media only screen and (min-device-width: 960px) and (max-device-width: 1264px) {
+    .lawsuit-index{
+        .col-3{
+            flex: 0 0 22% !important;
+            max-width: 22% !important;
+        }
+    }
+}
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 960px) {
+    .lawsuit-index{
+        th {
+            padding: unset;
+        }
+        .col-3{
+            flex: 0 0 17% !important;
+            max-width: 17% !important;
+        }
     }
 }
