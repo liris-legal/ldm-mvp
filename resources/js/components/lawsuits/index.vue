@@ -13,6 +13,7 @@
       <table class="table">
         <thead>
           <tr class="title d-flex">
+            <!-- col col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 -->
             <th
               scope="col"
               class="col col-3"

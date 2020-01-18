@@ -24,7 +24,7 @@
         </v-col>
         <v-col cols="6">
           <v-progress-linear
-            color="deep-purple accent-4"
+            color="blue lighten-3 accent-4"
             indeterminate
             rounded
             height="6"

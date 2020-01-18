@@ -29,7 +29,7 @@
       class="col d-flex last-column"
       :class="{'x-overlays': overlay}"
     >
-      <div class="col-6 pa-0">
+      <div class="col-10 pa-0">
         <div class="name">
           {{ document.created_at_wareki }}
         </div>

@@ -12,7 +12,8 @@
         :key="'item-document-'+document.id"
         class="text-vertical"
       >
-        {{ document.name }}
+        {{ parseName(document) }}
+        <span class="text-initial">{{ document.number }}</span>
       </v-tab>
     </v-tabs>
 
@@ -43,6 +44,15 @@
         documentsTab: null,
       }
     },
+    methods:{
+      parseName(document){
+        const ignorePattern = '号証';
+        if (document.type.id === 2 && document.name.includes(ignorePattern)){
+          return document.name.replace(ignorePattern, '')
+        }
+        return document.name
+      }
+    }
   }
 </script>
 
@@ -70,6 +80,9 @@
     height: auto !important;
     letter-spacing: 4px;
     padding-bottom: 8px;
+  }
+  .text-initial{
+    writing-mode: lr !important;
   }
 
 </style>

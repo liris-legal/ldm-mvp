@@ -14,7 +14,7 @@
         <v-btn
           value="recent"
           href="/"
-          :class="{'v-btn--active': $route.name === checkRoutes(['index'])}"
+          :class="{'v-btn--active': checkRoutes(['index'])}"
         >
           <span>ホーム</span>
           <v-icon>home</v-icon>
@@ -27,7 +27,8 @@
         <v-btn
           value="favorites"
           :href="routeListTypeLawsuits"
-          :class="{'v-btn--active': $route.name === checkRoutes(['typeLawsuitsIndex', 'lawsuitsIndex', 'lawsuitsShow'])}"
+          :class="{'v-btn--active': checkRoutes(['typeLawsuitsIndex', 'lawsuitsIndex', 'lawsuitsEdit',
+          'lawsuitsShow', 'lawsuitsDocumentShow', 'documentsEdit', 'documentsIndex'])}"
         >
           <span>ファイル</span>
           <v-icon>folder_open</v-icon>
@@ -41,7 +42,7 @@
           id="btn-add-app"
           v-click-outside="hidden"
           value="nearby"
-          :class="{'v-btn--active': $route.name === checkRoutes(['lawsuitsCreate', 'documentsCreate'])}"
+          :class="{'v-btn--active': checkRoutes(['lawsuitsCreate', 'documentsCreate'])}"
           @click="showAdd = !showAdd"
         >
           <span>作成</span>
@@ -119,11 +120,11 @@
        * @function checkRoutes
        * @description Check route and active class when click on url
        *
-       * @param {Array} $array - Is a array has many paths
-       * @return string
+       * @param {Array} routes
+       * @return boolean
        */
-      checkRoutes($array) {
-        return $array.find( value => this.$route.name === value );
+      checkRoutes(routes) {
+        return !!routes.find(route => route === this.$route.name);
       },
 
       /**

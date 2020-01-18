@@ -4,7 +4,7 @@
     class="col col-3"
   >
     {{ title }}{{ index === 1? '': index }}{{ index === 1 && length > 1 ? index : '' }}
-    <v-spacer v-show="isLast" />
+    <v-spacer v-if="isLast" />
   </th>
 </template>
 

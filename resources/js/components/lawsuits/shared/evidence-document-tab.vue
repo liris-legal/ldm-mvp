@@ -55,7 +55,7 @@
        * @return array
        */
       parseEvidenceDocuments(party){
-        return this.documents.filter(d => d.submitter.description === party );
+        return this.documents.filter(d => d.submitter.description === party).sort((a, b) => a.name - b.name ? 1 : -1);
       },
       /**
        * @function parseParties
