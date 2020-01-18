@@ -2,7 +2,7 @@
   <v-tab-item>
     <v-container fluid>
       <v-tabs
-        v-model="claimDocumentTab"
+        v-model="tabs"
         background-color="transparent"
         class="document-tabs"
         active-class="activated"
@@ -19,7 +19,7 @@
       </v-tabs>
 
       <v-tabs-items
-        v-model="claimDocumentTab"
+        v-model="tabs"
         class="document-items"
       >
         <v-tab-item
@@ -40,10 +40,16 @@
     name: "ClaimDocumentTab",
     props: {
       documents: {required: true, type: Array, default: () => []},
+      documentTab: {required: true, type: Number, default: () => 0},
     },
     data() {
       return {
-        claimDocumentTab: null,
+        tabs: this.documentTab,
+      }
+    },
+    watch: {
+      documentTab(){
+        this.tabs = this.documentTab
       }
     },
   }

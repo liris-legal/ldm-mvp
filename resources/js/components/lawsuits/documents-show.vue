@@ -22,15 +22,15 @@
 
       <v-tabs-items v-model="typeTab">
         <!-- ▽ 主張書面-->
-        <claim-document-tab :documents="claimDocuments" />
+        <claim-document-tab :documents="claimDocuments" :document-tab="claimDocumentTab" />
         <!-- △ 主張書面-->
 
         <!-- ▽ 証拠書面-->
-        <evidence-document-tab :documents="evidenceDocuments" />
+        <evidence-document-tab :documents="evidenceDocuments" :document-tab="evidenceDocumentTab" />
         <!-- △ 証拠書面-->
 
         <!-- ▽ その他の書面-->
-        <other-document-tab :documents="otherDocuments" />
+        <other-document-tab :documents="otherDocuments" :document-tab="otherDocumentTab" />
         <!-- △ その他の書面-->
       </v-tabs-items>
     </v-card>
@@ -62,8 +62,11 @@
         lawsuit: {},
         typeTab: null,
         claimDocuments: [],
+        claimDocumentTab: 0,
         evidenceDocuments: [],
+        evidenceDocumentTab: 0,
         otherDocuments: [],
+        otherDocumentTab: 0,
       }
     },
     mounted() {
@@ -71,6 +74,9 @@
       document.body.style.overflowY = "hidden";
     },
     created() {
+      /**
+       * fetch lawsuit data from API
+       */
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
@@ -78,12 +84,40 @@
           this.claimDocuments = documents.filter(d => d.type.description === 'claim');
           this.evidenceDocuments = documents.filter(d => d.type.description === 'evidence' );
           this.otherDocuments = documents.filter(d => d.type.description === 'other');
+
+          // initial tab activated
+          this.claimDocumentTab = this.initialData(this.claimDocuments);
+          this.evidenceDocumentTab = this.initialData(this.evidenceDocuments);
+          this.otherDocumentTab = this.initialData(this.otherDocuments);
           })
         .catch(err => {
           console.log(err.response);
           alert('Not found data!');
         });
+
+      /**
+       * initial typeTab
+       */
+      this.typeTab = this.$route.query.hasOwnProperty('type') ? parseInt(this.$route.query.type) - 1 : 0;
     },
+    methods: {
+      /**
+       * initial documentTab
+       */
+      initialData(documents){
+        if (this.$route.query.hasOwnProperty('type') && parseInt(this.$route.query.type) !== 2){
+          const nameTab = this.$route.query.hasOwnProperty('name') ? this.$route.query.name : '';
+          return documents.findIndex(e => e.name === nameTab);
+        }
+        // if (this.$route.query.hasOwnProperty('submitter')){
+        //   const submitter = this.$route.query.submitter;
+        //   const submitters = ['plaintiff', 'defendant'];
+        //   return submitters.findIndex(s => s === submitter);
+        // }
+        // console.log('not found query');
+        return 0;
+      }
+    }
   }
 </script>
 

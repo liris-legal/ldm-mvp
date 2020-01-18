@@ -94,9 +94,15 @@
       /**
        * @function showLawsuitDocument
        * @description goto show documents of lawsuit
+       * @param lawsuitId
        */
-      showLawsuitDocument(lawsuit_id) {
-        location.href = '/lawsuits/' + lawsuit_id + '/documents';
+      showLawsuitDocument(lawsuitId) {
+        let href = '/lawsuits/' + lawsuitId + '/documents?type='+this.document.type.id+'&name='+this.document.name;
+        if(this.document.type.id === 2){
+          const submitter = this.$route.params.submitter;
+          href = '/lawsuits/' + lawsuitId + '/documents?type='+this.document.type.id+'&submitter='+submitter+'&name='+this.document.name;
+        }
+        location.href = href;
       },
     }
   }

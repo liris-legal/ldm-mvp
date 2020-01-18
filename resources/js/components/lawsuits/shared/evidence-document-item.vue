@@ -41,7 +41,7 @@
     },
     data() {
       return {
-        documentsTab: null,
+        documentsTab: 0,
       }
     },
     methods:{
