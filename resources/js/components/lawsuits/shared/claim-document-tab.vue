@@ -1,6 +1,9 @@
 <template>
   <v-tab-item>
-    <v-container fluid>
+    <v-container
+      fluid
+      class="pa-0"
+    >
       <v-tabs
         v-model="claimDocumentTab"
         background-color="transparent"

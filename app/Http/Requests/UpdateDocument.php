@@ -30,7 +30,7 @@ class UpdateDocument extends FormRequest
         $rules = [
             'name'              => 'bail|required|max:150',
             'number'            => 'bail|max:100|min:1|nullable',
-            'file'              => 'bail|mimes:pdf,doc,docx|max:204800',
+            'file'              => 'bail|mimes:pdf|max:204800',
             'type_document_id'  => 'bail|required|exists:type_documents,id',
             'submitter_id'      => 'bail|required',
             'lawsuit_id'        => 'bail|required|exists:lawsuits,id',

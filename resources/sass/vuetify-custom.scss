@@ -22,20 +22,20 @@
         min-height: 70vh;
         height: auto;
         .v-card {
-            margin-top: 4px;
+            margin: 10px;
 
             // to vertical right tab-bar
             .item-tabs {
                 .v-tabs-bar {
                     float: right;
                     position: absolute;
-                    right: 0;
-                    top: 4px;
+                    right: 8px;
+                    top: 10px;
                     z-index: 99;
                 }
                 .v-tab{
                     border: 1.3px solid #dee2e6;
-                    padding: 8px;
+                    padding: 12px;
                 }
             }
         }
