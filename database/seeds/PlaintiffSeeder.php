@@ -17,15 +17,16 @@ class PlaintiffSeeder extends Seeder
 
         DB::table('plaintiffs')->truncate();
         $rows = [
-            [ 'ABCDE株式会社', 1, $time],
-            [ 'ABHGJ株式会社', 2, $time],
-            [ 'JJKDE株式会社', 1, $time],
+            [ 'ABCDE株式会社', 1, 1, $time],
+            [ 'ABHGJ株式会社', 2, 1, $time],
+            [ 'JJKDE株式会社', 1, 1, $time],
         ];
         foreach ($rows as $row) {
             DB::table('plaintiffs')->insert([
                 'name' => $row[0],
                 'lawsuit_id' => $row[1],
-                'created_at' => $row[2],
+                'submitter_id' => $row[2],
+                'created_at' => $row[3],
             ]);
         }
         Schema::enableForeignKeyConstraints();

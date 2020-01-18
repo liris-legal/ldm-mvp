@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lawsuit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
@@ -58,4 +59,42 @@ class Helpers
 
         return $withDay ? $fullFormatter->format($date) : $longFormatter->format($date);
     }
+
+
+    /**
+     * parse submitters with plaintiff, defendant
+     *
+     * @param Lawsuit $lawsuit
+     * @param $submitters
+     * @return \Illuminate\Support\Collection
+     */
+    public static function parseParties($lawsuit, $submitters)
+    {
+        $parties = collect();
+        $plaintiffs = $lawsuit->plaintiffs;
+        $defendants = $lawsuit->defendants;
+
+        $parties->push($plaintiffs->count() ? $plaintiffs : Helpers::filteredSubmitter($submitters, 'plaintiff'));
+        $parties->push($defendants->count() ? $defendants : Helpers::filteredSubmitter($submitters, 'defendant'));
+        $parties = $parties->flatten();
+
+        foreach ($submitters->where('description', 'court')->orWhere('description', 'other_party')->get() as $sub) {
+            $parties->push($sub);
+        }
+
+        return $parties;
+    }
+
+    /**
+     * Filter submitters where $party
+     *
+     * @param $submitters
+     * @param $party
+     * @return array
+     */
+    public static function filteredSubmitter($submitters, $party)
+    {
+        return $submitters->where('description', $party)->get();
+    }
+
 }

@@ -17,14 +17,15 @@ class DefendantSeeder extends Seeder
 
         DB::table('defendants')->truncate();
         $rows = [
-            [ 'KLMNO株式会社', 1, $time],
-            [ 'LMNOP株式会社', 2, $time],
+            [ 'KLMNO株式会社', 1, 3, $time],
+            [ 'LMNOP株式会社', 2, 3, $time],
         ];
         foreach ($rows as $row) {
             DB::table('defendants')->insert([
                 'name' => $row[0],
                 'lawsuit_id' => $row[1],
-                'created_at' => $row[2],
+                'submitter_id' => $row[2],
+                'created_at' => $row[3],
             ]);
         }
         Schema::enableForeignKeyConstraints();

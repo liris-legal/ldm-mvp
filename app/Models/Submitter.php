@@ -19,33 +19,9 @@ class Submitter extends Model
     /**
      * Get all plaintiffs for submitter.
      */
-    public function plaintiffRepresentatives()
-    {
-        return $this->hasMany('App\Models\PlaintiffRepresentative');
-    }
-
-    /**
-     * Get all plaintiffs for submitter.
-     */
     public function defendants()
     {
         return $this->hasMany('App\Models\Defendant');
-    }
-
-    /**
-     * Get all plaintiffs for submitter.
-     */
-    public function defendantsRepresentatives()
-    {
-        return $this->hasMany('App\Models\DefendantsRepresentative');
-    }
-
-    /**
-     * Get all plaintiffs for submitter.
-     */
-    public function otherParties()
-    {
-        return $this->hasMany('App\Models\OtherParty');
     }
 
     /**

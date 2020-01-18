@@ -9,10 +9,10 @@ class OtherParty extends Model
     public $fillable = ['name', 'lawsuit_id'];
 
     /**
-     * Get case for the other party.
+     * Get lawsuit for the OtherParty.
      */
-    public function case()
+    public function lawsuit()
     {
-        return $this->belongsTo('App\Models\Cases', 'cases_id');
+        return $this->belongsTo('App\Models\Lawsuit', 'lawsuit_id');
     }
 }

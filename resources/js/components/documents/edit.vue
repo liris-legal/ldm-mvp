@@ -29,10 +29,10 @@
               class="col-9 pa-0 input"
             >
               <v-select
-                v-model="submitter_id"
+                v-model="submitter"
                 :items="submitters"
                 item-text="name"
-                item-value="id"
+                return-object
                 label="提出者"
                 single-line
                 outlined
@@ -84,7 +84,7 @@
               <v-select
                 v-if="type_document_id === 2"
                 v-model="document.name"
-                :items="nameEvidenceDocuments.filter(item => item.submitter_id === submitter_id)"
+                :items="nameEvidenceDocuments.filter(item => item.submitter_id === submitter.submitter_id)"
                 label="書面名"
                 item-text="name"
                 item-value="name"
@@ -250,7 +250,7 @@
         document: {},
         numbers: new Array(100).join().split(',').map(function(item, index){ return ++index;}),
         type_document_id: 1,
-        submitter_id: 1,
+        submitter: null,
         nameEvidenceDocuments: [
           { id: 1, name: '証拠説明書', submitter_id: 1 },
           { id: 2, name: '甲号証', submitter_id: 1 },
@@ -273,8 +273,13 @@
       date (val) {
         this.dateFormatted = this.formatDate(this.date)
       },
-      submitter_id (val) {
-        this.onChangeSubmitter(val);
+      submitter () {
+        if (this.submitter.hasOwnProperty('description') && (this.submitter.description === 'court' || this.submitter.description === 'other_party')) {
+          this.type_document_id = 3;
+          this.disabled = true;
+        } else {
+          this.disabled = false;
+        }
       },
     },
     mounted() {
@@ -290,7 +295,7 @@
           this.document = res.data.data;
           this.document.number = this.document.number ? parseInt(this.document.number) : this.document.number;
           this.type_document_id = this.document.type.id;
-          this.submitter_id = this.document.submitter.id;
+          this.submitter = this.document.documentable ? this.document.documentable : this.document.submitter;
           this.date = new Date(this.document.created_at).toISOString().substr(0, 10);
         })
         .catch(err => {
@@ -312,7 +317,8 @@
         formData.append('number', this.document.number);
         formData.append('lawsuit_id', this.lawsuitId);
         formData.append('type_document_id', this.type_document_id);
-        formData.append('submitter_id', this.submitter_id);
+        formData.append('type_submitter_id', this.submitter.id);
+        formData.append('submitter_id', this.submitter.hasOwnProperty('submitter_id') ? this.submitter.submitter_id : this.submitter.id);
         formData.append('created_at', this.date || '');
         formData.append("_method", "PATCH");
 
@@ -327,20 +333,6 @@
               this.errors = err.response.data.errors;
             }
           });
-      },
-
-      /**
-       * @function onChangeSubmitter
-       * @description to handle change submitter
-       */
-      onChangeSubmitter(submitter_id) {
-        console.log('changed: ' + submitter_id);
-        if (this.submitters.find(s => s.id === submitter_id && (s.description === 'court' || s.description === 'other_party'))) {
-          this.type_document_id = 3;
-          this.disabled = true;
-        } else {
-          this.disabled = false;
-        }
       },
     },
   }

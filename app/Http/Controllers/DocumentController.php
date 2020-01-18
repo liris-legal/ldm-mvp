@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lawsuit;
 use App\Models\Document;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use phpDocumentor\Reflection\Types\Collection;
 
 class DocumentController extends Controller
 {
@@ -24,38 +27,42 @@ class DocumentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param $lawsuitId
+     * @param Lawsuit $lawsuit
      * @return void
      */
-    public function create($lawsuitId)
+    public function create(Lawsuit $lawsuit)
     {
         $typeDocuments = TypeDocument::all();
-        $submitters = Submitter::where('description', 'NOT LIKE', '%representative')->get();
+
+        $submitters = Submitter::where('description', 'NOT LIKE', '%representative');
+        $parties = Helpers::parseParties($lawsuit, $submitters);
 
         return view('content.documents.create', [
-            'lawsuitId' => $lawsuitId,
+            'lawsuitId' => $lawsuit->id,
             'typeDocuments' => $typeDocuments,
-            'submitters' => $submitters
+            'submitters' => $parties
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $lawsuitId
+     * @param Lawsuit $lawsuit
      * @param $documentId
      * @return \Illuminate\Http\Response
      */
-    public function edit($lawsuitId, $documentId)
+    public function edit(Lawsuit $lawsuit, $documentId)
     {
         $typeDocuments = TypeDocument::all();
-        $submitters = Submitter::where('description', 'NOT LIKE', '%representative')->get();
+
+        $submitters = Submitter::where('description', 'NOT LIKE', '%representative');
+        $parties = Helpers::parseParties($lawsuit, $submitters);
 
         return view('content.documents.edit', [
-                'lawsuitId' => $lawsuitId,
+                'lawsuitId' => $lawsuit->id,
                 'documentId' => $documentId,
                 'typeDocuments' => $typeDocuments,
-                'submitters' => $submitters
+                'submitters' => $parties
             ]);
     }
 }
