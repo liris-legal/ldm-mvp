@@ -9,7 +9,6 @@ use App\Models\Defendant;
 use App\Models\Document;
 use App\Models\Plaintiff;
 use App\Models\Submitter;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDocument;
@@ -81,7 +80,7 @@ class DocumentApiController extends Controller
         $document->lawsuit_id = $data['lawsuit_id'];
         $document->type_document_id = $data['type_document_id'];
         $document->submitter_id = $data['submitter_id'];
-        $document->created_at = Carbon::parse($data['created_at']);
+        $document->created_at = \Carbon\Carbon::parse($data['created_at']);
 
         $typeSubmitterId = $data['type_submitter_id'];
         $submitterId = $data['submitter_id'];
