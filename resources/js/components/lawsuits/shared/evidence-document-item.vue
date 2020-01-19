@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat class="ma-0">
     <v-tabs
       v-model="documentsTab"
       class="item-tabs"
@@ -56,7 +56,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .item-tabs{
     position: relative;
   }
@@ -84,5 +84,12 @@
   .text-initial{
     writing-mode: lr !important;
   }
+  .text-vertical.v-tab.activated.v-tab--active, .v-slide-group__content.v-tabs-bar__content, .v-tab--active.v-tab:not(:focus):before{
+      width: 48px;
+  }
+  .item-content{
+      padding-right: 3.8em;
+  }
+
 
 </style>

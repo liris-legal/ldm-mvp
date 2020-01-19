@@ -1,6 +1,9 @@
 <template>
-  <v-tab-item>
-    <v-container fluid>
+  <v-tab-item class="evidence-document-tab">
+    <v-container
+      fluid
+      class="pa-0"
+    >
       <v-tabs
         v-model="tabs"
         background-color="transparent"

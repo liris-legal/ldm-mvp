@@ -307,6 +307,18 @@ body {
         z-index: 5 !important;
     }
 }
+// fix for vertical tabs
+.evidence-document-tab{
+    .text-vertical.v-tab.activated.v-tab--active, .v-slide-group__content.v-tabs-bar__content{
+        width: 48px;
+        min-width: 48px;
+        color: #000;
+    }
+    .item-content{
+        padding-right: 4.3em;
+    }
+}
+
 /*
  * Custom Responsive
  * Medium: 960px > < 1264px*
