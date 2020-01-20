@@ -96,5 +96,4 @@ class Helpers
     {
         return $submitters->where('description', $party)->get();
     }
-
 }

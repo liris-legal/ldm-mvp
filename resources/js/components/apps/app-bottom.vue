@@ -28,7 +28,7 @@
           value="favorites"
           :href="routeListTypeLawsuits"
           :class="{'v-btn--active': checkRoutes(['typeLawsuitsIndex', 'lawsuitsIndex', 'lawsuitsEdit',
-          'lawsuitsShow', 'lawsuitsDocumentShow', 'documentsEdit', 'documentsIndex'])}"
+                                                 'lawsuitsShow', 'lawsuitsDocumentShow', 'documentsEdit', 'documentsIndex'])}"
         >
           <span>ファイル</span>
           <v-icon>folder_open</v-icon>

@@ -17,18 +17,11 @@ class Plaintiff extends Model
     }
 
     /**
-     * Get documents for the Plaintiff.
-     */
-//    public function documents()
-//    {
-//        return $this->hasMany('App\Models\Document');
-//    }
-
-    /**
      * Get the plaintiff's documents.
      */
     public function documents()
     {
+        // return $this->hasMany('App\Models\Document');
         return $this->morphMany('App\Models\Document', 'documentable');
     }
 

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\StoreDocument;
 use App\Http\Resources\Document as DocumentResource;
-use App\Http\Resources\DocumentUrl as DocumentUrlResource;
 use App\Models\Defendant;
 use App\Models\Document;
 use App\Models\Plaintiff;
@@ -12,10 +10,15 @@ use App\Models\Submitter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDocument;
+use App\Http\Requests\StoreDocument;
 use App\Services\FileService;
 
 class DocumentApiController extends Controller
 {
+    /**
+     * an instance FileService
+     * @var string
+     */
     protected $fileService;
 
     public function __construct(FileService $fileService)
@@ -46,21 +49,6 @@ class DocumentApiController extends Controller
         $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
         return response([
             'data' => new DocumentResource($document)
-        ]);
-    }
-
-    /**
-     * Display the Url of specified resource.
-     *
-     * @param $lawsuit
-     * @param Document $document
-     * @return \Illuminate\Http\Response
-     */
-    public function showUrl($lawsuit, $document)
-    {
-        $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
-        return response([
-            'data' => new DocumentUrlResource($document)
         ]);
     }
 
@@ -137,7 +125,6 @@ class DocumentApiController extends Controller
                 $data['url'] = $document->url;
                 $document->delete();
                 return $this->create($data);
-
         }
         // dd('updating');
         $document->updated_at = now();

@@ -17,18 +17,11 @@ class Defendant extends Model
     }
 
     /**
-     * Get document for the Defendant.
-     */
-//    public function documents()
-//    {
-//        return $this->hasMany('App\Models\Document', 'document_id');
-//    }
-
-    /**
      * Get the plaintiff's documents.
      */
     public function documents()
     {
+        // return $this->hasMany('App\Models\Document', 'document_id');
         return $this->morphMany('App\Models\Document', 'documentable');
     }
 
@@ -39,5 +32,4 @@ class Defendant extends Model
     {
         return $this->belongsTo('App\Models\Submitter', 'submitter_id');
     }
-
 }

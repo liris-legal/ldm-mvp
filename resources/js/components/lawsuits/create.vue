@@ -304,9 +304,9 @@
             <v-btn
               v-ripple
               class="col-sm-8 col-md-6 col-lg-4 mr-0-auto btn btn-primary pa-3 height-auto font-size-16 font-weight-600"
-              @click="postData"
               :loading="loading"
               :disabled="loading"
+              @click="postData"
             >
               登録
               <template v-slot:loader>
@@ -356,10 +356,6 @@
 				errors: {}|undefined
       }
     },
-    mounted() {
-      this.civil_lawsuits = this.typeLawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];
-      this.lawsuit.type_lawsuit_id = this.civil_lawsuits.id;
-    },
     watch: {
       /**
        * to make btn loader processing
@@ -372,6 +368,10 @@
 
         this.loader = null
       },
+    },
+    mounted() {
+      this.civil_lawsuits = this.typeLawsuits.filter((lawsuit) => lawsuit.description.includes('civil') )[0];
+      this.lawsuit.type_lawsuit_id = this.civil_lawsuits.id;
     },
 	  methods: {
       /**

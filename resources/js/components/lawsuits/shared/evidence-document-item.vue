@@ -1,5 +1,8 @@
 <template>
-  <v-card flat class="ma-0">
+  <v-card
+    flat
+    class="ma-0"
+  >
     <v-tabs
       v-model="documentsTab"
       class="item-tabs"

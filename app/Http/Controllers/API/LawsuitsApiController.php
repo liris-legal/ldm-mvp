@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\DocumentUrl as DocumentUrlResource;
 use App\Http\Resources\Lawsuit as LawsuitResource;
 use App\Models\Lawsuit;
 use App\Models\Submitter;
@@ -106,6 +107,21 @@ class LawsuitsApiController extends Controller
     {
         return response([
             'data' => new LawsuitResource($lawsuit)
+        ]);
+    }
+
+    /**
+     * Display the Url of specified resource.
+     *
+     * @param $lawsuit
+     * @param Document $document
+     * @return \Illuminate\Http\Response
+     */
+    public function showUrl($lawsuit, $document)
+    {
+        $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
+        return response([
+            'data' => new DocumentUrlResource($document)
         ]);
     }
 

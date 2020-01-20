@@ -22,15 +22,24 @@
 
       <v-tabs-items v-model="typeTab">
         <!-- ▽ 主張書面-->
-        <claim-document-tab :documents="claimDocuments" :document-tab="claimDocumentTab" />
+        <claim-document-tab
+          :documents="claimDocuments"
+          :document-tab="claimDocumentTab"
+        />
         <!-- △ 主張書面-->
 
         <!-- ▽ 証拠書面-->
-        <evidence-document-tab :documents="evidenceDocuments" :document-tab="evidenceDocumentTab" />
+        <evidence-document-tab
+          :documents="evidenceDocuments"
+          :document-tab="evidenceDocumentTab"
+        />
         <!-- △ 証拠書面-->
 
         <!-- ▽ その他の書面-->
-        <other-document-tab :documents="otherDocuments" :document-tab="otherDocumentTab" />
+        <other-document-tab
+          :documents="otherDocuments"
+          :document-tab="otherDocumentTab"
+        />
         <!-- △ その他の書面-->
       </v-tabs-items>
     </v-card>
