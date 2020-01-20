@@ -8,6 +8,7 @@
         color="primary"
         grow
         centered
+        hide-slider
         class="type-tabs"
         active-class="tab--activated"
         height="40"
@@ -144,5 +145,6 @@
   }
   .tab--activated{
     font-weight: 600;
+    border-bottom: 2px solid #1876D2;
   }
 </style>
