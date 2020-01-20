@@ -8,6 +8,7 @@
           height="50"
           width="120"
           class="mr-0-auto btn-primary pa-3 height-auto font-size-16 font-weight-600"
+          @click="showAllDocument(lawsuit.id)"
         >
           All View
         </v-btn>
@@ -151,7 +152,7 @@
           if (hasDocument) return hasDocument.submitter.name + '書面';
           return null;
         }
-      }
+      },
     }
   }
 </script>

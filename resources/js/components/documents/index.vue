@@ -6,6 +6,7 @@
         <v-btn
           v-ripple
           class="mr-0-auto btn-primary height-auto font-size-18 font-weight-600"
+          @click="showAllDocument(lawsuit.id)"
         >
           All View
         </v-btn>
@@ -110,8 +111,5 @@
       this.submitter = this.$route.params.submitter;
       this.submitterKana = this.submitter === 'plaintiff' ? "甲" : "乙"
     },
-    mounted() {
-      // console.log(this.$route.name + ' mounted');
-    }
   }
 </script>

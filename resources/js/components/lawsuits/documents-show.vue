@@ -79,6 +79,7 @@
       }
     },
     mounted() {
+      // console.log(this.$options.name + ' mounted');
       // disable scroll-y
       document.body.style.overflowY = "hidden";
     },
@@ -116,7 +117,8 @@
       initialData(documents){
         if (this.$route.query.hasOwnProperty('type') && parseInt(this.$route.query.type) !== 2){
           const nameTab = this.$route.query.hasOwnProperty('name') ? this.$route.query.name : '';
-          return documents.findIndex(e => e.name === nameTab);
+          const tab = documents.findIndex(e => e.name === nameTab);
+          return tab !== -1 ? tab : 0;
         }
         // if (this.$route.query.hasOwnProperty('submitter')){
         //   const submitter = this.$route.query.submitter;

@@ -17,7 +17,7 @@
       class="document-two-columns"
     >
       <a
-        href="#"
+        :href="'/lawsuits/' + document.lawsuit_id + '/documents?type='+document.type.id+'&name='+document.name"
         class="document-link"
       >
         <v-row v-ripple>

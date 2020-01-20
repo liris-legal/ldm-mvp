@@ -125,4 +125,12 @@ export const methods = {
 
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
   },
+  /**
+   * @function showAllDocument
+   * @description goto show documents of lawsuit
+   * @param lawsuitId
+   */
+  showAllDocument(lawsuitId) {
+    location.href = '/lawsuits/' + lawsuitId + '/documents';
+  },
 };
