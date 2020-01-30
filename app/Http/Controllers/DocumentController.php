@@ -8,7 +8,6 @@ use App\Models\Submitter;
 use App\Models\TypeDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use phpDocumentor\Reflection\Types\Collection;
 
 class DocumentController extends Controller
 {

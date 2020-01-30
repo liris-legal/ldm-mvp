@@ -15,14 +15,15 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('number')->nullable();
-            $table->string('name');
-            $table->integer('documentable_id')->nullable();;
-            $table->string('documentable_type')->nullable();;
-            $table->string('url')->unique();
             $table->unsignedInteger('lawsuit_id');
             $table->unsignedInteger('type_document_id');
             $table->unsignedInteger('submitter_id');
+            $table->integer('documentable_id')->nullable();
+            $table->string('documentable_type')->nullable();
+            $table->string('name');
+            $table->integer('number')->nullable();
+            $table->integer('subnumber')->nullable();
+            $table->string('url')->unique();
             $table->timestamps();
 
             $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');

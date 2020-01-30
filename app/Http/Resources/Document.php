@@ -20,9 +20,10 @@ class Document extends JsonResource
     {
         return [
             'id'                       =>  $this->id,
-            'number'                   =>  $this->number,
-            'name'                     =>  $this->name,
             'lawsuit_id'               =>  $this->lawsuit_id,
+            'number'                   =>  $this->number,
+            'subnumber'                =>  $this->subnumber,
+            'name'                     =>  $this->name,
             'type'                     =>  $this->typeDocument,
             'submitter'                =>  $this->submitter,
             'documentable'             =>  $this->documentable,

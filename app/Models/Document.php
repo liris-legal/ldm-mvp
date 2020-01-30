@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $fillable = [
-        'url',
-        'name',
         'number',
+        'subnumber',
+        'name',
+        'url',
         'documentable_id',
         'documentable_type',
         'lawsuit_id',
         'submitter_id',
         'type_document_id',
         'created_at',
+        'updated_at',
     ];
 
     /**

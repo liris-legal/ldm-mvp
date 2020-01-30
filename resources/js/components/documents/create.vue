@@ -10,7 +10,6 @@
     </v-row>
     <v-form
       class="form-group clearfix"
-      method="POST"
     >
       <v-container class="form-group-content">
         <v-row class="ma-0">
@@ -135,6 +134,10 @@
                     outlined
                     dense
                   />
+                  <small
+                    v-if="errors"
+                    class="has-error"
+                  >{{ catchError(errors, 'number') }}</small>
                 </v-col>
 
                 <v-col
@@ -149,17 +152,29 @@
                   class="pa-0"
                 >
                   <v-select
-                    :items="numbers"
+                    v-if="document.name === '証拠説明書'"
+                    disabled
+                    v-model="document.subnumber"
+                    :items="subnumbers"
                     single-line
                     outlined
                     dense
                   />
+                  <v-select
+                    v-else
+                    v-model="document.subnumber"
+                    :items="subnumbersFormatted()"
+                    single-line
+                    outlined
+                    dense
+                    clearable
+                  />
+                  <small
+                    v-if="errors"
+                    class="has-error"
+                  >{{ catchError(errors, 'subnumber') }}</small>
                 </v-col>
               </v-row>
-              <small
-                v-if="errors"
-                class="has-error"
-              >{{ catchError(errors, 'number') }}</small>
             </v-col>
           </v-col>
           <v-col
@@ -254,11 +269,13 @@
       return {
         document: {
           number: 1,
+          subnumber: 1,
           name: '',
         },
         numbers: new Array(100).join().split(',').map(function(item, index){ return ++index;}),
+        subnumbers: new Array(50).join().split(',').map(function(item, index){ return ++index;}),
         type_document_id: 1,
-        submitter: null,
+        submitter: {},
         nameEvidenceDocuments: [
           { id: 1, name: '証拠説明書', submitter_id: 1 },
           { id: 2, name: '甲号証', submitter_id: 1 },
@@ -304,6 +321,16 @@
     },
     methods: {
       /**
+       * @function subnumbersFormatted
+       * @description to format numbers selection
+       */
+      subnumbersFormatted() {
+        if (this.document.number === 1)
+          return this.subnumbers.filter(n => n > 1);
+        return this.subnumbers;
+      },
+
+      /**
        * @function openFileDialog
        * @description to open dialog select file
        */
@@ -318,7 +345,8 @@
       clearFile() {
         this.file = null;
         this.selected = null;
-        let clearIcon = document.getElementsByClassName(' v-input__icon--clear');
+        let fileInput = document.getElementsByClassName('v-file-input');
+        let clearIcon = fileInput[0].getElementsByClassName('v-input__icon--clear');
         if(clearIcon.length) clearIcon[0].children[0].click()
       },
 
@@ -332,8 +360,9 @@
          * */
         let formData = new FormData();
         formData.append('lawsuit_id', this.lawsuitId);
-        formData.append('number', this.document.number);
         formData.append('name', this.document.name);
+        formData.append('number', this.document.number);
+        formData.append('subnumber', this.document.subnumber || 1);
         formData.append('file', this.file);
         formData.append('type_document_id', this.type_document_id);
         formData.append('type_submitter_id', this.submitter.id);

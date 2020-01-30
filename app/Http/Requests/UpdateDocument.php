@@ -30,6 +30,7 @@ class UpdateDocument extends FormRequest
         $rules = [
             'name'              => 'bail|required|max:150',
             'number'            => 'bail|max:100|min:1|nullable',
+            'subnumber'         => 'bail|max:50|min:1|nullable',
             'file'              => 'bail|mimes:pdf|max:204800',
             'type_document_id'  => 'bail|required|exists:type_documents,id',
             'submitter_id'      => 'bail|required',
@@ -41,7 +42,8 @@ class UpdateDocument extends FormRequest
             && ($this->document->type_document_id == 2)) {
             $rules['number'] = 'bail|required|numeric|unique:documents,number,'
                 . $this->document->id . ',id,lawsuit_id,' . $this->document->lawsuit_id
-                . ',submitter_id,' . $this->document->submitter_id . ',name,' . $this->document->name;
+                . ',submitter_id,' . $this->document->submitter_id . ',name,' . $this->document->name
+                . ',subnumber,' . $this->subnumber;
         }
 
         return $rules;

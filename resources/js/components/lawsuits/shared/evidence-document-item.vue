@@ -17,6 +17,8 @@
       >
         {{ parseName(document) }}
         <span class="text-initial">{{ document.number }}</span>
+        {{ hasConjunction(document.name, document.number) ? 'の' : ''}}
+        <span class="text-initial" v-show="hasConjunction(document.name, document.number)">{{ document.subnumber }}</span>
       </v-tab>
     </v-tabs>
 
@@ -48,13 +50,29 @@
       }
     },
     methods:{
+      /**
+       * @function parseName
+       * @description parse name to display
+       */
       parseName(document){
         const ignorePattern = '号証';
         if (document.type.id === 2 && document.name.includes(ignorePattern)){
           return document.name.replace(ignorePattern, '')
         }
         return document.name
-      }
+      },
+
+      /**
+       * @function hasConjunction
+       * @description has の ?
+       */
+      hasConjunction(name, number){
+        if (name !== "証拠説明書")
+          return this.documents.filter(d => d.number === number).length > 1;
+        else
+          return false
+      },
+
     }
   }
 </script>

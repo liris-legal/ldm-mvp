@@ -29,6 +29,7 @@ class StoreDocument extends FormRequest
         $rules = [
             'name'              => 'bail|required|max:150',
             'number'            => 'bail|max:100|min:1|nullable',
+            'subnumber'         => 'bail|max:50|min:1|nullable',
             'file'              => 'bail|required|mimes:pdf|max:204800',
             'type_document_id'  => 'bail|required|exists:type_documents,id',
             'submitter_id'      => 'bail|required',
@@ -37,8 +38,9 @@ class StoreDocument extends FormRequest
         ];
 
         if (($this->submitter_id == '1' || $this->submitter_id == '3') && $this->type_document_id == 2) {
-            $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id,lawsuit_id,'
-            . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name;
+            $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id'
+                . ',lawsuit_id,' . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name
+                . ',subnumber,' . $this->subnumber;
         }
 
         return $rules;

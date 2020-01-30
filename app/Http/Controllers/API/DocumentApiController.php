@@ -62,8 +62,9 @@ class DocumentApiController extends Controller
     {
         // init document
         $document = new Document();
-        $document->number = $data['number'];
         $document->name = $data['name'];
+        $document->number = $data['number'];
+        $document->subnumber = $data['subnumber'];
         $document->url = $data['url'];
         $document->lawsuit_id = $data['lawsuit_id'];
         $document->type_document_id = $data['type_document_id'];

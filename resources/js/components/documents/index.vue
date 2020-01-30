@@ -44,7 +44,7 @@
       <v-row>
         <v-col class="col-12 header-content">
           <h3 class="description font-size-18">
-            {{ submitterKana }}号証
+            {{ party }}号証
           </h3>
         </v-col>
       </v-row>
@@ -56,7 +56,7 @@
               v-for="document in evidenceDocuments"
               :key="'evidence-document-'+document.id"
               :document="document"
-              :document-name="submitterKana+'第'+document.number+'号証'"
+              :document-name="parseDocumentName(document.number, document.subnumber)"
               :lawsuit-id="parseInt($route.params.lawsuitId)"
             />
           </template>
@@ -81,7 +81,7 @@
     data() {
       return {
         submitter: '',
-        submitterKana: '',
+        party: '',
         theadLabels: [
           { id: 1, label: '書面名', class: 'col-6'},
           { id: 2, label: '提出日', class: 'col-6'},
@@ -92,6 +92,9 @@
       }
     },
     created() {
+      /**
+       * @description fetch lawsuits data from API
+       */
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
@@ -99,7 +102,7 @@
            d.type.description === 'evidence' );
 
           const explainDocumentName = this.submitter === 'plaintiff' ? "甲号証" : "乙号証";
-          this.evidenceDocuments = evidenceDocument.filter(d => d.name === explainDocumentName);
+          this.evidenceDocuments = evidenceDocument.filter(d => d.name === explainDocumentName).reverse();
           this.explainDocuments = evidenceDocument.filter(d => d.name === '証拠説明書');
           })
         .catch(err => {console.log(err.response);});
@@ -109,7 +112,22 @@
        *
        */
       this.submitter = this.$route.params.submitter;
-      this.submitterKana = this.submitter === 'plaintiff' ? "甲" : "乙"
+      this.party = this.submitter === 'plaintiff' ? "甲" : "乙"
     },
+    methods: {
+      /**
+       * @function parseDocumentName
+       * @description parse name to display
+       */
+      parseDocumentName(number, subnumber){
+        if (subnumber === 1)
+          if(this.evidenceDocuments.filter(d => d.number === number).length > 1)
+            return this.party+'第'+number+'号証の'+subnumber;
+          else
+            return this.party+'第'+number+'号証';
+        else
+          return this.party + '第' + number + '号証の' + subnumber
+      }
+    }
   }
 </script>
