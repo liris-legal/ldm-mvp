@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('cognito_username')->unique();
             $table->string('email')->unique();
-            $table->json('recently_viewed_documents')->default('[]');
+            $table->json('recently_viewed_documents')->nullable();
             $table->timestamps();
         });
     }

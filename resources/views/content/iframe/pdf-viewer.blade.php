@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="content d-block">
-    <div style="width:100vh;margin: 0 auto">
+    <div style="width:100vh;margin: 0 auto;overflow-x: hidden">
         <div id="pdf-viewer"></div>
         <div>
             <h2 class="message"></h2>
@@ -31,7 +31,7 @@
             pageNum = 1,
             pageRendering = false,
             pageNumPending = null,
-            scale = 1;
+            scale = 1.2;
 
         /**
          * Get page info from document, resize canvas accordingly, and render page.

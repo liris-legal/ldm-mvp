@@ -99,8 +99,7 @@
     white-space:nowrap;
     display:block;
     height: auto !important;
-    letter-spacing: 4px;
-    padding-bottom: 8px;
+    letter-spacing: 3px;
   }
   .text-initial{
     writing-mode: lr !important;
@@ -111,6 +110,5 @@
   .item-content{
       padding-right: 3.8em;
   }
-
 
 </style>

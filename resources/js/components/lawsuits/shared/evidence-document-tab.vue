@@ -67,7 +67,14 @@
        * @return array
        */
       parseEvidenceDocuments(party){
-        return this.documents.filter(d => d.submitter.description === party).sort((a, b) => a.name - b.name ? 1 : -1);
+        const documents = this.documents.filter(d => d.submitter.description === party);
+        // except "証拠説明書"
+        let evidenceStatementDocuments = documents.filter(d => d.name === '証拠説明書').sort((a, b) => a.number > b.number ? 1 : -1);
+
+        let evidenceDocuments = documents.filter(d => d.name !== '証拠説明書');
+        evidenceDocuments.sort((a, b) => a.number >= b.number ? -1 : a.subnumber > b.subnumber ? 1 : -1).reverse();
+
+        return evidenceStatementDocuments.concat(evidenceDocuments);
       },
       /**
        * @function parseParties

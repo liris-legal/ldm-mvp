@@ -26,7 +26,7 @@ class CreateDefendantsTable extends Migration
 
         DB::statement('ALTER TABLE defendants CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
         DB::statement('ALTER TABLE defendants CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
-        DB::statement('ALTER TABLE plaintiffs CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
+        DB::statement('ALTER TABLE defendants CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
     }
 
     /**

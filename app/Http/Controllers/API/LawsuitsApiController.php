@@ -45,16 +45,16 @@ class LawsuitsApiController extends Controller
      * Store a newly created party.
      *
      * @param Request $request
-     * @param $submitter
+     * @param $submitterId
      * @param $lawsuit
      * @param $party
      * @param $model
      */
-    public function storeParties(Request $request, $submitter, $lawsuit, $party, $model)
+    public function storeParties(Request $request, $submitterId, $lawsuit, $party, $model)
     {
         if ($request->has($party)) {
             foreach ($request->get($party) as $item) {
-                $data = ['name' => $item, 'submitter_id' => $submitter->id, 'lawsuit_id' => $lawsuit->id];
+                $data = ['name' => $item, 'submitter_id' => $submitterId, 'lawsuit_id' => $lawsuit->id];
                 $class = "App\Models\\".$model;
                 $class::create($data);
             }
@@ -73,24 +73,26 @@ class LawsuitsApiController extends Controller
         $data['created_at'] = now();
         $lawsuit = Lawsuit::create($data);
 
-        $submitters = Submitter::all();
-        $this->storeParties($request, $submitters[0], $lawsuit, 'plaintiffs', 'Plaintiff');
+        $submitterPlaintiffId = Submitter::where('description', 'plaintiff')->value('id');
+        $this->storeParties($request, $submitterPlaintiffId, $lawsuit, 'plaintiffs', 'Plaintiff');
         $this->storeParties(
             $request,
-            $submitters[0],
+            $submitterPlaintiffId,
             $lawsuit,
             'plaintiff_representatives',
             'PlaintiffRepresentative'
         );
-        $this->storeParties($request, $submitters[1], $lawsuit, 'defendants', 'Defendant');
+        $submitterDefendantId = Submitter::where('description', 'defendant')->value('id');
+        $this->storeParties($request, $submitterDefendantId, $lawsuit, 'defendants', 'Defendant');
         $this->storeParties(
             $request,
-            $submitters[1],
+            $submitterDefendantId,
             $lawsuit,
             'defendant_representatives',
             'DefendantRepresentative'
         );
-        $this->storeParties($request, $submitters[3], $lawsuit, 'other_parties', 'OtherParty');
+        $submitterOtherId = Submitter::where('description', 'other_party')->value('id');
+        $this->storeParties($request, $submitterOtherId, $lawsuit, 'other_parties', 'OtherParty');
 
         $message = ['status' => 'success', 'content' => '事件を作成しました。'];
 

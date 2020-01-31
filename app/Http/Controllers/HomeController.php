@@ -48,7 +48,7 @@ class HomeController extends Controller
 
         // update recently_viewed_documents
         $user = Auth::user();
-        $documents = json_decode($user->recently_viewed_documents);
+        $documents = empty($user->recently_viewed_documents) ? [] : json_decode($user->recently_viewed_documents);
         array_push($documents, $documentId);
         $user->update(array('recently_viewed_documents' => array_values(array_unique($documents))));
 
