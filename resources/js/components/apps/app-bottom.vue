@@ -63,7 +63,7 @@
             </v-list-item-title>
           </v-list-item>
           <v-list-item
-            :href="isLawsuitShow()"
+            :href="createDocument()"
             dense
           >
             <v-list-item-title class="font-size-14">
@@ -128,12 +128,13 @@
       },
 
       /**
-       * @function isLawsuitShow
-       * @description Check route is lawsuitsShow to enable ファイルをアップロード button
+       * @function createDocument
+       * @description Check route to enable ファイルをアップロード button
        */
-      isLawsuitShow(){
-        const routeCreateDocument = this.routeCreateDocument.replace('0', this.$route.params.lawsuitId);
-        return this.$route.name === 'lawsuitsShow' ? routeCreateDocument : '#';
+      createDocument(){
+        const enableRoutes = ['lawsuitsShow', 'documentsIndex'];
+        const route = this.routeCreateDocument.replace('0', this.$route.params.lawsuitId);
+        return enableRoutes.includes(this.$route.name) ? route : '#';
       }
 		}
   }
