@@ -17,15 +17,15 @@
       class="document-two-columns"
     >
       <a
-        :href="'/lawsuits/' + document.lawsuit_id + '/documents?type='+document.type.id+'&name='+document.name"
+        :href="'/lawsuits/' + document.lawsuit_id + '/documents?type='+document.type_document_id+'&name='+document.name"
         class="document-link"
       >
         <v-row v-ripple>
           <v-col class="col-7">
-            <div class="name">{{ document.name }}</div>
+            <div class="name">{{ parseDocumentName(document) }}</div>
           </v-col>
           <v-col class="col-5">
-            <div class="date">{{ document.created_at_wareki }}</div>
+            <div class="date">{{ formatDate(document.created_at.split(' ')[0]) }}</div>
           </v-col>
         </v-row>
       </a>
@@ -46,7 +46,20 @@
           { id: 2, name: '表示日', class: 'col-5'}
         ],
 			}
-		}
+		},
+    methods: {
+      /**
+       * @function parseDocumentName
+       * @description parse name to display
+       */
+      parseDocumentName(document){
+        if (document.type_document_id !== 2) return document.name;
+        if (document.name !== '"証拠説明書"' && document.subnumber === 1)
+          return document.name.replace('号証', '') + document.number + '号証の' + document.subnumber;
+        else
+          return document.name + '' + document.number;
+      }
+    }
   }
 </script>
 
