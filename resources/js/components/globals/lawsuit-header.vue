@@ -2,7 +2,7 @@
   <v-row class="lawsuit-header pa-3 pt-0 pb-0">
     <v-col class="col-lg-5 col-md-5 col-sm-6 col-xl-6">
       <p class="font-size-12 mb-0">
-        {{ lawsuit.created_at_wareki }}第{{ lawsuit.number }}号
+        {{ lawsuit.number }}
       </p>
       <p class="font-size-22 pl-4 mb-0">
         {{ lawsuit.name }}

@@ -310,7 +310,7 @@
             >
               登録
               <template v-slot:loader>
-                <span>登録・・・</span>
+                <span>登録</span>
               </template>
             </v-btn>
           </v-col>
@@ -364,7 +364,7 @@
         const l = this.loader;
         this[l] = !this[l];
 
-        setTimeout(() => (this[l] = false), 3000);
+        setTimeout(() => (this[l] = false), 2000);
 
         this.loader = null
       },
