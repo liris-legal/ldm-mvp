@@ -6,6 +6,7 @@ use App\Models\Document;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use App\Http\Resources\Document as DocumentResource;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -26,9 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $documents = Document::all()->map(function ($document) {
-            return new DocumentResource($document);
-        });
+        // get recently_viewed_documents
+        $viewedDocuments = Auth::user()->recently_viewed_documents;
+        $documents = empty($viewedDocuments) ? Document::all()->take(10)
+            : Document::whereIn('id', json_decode($viewedDocuments))->get();
 
         return view('content.home', ['documents' => $documents]);
     }
@@ -42,6 +44,14 @@ class HomeController extends Controller
     public function show(Request $request)
     {
         $src = $request->query('url', 'null');
+        $documentId = Document::where('url', explode("documents/", $src)[1])->value('id');
+
+        // update recently_viewed_documents
+        $user = Auth::user();
+        $documents = json_decode($user->recently_viewed_documents);
+        array_push($documents, $documentId);
+        $user->update(array('recently_viewed_documents' => array_values(array_unique($documents))));
+
         return view('content.iframe.pdf-viewer', ['src' => $src]);
     }
 }
