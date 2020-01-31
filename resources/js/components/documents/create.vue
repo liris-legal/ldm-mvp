@@ -98,7 +98,7 @@
                 dense
                 single-line
                 outlined
-                required
+                autofocus
               />
               <small
                 v-if="errors"
@@ -312,8 +312,7 @@
         }
       },
       file (val){
-        if (val && this.selected) this.postData();
-        this.clearFile();
+        if (val && this.selected) this.postData()
       },
     },
     mounted() {
@@ -339,10 +338,10 @@
         this.selected = true;
       },
       /**
-       * @function clearFile
+       * @function clearFileSelected
        * @description to clear selected file
        */
-      clearFile() {
+      clearFileSelected() {
         this.file = null;
         this.selected = null;
         let fileInput = document.getElementsByClassName('v-file-input');
@@ -369,6 +368,7 @@
         formData.append('submitter_id', this.submitter.hasOwnProperty('submitter_id') ? this.submitter.submitter_id : this.submitter.id);
         formData.append('created_at', this.date);
 
+        this.clearFileSelected();
         axios.post(this.storeRoute, formData)
           .then(res => {
             console.log(res);
