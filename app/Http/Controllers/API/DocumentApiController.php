@@ -64,7 +64,7 @@ class DocumentApiController extends Controller
         $document = new Document();
         $document->name = $data['name'];
         $document->number = $data['number'];
-        $document->subnumber = $data['subnumber'];
+        $document->subnumber = $data['subnumber'] + 1;
         $document->url = $data['url'];
         $document->lawsuit_id = $data['lawsuit_id'];
         $document->type_document_id = $data['type_document_id'];
@@ -102,7 +102,7 @@ class DocumentApiController extends Controller
     {
         $data = $request->all();
         // storage file on aws-s3
-        $data['url'] = $this->fileService->createFileS3($request, 'file');
+        $data['url'] = date("Ymdhmst"); // $this->fileService->createFileS3($request, 'file');
 
         // create new document
         $this->create($data);

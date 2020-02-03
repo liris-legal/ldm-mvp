@@ -147,11 +147,9 @@
        * @return string|null
        */
       parseParties(parties, condition){
-        if(parties && parties.length > 0) {
-          const hasDocument = this.evidenceDocuments.find(d => { return d.submitter.description === condition });
-          if (hasDocument) return hasDocument.submitter.name + '書面';
-          return null;
-        }
+        const hasDocument = this.evidenceDocuments.find(d => { return d.submitter.description === condition });
+        if (hasDocument) return hasDocument.submitter.name + '書面';
+        return null;
       },
     }
   }
