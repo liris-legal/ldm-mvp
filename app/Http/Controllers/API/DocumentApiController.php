@@ -53,7 +53,7 @@ class DocumentApiController extends Controller
     }
 
     /**
-     * Create new resource.
+     * Create new Document resource.
      *
      * @param $data
      * @return Document
@@ -75,10 +75,16 @@ class DocumentApiController extends Controller
         $submitterId = $data['submitter_id'];
         switch ($submitterId) {
             case 1:
-                Plaintiff::find($typeSubmitterId)->documents()->save($document);
+                $party = Plaintiff::where('id', $typeSubmitterId)
+                    ->where('lawsuit_id', $data['lawsuit_id'])->first();
+                $party ? $party->documents()->save($document) :
+                    Submitter::find($submitterId)->documents()->save($document);
                 break;
             case 3:
-                Defendant::find($typeSubmitterId)->documents()->save($document);
+                $party = Defendant::where('id', $typeSubmitterId)
+                    ->where('lawsuit_id', $data['lawsuit_id'])->first();
+                $party ? $party->documents()->save($document) :
+                    Submitter::find($submitterId)->documents()->save($document);
                 break;
             default:
                 Submitter::find($submitterId)->documents()->save($document);
@@ -109,31 +115,6 @@ class DocumentApiController extends Controller
     }
 
     /**
-     * Create new resource.
-     *
-     * @param $document
-     * @param $request
-     * @return Document
-     */
-    public function createOrUpdate($document, $request)
-    {
-        $data = $request->all();
-        // If changed submitter
-        if ($document->submitter_id !== (int)$request->submitter_id
-            && $document->documentable_id !== $request->type_submitter_id) {
-                // dd('recreating');
-                // delete document and recreate document
-                $data['url'] = $document->url;
-                $document->delete();
-                return $this->create($data);
-        }
-        // dd('updating');
-        $document->updated_at = now();
-        $document->fill($data)->save();
-        return $document;
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param UpdateDocument $request
@@ -142,12 +123,37 @@ class DocumentApiController extends Controller
      */
     public function update(UpdateDocument $request, Document $document)
     {
-        $this->createOrUpdate($document, $request);
+        $data = $request->all();
+        // If changed submitter
+        $documentableId = $request->type_submitter_id;
+        $submitterId = $request->submitter_id;
+        if ($document->submitter_id !== $submitterId
+            || $document->documentable_id !== $documentableId) {
+            // dd('re-updating');
+            switch ($submitterId) {
+                case 1:
+                    $documentableId == 0 ? $documentableId = $documentableType = null
+                        : $documentableType = 'App\Models\Plaintiff';
+                    break;
+                case 3:
+                    $documentableId == 0 ? $documentableId = $documentableType = null
+                        : $documentableType = 'App\Models\Defendant';
+                    break;
+                default:
+                    $documentableId = $documentableType = null;
+                    break;
+            }
+
+            // re-update document
+            $data['documentable_id'] = $documentableId;
+            $data['documentable_type'] = $documentableType;
+        }
+        // dd('updating');
+        $document->updated_at = now();
+        $document->fill($data)->save();
 
         $message = ['status' => 'success', 'content' => '文書が正常に更新しました。'];
-        $url = $document->submitter_id == 1 || $document->submitter_id == 3 ?
-            route('documents.index', [$document->lawsuit_id, $document->submitter->description]) :
-            route('lawsuits.show', $document->lawsuit_id);
+        $url = route('lawsuits.show', $document->lawsuit_id);
 
         return response()->json(['url' => $url, 'message' => $message], 200);
     }

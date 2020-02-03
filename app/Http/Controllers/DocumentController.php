@@ -32,9 +32,7 @@ class DocumentController extends Controller
     public function create(Lawsuit $lawsuit)
     {
         $typeDocuments = TypeDocument::all();
-
-        $submitters = Submitter::where('description', 'NOT LIKE', '%representative');
-        $parties = Helpers::parseParties($lawsuit, $submitters);
+        $parties = Helpers::parseParties($lawsuit);
 
         return view('content.documents.create', [
             'lawsuitId' => $lawsuit->id,
@@ -53,9 +51,7 @@ class DocumentController extends Controller
     public function edit(Lawsuit $lawsuit, $documentId)
     {
         $typeDocuments = TypeDocument::all();
-
-        $submitters = Submitter::where('description', 'NOT LIKE', '%representative');
-        $parties = Helpers::parseParties($lawsuit, $submitters);
+        $parties = Helpers::parseParties($lawsuit);
 
         return view('content.documents.edit', [
                 'lawsuitId' => $lawsuit->id,

@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lawsuit;
+use App\Models\Submitter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
@@ -65,20 +66,19 @@ class Helpers
      * parse submitters with plaintiff, defendant
      *
      * @param Lawsuit $lawsuit
-     * @param $submitters
      * @return \Illuminate\Support\Collection
      */
-    public static function parseParties($lawsuit, $submitters)
+    public static function parseParties($lawsuit)
     {
         $parties = collect();
         $plaintiffs = $lawsuit->plaintiffs;
         $defendants = $lawsuit->defendants;
 
-        $parties->push($plaintiffs->count() ? $plaintiffs : Helpers::filteredSubmitter($submitters, 'plaintiff'));
-        $parties->push($defendants->count() ? $defendants : Helpers::filteredSubmitter($submitters, 'defendant'));
+        $parties->push($plaintiffs->count() ? $plaintiffs : Helpers::selectParty('plaintiff'));
+        $parties->push($defendants->count() ? $defendants : Helpers::selectParty('defendant'));
         $parties = $parties->flatten();
 
-        foreach ($submitters->where('description', 'court')->orWhere('description', 'other_party')->get() as $sub) {
+        foreach (Submitter::where('description', 'court')->orWhere('description', 'other_party')->get() as $sub) {
             $parties->push($sub);
         }
 
@@ -86,14 +86,13 @@ class Helpers
     }
 
     /**
-     * Filter submitters where $party
+     * Select party
      *
-     * @param $submitters
      * @param $party
      * @return array
      */
-    public static function filteredSubmitter($submitters, $party)
+    public static function selectParty($party)
     {
-        return $submitters->where('description', $party)->get();
+        return Submitter::where('description', $party)->get();
     }
 }

@@ -84,7 +84,7 @@
               <v-select
                 v-if="type_document_id === 2"
                 v-model="document.name"
-                :items="nameEvidenceDocuments.filter(item => item.submitter_id === submitter.submitter_id)"
+                :items="nameEvidenceDocuments.filter(item => item.submitter_id === submitter_id)"
                 label="書面名"
                 item-text="name"
                 item-value="name"
@@ -268,6 +268,8 @@
         subnumbers: new Array(50).join().split(',').map(function(item, index){ return ++index;}),
         type_document_id: 1,
         submitter: null,
+        submitter_id: 0,
+        type_submitter_id: 0,
         nameEvidenceDocuments: [
           { id: 1, name: '証拠説明書', submitter_id: 1 },
           { id: 2, name: '甲号証', submitter_id: 1 },
@@ -291,6 +293,8 @@
         this.dateFormatted = this.formatDate(this.date)
       },
       submitter () {
+        this.submitter_id = this.submitter.hasOwnProperty('submitter_id') ? this.submitter.submitter_id : this.submitter.id;
+        this.type_submitter_id = this.submitter.hasOwnProperty('description') && (this.submitter.description === 'plaintiff' || this.submitter.description === 'defendant') ? 0 : this.submitter.id;
         if (this.submitter.hasOwnProperty('description') && (this.submitter.description === 'court' || this.submitter.description === 'other_party')) {
           this.type_document_id = 3;
           this.disabled = true;
@@ -344,8 +348,8 @@
         formData.append('subnumber', this.document.subnumber || 1);
         formData.append('lawsuit_id', this.lawsuitId);
         formData.append('type_document_id', this.type_document_id);
-        formData.append('type_submitter_id', this.submitter.id);
-        formData.append('submitter_id', this.submitter.hasOwnProperty('submitter_id') ? this.submitter.submitter_id : this.submitter.id);
+        formData.append('type_submitter_id', this.type_submitter_id);
+        formData.append('submitter_id', this.submitter_id);
         formData.append('created_at', this.date || '');
         formData.append("_method", "PATCH");
 
