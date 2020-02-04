@@ -365,7 +365,7 @@
         formData.append('lawsuit_id', this.lawsuitId);
         formData.append('name', this.document.name);
         formData.append('number', this.document.number);
-        formData.append('subnumber', ''+(this.document.subnumber - 1) || 0);
+        formData.append('subnumber', ''+(this.document.subnumber ? this.document.subnumber - 1 : 0 ) || 0);
         formData.append('file', this.file);
         formData.append('type_document_id', this.type_document_id);
         formData.append('type_submitter_id', this.type_submitter_id);
