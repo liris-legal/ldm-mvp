@@ -30,8 +30,7 @@
         var pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
-            pageNumPending = null,
-            scale = 1.2;
+            pageNumPending = null;
 
         /**
          * Get page info from document, resize canvas accordingly, and render page.
@@ -41,14 +40,21 @@
             pageRendering = true;
             // Using promise to fetch the page
             pdfDoc.getPage(num).then(function(page) {
-                var viewport = page.getViewport({scale: scale});
-                var canvasId = 'pdf-viewer-' + num;
+                var canvasId = 'canvas-id-' + num;
                 $('#pdf-viewer').append($('<canvas/>', {'id': canvasId}));
                 var canvas = document.getElementById(canvasId),
                     ctx = canvas.getContext('2d');
 
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+                // メモリ上における実際のサイズを設定(ピクセル密度の分だけ倍増させます)。
+                var scale = window.devicePixelRatio; // レティナでこの値を1にするとぼやけたcanvasになります
+                var viewport = page.getViewport({scale: scale});
+                canvas.width = viewport.width * scale;
+                canvas.height = viewport.height * scale;
+                canvas.style.width = viewport.width + 'px'; // Note: The px unit is required here
+                canvas.style.height = viewport.height + 'px';
+
+                // CSS上のピクセル数を前提としているシステムに合わせます。
+                ctx.scale(scale, scale);
 
                 // Render PDF page into canvas context
                 var renderContext = {
