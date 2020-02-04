@@ -12,7 +12,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDocument;
 use App\Http\Requests\StoreDocument;
 use App\Services\FileService;
-use Illuminate\Support\Facades\Validator;
 
 class DocumentApiController extends Controller
 {
@@ -94,32 +93,6 @@ class DocumentApiController extends Controller
     }
 
     /**
-     * Validated request filed.
-     *
-     * @param Request $request
-     */
-    public function validatedExists(Request $request)
-    {
-        if (($request->submitter_id == 1 || $request->submitter_id == 3) && $request->type_document_id == 2 &&
-            $request->subnumber > 0 && ($request->name === '乙号証' || $request->name === '甲号証')) {
-            $input = $request->only('subnumber');
-            $rules = ['subnumber' => 'bail|required|numeric|max:50|min:1|exists:documents,subnumber'
-                . ',lawsuit_id,' . $request->lawsuit_id . ',submitter_id,' . $request->submitter_id
-                . ',name,' . $request->name . ',number,' . $request->number
-            ];
-            $messages = ['exists' => 'subnumberには、存在ではありません。'];
-            // message:
-            // 乙第1号証の2 when 乙第1号証 is not exist , then occur error not exist 乙第1号証.
-            // @see https://gitlab.com/ConnectivCorporation/contract/liris/LDM/issues/10#note_281202966
-            $party = strpos($request->name, '乙') ? '乙' : '甲';
-            $subnumber = $party . '第' . $request->subnumber . '号証';
-            $messages['exists'] = str_replace('subnumber', $subnumber, $messages['exists']);
-
-            Validator::make($input, $rules, $messages)->validate();
-        }
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param StoreDocument $request
@@ -127,9 +100,6 @@ class DocumentApiController extends Controller
      */
     public function store(StoreDocument $request)
     {
-        // validate exists subnumber
-        $this->validatedExists($request);
-
         $data = $request->all();
         // storage file on aws-s3
         $data['url'] = $this->fileService->createFileS3($request, 'file');
