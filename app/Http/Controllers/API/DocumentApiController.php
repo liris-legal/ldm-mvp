@@ -152,7 +152,7 @@ class DocumentApiController extends Controller
         $document->updated_at = now();
         $document->fill($data)->save();
 
-        $message = ['status' => 'success', 'content' => '文書が正常に更新しました。'];
+        $message = ['status' => 'success', 'content' => '文書を正常に更新しました。'];
         $url = route('lawsuits.show', $document->lawsuit_id);
 
         return response()->json(['url' => $url, 'message' => $message], 200);

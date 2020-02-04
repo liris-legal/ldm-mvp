@@ -62,13 +62,16 @@ class StoreDocument extends FormRequest
                 . ',lawsuit_id,' . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id
                 . ',name,' . $this->name . ',number,' . $this->number
             ];
-            $messages = ['exists' => 'subnumberには、存在ではありません。'];
+
+            // $messages = ['exists' => 'subnumberには、存在ではありません。'];
             // message:
             // 乙第1号証の2 when 乙第1号証 is not exist , then occur error not exist 乙第1号証.
             // @see https://gitlab.com/ConnectivCorporation/contract/liris/LDM/issues/10#note_281202966
-            $party = strpos($this->name, '乙') ? '乙' : '甲';
-            $subnumber = $party . '第' . $this->subnumber . '号証';
-            $messages['exists'] = str_replace('subnumber', $subnumber, $messages['exists']);
+            // $party = strpos($this->name, '乙') ? '乙' : '甲';
+            // $subnumber = $party . '第' . $this->subnumber . '号証';
+            // $messages['exists'] = str_replace('subnumber', $subnumber, $messages['exists']);
+
+            $messages = ['exists' => ':attributeに抜け番があります。'];
 
             Validator::make($input, $rules, $messages)->validate();
         }

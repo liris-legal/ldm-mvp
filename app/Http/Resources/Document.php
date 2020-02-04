@@ -27,7 +27,7 @@ class Document extends JsonResource
             'type'                     =>  $this->typeDocument,
             'submitter'                =>  $this->submitter,
             'documentable'             =>  $this->documentable,
-            'created_at'               =>  $this->created_at,
+            'created_at'               =>  $this->created_at->toDateString(),
             'created_at_wareki'        =>  $this->created_at->isoFormat('YYYY年MM月DD日'),
             'updated_at'               =>  $this->updated_at ? $this->updated_at->isoFormat('LL') : null,
         ];
