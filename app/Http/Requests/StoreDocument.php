@@ -42,12 +42,6 @@ class StoreDocument extends FormRequest
             $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id'
                 . ',lawsuit_id,' . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name
                 . ',subnumber,' . ($this->subnumber + 1);
-
-            if ($this->subnumber > 0 && ($this->name === '乙号証' || $this->name === '甲号証')) {
-                $rules['subnumber'] = 'bail|required|numeric|max:50|min:1|exists:documents,subnumber'
-                    . ',lawsuit_id,' . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id
-                    . ',name,' . $this->name . ',number,' . $this->number;
-            }
         }
 
         return $rules;
