@@ -30,7 +30,7 @@ class HomeController extends Controller
         // get recently_viewed_documents
         $viewedDocuments = Auth::user()->recently_viewed_documents;
         $documents = empty($viewedDocuments) ? Document::all()->take(10)
-            : Document::whereIn('id', json_decode($viewedDocuments))->get();
+            : Document::whereIn('id', array_slice(json_decode($viewedDocuments), 0, 10))->get();
 
         return view('content.home', ['documents' => $documents]);
     }
