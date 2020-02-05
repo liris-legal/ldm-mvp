@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="content d-block">
-    <div style="width:100vh;margin: 0 auto;overflow-x: hidden">
+    <div style="width:100vh;margin: 0 auto;">
         <div id="pdf-viewer"></div>
         <div>
             <h2 class="message"></h2>
