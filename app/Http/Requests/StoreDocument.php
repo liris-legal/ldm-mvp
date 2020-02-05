@@ -2,11 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\Helpers;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Submitter;
-use App\Models\TypeDocument;
-use App\Models\Document;
-use Illuminate\Support\Facades\Validator;
 
 class StoreDocument extends FormRequest
 {
@@ -40,41 +37,13 @@ class StoreDocument extends FormRequest
 
         if (($this->submitter_id == 1 || $this->submitter_id == 3) && $this->type_document_id == 2) {
             $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id'
-                . ',lawsuit_id,' . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name
-                . ',subnumber,' . $this->subnumber;
+                . ',lawsuit_id,' . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id
+                . ',name,' . $this->name . ',subnumber,' . $this->subnumber;
 
             // validate exists number, subnumber
-            $this->validatedExists();
+            Helpers::validatedExists($this);
         }
 
         return $rules;
-    }
-
-    /**
-     * Validated request filed.
-     */
-    public function validatedExists()
-    {
-        $messages = ['exists' => ':attributeに抜け番があります。'];
-        if ($this->number > 1) {
-            $input = $this->only('number');
-            $input['number'] -= 1;
-            $rules = [
-                'number' => 'bail|required|numeric|max:100|min:1|exists:documents,number,lawsuit_id,'
-                    . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id . ',name,' . $this->name
-            ];
-            Validator::make($input, $rules, $messages)->validate();
-        }
-
-        if ($this->subnumber > 1 && ($this->name === '乙号証' || $this->name === '甲号証')) {
-            $input = $this->only('subnumber');
-            $input['subnumber'] -= 1;
-            $rules = [
-                'subnumber' => 'bail|required|numeric|max:50|min:1|exists:documents,subnumber,lawsuit_id,'
-                    . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id
-                    . ',name,' . $this->name . ',number,' . $this->number
-            ];
-            Validator::make($input, $rules, $messages)->validate();
-        }
     }
 }

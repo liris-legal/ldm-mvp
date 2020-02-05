@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\Helpers;
 use App\Models\Document;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Submitter;
 use App\Models\TypeDocument;
 use App\Models\Lawsuit;
+use Illuminate\Support\Facades\Validator;
 
 class UpdateDocument extends FormRequest
 {
@@ -31,19 +33,22 @@ class UpdateDocument extends FormRequest
             'name'              => 'bail|required|max:150',
             'number'            => 'bail|max:100|min:1|nullable',
             'subnumber'         => 'bail|max:50|min:1|nullable',
-            'file'              => 'bail|mimes:pdf|max:204800',
             'type_document_id'  => 'bail|required|exists:type_documents,id',
             'submitter_id'      => 'bail|required',
             'lawsuit_id'        => 'bail|required|exists:lawsuits,id',
             'created_at'        => 'bail|required|date_format:Y-m-d|before:tomorrow',
         ];
 
-        if (($this->document->submitter_id == 1 || $this->document->submitter_id == 3)
-            && ($this->document->type_document_id == 2)) {
-            $rules['number'] = 'bail|required|numeric|unique:documents,number,'
-                . $this->document->id . ',id,lawsuit_id,' . $this->document->lawsuit_id
-                . ',submitter_id,' . $this->document->submitter_id . ',name,' . $this->document->name
-                . ',subnumber,' . $this->subnumber;
+        if (($this->submitter_id == 1 || $this->submitter_id == 3) && ($this->type_document_id == 2)) {
+            $rules['number'] = 'bail|required|numeric|unique:documents,number,' . $this->document->id . ',id'
+                . ',lawsuit_id,' . $this->document->lawsuit_id . ',submitter_id,' . $this->submitter_id
+                . ',name,' . $this->name . ',subnumber,' . $this->subnumber;
+
+            // validate unique number, subnumber
+            Helpers::validatedUnique($this);
+
+            // validate exist number, subnumber
+            Helpers::validatedExists($this);
         }
 
         return $rules;

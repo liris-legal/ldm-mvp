@@ -157,7 +157,7 @@
                   <v-select
                     v-if="document.name === '証拠説明書'"
                     disabled
-                    v-model="document.subnumber"
+                    v-model="document.subnumber = 1"
                     :items="subnumbers"
                     single-line
                     outlined
@@ -304,7 +304,7 @@
       },
     },
     mounted() {
-      console.log('create document mounted')
+      // console.log('edit document mounted')
     },
     created() {
       /**

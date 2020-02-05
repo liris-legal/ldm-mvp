@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use IntlDateFormatter;
 
@@ -94,5 +95,57 @@ class Helpers
     public static function selectParty($party)
     {
         return Submitter::where('description', $party)->get();
+    }
+
+    /**
+     * Validated exists request filed.
+     * @param $request
+     */
+    public static function validatedExists($request)
+    {
+        $messages = ['exists' => ':attributeに抜け番があります。'];
+        if ($request->number > 1) {
+            $input = $request->only('number');
+            $input['number'] -= 1;
+
+            // if ($request->document && $request->number !== $request->document->number){}
+            $rules = [
+                'number' => 'bail|required|numeric|max:100|min:1|exists:documents,number,lawsuit_id,'
+                    . $request->lawsuit_id . ',submitter_id,' . $request->submitter_id . ',name,' . $request->name
+            ];
+
+            Validator::make($input, $rules, $messages)->validate();
+        }
+
+        if ($request->subnumber > 1 && ($request->name === '乙号証' || $request->name === '甲号証')) {
+            $input = $request->only('subnumber');
+            $input['subnumber'] -= 1;
+
+            $rules = [
+                'subnumber' => 'bail|required|numeric|max:50|min:1|exists:documents,subnumber,lawsuit_id,'
+                    . $request->lawsuit_id . ',submitter_id,' . $request->submitter_id
+                    . ',name,' . $request->name . ',number,' . $request->number
+            ];
+            Validator::make($input, $rules, $messages)->validate();
+        }
+    }
+
+    /**
+     * Validated unique request filed.
+     * @param $request
+     */
+    public static function validatedUnique($request)
+    {
+        if ($request->name !== $request->document->name) {
+            $input = $request->only('number');
+
+            $rules = [
+                'number' => 'bail|required|numeric|unique:documents,number,NULL,id'
+                    . ',lawsuit_id,' . $request->document->lawsuit_id . ',submitter_id,' . $request->submitter_id
+                    . ',name,' . $request->name . ',subnumber,' . $request->subnumber
+            ];
+
+            Validator::make($input, $rules)->validate();
+        }
     }
 }
