@@ -17,8 +17,11 @@
       >
         {{ parseName(document) }}
         <span class="text-initial">{{ document.number }}</span>
-        {{ hasConjunction(document.name, document.number) ? 'の' : ''}}
-        <span class="text-initial" v-show="hasConjunction(document.name, document.number)">{{ document.subnumber }}</span>
+        {{ hasConjunction(document.name, document.number) ? 'の' : '' }}
+        <span
+          v-show="hasConjunction(document.name, document.number)"
+          class="text-initial"
+        >{{ document.subnumber }}</span>
       </v-tab>
     </v-tabs>
 

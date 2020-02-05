@@ -156,8 +156,8 @@
                 >
                   <v-select
                     v-if="document.name === '証拠説明書'"
+                    v-model="document.subnumber"
                     disabled
-                    v-model="document.subnumber = 1"
                     :items="subnumbers"
                     single-line
                     outlined
@@ -342,6 +342,7 @@
         /**
          * Create a new formData to store document
          * */
+        this.document.subnumber = this.document.name === '証拠説明書' ? 1 : this.document.subnumber;
         let formData = new FormData();
         formData.append('name', this.document.name);
         formData.append('number', this.document.number);

@@ -153,8 +153,8 @@
                 >
                   <v-select
                     v-if="document.name === '証拠説明書'"
-                    disabled
                     v-model="document.subnumber"
+                    disabled
                     :items="subnumbers"
                     single-line
                     outlined
