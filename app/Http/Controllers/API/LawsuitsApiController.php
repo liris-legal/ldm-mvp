@@ -73,7 +73,7 @@ class LawsuitsApiController extends Controller
         $data['created_at'] = now();
         $lawsuit = Lawsuit::create($data);
 
-        $submitterPlaintiffId = Submitter::where('description', 'plaintiff')->value('id');
+        $submitterPlaintiffId = $this->selectSubmitter('description', 'plaintiff', 'id');
         $this->storeParties($request, $submitterPlaintiffId, $lawsuit, 'plaintiffs', 'Plaintiff');
         $this->storeParties(
             $request,
@@ -82,7 +82,7 @@ class LawsuitsApiController extends Controller
             'plaintiff_representatives',
             'PlaintiffRepresentative'
         );
-        $submitterDefendantId = Submitter::where('description', 'defendant')->value('id');
+        $submitterDefendantId = $this->selectSubmitter('description', 'defendant', 'id');
         $this->storeParties($request, $submitterDefendantId, $lawsuit, 'defendants', 'Defendant');
         $this->storeParties(
             $request,
@@ -91,7 +91,7 @@ class LawsuitsApiController extends Controller
             'defendant_representatives',
             'DefendantRepresentative'
         );
-        $submitterOtherId = Submitter::where('description', 'other_party')->value('id');
+        $submitterOtherId = $this->selectSubmitter('description', 'other_party', 'id');
         $this->storeParties($request, $submitterOtherId, $lawsuit, 'other_parties', 'OtherParty');
 
         $message = ['status' => 'success', 'content' => '事件を作成しました。'];
@@ -157,26 +157,29 @@ class LawsuitsApiController extends Controller
         $lawsuit->fill($data)->save();
         // $lawsuit->update($data);
 
-        $submitters = Submitter::all();
-        $this->updateParties($request, $submitters[0], $lawsuit, 'plaintiffs', 'plaintiffs', 'Plaintiff');
+        $submitterPlaintiffId = $this->selectSubmitter('description', 'plaintiff', 'id');
+        $this->updateParties($request, $submitterPlaintiffId, $lawsuit, 'plaintiffs', 'plaintiffs', 'Plaintiff');
         $this->updateParties(
             $request,
-            $submitters[0],
+            $submitterPlaintiffId,
             $lawsuit,
             'plaintiffRepresentatives',
             'plaintiff_representatives',
             'PlaintiffRepresentative'
         );
-        $this->updateParties($request, $submitters[1], $lawsuit, 'defendants', 'defendants', 'Defendant');
+
+        $submitterDefendantId = $this->selectSubmitter('description', 'defendant', 'id');
+        $this->updateParties($request, $submitterDefendantId, $lawsuit, 'defendants', 'defendants', 'Defendant');
         $this->updateParties(
             $request,
-            $submitters[1],
+            $submitterDefendantId,
             $lawsuit,
             'defendantRepresentatives',
             'defendant_representatives',
             'DefendantRepresentative'
         );
-        $this->updateParties($request, $submitters[3], $lawsuit, 'otherParties', 'other_parties', 'OtherParty');
+        $submitterOtherId = $this->selectSubmitter('description', 'other_party', 'id');
+        $this->updateParties($request, $submitterOtherId, $lawsuit, 'otherParties', 'other_parties', 'OtherParty');
 
         $message = ['status' => 'success', 'content' => '事件を編集しました。'];
         return response()->json(['url' => route('lawsuits.index'), 'message' => $message], 200);
@@ -199,5 +202,18 @@ class LawsuitsApiController extends Controller
 
         $message = ['status' => 'success', 'content' => '事件を削除しました。'];
         return response()->json(['url'=> route('lawsuits.index'), 'message' => $message], 200);
+    }
+
+    /**
+     * Select field the specified resource submitter.
+     *
+     * @param $field
+     * @param $condition
+     * @param $value
+     * @return
+     */
+    public function selectSubmitter($field, $condition, $value)
+    {
+        return Submitter::where($field, $condition)->value($value);
     }
 }

@@ -106,9 +106,10 @@ class Helpers
         $messages = ['exists' => ':attributeに抜け番があります。'];
         if ($request->number > 1) {
             $input = $request->only('number');
-            $input['number'] -= 1;
 
-            // if ($request->document && $request->number !== $request->document->number){}
+            $input['number'] = ($request->document && $request->number - 1 == $request->document->number) ?
+                $input['number'] : $input['number'] - 1;
+
             $rules = [
                 'number' => 'bail|required|numeric|max:100|min:1|exists:documents,number,lawsuit_id,'
                     . $request->lawsuit_id . ',submitter_id,' . $request->submitter_id . ',name,' . $request->name
