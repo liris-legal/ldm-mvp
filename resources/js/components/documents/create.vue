@@ -238,7 +238,6 @@
               v-model="file"
               type="file"
               accept=".pdf,.doc,.docx"
-              style="display:none"
               show-size
               :rules="rules"
             />
@@ -347,10 +346,10 @@
        */
       clearFileSelected() {
         this.file = null;
-        this.selected = null;
-        let fileInput = document.getElementsByClassName('v-file-input');
-        let clearIcon = fileInput[0].getElementsByClassName('v-input__icon--clear');
-        if(clearIcon.length) clearIcon[0].children[0].click()
+        this.selected = false;
+        // let fileInput = document.getElementsByClassName('v-file-input');
+        // let clearIcon = fileInput[0].getElementsByClassName('v-input__icon--clear');
+        // if(clearIcon.length) clearIcon[0].children[0].click()
       },
 
       /**
