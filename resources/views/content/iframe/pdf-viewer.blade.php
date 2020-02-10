@@ -7,17 +7,24 @@
     <title>PDF Viewer</title>
     <style>
         .canvas-viewer {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
             width: 100vh;
             margin: 0 auto;
             overflow: scroll;
             -webkit-overflow-scrolling: touch;
+        }
+        .pdf-viewer{
+            scroll-behavior: smooth;
+            shape-outside: none;
         }
     </style>
 </head>
 <body>
 <div class="content d-block">
     <div class="canvas-viewer">
-        <div id="pdf-viewer"></div>
+        <div class="pdf-viewer" id="pdf-viewer"></div>
         <div>
             <h2 class="message"></h2>
         </div>
