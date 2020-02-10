@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
     <title>PDF Viewer</title>
+    <style>
+        .canvas-viewer {
+            width: 100vh;
+            margin: 0 auto;
+            overflow: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
 </head>
 <body>
 <div class="content d-block">
-    <div style="width:100vh;margin: 0 auto;">
+    <div class="canvas-viewer">
         <div id="pdf-viewer"></div>
         <div>
             <h2 class="message"></h2>

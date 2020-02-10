@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
         <title>Laravel</title>
 
@@ -12,12 +12,15 @@
         <!-- Styles -->
         <style>
             html, body {
+                position: fixed;
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
-                height: 100vh;
-                margin: 0;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
             }
 
             .full-height {
