@@ -93,7 +93,7 @@
     height: auto;
   }
   .text-vertical{
-    writing-mode:vertical-lr;
+    writing-mode: vertical-lr;
     -webkit-transform:rotate(0deg);
     -moz-transform:rotate(0deg);
     -o-transform: rotate(0deg);
@@ -105,7 +105,7 @@
     letter-spacing: 3px;
   }
   .text-initial{
-    writing-mode: lr !important;
+    writing-mode: horizontal-tb !important;
   }
   .text-vertical.v-tab.activated.v-tab--active, .v-slide-group__content.v-tabs-bar__content, .v-tab--active.v-tab:not(:focus):before{
       width: 48px;
