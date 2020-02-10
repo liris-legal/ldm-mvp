@@ -10,7 +10,6 @@
             position: absolute;
             max-width: 100%;
             max-height: 100%;
-            width: 100vh;
             margin: 0 auto;
             overflow: scroll;
             -webkit-overflow-scrolling: touch;
