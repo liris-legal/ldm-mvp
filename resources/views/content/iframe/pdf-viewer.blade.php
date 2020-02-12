@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{asset('js/hammer.min.js')}}"></script>
     <title>PDF Viewer</title>
     <style>
-        .canvas-viewer {
+        .pdf-viewer {
             position: absolute;
             max-width: 100%;
             max-height: 100%;
             margin: 0 auto;
             overflow: scroll;
+            touch-action: auto;
+            scroll-behavior: smooth;
+            shape-outside: none;
             -webkit-overflow-scrolling: touch;
         }
-        .pdf-viewer{
+        .canvas-viewer {
             scroll-behavior: smooth;
             shape-outside: none;
         }
@@ -22,8 +26,8 @@
 </head>
 <body>
 <div class="content d-block">
-    <div class="canvas-viewer">
-        <div class="pdf-viewer" id="pdf-viewer"></div>
+    <div class="pdf-viewer">
+        <div class="canvas-viewer" id="canvas-viewer"></div>
         <div>
             <h2 class="message"></h2>
         </div>
@@ -44,7 +48,8 @@
         var pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
-            pageNumPending = null;
+            pageNumPending = null,
+            scale = window.devicePixelRatio; // レティナでこの値を1にするとぼやけたcanvasになります
 
         /**
          * Get page info from document, resize canvas accordingly, and render page.
@@ -55,12 +60,11 @@
             // Using promise to fetch the page
             pdfDoc.getPage(num).then(function(page) {
                 var canvasId = 'canvas-id-' + num;
-                $('#pdf-viewer').append($('<canvas/>', {'id': canvasId}));
+                $('#canvas-viewer').append($('<canvas/>', {'id': canvasId}));
                 var canvas = document.getElementById(canvasId),
                     ctx = canvas.getContext('2d');
 
                 // メモリ上における実際のサイズを設定(ピクセル密度の分だけ倍増させます)。
-                var scale = window.devicePixelRatio; // レティナでこの値を1にするとぼやけたcanvasになります
                 var viewport = page.getViewport({scale: scale});
                 canvas.width = viewport.width * scale;
                 canvas.height = viewport.height * scale;
@@ -69,6 +73,8 @@
 
                 // CSS上のピクセル数を前提としているシステムに合わせます。
                 ctx.scale(scale, scale);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
 
                 // Render PDF page into canvas context
                 var renderContext = {
@@ -89,6 +95,20 @@
             });
         }
 
+        // zoomIn
+        var zoomIn = function() {
+            scale = scale + 0.25;
+            renderPage(pageNum);
+        };
+
+        // zoomOut
+        var zoomOut = function() {
+            if (scale <= 0.25) return;
+            scale = scale - 0.25;
+            renderPage(pageNum);
+        };
+
+
         // Asynchronous download of PDF
         var loadingTask = pdfjsLib.getDocument(src);
         loadingTask.promise.then(function(pdfDoc_) {
@@ -104,6 +124,173 @@
             console.error(reason);
             $('.message')[0].innerText = "ERROR: " + reason.message;
         });
+    </script>
+    <script type="text/javascript">
+        var element = document.getElementById('canvas-viewer')
+        var hammertime = new Hammer(element, {});
+
+        hammertime.get('pinch').set({ enable: true });
+        hammertime.get('pan').set({ threshold: 0 });
+
+        var fixHammerjsDeltaIssue = undefined;
+        var pinchStart = { x: undefined, y: undefined }
+        var lastEvent = undefined;
+
+        var originalSize = {
+            width: 200,
+            height: 300
+        }
+
+        var current = {
+            x: 0,
+            y: 0,
+            z: 1,
+            zooming: false,
+            width: originalSize.width * 1,
+            height: originalSize.height * 1,
+        }
+
+        var last = {
+            x: current.x,
+            y: current.y,
+            z: current.z
+        }
+
+        function getRelativePosition(element, point, originalSize, scale) {
+            var domCoords = getCoords(element);
+
+            var elementX = point.x - domCoords.x;
+            var elementY = point.y - domCoords.y;
+
+            var relativeX = elementX / (originalSize.width * scale / 2) - 1;
+            var relativeY = elementY / (originalSize.height * scale / 2) - 1;
+            return { x: relativeX, y: relativeY }
+        }
+
+        function getCoords(elem) { // crossbrowser version
+            var box = elem.getBoundingClientRect();
+
+            var body = document.body;
+            var docEl = document.documentElement;
+
+            var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+            var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+            var clientTop = docEl.clientTop || body.clientTop || 0;
+            var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+            var top  = box.top +  scrollTop - clientTop;
+            var left = box.left + scrollLeft - clientLeft;
+
+            return { x: Math.round(left), y: Math.round(top) };
+        }
+
+        function scaleFrom(zoomOrigin, currentScale, newScale) {
+            var currentShift = getCoordinateShiftDueToScale(originalSize, currentScale);
+            var newShift = getCoordinateShiftDueToScale(originalSize, newScale)
+
+            var zoomDistance = newScale - currentScale
+
+            var shift = {
+                x: currentShift.x - newShift.x,
+                y: currentShift.y - newShift.y,
+            }
+
+            var output = {
+                x: zoomOrigin.x * shift.x,
+                y: zoomOrigin.y * shift.y,
+                z: zoomDistance
+            }
+            return output
+        }
+
+        function getCoordinateShiftDueToScale(size, scale){
+            var newWidth = scale * size.width;
+            var newHeight = scale * size.height;
+            var dx = (newWidth - size.width) / 2
+            var dy = (newHeight - size.height) / 2
+            return {
+                x: dx,
+                y: dy
+            }
+        }
+
+        hammertime.on('doubletap', function(e) {
+            var scaleFactor = 1;
+            if (current.zooming === false) {
+                current.zooming = true;
+            } else {
+                current.zooming = false;
+                scaleFactor = -scaleFactor;
+            }
+
+            element.style.transition = "0.3s";
+            setTimeout(function() {
+                element.style.transition = "none";
+            }, 300)
+
+            var zoomOrigin = getRelativePosition(element, { x: e.center.x, y: e.center.y }, originalSize, current.z);
+            var d = scaleFrom(zoomOrigin, current.z, current.z + scaleFactor)
+            current.x += d.x;
+            current.y += d.y;
+            current.z += d.z;
+
+            last.x = current.x;
+            last.y = current.y;
+            last.z = current.z;
+
+            update();
+        })
+
+        hammertime.on('pan', function(e) {
+            if (lastEvent !== 'pan') {
+                fixHammerjsDeltaIssue = {
+                    x: e.deltaX,
+                    y: e.deltaY
+                }
+            }
+
+            current.x = last.x + e.deltaX - fixHammerjsDeltaIssue.x;
+            current.y = last.y + e.deltaY - fixHammerjsDeltaIssue.y;
+            lastEvent = 'pan';
+            update();
+        })
+
+        hammertime.on('pinch', function(e) {
+            var d = scaleFrom(pinchZoomOrigin, last.z, last.z * e.scale)
+            current.x = d.x + last.x + e.deltaX;
+            current.y = d.y + last.y + e.deltaY;
+            current.z = d.z + last.z;
+            lastEvent = 'pinch';
+            update();
+        })
+
+        var pinchZoomOrigin = undefined;
+        hammertime.on('pinchstart', function(e) {
+            pinchStart.x = e.center.x;
+            pinchStart.y = e.center.y;
+            pinchZoomOrigin = getRelativePosition(element, { x: pinchStart.x, y: pinchStart.y }, originalSize, current.z);
+            lastEvent = 'pinchstart';
+        })
+
+        hammertime.on('panend', function(e) {
+            last.x = current.x;
+            last.y = current.y;
+            lastEvent = 'panend';
+        })
+
+        hammertime.on('pinchend', function(e) {
+            last.x = current.x;
+            last.y = current.y;
+            last.z = current.z;
+            lastEvent = 'pinchend';
+        })
+
+        function update() {
+            current.height = originalSize.height * current.z;
+            current.width = originalSize.width * current.z;
+            element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
+        }
     </script>
 </div>
 </body>
