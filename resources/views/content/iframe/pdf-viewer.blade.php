@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{{--    <meta name="viewport" content="width=device-width, initial-scale=1">--}}
+    <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui"/>
     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
     <script src="{{asset('js/hammer.min.js')}}"></script>
@@ -13,14 +14,15 @@
             max-height: 100%;
             margin: 0 auto;
             overflow: scroll;
-            touch-action: auto;
+            touch-action: manipulation;
             scroll-behavior: smooth;
             shape-outside: none;
-            -webkit-overflow-scrolling: touch;
+            -webkit-overflow-scrolling: auto;
+            -moz-overflow-scrolling: auto;
+            overflow-scrolling: auto;
         }
         .canvas-viewer {
-            scroll-behavior: smooth;
-            shape-outside: none;
+
         }
     </style>
 </head>
@@ -137,8 +139,8 @@
         var lastEvent = undefined;
 
         var originalSize = {
-            width: 200,
-            height: 300
+            width: 100,
+            height: 200
         }
 
         var current = {
@@ -201,6 +203,7 @@
                 y: zoomOrigin.y * shift.y,
                 z: zoomDistance
             }
+            console.log(output)
             return output
         }
 
@@ -242,7 +245,9 @@
             update();
         })
 
+        // touch event
         hammertime.on('pan', function(e) {
+            console.log(e)
             if (lastEvent !== 'pan') {
                 fixHammerjsDeltaIssue = {
                     x: e.deltaX,
@@ -257,6 +262,7 @@
         })
 
         hammertime.on('pinch', function(e) {
+            // console.log(e)
             var d = scaleFrom(pinchZoomOrigin, last.z, last.z * e.scale)
             current.x = d.x + last.x + e.deltaX;
             current.y = d.y + last.y + e.deltaY;
@@ -267,6 +273,7 @@
 
         var pinchZoomOrigin = undefined;
         hammertime.on('pinchstart', function(e) {
+            // console.log(e)
             pinchStart.x = e.center.x;
             pinchStart.y = e.center.y;
             pinchZoomOrigin = getRelativePosition(element, { x: pinchStart.x, y: pinchStart.y }, originalSize, current.z);

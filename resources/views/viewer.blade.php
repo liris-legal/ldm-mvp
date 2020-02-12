@@ -12,7 +12,7 @@
         <!-- Styles -->
         <style>
             html, body {
-                position: fixed;
+                /*position: fixed;*/
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
@@ -73,21 +73,7 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content d-block">
+            <div class="content">
                 <h1>PDF.js Previous/Next example</h1>
 
                 <div class="row">
@@ -102,7 +88,7 @@
                 <script !src="">
                     // If absolute URL from the remote server is provided, configure the CORS
                     // header on that server.
-                    var url = 'https://raw.githubusercontent.com/thaild/1LinkIntern/3d3d31045997a1b678cabfde931545375a75fef3/1link/design_pattern_tutorial.pdf';
+                    var url = 'https://liris-dev.s3-ap-northeast-1.amazonaws.com/uploads/documents/2020011803014931-訴状サンプル.pdf';
 
                     // Loaded via <script> tag, create shortcut to access PDF.js exports.
                     var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -201,9 +187,24 @@
 
                 </script>
             </div>
-
         </div>
-        <div class="content d-block" style="margin: 4em">
+
+        <div class="content" style="margin: 4em">
+            <h1>PDF using embed</h1>
+
+            <embed src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://liris-dev.s3-ap-northeast-1.amazonaws.com/uploads/documents/2020011803014931-訴状サンプル.pdf"
+                   width="800" height="500"
+            >
+        </div>
+
+        <div class="content" style="margin: 4em">
+            <h1>PDF using iframe</h1>
+
+            <iframe src="http://docs.google.com/gview?url=https://liris-dev.s3-ap-northeast-1.amazonaws.com/uploads/documents/2020011803014931-訴状サンプル.pdf&embedded=true"
+                    style="width:800px; height:500px;" frameborder="0"></iframe>
+        </div>
+
+        <div class="content" style="margin: 4em">
 
             <h1>PDF.js 'Hello, world!' example</h1>
 
