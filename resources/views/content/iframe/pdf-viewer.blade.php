@@ -128,20 +128,27 @@
         });
     </script>
     <script type="text/javascript">
-        var element = document.getElementById('canvas-viewer')
-        var hammertime = new Hammer(element, {});
+        var element = document.getElementById('canvas-viewer');
+        var canvasElement = document.getElementById('canvas-id-1');
+        var options = {
+            preventDefault: true,
+            minZoom: 1,
+            maxZoom: 10,
+        };
+        var hammertime = new Hammer(element, options);
+        hammertime.on("dragup dragdown swipeup swipedown", function(ev){ });
 
         hammertime.get('pinch').set({ enable: true });
         hammertime.get('pan').set({ threshold: 0 });
 
         var fixHammerjsDeltaIssue = undefined;
-        var pinchStart = { x: undefined, y: undefined }
+        var pinchStart = { x: undefined, y: undefined };
         var lastEvent = undefined;
 
         var originalSize = {
-            width: 100,
-            height: 200
-        }
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
 
         var current = {
             x: 0,
@@ -203,7 +210,7 @@
                 y: zoomOrigin.y * shift.y,
                 z: zoomDistance
             }
-            console.log(output)
+            // console.log(output)
             return output
         }
 
@@ -247,7 +254,7 @@
 
         // touch event
         hammertime.on('pan', function(e) {
-            console.log(e)
+            // console.log(e)
             if (lastEvent !== 'pan') {
                 fixHammerjsDeltaIssue = {
                     x: e.deltaX,
