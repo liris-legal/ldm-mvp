@@ -136,7 +136,9 @@
             maxZoom: 10,
         };
         var hammertime = new Hammer(element, options);
-        hammertime.on("dragup dragdown swipeup swipedown", function(ev){ });
+        hammertime.on("dragup dragdown swipeup swipedown", function(ev){
+            console.log('disable dragup dragdown swipeup swipedown')
+        });
 
         hammertime.get('pinch').set({ enable: true });
         hammertime.get('pan').set({ threshold: 0 });
@@ -157,23 +159,26 @@
             zooming: false,
             width: originalSize.width * 1,
             height: originalSize.height * 1,
-        }
+        };
+        console.log(current);
 
         var last = {
             x: current.x,
             y: current.y,
             z: current.z
-        }
+        };
+        console.log(last);
 
         function getRelativePosition(element, point, originalSize, scale) {
             var domCoords = getCoords(element);
+            console.log(domCoords)
 
             var elementX = point.x - domCoords.x;
             var elementY = point.y - domCoords.y;
 
             var relativeX = elementX / (originalSize.width * scale / 2) - 1;
             var relativeY = elementY / (originalSize.height * scale / 2) - 1;
-            return { x: relativeX, y: relativeY }
+            return { x: relativeX < 0 ? 0 : relativeX , y: relativeY < 0 ? 0 : relativeY }
         }
 
         function getCoords(elem) { // crossbrowser version
@@ -191,7 +196,7 @@
             var top  = box.top +  scrollTop - clientTop;
             var left = box.left + scrollLeft - clientLeft;
 
-            return { x: Math.round(left), y: Math.round(top) };
+            return { x: left < 0 ? 0 : Math.round(left), y: top < 0 ? 0 : Math.round(top) };
         }
 
         function scaleFrom(zoomOrigin, currentScale, newScale) {
@@ -217,8 +222,8 @@
         function getCoordinateShiftDueToScale(size, scale){
             var newWidth = scale * size.width;
             var newHeight = scale * size.height;
-            var dx = (newWidth - size.width) / 2
-            var dy = (newHeight - size.height) / 2
+            var dx = (newWidth - size.width) / 2;
+            var dy = (newHeight - size.height) / 2;
             return {
                 x: dx,
                 y: dy
@@ -226,6 +231,7 @@
         }
 
         hammertime.on('doubletap', function(e) {
+            console.log('doubletap')
             var scaleFactor = 1;
             if (current.zooming === false) {
                 current.zooming = true;
@@ -301,6 +307,12 @@
         })
 
         function update() {
+            // console.log(current);
+            // console.log(originalSize)
+
+            current.height = Math.abs(current.height) < originalSize.height ? Math.abs(current.height) : originalSize.height;
+            current.width = Math.abs(current.width) < originalSize.width ? Math.abs(current.width) : originalSize.width;
+
             current.height = originalSize.height * current.z;
             current.width = originalSize.width * current.z;
             element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
