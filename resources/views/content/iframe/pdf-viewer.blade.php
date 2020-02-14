@@ -276,7 +276,7 @@
 
         hammertime.on('pinch', function(e) {
             // console.log(e)
-            var d = scaleFrom(pinchZoomOrigin, last.z, last.z * e.scale)
+            var d = scaleFrom(pinchZoomOrigin, last.z, last.z * e.scale);
             current.x = d.x + last.x + e.deltaX;
             current.y = d.y + last.y + e.deltaY;
             current.z = d.z + last.z;
@@ -302,7 +302,7 @@
         hammertime.on('pinchend', function(e) {
             last.x = current.x;
             last.y = current.y;
-            last.z = current.z;
+            // last.z = current.z;
             lastEvent = 'pinchend';
         })
 
@@ -315,6 +315,7 @@
 
             current.height = originalSize.height * current.z;
             current.width = originalSize.width * current.z;
+            current.z = 1;
             element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
         }
     </script>
