@@ -81,6 +81,13 @@
         </div>
 
         <div class="content" style="margin: 4em">
+            <h1>PDF using s3 iframe</h1>
+
+            <iframe src="https://liris-dev.s3-ap-northeast-1.amazonaws.com/uploads/documents/2020011803014931-訴状サンプル.pdf"
+                    style="width:800px; height:500px;" frameborder="0"></iframe>
+        </div>
+
+        <div class="content" style="margin: 4em">
             <h1>PDF using iframe</h1>
 
             <iframe src="http://docs.google.com/gview?url=https://liris-dev.s3-ap-northeast-1.amazonaws.com/uploads/documents/2020011803014931-訴状サンプル.pdf&embedded=true"
