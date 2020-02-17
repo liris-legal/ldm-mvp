@@ -53,7 +53,7 @@
         })
         .catch(err => {
           console.log(err.response);
-          alert('Not found data!');
+          alert('Not found document!');
         });
     },
     mounted() {

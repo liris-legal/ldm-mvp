@@ -100,7 +100,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'email' => ['required', 'email', 'max:255', 'unique:users', 'cognito_user_unique'],
-            'password' => ['required', 'string', 'min:8', 'confirmed',
+            'password' => ['required', 'string', 'min:8', 'max:32', 'confirmed',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,35}.+$/i'],
             'password_confirmation' => 'required|min:8|max:32'
         ]);
