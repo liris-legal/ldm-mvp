@@ -2,7 +2,7 @@
   <div v-if="src">
     <iframe
       name="iframe"
-      :src="'/iframe?url='+ encodeURIComponent(src)"
+      :src="'/iframe/lawsuits/'+document.lawsuit_id+'/documents/'+document.id"
       width="100%"
       height="100%"
       frameborder="0"

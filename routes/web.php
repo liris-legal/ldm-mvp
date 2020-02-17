@@ -23,7 +23,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::get('lawsuits/{lawsuit}/documents/{documents}/edit', 'DocumentController@edit')->name('documents.edit');
 });
 
-Route::get('/iframe', 'HomeController@show');
+Route::get('/iframe/lawsuits/{lawsuit}/documents/{document}', 'HomeController@show');
 
 Route::get('/viewer', function () {
     return view('viewer');

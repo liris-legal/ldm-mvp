@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DocumentUrl;
+use App\Http\Resources\DocumentUrl as DocumentUrlResource;
 use App\Models\Document;
+use App\Models\DocumentRecently;
+use App\Services\FileService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use App\Http\Resources\Document as DocumentResource;
 use Auth;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -28,9 +32,9 @@ class HomeController extends Controller
     public function index()
     {
         // get recently_viewed_documents
-        $viewedDocuments = Auth::user()->recently_viewed_documents;
-        $documents = empty($viewedDocuments) ? Document::all()->take(10)
-            : Document::whereIn('id', array_slice(json_decode($viewedDocuments), 0, 10))->get();
+        $viewedDocuments = DocumentRecently::where('user_id', Auth::user()->id)->get();
+
+        $documents = $viewedDocuments->isEmpty() ? Document::all()->take(10) : $viewedDocuments;
 
         return view('content.home', ['documents' => $documents]);
     }
@@ -39,19 +43,24 @@ class HomeController extends Controller
      * Pdf viewer in the iframe
      *
      * @param Request $request
+     * @param $lawsuitId
+     * @param $documentId
      * @return Renderable
      */
-    public function show(Request $request)
+    public function show(Request $request, $lawsuitId, $documentId)
     {
-        $src = $request->query('url', 'null');
-        $documentId = Document::where('url', explode("documents/", $src)[1])->value('id');
+        $time = Carbon::now();
+        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->first();
 
         // update recently_viewed_documents
-        $user = Auth::user();
-        $documents = empty($user->recently_viewed_documents) ? [] : json_decode($user->recently_viewed_documents);
-        array_push($documents, $documentId);
-        $user->update(array('recently_viewed_documents' => array_values(array_unique($documents))));
+        DocumentRecently::updateOrCreate(
+            ['user_id' => Auth::user()->id, 'document_id' => $documentId,
+                'name' => $document->name, 'number' => $document->number, 'subnumber' => $document->subnumber,
+                'lawsuit_id' => $lawsuitId, 'type_document_id' => $document->type_document_id],
+            ['created_at' => $time]
+        );
 
+        $src = (new FileService())->getFileUrlS3($document->url);
         return view('content.iframe.pdf-viewer', ['src' => $src]);
     }
 }
