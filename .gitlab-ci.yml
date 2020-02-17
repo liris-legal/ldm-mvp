@@ -37,7 +37,7 @@ stages:
 unit_test:
   stage: test
   only:
-    - develop
+    - test
   environment:
     # coding convention check コーディング規約チェック
     name: testing-environment
