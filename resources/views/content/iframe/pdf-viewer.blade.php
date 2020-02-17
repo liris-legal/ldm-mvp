@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
 {{--    <meta name="viewport" content="width=device-width, initial-scale=1">--}}
-    <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui"/>
+    <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0"/>
     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
     <script src="{{asset('js/hammer.min.js')}}"></script>
@@ -139,7 +139,7 @@
             console.log('disable dragup dragdown swipeup swipedown')
         });
 
-        hammertime.get('pinch').set({ threshold: 3, enable: true });
+        hammertime.get('pinch').set({ enable: true });
         hammertime.get('pan').set({ threshold: 3 });
 
         var fixHammerjsDeltaIssue = undefined;
