@@ -72,6 +72,8 @@
                 canvas.height = viewport.height * scale;
                 canvas.style.width = viewport.width + 'px'; // Note: The px unit is required here
                 canvas.style.height = viewport.height + 'px';
+                window.width = viewport.width;
+                window.height = viewport.height;
 
                 // CSS上のピクセル数を前提としているシステムに合わせます。
                 ctx.scale(scale, scale);
@@ -97,20 +99,6 @@
             });
         }
 
-        // zoomIn
-        var zoomIn = function() {
-            scale = scale + 0.25;
-            renderPage(pageNum);
-        };
-
-        // zoomOut
-        var zoomOut = function() {
-            if (scale <= 0.25) return;
-            scale = scale - 0.25;
-            renderPage(pageNum);
-        };
-
-
         // Asynchronous download of PDF
         var loadingTask = pdfjsLib.getDocument(src);
         loadingTask.promise.then(function(pdfDoc_) {
@@ -126,8 +114,8 @@
             console.error(reason);
             $('.message')[0].innerText = "ERROR: " + reason.message;
         });
-    </script>
-    <script type="text/javascript">
+
+        // Hammerjs
         var element = document.getElementById('canvas-viewer');
         var canvasElement = document.getElementById('canvas-id-1');
         var options = {
@@ -148,8 +136,8 @@
         var lastEvent = undefined;
 
         var originalSize = {
-            width: window.innerWidth,
-            height: window.innerHeight
+            width: 750,
+            height: 750
         };
 
         var current = {
@@ -157,8 +145,8 @@
             y: 0,
             z: 1,
             zooming: false,
-            width: originalSize.width * 1,
-            height: originalSize.height * 1,
+            width: originalSize.width,
+            height: originalSize.height,
         };
         console.log(current);
 
@@ -302,19 +290,20 @@
         hammertime.on('pinchend', function(e) {
             last.x = current.x;
             last.y = current.y;
-            // last.z = current.z;
+            last.z = current.z;
             lastEvent = 'pinchend';
         })
 
         function update() {
             // console.log(current);
+            if(Math.abs(current.z) > 5) return;
             // console.log(originalSize)
 
             current.height = Math.abs(current.height) < originalSize.height ? Math.abs(current.height) : originalSize.height;
             current.width = Math.abs(current.width) < originalSize.width ? Math.abs(current.width) : originalSize.width;
 
-            current.height = originalSize.height * current.z;
-            current.width = originalSize.width * current.z;
+            current.height = originalSize.height;
+            current.width = originalSize.width;
             element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
         }
     </script>
