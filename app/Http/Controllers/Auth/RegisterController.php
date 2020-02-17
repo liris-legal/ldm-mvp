@@ -64,7 +64,8 @@ class RegisterController extends Controller
     {
         $data = $request->all();
 
-        $this->validator($data)->validate();
+        $this->validatorEmail($data)->validate();
+        $this->validatorPassword($data)->validate();
 
         try {
             // Cognito側の新規登録
@@ -91,18 +92,33 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Get a validator password for an incoming registration request.
      *
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validatorPassword(array $data)
+    {
+        $message = ['max' => 'パスワードは8文字以上、32文字以下にしてください。',
+                    'min' => 'パスワードは8文字以上、32文字以下にしてください。'];
+
+        return Validator::make($data, [
+            'password' => ['required', 'string', 'min:8', 'max:32', 'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,32}.+$/i'],
+            'password_confirmation' => 'required|min:8|max:32'
+        ], $message);
+    }
+
+    /**
+     * Get a validator email for an incoming registration request.
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validatorEmail(array $data)
     {
         return Validator::make($data, [
             'email' => ['required', 'email', 'max:255', 'unique:users', 'cognito_user_unique'],
-            'password' => ['required', 'string', 'min:8', 'max:32', 'confirmed',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,35}.+$/i'],
-            'password_confirmation' => 'required|min:8|max:32'
         ]);
     }
 
