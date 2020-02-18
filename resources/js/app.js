@@ -10,6 +10,12 @@ import stores from "./store";
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
 
+// import vue-panzoom
+import panZoom from 'vue-panzoom'
+
+// install plugin
+Vue.use(panZoom);
+
 /**
  * VueRouter
  */

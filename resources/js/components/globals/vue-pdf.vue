@@ -1,12 +1,14 @@
 <template>
-  <div v-if="src">
-    <div class='pdf-viewer-wrapper' v-dragscroll='true' :class='{"zoom-active": zoom > 100 }' >
-      <pdf :src="src"
-           @num-pages="pageCount = $event"
-           @page-loaded="currentPage = $event"
-           style="width: 120%"
-      />
-    </div>
+  <div v-if="loadingTask" class="pdf-viewer-wrapper">
+    <panZoom :options="{minZoom: 0.5, maxZoom: 5}">
+      <pdf
+        v-for="i in numPages"
+        :key="i"
+        :src="loadingTask"
+        :page="i"
+        style="display: inline-block; width: 120%"
+      ></pdf>
+    </panZoom>
   </div>
 
   <div v-else>
@@ -37,7 +39,6 @@
 
 <script>
   import pdf from 'vue-pdf'
-  import { dragscroll } from 'vue-dragscroll'
 
   export default {
     name: "VuePdf",
@@ -47,19 +48,22 @@
     data() {
       return {
         zoom: 100,
-        src: null,
+        loadingTask: null,
         currentPage: 0,
         pageCount: 0,
+        numPages: 0,
       }
     },
-    directives: { dragscroll },
     components: {
       pdf
     },
     created(){
       axios.post('lawsuits/'+this.document.lawsuit_id+'/documents/'+this.document.id)
         .then(res => {
-          this.src = res.data.data.url;
+          this.loadingTask = pdf.createLoadingTask(res.data.data.url);
+          this.loadingTask.then(pdf => {
+            this.numPages = pdf.numPages;
+          });
         })
         .catch(err => {
           console.log(err.response);
@@ -67,7 +71,7 @@
         });
     },
     mounted() {
-      console.log('PdfViewer mounted')
+      console.log('PdfViewer mounted');
     }
   }
 </script>
