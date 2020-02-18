@@ -6,6 +6,8 @@
         :key="i"
         :src="loadingTask"
         :page="i"
+        @loaded="onLoad"
+        ref="pdf"
         style="display: inline-block; width: 120%"
       ></pdf>
     </panZoom>
@@ -39,6 +41,7 @@
 
 <script>
   import pdf from 'vue-pdf'
+  import panzoom from 'panzoom';
 
   export default {
     name: "VuePdf",
@@ -56,6 +59,11 @@
     },
     components: {
       pdf
+    },
+    methods: {
+      onLoad() {
+        panzooom(this.$refs.pdf);
+      }
     },
     created(){
       axios.post('lawsuits/'+this.document.lawsuit_id+'/documents/'+this.document.id)
