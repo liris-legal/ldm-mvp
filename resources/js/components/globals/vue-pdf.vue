@@ -5,11 +5,8 @@
       :key="i"
       :src="loadingTask"
       :page="i"
-      ref="pdf"
-      v-hammer:pinch="onPinch('ignored')"
-      v-hammer:pinchin="onPinch('in')"
-      v-hammer:pinchout="onPinch('out')"
-      v-hammer:pan="onPan()"
+      v-hammer:pinchin="onPinchIn"
+      v-hammer:pinchout="onPinchOut"
       style="display: inline-block;"
       v-bind:style="{ width: zoom + '%' }"
     ></pdf>
@@ -73,18 +70,16 @@
         });
     },
     methods:{
-      onPinch(type){
-        console.log(e)
-        console.log('onPinch')
-        if(type === 'in') this.zoom--;
-        if(type === 'out') this.zoom++;
+      onPinchIn(){
+        this.zoom--;
+        console.log('onPinchIn', this.zoom);
         alert(this.zoom)
       },
-      onPan(e){
-         alert('onPan')
-        console.log('onPan')
-        console.log(e)
-      }
+      onPinchOut(){
+        this.zoom++;
+        console.log('onPinchIn', this.zoom);
+        alert(this.zoom)
+      },
     },
     mounted() {
       console.log('VuePdf mounted');
