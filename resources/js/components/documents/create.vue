@@ -240,6 +240,7 @@
               accept=".pdf,.doc,.docx"
               show-size
               :rules="rules"
+              style="display:none"
             />
             <v-btn
               v-ripple

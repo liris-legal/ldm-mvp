@@ -49,6 +49,7 @@ Vue.component('app-type-lawsuit', require('./components/globals/app-type-lawsuit
 Vue.component('app-modal', require('./components/globals/range-modal.vue').default);
 Vue.component('lawsuit-header', require('./components/globals/lawsuit-header.vue').default);
 Vue.component('pdf-viewer', require('./components/globals/pdf-viewer.vue').default);
+Vue.component('vue-pdf', require('./components/globals/vue-pdf.vue').default);
 // component globals/tables
 Vue.component('thead-columns', require('./components/globals/tables/thead-columns.vue').default);
 Vue.component('range-row-item', require('./components/globals/tables/range-row-item.vue').default);

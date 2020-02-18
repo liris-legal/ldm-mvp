@@ -16,6 +16,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'cognito_username', 'email', 'recently_viewed_documents'
+        'cognito_username', 'email',
     ];
 }
