@@ -1,15 +1,7 @@
 <template>
   <div v-if="loadingTask" class="pdf-viewer-wrapper">
-    <pdf
-      v-for="i in numPages"
-      :key="i"
-      :src="loadingTask"
-      :page="i"
-      style="display: inline-block;"
-      v-bind:style="{ width: zoom + '%' }"
-    ></pdf>
-    <v-row class="btn-control-icon text-center">
-      <v-col cols="6" sm="3">
+    <v-col class="btn-control-icon text-center">
+      <v-col cols="1" sm="1">
         <v-btn
           @click="onZoomOut()"
           :disabled="disabledZoomOut"
@@ -18,7 +10,7 @@
         </v-btn>
       </v-col>
 
-      <v-col cols="6" sm="3">
+      <v-col cols="1" sm="1">
         <v-btn
           @click="onZoomIn()"
           :disabled="disabledZoomIn"
@@ -26,7 +18,15 @@
           <v-icon>zoom_in</v-icon>
         </v-btn>
       </v-col>
-    </v-row>
+    </v-col>
+    <pdf
+      v-for="i in numPages"
+      :key="i"
+      :src="loadingTask"
+      :page="i"
+      style="display: inline-block;"
+      v-bind:style="{ width: zoom + '%' }"
+    ></pdf>
   </div>
 
   <div v-else>
@@ -124,7 +124,8 @@
       position: fixed;
       width: 100%;
       justify-content: center;
-      bottom: 7%;
+      bottom: 30%;
+      z-index: 1;
 
       button {
        background-color: #FFF;
