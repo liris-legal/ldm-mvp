@@ -5,11 +5,28 @@
       :key="i"
       :src="loadingTask"
       :page="i"
-      v-hammer:pinchin="onPinchIn"
-      v-hammer:pinchout="onPinchOut"
       style="display: inline-block;"
       v-bind:style="{ width: zoom + '%' }"
     ></pdf>
+    <v-row class="btn-control-icon text-center">
+      <v-col cols="6" sm="3">
+        <v-btn
+          @click="onZoomOut()"
+          :disabled="disabledZoomOut"
+          elevation="6" outlined fab x-small color="indigo">
+          <v-icon>zoom_out</v-icon>
+        </v-btn>
+      </v-col>
+
+      <v-col cols="6" sm="3">
+        <v-btn
+          @click="onZoomIn()"
+          :disabled="disabledZoomIn"
+          elevation="6" outlined fab x-small color="indigo">
+          <v-icon>zoom_in</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 
   <div v-else>
@@ -51,6 +68,8 @@
         zoom: 100,
         loadingTask: null,
         numPages: 0,
+        disabledZoomIn: false,
+        disabledZoomOut: false,
       }
     },
     components: {
@@ -69,16 +88,20 @@
           alert('Not found document!');
         });
     },
+    watch: {
+      zoom(){
+        this.disabledZoomIn = this.zoom > 150;
+        this.disabledZoomOut = this.zoom < 80;
+      }
+    },
     methods:{
-      onPinchIn(){
-        this.zoom--;
-        console.log('onPinchIn', this.zoom);
-        alert(this.zoom)
+      onZoomIn(){
+        this.zoom += 5;
+        console.log('onZoomIn', this.zoom);
       },
-      onPinchOut(){
-        this.zoom++;
-        console.log('onPinchIn', this.zoom);
-        alert(this.zoom)
+      onZoomOut(){
+        this.zoom -= 5;
+        console.log('onZoomOut', this.zoom);
       },
     },
     mounted() {
@@ -91,8 +114,21 @@
   .pdf-viewer-wrapper {
     overflow: auto;
     max-height: 70vh;
+    position: relative;
+    width: 100%;
+    height: 100%;
     &.zoom-active {
       cursor: grab;
+    }
+    .btn-control-icon{
+      position: fixed;
+      width: 100%;
+      justify-content: center;
+      bottom: 7%;
+
+      button {
+       background-color: #FFF;
+      }
     }
   }
 </style>
