@@ -6875,6 +6875,11 @@ vue-click-outside@^1.0.7:
   resolved "https://registry.yarnpkg.com/vue-click-outside/-/vue-click-outside-1.0.7.tgz#cdd2b1605e3c4944784e1794eae4a12a0f700bd6"
   integrity sha1-zdKxYF48SUR4TheU6uShKg9wC9Y=
 
+vue-dragscroll@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-dragscroll/-/vue-dragscroll-2.0.1.tgz#46646ae36ffec9d2c1c40f5f14e0af1fc81ece81"
+  integrity sha512-U1AlKP5fzwc2S8mZAopBDiwIlkLZa8S88XlsLQ+L4eIjvhJDrZCsvoJ1VFdEg+DvCHZRmNAbHScXJ05K56rVwA==
+
 vue-eslint-parser@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-6.0.5.tgz#c1c067c2755748e28f3872cd42e8c1c4c1a8059f"

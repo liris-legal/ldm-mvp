@@ -1,10 +1,14 @@
 <template>
   <div v-if="src">
-    <pdf :src="src"
-         @num-pages="pageCount = $event"
-         @page-loaded="currentPage = $event"
-    />
+    <div class='pdf-viewer-wrapper' v-dragscroll='true' :class='{"zoom-active": zoom > 100 }' >
+      <pdf :src="src"
+           @num-pages="pageCount = $event"
+           @page-loaded="currentPage = $event"
+           style="width: 120%"
+      />
+    </div>
   </div>
+
   <div v-else>
     <v-container style="height: 65vh;">
       <v-row
@@ -33,6 +37,7 @@
 
 <script>
   import pdf from 'vue-pdf'
+  import { dragscroll } from 'vue-dragscroll'
 
   export default {
     name: "VuePdf",
@@ -41,11 +46,13 @@
     },
     data() {
       return {
+        zoom: 100,
         src: null,
         currentPage: 0,
         pageCount: 0,
       }
     },
+    directives: { dragscroll },
     components: {
       pdf
     },
@@ -64,3 +71,13 @@
     }
   }
 </script>
+
+<style lang='scss'>
+  .pdf-viewer-wrapper {
+    overflow: auto;
+    max-height: 70vh;
+    &.zoom-active {
+      cursor: grab;
+    }
+  }
+</style>

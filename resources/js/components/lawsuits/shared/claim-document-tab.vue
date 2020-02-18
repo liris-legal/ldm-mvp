@@ -30,7 +30,7 @@
           :key="'claim-document-'+document.id"
         >
           <v-card flat>
-            <pdf-viewer :document="document" />
+            <vue-pdf :document="document" />
           </v-card>
         </v-tab-item>
       </v-tabs-items>
