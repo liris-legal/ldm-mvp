@@ -29,7 +29,6 @@
     },
     "dependencies": {
         "babel-runtime": "^6.26.0",
-        "panzoom": "^9.2.1",
         "vue-click-outside": "^1.0.7",
         "vue-panzoom": "^1.1.0",
         "vuetify": "^2.1.17",

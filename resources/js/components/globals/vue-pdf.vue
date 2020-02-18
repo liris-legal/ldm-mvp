@@ -1,12 +1,16 @@
 <template>
   <div v-if="loadingTask" class="pdf-viewer-wrapper">
-    <panZoom :options="{minZoom: 0.5, maxZoom: 5}">
+    <!-- apply to regular dom elements -->
+    <panZoom>
+      <p>zoom text</p>
+    </panZoom>
+
+    <panZoom :options="{minZoom: 0.5, maxZoom: 4}">
       <pdf
         v-for="i in numPages"
         :key="i"
         :src="loadingTask"
         :page="i"
-        @loaded="onLoad"
         ref="pdf"
         style="display: inline-block; width: 120%"
       ></pdf>
@@ -41,7 +45,6 @@
 
 <script>
   import pdf from 'vue-pdf'
-  import panzoom from 'panzoom';
 
   export default {
     name: "VuePdf",
@@ -58,12 +61,7 @@
       }
     },
     components: {
-      pdf
-    },
-    methods: {
-      onLoad() {
-        panzooom(this.$refs.pdf);
-      }
+      pdf,
     },
     created(){
       axios.post('lawsuits/'+this.document.lawsuit_id+'/documents/'+this.document.id)
