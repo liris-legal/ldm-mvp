@@ -10,11 +10,16 @@ import stores from "./store";
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
 
-// import vue-panzoom
-import panZoom from 'vue-panzoom'
+// import VueHammer
+import { VueHammer } from 'vue2-hammer'
 
 // install plugin
-Vue.use(panZoom);
+Vue.use(VueHammer);
+
+// change the threshold for all swipe recognizers
+VueHammer.config = {
+  pinch: {  threshold: 100  }
+};
 
 /**
  * VueRouter

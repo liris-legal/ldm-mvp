@@ -1,20 +1,18 @@
 <template>
   <div v-if="loadingTask" class="pdf-viewer-wrapper">
-    <!-- apply to regular dom elements -->
-    <panZoom>
-      <p>zoom text</p>
-    </panZoom>
-
-    <panZoom :options="{minZoom: 0.5, maxZoom: 4}">
-      <pdf
-        v-for="i in numPages"
-        :key="i"
-        :src="loadingTask"
-        :page="i"
-        ref="pdf"
-        style="display: inline-block; width: 120%"
-      ></pdf>
-    </panZoom>
+    <pdf
+      v-for="i in numPages"
+      :key="i"
+      :src="loadingTask"
+      :page="i"
+      ref="pdf"
+      v-hammer:pinch="onPinch('ignored')"
+      v-hammer:pinchin="onPinch('in')"
+      v-hammer:pinchout="onPinch('out')"
+      v-hammer:pan="onPan()"
+      style="display: inline-block;"
+      v-bind:style="{ width: zoom + '%' }"
+    ></pdf>
   </div>
 
   <div v-else>
@@ -55,8 +53,6 @@
       return {
         zoom: 100,
         loadingTask: null,
-        currentPage: 0,
-        pageCount: 0,
         numPages: 0,
       }
     },
@@ -76,8 +72,22 @@
           alert('Not found document!');
         });
     },
+    methods:{
+      onPinch(type){
+        console.log(e)
+        console.log('onPinch')
+        if(type === 'in') this.zoom--;
+        if(type === 'out') this.zoom++;
+        alert(this.zoom)
+      },
+      onPan(e){
+         alert('onPan')
+        console.log('onPan')
+        console.log(e)
+      }
+    },
     mounted() {
-      console.log('PdfViewer mounted');
+      console.log('VuePdf mounted');
     }
   }
 </script>
