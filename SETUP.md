@@ -26,7 +26,7 @@ sudo pip install docker-compose
 
 ## 1.3  Install project
 
-- Clone project(Make sure it is develop environment)
+- Clone project (Make sure it is develop environment)
 ```
 git clone git@gitlab.com:ConnectivCorporation/contract/liris/LDM.git 
 ```
@@ -53,7 +53,7 @@ DB_USERNAME=docker
 DB_PASSWORD=docker
 ```
 
-- Add more necessary configs for Cognito and AWS to `.env`  
+- Add more necessary configs for AWS Cognito and AWS S3 to `.env`  
 
 ```
 (Ask @Thai for the content.
@@ -61,7 +61,7 @@ It's not showen here for security reasons.)
 ```
 
 
-- Get into inside docker container, run command to build static files(css and js files)
+- Get into inside docker container, run command to build static files (css and js files)
 ```
 docker exec -it liris-web bash
 cd liris/
@@ -70,7 +70,7 @@ npm install
 npm run prod
 ```
 
-- Still in docker container(Liris directory): Install composer and permission
+- Still in docker container (Liris directory): Install composer and permission
 ```
 composer install
 chmod -Rf 775 storage/ bootstrap/
