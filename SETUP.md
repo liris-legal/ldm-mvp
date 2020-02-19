@@ -26,7 +26,7 @@ sudo pip install docker-compose
 
 ## 1.3  Install project
 
-- Clone project
+- Clone project(Make sure it is develop environment)
 ```
 git clone git@gitlab.com:ConnectivCorporation/contract/liris/LDM.git 
 ```
@@ -43,7 +43,7 @@ docker-compose up
 - cp .env.example .env
 ```
 
-- File .env development used docker
+- Edit `.env` file with following properties:  
 ``` 
 DB_CONNECTION=mysql
 DB_HOST=172.23.0.3
@@ -53,17 +53,25 @@ DB_USERNAME=docker
 DB_PASSWORD=docker
 ```
 
-- If error: node_modules directory is missing. Please run npm install in your project directory
+- Add more necessary configs for Cognito and AWS to `.env`  
+
 ```
-cd LDM
+(Ask @Thai for the content.
+It's not showen here for security reasons.) 
+```
+
+
+- Get into inside docker container, run command to build static files(css and js files)
+```
+docker exec -it liris-web bash
+cd liris/
+rm package-lock.json
 npm install
 npm run prod
 ```
 
-- Install composer and permission
+- Still in docker container(Liris directory): Install composer and permission
 ```
-docker exec -it liris-web bash
-cd liris/
 composer install
 chmod -Rf 775 storage/ bootstrap/
 ```
