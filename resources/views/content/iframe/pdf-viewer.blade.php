@@ -136,8 +136,8 @@
         var lastEvent = undefined;
 
         var originalSize = {
-            width: 750,
-            height: 750
+            width: 695,
+            height: 686
         };
 
         var current = {
@@ -148,14 +148,12 @@
             width: originalSize.width,
             height: originalSize.height,
         };
-        console.log(current);
 
         var last = {
             x: current.x,
             y: current.y,
             z: current.z
         };
-        console.log(last);
 
         function getRelativePosition(element, point, originalSize, scale) {
             var domCoords = getCoords(element);
@@ -231,7 +229,7 @@
             element.style.transition = "0.3s";
             setTimeout(function() {
                 element.style.transition = "none";
-            }, 300)
+            }, 300);
 
             var zoomOrigin = getRelativePosition(element, { x: e.center.x, y: e.center.y }, originalSize, current.z);
             var d = scaleFrom(zoomOrigin, current.z, current.z + scaleFactor)
@@ -248,7 +246,7 @@
 
         // touch event
         hammertime.on('pan', function(e) {
-            // console.log(e)
+            console.log(e)
             if (lastEvent !== 'pan') {
                 fixHammerjsDeltaIssue = {
                     x: e.deltaX,
@@ -295,15 +293,26 @@
         })
 
         function update() {
-            // console.log(current);
-            if(Math.abs(current.z) > 5) return;
-            // console.log(originalSize)
+            console.log('current ', current);
+            if(Math.abs(current.z) > 3) return;
 
             current.height = Math.abs(current.height) < originalSize.height ? Math.abs(current.height) : originalSize.height;
             current.width = Math.abs(current.width) < originalSize.width ? Math.abs(current.width) : originalSize.width;
 
-            current.height = originalSize.height;
-            current.width = originalSize.width;
+            if(current.width / 2 < current.x ){
+                current.x = current.width / 2;
+            }
+            if(current.x < -current.width){
+                current.x = -current.width;
+            }
+            if(current.height / 2 < current.y ){
+                current.y = current.height / 2;
+            }
+            if(current.y < -current.height){
+                current.y = -current.height;
+            }
+
+            console.log('updated:', current);
             element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
         }
     </script>
