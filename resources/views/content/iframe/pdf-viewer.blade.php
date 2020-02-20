@@ -241,7 +241,7 @@
          * @param e Event
          */
         function handlePinchstart(e) {
-            console.log('e.center.x: ' + e.center.x + ' & e.center.y: ' + e.center.y)
+            // console.log('e.center.x: ' + e.center.x + ' & e.center.y: ' + e.center.y)
             // console.log('e: ' + e)
 
             var actualCenter = convertToActualCenter(e.center.x, e.center.y);
@@ -288,7 +288,7 @@
             lastEvent = 'pan';
             update();
 
-            console.log('current.x: ' + current.x + ' & current.y:' + current.y);
+            // console.log('current.x: ' + current.x + ' & current.y:' + current.y);
         }
 
         /**
@@ -325,7 +325,7 @@
 
         function getRelativePosition(element, point, originalSize, scale) {
             var domCoords = getCoords(element);
-            console.log('domCoords:' + domCoords.x + ' ' + domCoords.y);
+            // console.log('domCoords:' + domCoords.x + ' ' + domCoords.y);
             // console.log('domCoords.x ' + domCoords.x); // always 0
             // console.log('domCoords.y ' + domCoords.y); // always 0
 
@@ -340,7 +340,7 @@
 
         function getCoords(elem) { // crossbrowser version
             var box = elem.getBoundingClientRect();
-            console.log('box: ' +  box.top +  ' ' + box.left);
+            // console.log('box: ' +  box.top +  ' ' + box.left);
 
             var body = document.body;
             var docEl = document.documentElement;
