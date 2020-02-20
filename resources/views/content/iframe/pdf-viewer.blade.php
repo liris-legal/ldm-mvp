@@ -51,7 +51,7 @@
         // header on that server.
         var src = $('input[name=file-src]').val();
         var pdfDoc = null,
-            pageNum = 1,
+            totalPages = 1,
             pageRendering = false,
             pageNumPending = null,
             scale = window.devicePixelRatio; // レティナでこの値を1にするとぼやけたcanvasになります
@@ -92,6 +92,13 @@
 
                 // Wait for rendering to finish
                 renderTask.promise.then(function() {
+                    // console.log('rendered, ', canvas);
+
+                    // intialize hammer.js only after the all canvas is created.
+                    if( num === totalPages){
+                        initHammerJs(document.getElementById('canvas-viewer'));
+                    }
+
                     pageRendering = false;
                     if (pageNumPending !== null) {
                         // New page rendering is pending
@@ -101,7 +108,7 @@
                 });
 
                 // intialize hammer.js only after the inner canvas is created.
-                initHammerJs(canvas);
+                // initHammerJs(canvas);
             });
         }
 
