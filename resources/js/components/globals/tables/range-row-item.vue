@@ -21,7 +21,12 @@
       :class="{'x-overlays': overlay}"
     >
       <div class="name">
-        {{ document.submitter.name }}
+        <span v-if="document.documentable">
+          {{ document.submitter.name }}{{ document.documentable.id}}（{{ document.documentable.name}}）
+        </span>
+        <span v-else>
+          {{ document.submitter.name }}
+        </span>
       </div>
     </td>
     <td
@@ -65,6 +70,7 @@
       documentName: {required: false, type: String, default: () => ''},
       subMenu: {required: false, type: Boolean, default: () => true},
       numberColumns: {required: false, type: Number, default: () => 2},
+      submittersLength: {required: false, type: Object, default: () => {}},
     },
     data() {
       return {
