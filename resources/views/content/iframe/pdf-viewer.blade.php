@@ -39,7 +39,7 @@
 
     <script !src="">
         // Constants
-        var ZOOM_SPEED_COEFFICIENT = 0.5;
+        var ZOOM_SPEED_COEFFICIENT = 0.7;
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -269,7 +269,9 @@
             // console.log('e.scale: ' + e.scale); // seems scale > 1 for enlargement, < 1 for reduce size.
             // console.log('e.deltaX: ' + e.deltaX); // seems how much moved while pinch
             // console.log('e.deltaY: ' + e.deltaY); // seems how much moved while pinch
-            var d = scaleFrom(pinchZoomOrigin, last.z, last.z * Math.pow(e.scale, ZOOM_SPEED_COEFFICIENT));
+            var scale = ((e.scale - 1) * ZOOM_SPEED_COEFFICIENT) + 1;
+            var d = scaleFrom(pinchZoomOrigin, last.z, last.z * scale);
+            // var d = scaleFrom(pinchZoomOrigin, last.z, last.z * Math.pow(e.scale, ZOOM_SPEED_COEFFICIENT));
             current.x = d.x + last.x + e.deltaX;
             current.y = d.y + last.y + e.deltaY;
             current.z = d.z + last.z;
@@ -336,8 +338,11 @@
             // console.log('domCoords.x ' + domCoords.x); // always 0
             // console.log('domCoords.y ' + domCoords.y); // always 0
 
-            var elementX = point.x - domCoords.x;
-            var elementY = point.y - domCoords.y;
+            // var elementX = point.x - domCoords.x;
+            // var elementY = point.y - domCoords.y;
+
+            var elementX = point.x;
+            var elementY = point.y;
 
             var relativeX = elementX / (originalSize.width * scale / 2) - 1;
             var relativeY = elementY / (originalSize.height * scale / 2) - 1;
