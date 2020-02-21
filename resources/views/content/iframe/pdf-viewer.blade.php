@@ -79,9 +79,8 @@
                 window.height = viewport.height;
 
                 // CSS上のピクセル数を前提としているシステムに合わせます。
-                ctx.scale(scale, scale);
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
+                var scaleCanvas = Math.pow(window.devicePixelRatio, ZOOM_SPEED_COEFFICIENT);
+                ctx.scale(scaleCanvas, scaleCanvas);
 
                 // Render PDF page into canvas context
                 var renderContext = {
