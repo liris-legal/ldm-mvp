@@ -34,7 +34,6 @@
               :document-name="document.name"
               :number-columns="parseInt(3)"
               :lawsuit-id="lawsuit.id"
-              :submitters-length="submittersLength"
             />
           </template>
           <template v-else>
@@ -128,7 +127,6 @@
         claimDocuments: [],
         evidenceDocuments: [],
         otherDocuments: [],
-        submittersLength: {},
 			}
     },
     created() {
@@ -138,11 +136,6 @@
         this.claimDocuments = this.lawsuit.documents.filter(d => d.type.description === 'claim' );
         this.evidenceDocuments = this.lawsuit.documents.filter(d => d.type.description === 'evidence' );
         this.otherDocuments = this.lawsuit.documents.filter(d => d.type.description === 'other');
-        this.submittersLength = {
-          defendant: this.lawsuit.defendants.length,
-          plaintiff: this.lawsuit.plaintiffs.length,
-          other_party: this.lawsuit.other_parties.length,
-        }
       })
       .catch(err => {console.log(err.response);
       });
