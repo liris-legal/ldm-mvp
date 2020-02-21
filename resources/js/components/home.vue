@@ -12,7 +12,7 @@
     </v-row>
     <app-thead :thead="thead" />
     <div
-      v-for="document in documents"
+      v-for="document in sortedDocuments"
       :key="document.id"
       class="document-two-columns"
     >
@@ -45,6 +45,7 @@
           { id: 1, name: '書面名', class: 'col-7'},
           { id: 2, name: '表示日', class: 'col-5'}
         ],
+        sortedDocuments: []
 			}
 		},
     methods: {
@@ -59,6 +60,10 @@
         else
           return document.name + '' + document.number;
       }
+    },
+    mounted() {
+      // sort document by created_at
+      this.sortedDocuments = this.documents.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
     }
   }
 </script>
