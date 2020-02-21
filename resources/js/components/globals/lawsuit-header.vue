@@ -5,7 +5,12 @@
         {{ lawsuit.number }}
       </p>
       <p class="font-size-22 pl-4 mb-0">
-        {{ lawsuit.name }}
+<!--        {{ lawsuit.name }}-->
+        <a
+          :href="'/lawsuits/' + lawsuit.id"
+        >
+          {{ lawsuit.name }}
+        </a>
       </p>
     </v-col>
     <v-col class="col-lg-7 col-md-7 col-sm-6 col-xl-6 font-size-18">
@@ -31,3 +36,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  p > a{
+    color: rgba(0,0,0,.87);
+    text-decoration: none;
+  }
+</style>

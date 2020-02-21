@@ -47,7 +47,7 @@
                 <div class="v-row">
                     <div class="col-12 text-center">
                         <a class="btn dark-link" href="{{ route('register') }}">
-                            {{ __('新しいアカウントを作成する。') }}
+                            {{ __('新しいアカウントを作成する') }}
                         </a>
                     </div>
                 </div>

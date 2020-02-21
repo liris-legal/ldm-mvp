@@ -3,7 +3,7 @@
     <v-row>
       <v-col class="col-12 header-content">
         <h2 class="title-name font-size-30">
-          新件を作成
+          名前を変更
         </h2>
         <h3 class="description" />
       </v-col>
