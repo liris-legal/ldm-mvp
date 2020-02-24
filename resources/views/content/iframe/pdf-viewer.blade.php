@@ -39,7 +39,7 @@
 
     <script !src="">
         // Constants
-        var ZOOM_SPEED_COEFFICIENT = 0.7;
+        var ZOOM_SPEED_COEFFICIENT = 0.65;
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -117,6 +117,9 @@
             // console.log('PDF loaded');
             pdfDoc = pdfDoc_;
 
+            // set total pages
+            totalPages = pdfDoc.numPages;
+
             // Initial/first page rendering
             for (var i = 1; i <= pdfDoc.numPages; i++) {
                 renderPage(i);
@@ -167,14 +170,17 @@
             var options = {
                 preventDefault: true,
                 minZoom: 1,
-                maxZoom: 10,
+                maxZoom: 5,
             };
             hammertime = new Hammer(elm, options);
 
-            originalSize.width = elm.offsetWidth,
-            originalSize.height = elm.offsetHeight,
-            current.width = elm.offsetWidth,
-            current.height = elm.offsetHeight,
+            originalSize.width = elm.offsetWidth;
+            originalSize.height = elm.offsetHeight;
+            current.width = elm.offsetWidth;
+            current.height = elm.offsetHeight;
+
+            // init update canvas
+            initUpdate(element);
 
             // Set hammer js events
             hammertime.on("dragup dragdown swipeup swipedown", function(ev){
@@ -183,7 +189,7 @@
             hammertime.get('pinch').set({ enable: true });
             hammertime.get('pan').set({ threshold: 0 });
             hammertime.on('doubletap', function(e) {
-                handleDoubletap(e);
+                // handleDoubletap(e);
             })
             hammertime.on('pan', function(e) {
                 handlePan(e);
@@ -283,7 +289,7 @@
          * @param e Event
          */
         function handlePan(e) {
-            // console.log(e)
+            // console.log('handlePan', e)
             if (lastEvent !== 'pan') {
                 fixHammerjsDeltaIssue = {
                     x: e.deltaX,
@@ -304,7 +310,7 @@
          * @param e Event
          */
         function handleDoubletap(e) {
-            // console.log('doubletap')
+            // console.log('doubletap', e)
             var scaleFactor = 1;
             if (current.zooming === false) {
                 current.zooming = true;
@@ -318,8 +324,12 @@
                 element.style.transition = "none";
             }, 300);
 
+            // console.log('current ', current)
+            // console.log('originalSize ', originalSize)
             var zoomOrigin = getRelativePosition(element, { x: e.center.x, y: e.center.y }, originalSize, current.z);
-            var d = scaleFrom(zoomOrigin, current.z, current.z + scaleFactor)
+            // console.log('zoomOrigin', zoomOrigin);
+            var d = scaleFrom(zoomOrigin, current.z, current.z + scaleFactor);
+            // console.log('d', d)
             current.x += d.x;
             current.y += d.y;
             current.z += d.z;
@@ -396,9 +406,37 @@
             }
         }
 
+        /**
+         * To init update canvas to fit viewport
+         */
+        function initUpdate(element) {
+            const pdfViewer = element;
+            const pageViewer = document.getElementById('canvas-id-1');
+            const fitOriginal = {
+                width: pdfViewer.offsetWidth,
+                height: pdfViewer.offsetHeight
+            };
+            const sizePageViewer = {
+                width: pageViewer.offsetWidth,
+                height: pageViewer.offsetHeight
+            };
+
+            current.x = current.y = (fitOriginal.width - sizePageViewer.width) / (2 * scale);
+            // current.y = (fitOriginal.height - sizePageViewer.height) / (2 * scale);
+            // console.log('current', current)
+
+            element.style.transition = "0.4s";
+            setTimeout(function() {
+                element.style.transition = "none";
+            }, 400);
+
+            last.x = current.x;
+            last.y = current.y;
+
+            update();
+        }
+
         function update() {
-            // current.height = originalSize.height;
-            // current.width = originalSize.width;
             element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
         }
     </script>
