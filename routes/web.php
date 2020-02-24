@@ -18,7 +18,8 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::resource('lawsuits', 'LawsuitsController')->only(['index', 'create', 'edit', 'show']);
     Route::get('lawsuits/{lawsuit}/documents', 'LawsuitsController@documentsShow')->name('lawsuits.documents.show');
 
-    Route::get('lawsuits/{lawsuit}/{submitter}/documents', 'DocumentController@index')->name('documents.index');
+    Route::get('lawsuits/{lawsuit}/{submitter}/{submitterId}/documents', 'DocumentController@index')
+        ->name('documents.index');
     Route::get('lawsuits/{lawsuit}/documents/create', 'DocumentController@create')->name('documents.create');
     Route::get('lawsuits/{lawsuit}/documents/{documents}/edit', 'DocumentController@edit')->name('documents.edit');
 });

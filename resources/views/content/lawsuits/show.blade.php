@@ -2,8 +2,7 @@
 @section('title', '民事事件')
 @section('content')
 <lawsuits-show
-    :route-plaintiff-documents-index="'{{route('documents.index', [$lawsuitId, 'plaintiff'])}}'"
-    :route-defendant-documents-index="'{{route('documents.index', [$lawsuitId, 'defendant'])}}'"
+    :route-submitter-documents-index="'{{route('documents.index', [$lawsuitId, 'submitter', 'submitterId'])}}'"
     :type-documents="{{ $typeDocuments }}"
     :submitters="{{ $submitters }}"
 ></lawsuits-show>

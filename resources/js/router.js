@@ -39,7 +39,7 @@ export default new Router({
     { path: '/lawsuits/:lawsuitId', name: 'lawsuitsShow', component: LawsuitsShow },
     { path: '/lawsuits/:lawsuitId/edit', name: 'lawsuitsEdit', component: LawsuitsEdit },
     { path: '/lawsuits/:lawsuitId/documents/create', name: 'documentsCreate', component: DocumentsCreate },
-    { path: '/lawsuits/:lawsuitId/:submitter/documents', name: 'documentsIndex', component: DocumentsIndex },
+    { path: '/lawsuits/:lawsuitId/:submitter/:submitterId/documents', name: 'documentsIndex', component: DocumentsIndex },
     { path: '/lawsuits/:lawsuitId/documents/:documentId/edit', name: 'documentsEdit', component: DocumentsEdit },
     { path: '/lawsuits/:lawsuitId/documents', name: 'lawsuitsDocumentShow', component: LawsuitsDocumentShow },
   ],

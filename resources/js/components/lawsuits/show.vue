@@ -53,15 +53,16 @@
       </v-row>
       <app-thead :thead="thead_evidence_document" />
       <app-type-lawsuit
-        v-if="lawsuit.plaintiffs"
-        :route-text="parseParties(lawsuit.plaintiffs, 'plaintiff')"
-        :route-link="routePlaintiffDocumentsIndex"
+        v-for="plaintiff in lawsuit.plaintiffs"
+        :key="'document-plaintiff-'+plaintiff.id"
+        :route-text="parseDocument(plaintiff, 'plaintiff')"
+        :route-link="parseRouteLink('plaintiff', plaintiff.id)"
       />
-
       <app-type-lawsuit
-        v-if="lawsuit.defendants"
-        :route-text="parseParties(lawsuit.defendants, 'defendant')"
-        :route-link="routeDefendantDocumentsIndex"
+        v-for="defendant in lawsuit.defendants"
+        :key="'document-defendant-'+defendant.id"
+        :route-text="parseDocument(defendant, 'defendant')"
+        :route-link="parseRouteLink('defendant', defendant.id)"
       />
     </div>
 
@@ -98,19 +99,10 @@
   export default {
     name: "LawsuitShow",
     props: {
-      routePlaintiffDocumentsIndex: {
+      routeSubmitterDocumentsIndex: {
         required: true,
         type: String,
-        default() {
-          return ''
-        }
-      },
-      routeDefendantDocumentsIndex: {
-        required: true,
-        type: String,
-        default() {
-          return ''
-        }
+        default: () => ''
       },
       submitters: {required: true,  type: Array, default: () => []},
     },
@@ -144,12 +136,36 @@
       /**
        * @function parseParties
        * @description get submitter of document
+       *
        * @return string|null
        */
       parseParties(parties, condition){
         const hasDocument = this.evidenceDocuments.find(d => { return d.submitter.description === condition });
         if (hasDocument) return hasDocument.submitter.name + '書面';
         return null;
+      },
+      /**
+       * @function parseDocument
+       * @description get parent of document
+       *
+       * @return string|null
+       */
+      parseDocument(party, condition){
+        const hasDocument = this.evidenceDocuments.find(d => {
+          if (d.documentable)
+            return d.submitter.description === condition && d.documentable.name === party.name
+        });
+        if (hasDocument) return hasDocument.submitter.name + party.id + '書面';
+        return null;
+      },
+      /**
+       * @function parseRouteLink
+       * @description generate route link to document
+       *
+       * @return string url
+       */
+      parseRouteLink(party, partyId){
+        return this.routeSubmitterDocumentsIndex.replace('submitterId', partyId).replace('submitter', party);
       },
     }
   }
