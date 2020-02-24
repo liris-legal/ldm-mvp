@@ -48,6 +48,10 @@
         sortedDocuments: []
 			}
 		},
+    mounted() {
+      // sort document by created_at
+      this.sortedDocuments = this.documents.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
+    },
     methods: {
       /**
        * @function parseDocumentName
@@ -60,10 +64,6 @@
         else
           return document.name + '' + document.number;
       }
-    },
-    mounted() {
-      // sort document by created_at
-      this.sortedDocuments = this.documents.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
     }
   }
 </script>

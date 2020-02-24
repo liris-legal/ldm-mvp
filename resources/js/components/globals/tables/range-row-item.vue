@@ -22,7 +22,7 @@
     >
       <div class="name">
         <span v-if="document.documentable">
-          {{ document.submitter.name }}{{ document.documentable.id}}（{{ document.documentable.name}}）
+          {{ document.submitter.name }}{{ document.documentable.id }}（{{ document.documentable.name }}）
         </span>
         <span v-else>
           {{ document.submitter.name }}

@@ -1,6 +1,9 @@
 <template>
   <div class="container-fluid lawsuit-document-show">
-    <lawsuit-header :lawsuit="lawsuit" />
+    <lawsuit-header
+      :lawsuit="lawsuit"
+      :loading="loading"
+    />
     <v-card class="lawsuit-document-card">
       <v-tabs
         v-model="typeTab"
@@ -77,6 +80,7 @@
         evidenceDocumentTab: 0,
         otherDocuments: [],
         otherDocumentTab: 0,
+        loading: true,
       }
     },
     mounted() {
@@ -100,11 +104,16 @@
           this.claimDocumentTab = this.initialData(this.claimDocuments);
           this.evidenceDocumentTab = this.initialData(this.evidenceDocuments);
           this.otherDocumentTab = this.initialData(this.otherDocuments);
+          this.loading = false;
           })
         .catch(err => {
+          this.loading = true;
           console.log(err.response);
           alert('Not found data!');
-        });
+        })
+        .finally(() => {
+        this.loading = false;
+      });
 
       /**
        * initial typeTab

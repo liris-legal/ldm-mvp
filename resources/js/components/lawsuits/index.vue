@@ -10,10 +10,12 @@
     </v-row>
 
     <div class="overflow-x-auto">
-      <table class="table">
+      <table
+        v-if="lawsuits"
+        class="table"
+      >
         <thead>
           <tr class="title d-flex">
-            <!-- col col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 -->
             <th
               scope="col"
               class="col col-3"
@@ -83,6 +85,16 @@
           />
         </tbody>
       </table>
+      <v-overlay
+        :value="overlay"
+        :opacity="opacity"
+        :absolute="true"
+      >
+        <v-progress-circular
+          indeterminate
+          size="100"
+        />
+      </v-overlay>
     </div>
   </div>
 </template>
@@ -98,12 +110,14 @@
     },
     data() {
       return {
-        lawsuits: {},
+        lawsuits: null,
         plaintiffsLength: 0,
         plaintiffRepresentativesLength: 0,
         defendantsLength: 0,
         defendantRepresentativesLength: 0,
         otherPartiesLength: 0,
+        overlay: true,
+        opacity: 0.2
       }
     },
     created() {
@@ -115,10 +129,14 @@
           this.defendantsLength = this.maxItem(this.lawsuits, 'defendants');
           this.defendantRepresentativesLength = this.maxItem(this.lawsuits, 'defendant_representatives');
           this.otherPartiesLength = this.maxItem(this.lawsuits, 'other_parties');
+          this.overlay = false;
         })
         .catch(error => {
+          this.overlay = true;
           console.log(error.response)
-        })
+        }).finally(() => {
+        this.overlay = false;
+      })
     },
     methods:{
       maxItem(array, props){
@@ -132,3 +150,5 @@
     }
   }
 </script>
+
+<style scoped></style>

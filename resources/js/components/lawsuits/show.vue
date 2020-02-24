@@ -1,6 +1,9 @@
 <template>
   <div class="container-fluid lawsuit-show">
-    <lawsuit-header :lawsuit="lawsuit" />
+    <lawsuit-header
+      :lawsuit="lawsuit"
+      :loading="loading"
+    />
     <v-row class="clearfix pr-5 pt-2">
       <v-col class="text-right">
         <v-btn
@@ -119,6 +122,7 @@
         claimDocuments: [],
         evidenceDocuments: [],
         otherDocuments: [],
+        loading: true,
 			}
     },
     created() {
@@ -128,8 +132,13 @@
         this.claimDocuments = this.lawsuit.documents.filter(d => d.type.description === 'claim' );
         this.evidenceDocuments = this.lawsuit.documents.filter(d => d.type.description === 'evidence' );
         this.otherDocuments = this.lawsuit.documents.filter(d => d.type.description === 'other');
+        this.loading = false;
       })
-      .catch(err => {console.log(err.response);
+      .catch(err => {
+        this.loading = true;
+        console.log(err.response);
+      }).finally(() => {
+        this.loading = false;
       });
     },
     methods: {
