@@ -30,7 +30,7 @@
               <v-select
                 v-model="submitter"
                 :items="submitters"
-                item-text="name"
+                :item-text="submitterFormatted"
                 return-object
                 label="提出者"
                 single-line
@@ -323,6 +323,20 @@
       // console.log('create document mounted')
     },
     methods: {
+      /**
+       * @function submitterFormatted
+       * @description to format submitter selector
+       * before: ABCDE株式会社
+       * output: 原告1(ABCDE株式会社)
+       */
+      submitterFormatted(submitter) {
+        // console.log('submitter', submitter)
+        if(submitter.hasOwnProperty('submitter_id')){
+          const party = parseInt(submitter.submitter_id) === 1 ? '原告' : '被告';
+          return party + submitter.id + '(' + submitter.name + ')';
+        }
+        return submitter.name;
+      },
       /**
        * @function subnumbersFormatted
        * @description to format numbers selection
