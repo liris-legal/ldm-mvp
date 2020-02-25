@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid document document--index">
-    <lawsuit-header :lawsuit="lawsuit" />
+    <lawsuit-header :lawsuit="lawsuit" :loading="loading" />
     <v-row class="clearfix pr-5 pt-2">
       <v-col class="text-right">
         <v-btn
@@ -88,7 +88,8 @@
         ],
         lawsuit: {},
         explainDocuments: [],
-        evidenceDocuments: []
+        evidenceDocuments: [],
+        loading: true,
       }
     },
     created() {
@@ -113,7 +114,10 @@
           this.evidenceDocuments = filteredEvidence.filter(d => d.name === explainDocumentName).sort((a, b) => a.number >= b.number ? -1 : a.subnumber > b.subnumber ? 1 : -1).reverse();
           this.explainDocuments = filteredEvidence.filter(d => d.name === '証拠説明書').sort((a, b) => a.number > b.number ? 1 : -1);
           })
-        .catch(err => {console.log(err.response);});
+        .catch(err => {console.log(err.response);})
+      .finally(() => {
+        this.loading = false;
+      });
     },
     methods: {
       /**

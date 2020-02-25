@@ -58,13 +58,13 @@
       <app-type-lawsuit
         v-for="plaintiff in lawsuit.plaintiffs"
         :key="'document-plaintiff-'+plaintiff.id"
-        :route-text="parseDocument(plaintiff, 'plaintiff')"
+        :route-text="parseFolderName(plaintiff, 'plaintiff')"
         :route-link="parseRouteLink('plaintiff', plaintiff.id)"
       />
       <app-type-lawsuit
         v-for="defendant in lawsuit.defendants"
         :key="'document-defendant-'+defendant.id"
-        :route-text="parseDocument(defendant, 'defendant')"
+        :route-text="parseFolderName(defendant, 'defendant')"
         :route-link="parseRouteLink('defendant', defendant.id)"
       />
     </div>
@@ -154,18 +154,14 @@
         return null;
       },
       /**
-       * @function parseDocument
+       * @function parseFolderName
        * @description get parent of document
        *
        * @return string|null
        */
-      parseDocument(party, condition){
-        const hasDocument = this.evidenceDocuments.find(d => {
-          if (d.documentable)
-            return d.submitter.description === condition && d.documentable.name === party.name
-        });
-        if (hasDocument) return hasDocument.submitter.name + party.id + '書面';
-        return null;
+      parseFolderName(party, condition){
+        const partyType = condition === 'plaintiff' ? '原告' : '被告';
+        return partyType + party.id + '書面';
       },
       /**
        * @function parseRouteLink
