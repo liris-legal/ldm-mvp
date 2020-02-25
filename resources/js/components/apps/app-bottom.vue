@@ -65,6 +65,7 @@
           <v-list-item
             :href="createDocument()"
             dense
+            :disabled="disabled"
           >
             <v-list-item-title class="font-size-14">
               ファイルをアップロード
@@ -77,10 +78,6 @@
 </template>
 
 <script>
-  /**
-	 * bottom is component
-	 * @property {Boolean} showAdd - Is to show/hidden a block.
-	 */
   export default {
     name: "AppBottom",
     props: {
@@ -91,7 +88,9 @@
     data() {
       return {
         showAdd: false,
-			}
+        enableRoutes: ['lawsuitsShow', 'documentsIndex'],
+        disabled: true,
+    }
     },
     watch: {
       showAdd(val) {
@@ -104,7 +103,10 @@
         }
       }
     },
-		methods: {
+    created() {
+      this.disabled = !this.enableRoutes.includes(this.$route.name);
+    },
+    methods: {
       /**
 			 * @function hidden
 			 * @description to hidden 作成 panel
@@ -132,9 +134,8 @@
        * @description Check route to enable ファイルをアップロード button
        */
       createDocument(){
-        const enableRoutes = ['lawsuitsShow', 'documentsIndex'];
         const route = this.routeCreateDocument.replace('0', this.$route.params.lawsuitId);
-        return enableRoutes.includes(this.$route.name) ? route : '#';
+        return this.enableRoutes.includes(this.$route.name) ? route : '#';
       }
 		}
   }
