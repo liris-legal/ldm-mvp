@@ -36,8 +36,10 @@ class StoreDocument extends FormRequest
         ];
 
         if (($this->submitter_id == 1 || $this->submitter_id == 3) && $this->type_document_id == 2) {
+            $documentableType = $this->submitter_id == 1 ? 'App\Models\Plaintiff' : 'App\Models\Defendant';
             $rules['number'] = 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id'
                 . ',lawsuit_id,' . $this->lawsuit_id . ',submitter_id,' . $this->submitter_id
+                . ',documentable_type,' . $documentableType . ',documentable_id,' . $this->type_submitter_id
                 . ',name,' . $this->name . ',subnumber,' . $this->subnumber;
 
             // validate exists number, subnumber

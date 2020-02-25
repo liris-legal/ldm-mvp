@@ -130,6 +130,7 @@
                     v-model="document.number"
                     :items="numbers"
                     label="書面番号"
+                    v-on:change="onChangeNumber"
                     single-line
                     outlined
                     dense
@@ -164,6 +165,7 @@
                     v-else
                     v-model="document.subnumber"
                     :items="subnumbersFormatted()"
+                    v-on:change="onChangeSubnumber"
                     single-line
                     outlined
                     dense
@@ -289,9 +291,9 @@
         datePicker: false,
         disabled: false,
         file: null,
-        selected: null,
+        selected: false,
         rules: [
-          value => !value || value.size < 2048000000 || 'File size should be less than 2048 MB!',
+          value => !value || value.size < 204800000 || 'File size should be less than 204,8 MB!',
         ],
         errors: []
       }
@@ -319,9 +321,6 @@
         if (val && this.selected) this.postData()
       },
     },
-    mounted() {
-      // console.log('create document mounted')
-    },
     methods: {
       /**
        * @function submitterFormatted
@@ -336,6 +335,24 @@
           return party + submitter.id + '(' + submitter.name + ')';
         }
         return submitter.name;
+      },
+      /**
+       * @function onChangeNumber
+       *
+       * @description handle to change number to remove error message
+       */
+      onChangeNumber() {
+        // console.log('onChangeNumber');
+        return this.errors = [];
+      },
+      /**
+       * @function onChangeSubnumber
+       *
+       * @description handle to change subnumber to remove error message
+       */
+      onChangeSubnumber() {
+        // console.log('onChangeSubnumber');
+        return this.errors = [];
       },
       /**
        * @function subnumbersFormatted
@@ -386,18 +403,19 @@
         formData.append('submitter_id', this.submitter_id);
         formData.append('created_at', this.date);
 
-        this.clearFileSelected();
         axios.post(this.storeRoute, formData)
           .then(res => {
             console.log(res);
             this.$store.dispatch('create_notification', res.data.message);
-            setTimeout(function(){ location.href = res.data.url; }, 3000);
+            // setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             if (err.response.status === 422) {
               this.errors = err.response.data.errors;
             }
-          });
+          }).finally(() => {
+          this.clearFileSelected();
+        });
       },
     },
   }

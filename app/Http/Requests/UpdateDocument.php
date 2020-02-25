@@ -42,9 +42,11 @@ class UpdateDocument extends FormRequest
         if (($this->submitter_id == 1 || $this->submitter_id == 3) && ($this->type_document_id == 2)) {
             $rules['number'] = 'bail|required|numeric|unique:documents,number,' . $this->document->id . ',id'
                 . ',lawsuit_id,' . $this->document->lawsuit_id . ',submitter_id,' . $this->submitter_id
+                . ',documentable_type,' . $this->document->documentable_type
+                . ',documentable_id,' . $this->document->documentable_type
                 . ',name,' . $this->name . ',subnumber,' . $this->subnumber;
 
-            // validate unique number, subnumber
+            // validate unique number
             Helpers::validatedUnique($this);
 
             // validate exist number, subnumber

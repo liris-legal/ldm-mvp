@@ -103,7 +103,9 @@ class Helpers
      */
     public static function validatedExists($request)
     {
+        $documentableType = $request->submitter_id == 1 ? 'App\Models\Plaintiff' : 'App\Models\Defendant';
         $messages = ['exists' => ':attributeに抜け番があります。'];
+
         if ($request->number > 1) {
             $input = $request->only('number');
 
@@ -125,6 +127,7 @@ class Helpers
             $rules = [
                 'subnumber' => 'bail|required|numeric|max:50|min:1|exists:documents,subnumber,lawsuit_id,'
                     . $request->lawsuit_id . ',submitter_id,' . $request->submitter_id
+                    . ',documentable_type,' . $documentableType . ',documentable_id,' . $request->type_submitter_id
                     . ',name,' . $request->name . ',number,' . $request->number
             ];
             Validator::make($input, $rules, $messages)->validate();
@@ -137,12 +140,15 @@ class Helpers
      */
     public static function validatedUnique($request)
     {
+        // change document type
         if ($request->name !== $request->document->name) {
             $input = $request->only('number');
 
             $rules = [
-                'number' => 'bail|required|numeric|unique:documents,number,NULL,id'
+                'number' => 'bail|required|numeric|max:100|min:1|unique:documents,number,NULL,id'
                     . ',lawsuit_id,' . $request->document->lawsuit_id . ',submitter_id,' . $request->submitter_id
+                    . ',documentable_type,' . $request->document->documentable_type
+                    . ',documentable_id,' . $request->document->documentable_type
                     . ',name,' . $request->name . ',subnumber,' . $request->subnumber
             ];
 

@@ -75,14 +75,12 @@ class DocumentApiController extends Controller
         $submitterId = $data['submitter_id'];
         switch ($submitterId) {
             case 1:
-                $party = Plaintiff::where('id', $typeSubmitterId)
-                    ->where('lawsuit_id', $data['lawsuit_id'])->first();
+                $party = Plaintiff::where('id', $typeSubmitterId)->where('lawsuit_id', $data['lawsuit_id'])->first();
                 $party ? $party->documents()->save($document) :
                     Submitter::find($submitterId)->documents()->save($document);
                 break;
             case 3:
-                $party = Defendant::where('id', $typeSubmitterId)
-                    ->where('lawsuit_id', $data['lawsuit_id'])->first();
+                $party = Defendant::where('id', $typeSubmitterId)->where('lawsuit_id', $data['lawsuit_id'])->first();
                 $party ? $party->documents()->save($document) :
                     Submitter::find($submitterId)->documents()->save($document);
                 break;
