@@ -27,7 +27,9 @@
           width="500"
           type="heading"
         >
-          原告：{{ lawsuit.plaintiffs | parseParties }}
+          <a href="javascript:void(0)" @click="onClickHandle('plaintiffs')">
+            原告：{{ lawsuit.plaintiffs | parseParties }}
+          </a>
         </v-skeleton-loader>
       </p>
       <p class="mb-0">
@@ -37,9 +39,36 @@
           width="500"
           type="heading"
         >
-          被告：{{ lawsuit.defendants | parseParties }}
+          <a href="javascript:void(0)" @click="onClickHandle('defendants')">
+            被告：{{ lawsuit.defendants | parseParties }}
+          </a>
         </v-skeleton-loader>
       </p>
+      <!-- dialog popup table -->
+      <v-card
+        v-if="openPopup"
+        class="popup-box"
+        id="popup-box"
+        dense
+      >
+        <v-card-title class="font-weight-bold font-size-18">
+          <span>{{ nameParty }}ー覧</span>
+          <v-btn icon @click="openPopup =! openPopup">
+            <v-icon>cancel</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-list dense>
+          <v-list-item
+            v-for="(party, index) in parties"
+            :key="'popup-' + party.name"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{ nameParty }}{{ ++index }} ({{ party.name }})</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -54,16 +83,48 @@ export default {
   props: {
     lawsuit: {type: Object, required: true, default: () => {}},
     loading: {type: Boolean, required: true, default: () => true}
+  },
+  data() {
+    return {
+      openPopup: false,
+      parties: [],
+      nameParty: '',
+    }
+  },
+  methods: {
+    /**
+     * onClickHandle to open popup and get parties
+     * @param party
+     */
+    onClickHandle(party) {
+      this.openPopup = !this.openPopup;
+      this.nameParty = party === 'plaintiffs' ? '原告' : '被告';
+      this.parties = this.lawsuit[party];
+    },
   }
 }
 </script>
 
-<style scoped>
-  p > a{
+<style lang="scss" scoped>
+  p a{
     color: rgba(0,0,0,.87);
     text-decoration: none;
   }
   .v-skeleton-loader--is-loading{
     height: 30px
+  }
+  .v-card__title{
+    padding: 8px;
+  }
+  .popup-box{
+    position: absolute;
+    top: 72px;
+    left: 50%;
+    min-width: 200px;
+
+    button {
+      position: absolute;
+      right: 8px;
+    }
   }
 </style>
