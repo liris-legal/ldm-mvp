@@ -21,7 +21,7 @@
   export default {
     name: "RangeLawsuitItemCol",
     props: {
-      lawsuit: {required: true, type: Object, default: {}},
+      lawsuit: {required: true, type: Object, default: () => {}},
       party: {required: true, type: String, default: ''},
     },
   }

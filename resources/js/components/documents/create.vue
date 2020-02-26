@@ -130,10 +130,10 @@
                     v-model="document.number"
                     :items="numbers"
                     label="書面番号"
-                    v-on:change="onChangeNumber"
                     single-line
                     outlined
                     dense
+                    @change="onChangeNumber"
                   />
                   <small
                     v-if="errors"
@@ -165,11 +165,11 @@
                     v-else
                     v-model="document.subnumber"
                     :items="subnumbersFormatted()"
-                    v-on:change="onChangeSubnumber"
                     single-line
                     outlined
                     dense
                     clearable
+                    @change="onChangeSubnumber"
                   />
                   <small
                     v-if="errors"

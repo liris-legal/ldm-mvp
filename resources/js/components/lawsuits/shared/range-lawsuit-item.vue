@@ -30,7 +30,10 @@
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      <range-lawsuit-item-col :lawsuit="lawsuit" party="plaintiffs"/>
+      <range-lawsuit-item-col
+        :lawsuit="lawsuit"
+        party="plaintiffs"
+      />
     </td>
 
     <td
@@ -38,7 +41,10 @@
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      <range-lawsuit-item-col :lawsuit="lawsuit" party="plaintiff_representatives"/>
+      <range-lawsuit-item-col
+        :lawsuit="lawsuit"
+        party="plaintiff_representatives"
+      />
     </td>
 
     <td
@@ -46,7 +52,10 @@
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      <range-lawsuit-item-col :lawsuit="lawsuit" party="defendants"/>
+      <range-lawsuit-item-col
+        :lawsuit="lawsuit"
+        party="defendants"
+      />
     </td>
 
     <td
@@ -54,7 +63,10 @@
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      <range-lawsuit-item-col :lawsuit="lawsuit" party="defendant_representatives"/>
+      <range-lawsuit-item-col
+        :lawsuit="lawsuit"
+        party="defendant_representatives"
+      />
     </td>
 
     <td
@@ -103,10 +115,10 @@
 
   export default {
     name: "RangeLawsuitItem",
+    components:{ rangeLawsuitItemCol },
     props: {
       lawsuit: {required: true, type: Object, default: () => {}},
     },
-    components:{ rangeLawsuitItemCol },
     data() {
       return {
         overlay: false,

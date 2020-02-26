@@ -1,6 +1,9 @@
 <template>
   <div class="container-fluid document document--index">
-    <lawsuit-header :lawsuit="lawsuit" :loading="loading" />
+    <lawsuit-header
+      :lawsuit="lawsuit"
+      :loading="loading"
+    />
     <v-row class="clearfix pr-5 pt-2">
       <v-col class="text-right">
         <v-btn

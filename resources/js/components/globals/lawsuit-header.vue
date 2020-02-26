@@ -27,7 +27,10 @@
           width="500"
           type="heading"
         >
-          <a href="javascript:void(0)" @click="onClickHandle('plaintiffs')">
+          <a
+            href="javascript:void(0)"
+            @click="onClickHandle('plaintiffs')"
+          >
             原告：{{ lawsuit.plaintiffs | parseParties }}
           </a>
         </v-skeleton-loader>
@@ -39,7 +42,10 @@
           width="500"
           type="heading"
         >
-          <a href="javascript:void(0)" @click="onClickHandle('defendants')">
+          <a
+            href="javascript:void(0)"
+            @click="onClickHandle('defendants')"
+          >
             被告：{{ lawsuit.defendants | parseParties }}
           </a>
         </v-skeleton-loader>
@@ -47,17 +53,20 @@
       <!-- dialog popup table -->
       <v-card
         v-if="openPopup"
-        class="popup-box"
         id="popup-box"
+        class="popup-box"
         dense
       >
         <v-card-title class="font-weight-bold font-size-18">
           <span>{{ nameParty }}ー覧</span>
-          <v-btn icon @click="openPopup =! openPopup">
+          <v-btn
+            icon
+            @click="openPopup =! openPopup"
+          >
             <v-icon>cancel</v-icon>
           </v-btn>
         </v-card-title>
-        <v-divider></v-divider>
+        <v-divider />
         <v-list dense>
           <v-list-item
             v-for="(party, index) in parties"
