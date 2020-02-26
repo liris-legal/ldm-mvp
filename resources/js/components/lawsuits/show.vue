@@ -56,15 +56,15 @@
       </v-row>
       <app-thead :thead="thead_evidence_document" />
       <app-type-lawsuit
-        v-for="plaintiff in lawsuit.plaintiffs"
+        v-for="(plaintiff, index) in lawsuit.plaintiffs"
         :key="'document-plaintiff-'+plaintiff.id"
-        :route-text="parseFolderName(plaintiff, 'plaintiff')"
+        :route-text="parseFolderName(plaintiff, ++index, 'plaintiff')"
         :route-link="parseRouteLink('plaintiff', plaintiff.id)"
       />
       <app-type-lawsuit
-        v-for="defendant in lawsuit.defendants"
+        v-for="(defendant, index) in lawsuit.defendants"
         :key="'document-defendant-'+defendant.id"
-        :route-text="parseFolderName(defendant, 'defendant')"
+        :route-text="parseFolderName(defendant, ++index, 'defendant')"
         :route-link="parseRouteLink('defendant', defendant.id)"
       />
     </div>
@@ -159,9 +159,9 @@
        *
        * @return string|null
        */
-      parseFolderName(party, condition){
+      parseFolderName(party, index, condition){
         const partyType = condition === 'plaintiff' ? '原告' : '被告';
-        return partyType + party.id + '書面';
+        return partyType + index + '書面';
       },
       /**
        * @function parseRouteLink

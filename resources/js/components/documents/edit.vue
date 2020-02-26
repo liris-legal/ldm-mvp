@@ -31,7 +31,7 @@
               <v-select
                 v-model="submitter"
                 :items="submitters"
-                item-text="name"
+                :item-text="submitterFormatted"
                 return-object
                 label="提出者"
                 single-line
@@ -303,9 +303,6 @@
         }
       },
     },
-    mounted() {
-      // console.log('edit document mounted')
-    },
     created() {
       /**
        * @description fetch document data from API
@@ -324,6 +321,21 @@
         });
     },
     methods: {
+      /**
+       * @function submitterFormatted
+       * @description to format submitter selector
+       * before: ABCDE株式会社
+       * output: 原告1(ABCDE株式会社)
+       */
+      submitterFormatted(submitter) {
+        // console.log('submitter', submitter)
+        const index = this.submitters.findIndex(s => s.id === submitter.id) + 1;
+        if(submitter.hasOwnProperty('submitter_id')){
+          const party = parseInt(submitter.submitter_id) === 1 ? '原告' : '被告';
+          return party + index + '(' + submitter.name + ')';
+        }
+        return submitter.name;
+      },
       /**
        * @function subnumbersFormatted
        * @description to format numbers selection
