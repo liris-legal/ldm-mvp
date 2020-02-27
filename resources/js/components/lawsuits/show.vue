@@ -31,12 +31,12 @@
         <tbody>
           <template v-if="claimDocuments.length > 0">
             <range-row-item
-              v-for="document in claimDocuments"
+              v-for="(document, index) in claimDocuments"
               :key="'claim-document-'+document.id"
               :document="document"
               :document-name="document.name"
-              :number-columns="parseInt(3)"
-              :lawsuit-id="lawsuit.id"
+              :document-index="++index"
+              :number-columns="3"
             />
           </template>
           <template v-else>
@@ -82,12 +82,12 @@
         <tbody>
           <template v-if="otherDocuments.length > 0">
             <range-row-item
-              v-for="document in otherDocuments"
+              v-for="(document, index) in otherDocuments"
               :key="'other-document-'+document.id"
               :document="document"
               :document-name="document.name"
-              :lawsuit-id="lawsuit.id"
-              :number-columns="parseInt(3)"
+              :document-index="++index"
+              :number-columns="3"
             />
           </template>
           <template v-else>
