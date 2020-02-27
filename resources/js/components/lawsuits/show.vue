@@ -160,8 +160,13 @@
        * @return string|null
        */
       parseFolderName(party, index, condition){
+        const hasDocument = this.evidenceDocuments.find(d => {
+          if (d.documentable)
+            return d.submitter.description === condition && d.documentable.name === party.name
+        });
         const partyType = condition === 'plaintiff' ? '原告' : '被告';
-        return partyType + index + '書面';
+        if (hasDocument) return partyType + index + '書面';
+        return null;
       },
       /**
        * @function parseRouteLink
