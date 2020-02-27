@@ -27,6 +27,7 @@
             // to vertical right tab-bar
             .item-tabs {
                 .v-tabs-bar {
+                    background-color: initial;
                     float: right;
                     position: absolute;
                     right: 8px;
@@ -47,6 +48,8 @@
                         .v-tab{
                             border: 1.3px solid #dee2e6;
                             padding: 12px;
+                            min-width: 48px;
+                            max-width: 48px;
                         }
                     }
                 }

@@ -34,6 +34,7 @@
 
         <!-- ▽ 証拠書面-->
         <evidence-document-tab
+          :lawsuit="lawsuit"
           :documents="evidenceDocuments"
           :document-tab="evidenceDocumentTab"
         />
@@ -130,11 +131,6 @@
           const tab = documents.findIndex(e => e.name === nameTab);
           return tab !== -1 ? tab : 0;
         }
-        // if (this.$route.query.hasOwnProperty('submitter')){
-        //   const submitter = this.$route.query.submitter;
-        //   const submitters = ['plaintiff', 'defendant'];
-        //   return submitters.findIndex(s => s === submitter);
-        // }
         // console.log('not found query');
         return 0;
       }
