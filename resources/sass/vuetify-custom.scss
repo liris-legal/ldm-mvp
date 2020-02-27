@@ -48,8 +48,10 @@
                         .v-tab{
                             border: 1.3px solid #dee2e6;
                             padding: 12px;
+                            width: 48px;
                             min-width: 48px;
-                            max-width: 48px;
+                            height: initial;
+                            min-height: fit-content;
                         }
                     }
                 }

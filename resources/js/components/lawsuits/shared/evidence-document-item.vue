@@ -101,13 +101,15 @@
     transform: rotate(0deg);
     white-space:nowrap;
     display:block;
-    height: auto !important;
+    /*height: auto !important;*/
     letter-spacing: 3px;
   }
   .text-initial{
     writing-mode: horizontal-tb !important;
   }
-  .text-vertical.v-tab.activated.v-tab--active, .v-slide-group__content.v-tabs-bar__content, .v-tab--active.v-tab:not(:focus):before{
+  .text-vertical.v-tab.activated.v-tab--active,
+  .v-slide-group__content.v-tabs-bar__content,
+  .v-tab--active.v-tab:not(:focus):before{
       width: 48px;
   }
   .item-content{
