@@ -76,10 +76,10 @@
     >
       <template v-if="lawsuit.other_parties.length">
         <div class="col-md-6 col-lg-6">
-          {{ lawsuit.other_parties[0].name }}、
+          {{ lawsuit.other_parties[0].name }}
           <v-badge
             :content="lawsuit.other_parties.length"
-            color="green"
+            color="blue lighten-3"
             offset-x="0"
             offset-y="8"
           >
@@ -159,5 +159,8 @@
   }
   .cursor-unset {
     cursor: unset !important;
+  }
+  td /deep/.v-badge__badge{
+    color: initial;
   }
 </style>
