@@ -10,7 +10,7 @@
     <style>
         .pdf-viewer {
             position: absolute;
-            max-width: 100%;
+            max-width: 99%;
             max-height: 100%;
             margin: 0 auto;
             overflow: scroll;
@@ -28,7 +28,7 @@
 </head>
 <body>
 <div class="content d-block">
-    <div class="pdf-viewer">
+    <div class="pdf-viewer" id="pdf-viewer">
         <div class="canvas-viewer" id="canvas-viewer"></div>
         <div>
             <h2 class="message"></h2>
@@ -40,6 +40,7 @@
     <script !src="">
         // Constants
         var ZOOM_SPEED_COEFFICIENT = 0.65;
+        var ZOOM_COEFFICIENT = 0.5;
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -79,7 +80,7 @@
                 window.height = viewport.height;
 
                 // CSS上のピクセル数を前提としているシステムに合わせます。
-                var scaleCanvas = Math.pow(window.devicePixelRatio, ZOOM_SPEED_COEFFICIENT);
+                var scaleCanvas = Math.pow(window.devicePixelRatio, ZOOM_COEFFICIENT);
                 ctx.scale(scaleCanvas, scaleCanvas);
 
                 // Render PDF page into canvas context
@@ -95,6 +96,7 @@
 
                     // intialize hammer.js only after the all canvas is created.
                     if( num === totalPages){
+                        // document.getElementById('pdf-viewer') is smoother but hammer cannot work
                         initHammerJs(document.getElementById('canvas-viewer'));
                     }
 
@@ -180,7 +182,7 @@
             current.height = elm.offsetHeight;
 
             // init update canvas
-            initUpdate(element);
+            initUpdate();
 
             // Set hammer js events
             hammertime.on("dragup dragdown swipeup swipedown", function(ev){
@@ -409,21 +411,30 @@
         /**
          * To init update canvas to fit viewport
          */
-        function initUpdate(element) {
-            const pdfViewer = element;
+        function initUpdate() {
+            const pdfViewer = document.getElementById('pdf-viewer');
             const pageViewer = document.getElementById('canvas-id-1');
             const fitOriginal = {
                 width: pdfViewer.offsetWidth,
                 height: pdfViewer.offsetHeight
             };
-            const sizePageViewer = {
+            const sizePage = {
                 width: pageViewer.offsetWidth,
                 height: pageViewer.offsetHeight
             };
+            // console.log('fitOriginal', fitOriginal)
+            // console.log('sizePage', sizePage)
 
-            current.x = current.y = (fitOriginal.width - sizePageViewer.width) / (2 * scale);
-            // current.y = (fitOriginal.height - sizePageViewer.height) / (2 * scale);
-            // console.log('current', current)
+            const sizeVerticalTab = window.outerWidth - pdfViewer.offsetWidth;
+            console.log('sizeVerticalTab', sizeVerticalTab);
+            if (sizeVerticalTab > 48) {
+                current.x = -sizeVerticalTab + (fitOriginal.width - sizePage.width) / (2 * Math.pow(scale, 2));
+                current.x = current.x < -110 ? -110 : current.x;
+            } else {
+                current.x = (fitOriginal.width - sizePage.width) / (2 * Math.pow(scale, 2));
+            }
+            current.y = (fitOriginal.height - sizePage.height) / (2 * Math.pow(scale, 2)) < -100 ? -100 : current.x;
+            // console.log('current', current);
 
             element.style.transition = "0.4s";
             setTimeout(function() {
