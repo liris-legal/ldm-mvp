@@ -114,7 +114,7 @@
           const filteredEvidence = evidenceDocument.filter(e => e.documentable && e.documentable.id === parseInt(this.submitterId));
 
           const explainDocumentName = this.submitter === 'plaintiff' ? "甲号証" : "乙号証";
-          this.evidenceDocuments = filteredEvidence.filter(d => d.name === explainDocumentName).sort((a, b) => a.number >= b.number ? -1 : a.subnumber > b.subnumber ? 1 : -1).reverse();
+          this.evidenceDocuments = filteredEvidence.filter(d => d.name === explainDocumentName).sort((a, b) => a.subnumber >= b.subnumber ? 1 : -1).sort((a, b) => a.number >= b.number ? 1 : -1);
           this.explainDocuments = filteredEvidence.filter(d => d.name === '証拠説明書').sort((a, b) => a.number > b.number ? 1 : -1);
           })
         .catch(err => {console.log(err);})
@@ -128,13 +128,17 @@
        * @description parse name to display
        */
       parseDocumentName(number, subnumber){
-        if (subnumber === 1)
-          if(this.evidenceDocuments.filter(d => d.number === number).length > 1)
-            return this.party+'第'+number+'号証の'+subnumber;
-          else
-            return this.party+'第'+number+'号証';
+        if (subnumber > 0)
+          return this.party+'第'+number+'号証の'+subnumber;
         else
-          return this.party + '第' + number + '号証の' + subnumber
+          return this.party+'第'+number+'号証';
+        // if (subnumber === 1)
+        //   if(this.evidenceDocuments.filter(d => d.number === number).length > 1)
+        //     return this.party+'第'+number+'号証の'+subnumber;
+        //   else
+        //     return this.party+'第'+number+'号証';
+        // else
+        //   return this.party + '第' + number + '号証の' + subnumber
       }
     }
   }

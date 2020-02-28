@@ -100,12 +100,36 @@ class Helpers
     /**
      * Validated exists request filed.
      * @param $request
+     * @param $messages
      */
-    public static function validatedExists($request)
+    public static function validatedSubnumberExists($request, $messages)
     {
         $documentableType = $request->submitter_id == 1 ? 'App\Models\Plaintiff' : 'App\Models\Defendant';
-        $messages = ['exists' => ':attributeに抜け番があります。'];
 
+        // only check subnumber > 1
+        if ($request->subnumber > 1 && ($request->name === '乙号証' || $request->name === '甲号証')) {
+            $input = $request->only('subnumber');
+            $input['subnumber'] = ($request->document && $request->subnumber - 1 == $request->document->subnumber) ?
+                $input['subnumber'] : $input['subnumber'] - 1;
+
+            $rules = [
+                'subnumber' => 'bail|required|numeric|max:50|min:0|exists:documents,subnumber,lawsuit_id,'
+                    . $request->lawsuit_id . ',submitter_id,' . $request->submitter_id
+                    . ',documentable_type,' . $documentableType . ',documentable_id,' . $request->type_submitter_id
+                    . ',name,' . $request->name . ',number,' . $request->number
+            ];
+            Validator::make($input, $rules, $messages)->validate();
+        }
+    }
+
+    /**
+     * Validated exists request filed.
+     * @param $request
+     * @param $messages
+     */
+    public static function validatedNumberExists($request, $messages)
+    {
+        // when update to change document type
         if ($request->number > 1) {
             $input = $request->only('number');
 
@@ -119,28 +143,14 @@ class Helpers
 
             Validator::make($input, $rules, $messages)->validate();
         }
-
-        if ($request->subnumber > 1 && ($request->name === '乙号証' || $request->name === '甲号証')) {
-            $input = $request->only('subnumber');
-            $input['subnumber'] -= 1;
-
-            $rules = [
-                'subnumber' => 'bail|required|numeric|max:50|min:1|exists:documents,subnumber,lawsuit_id,'
-                    . $request->lawsuit_id . ',submitter_id,' . $request->submitter_id
-                    . ',documentable_type,' . $documentableType . ',documentable_id,' . $request->type_submitter_id
-                    . ',name,' . $request->name . ',number,' . $request->number
-            ];
-            Validator::make($input, $rules, $messages)->validate();
-        }
     }
-
     /**
      * Validated unique request filed.
      * @param $request
      */
-    public static function validatedUnique($request)
+    public static function validatedNumberUnique($request)
     {
-        // change document type
+        // when update to change document type
         if ($request->name !== $request->document->name) {
             $input = $request->only('number');
 

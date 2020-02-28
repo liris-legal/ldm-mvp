@@ -27,7 +27,7 @@ class StoreDocument extends FormRequest
         $rules = [
             'name'              => 'bail|required|max:150',
             'number'            => 'bail|max:100|min:1|nullable',
-            'subnumber'         => 'bail|max:50|min:1|nullable',
+            'subnumber'         => 'bail|max:50|min:0|nullable',
             'file'              => 'bail|required|file|mimes:pdf|max:204800',
             'type_document_id'  => 'bail|required|exists:type_documents,id',
             'submitter_id'      => 'bail|required',
@@ -43,7 +43,9 @@ class StoreDocument extends FormRequest
                 . ',name,' . $this->name . ',subnumber,' . $this->subnumber;
 
             // validate exists number, subnumber
-            Helpers::validatedExists($this);
+            $messages = ['exists' => ':attributeに抜け番があります。'];
+            Helpers::validatedNumberExists($this, $messages);
+            Helpers::validatedSubnumberExists($this, $messages);
         }
 
         return $rules;

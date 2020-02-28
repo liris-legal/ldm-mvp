@@ -164,7 +164,7 @@
                   <v-select
                     v-else
                     v-model="document.subnumber"
-                    :items="subnumbersFormatted()"
+                    :items="subnumbers"
                     single-line
                     outlined
                     dense
@@ -271,7 +271,7 @@
       return {
         document: {
           number: 1,
-          subnumber: 1,
+          subnumber: 0,
           name: '',
         },
         numbers: new Array(100).join().split(',').map(function(item, index){ return ++index;}),
@@ -355,15 +355,6 @@
         // console.log('onChangeSubnumber');
         return this.errors = [];
       },
-      /**
-       * @function subnumbersFormatted
-       * @description to format numbers selection
-       */
-      subnumbersFormatted() {
-        if (this.document.number === 1)
-          return this.subnumbers.filter(n => n > 1);
-        return this.subnumbers;
-      },
 
       /**
        * @function openFileDialog
@@ -397,7 +388,7 @@
         formData.append('lawsuit_id', this.lawsuitId);
         formData.append('name', this.document.name);
         formData.append('number', this.document.number);
-        formData.append('subnumber', this.document.subnumber ? this.document.subnumber : 1);
+        formData.append('subnumber', this.document.subnumber ? this.document.subnumber : 0);
         formData.append('file', this.file);
         formData.append('type_document_id', this.type_document_id);
         formData.append('type_submitter_id', this.type_submitter_id);
@@ -408,7 +399,7 @@
           .then(res => {
             console.log(res);
             this.$store.dispatch('create_notification', res.data.message);
-            // setTimeout(function(){ location.href = res.data.url; }, 3000);
+            setTimeout(function(){ location.href = res.data.url; }, 3000);
           })
           .catch(err => {
             if (err.response.status === 422) {

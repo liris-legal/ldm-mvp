@@ -166,7 +166,7 @@
                   <v-select
                     v-else
                     v-model="document.subnumber"
-                    :items="subnumbersFormatted()"
+                    :items="subnumbers"
                     single-line
                     outlined
                     dense
@@ -310,7 +310,8 @@
       axios.get('lawsuits/'+this.lawsuitId+'/documents/' + this.documentId)
         .then(res => {
           this.document = res.data.data;
-          this.document.number = this.document.number ? parseInt(this.document.number) : this.document.number;
+          // this.document.number = this.document.number ? parseInt(this.document.number) : this.document.number;
+          // this.document.subnumber = this.document.subnumber ? parseInt(this.document.subnumber) : this.document.subnumber;
           this.type_document_id = this.document.type.id;
           this.submitter = this.document.documentable ? this.document.documentable : this.document.submitter;
           this.date = new Date(this.document.created_at).toISOString().substr(0, 10);
@@ -341,9 +342,9 @@
        * @description to format numbers selection
        */
       subnumbersFormatted() {
-        if (this.document.number === 1)
-          return this.subnumbers.filter(n => n > 1);
-        return this.subnumbers;
+        // if (this.document.number === 1)
+        //   return this.subnumbers.filter(n => n > 1);
+        // return this.subnumbers;
       },
 
       /**
@@ -354,11 +355,11 @@
         /**
          * Create a new formData to store document
          * */
-        this.document.subnumber = this.document.name === '証拠説明書' ? 1 : this.document.subnumber;
+        this.document.subnumber = this.document.name === '証拠説明書' ? 0 : this.document.subnumber;
         let formData = new FormData();
         formData.append('name', this.document.name);
         formData.append('number', this.document.number);
-        formData.append('subnumber', this.document.subnumber || 1);
+        formData.append('subnumber', this.document.subnumber || 0);
         formData.append('lawsuit_id', this.lawsuitId);
         formData.append('type_document_id', this.type_document_id);
         formData.append('type_submitter_id', this.type_submitter_id);

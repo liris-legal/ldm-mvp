@@ -3,12 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Controllers\Helpers;
-use App\Models\Document;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Submitter;
-use App\Models\TypeDocument;
-use App\Models\Lawsuit;
-use Illuminate\Support\Facades\Validator;
 
 class UpdateDocument extends FormRequest
 {
@@ -32,7 +27,7 @@ class UpdateDocument extends FormRequest
         $rules = [
             'name'              => 'bail|required|max:150',
             'number'            => 'bail|max:100|min:1|nullable',
-            'subnumber'         => 'bail|max:50|min:1|nullable',
+            'subnumber'         => 'bail|max:50|min:0|nullable',
             'type_document_id'  => 'bail|required|exists:type_documents,id',
             'submitter_id'      => 'bail|required',
             'lawsuit_id'        => 'bail|required|exists:lawsuits,id',
@@ -47,10 +42,12 @@ class UpdateDocument extends FormRequest
                 . ',name,' . $this->name . ',subnumber,' . $this->subnumber;
 
             // validate unique number
-            Helpers::validatedUnique($this);
+            Helpers::validatedNumberUnique($this);
 
             // validate exist number, subnumber
-            Helpers::validatedExists($this);
+            $messages = ['exists' => ':attributeに抜け番があります。'];
+            Helpers::validatedNumberExists($this, $messages);
+            Helpers::validatedSubnumberExists($this, $messages);
         }
 
         return $rules;
