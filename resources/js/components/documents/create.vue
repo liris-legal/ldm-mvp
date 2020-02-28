@@ -30,7 +30,7 @@
               <v-select
                 v-model="submitter"
                 :items="submitters"
-                item-text="display_name"
+                :item-text="submitterFormatted"
                 return-object
                 label="提出者"
                 single-line
@@ -323,6 +323,22 @@
       },
     },
     methods: {
+      /**
+       * @function submitterFormatted
+       * @description to format submitter selector
+       * before: ABCDE株式会社
+       * output: 原告1(ABCDE株式会社)
+       */
+      submitterFormatted(submitter) {
+        // console.log('submitter', submitter)
+        if(submitter.hasOwnProperty('submitter_id')){
+          const index = this.submitters.filter(s => s.submitter_id === submitter.submitter_id).findIndex(s => s.id === submitter.id) + 1;
+          const party = parseInt(submitter.submitter_id) === 1 ? '原告' : '被告';
+          return party + index + '(' + submitter.name + ')';
+        }
+        return submitter.name;
+      },
+
       /**
        * @function clearErrors
        * @description handle to change to remove error message
