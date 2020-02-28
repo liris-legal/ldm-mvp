@@ -1,7 +1,7 @@
 <template>
   <span>
     <template v-if="lawsuit[party].length">
-      {{ lawsuit[party][0].name | truncate(15, '...')}}
+      {{ lawsuit[party][0].name | truncate(15, '...') }}
       <v-badge
         :content="lawsuit[party].length"
         color="blue lighten-3"

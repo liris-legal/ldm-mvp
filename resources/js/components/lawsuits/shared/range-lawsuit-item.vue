@@ -8,14 +8,14 @@
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      {{ lawsuit.number | truncate(15, '...')}}
+      {{ lawsuit.number | truncate(15, '...') }}
     </td>
     <td
       scope="col"
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      {{ lawsuit.name | truncate(15, '...')}}
+      {{ lawsuit.name | truncate(15, '...') }}
     </td>
     <td
       scope="col"
