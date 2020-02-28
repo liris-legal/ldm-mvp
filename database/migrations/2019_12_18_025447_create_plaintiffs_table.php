@@ -24,7 +24,8 @@ class CreatePlaintiffsTable extends Migration
             $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
 
-        DB::statement('ALTER TABLE plaintiffs CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT = 100000 FIRST');
+        DB::statement('ALTER TABLE plaintiffs CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
+        DB::statement('ALTER TABLE plaintiffs AUTO_INCREMENT = 100000');
         DB::statement('ALTER TABLE plaintiffs CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
         DB::statement('ALTER TABLE plaintiffs CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
     }

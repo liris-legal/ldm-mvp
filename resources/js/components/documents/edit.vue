@@ -162,6 +162,7 @@
                     single-line
                     outlined
                     dense
+                    @change="clearErrors"
                   />
                   <v-select
                     v-else
@@ -171,6 +172,7 @@
                     outlined
                     dense
                     clearable
+                    @change="clearErrors"
                   />
                   <small
                     v-if="errors"
@@ -281,7 +283,8 @@
         datePicker: false,
         disabled: false,
         errors: [],
-    }
+        submitterOrigin: 0,
+      }
     },
     computed: {
       computedDateFormatted () {
@@ -293,6 +296,7 @@
         this.dateFormatted = this.formatDate(this.date)
       },
       submitter () {
+        this.document.name = this.submitterOrigin.id !== this.submitter.id ? '' : this.document.name;
         this.submitter_id = this.submitter.hasOwnProperty('submitter_id') ? this.submitter.submitter_id : this.submitter.id;
         this.type_submitter_id = this.submitter.hasOwnProperty('description') && (this.submitter.description === 'plaintiff' || this.submitter.description === 'defendant') ? 0 : this.submitter.id;
         if (this.submitter.hasOwnProperty('description') && (this.submitter.description === 'court' || this.submitter.description === 'other_party')) {
@@ -301,6 +305,7 @@
         } else {
           this.disabled = false;
         }
+        this.errors = [];
       },
     },
     created() {
@@ -314,6 +319,7 @@
           // this.document.subnumber = this.document.subnumber ? parseInt(this.document.subnumber) : this.document.subnumber;
           this.type_document_id = this.document.type.id;
           this.submitter = this.document.documentable ? this.document.documentable : this.document.submitter;
+          this.submitterOrigin = this.submitter;
           this.date = new Date(this.document.created_at).toISOString().substr(0, 10);
         })
         .catch(err => {
@@ -322,6 +328,14 @@
         });
     },
     methods: {
+      /**
+       * @function clearErrors
+       * @description handle to change to remove error message
+       */
+      clearErrors() {
+        return this.errors = [];
+      },
+      
       /**
        * @function submitterFormatted
        * @description to format submitter selector

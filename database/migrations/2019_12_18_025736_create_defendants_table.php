@@ -24,7 +24,8 @@ class CreateDefendantsTable extends Migration
             $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
 
-        DB::statement('ALTER TABLE defendants CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT = 100000 FIRST');
+        DB::statement('ALTER TABLE defendants CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
+        DB::statement('ALTER TABLE defendants AUTO_INCREMENT = 100000');
         DB::statement('ALTER TABLE defendants CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
         DB::statement('ALTER TABLE defendants CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
     }

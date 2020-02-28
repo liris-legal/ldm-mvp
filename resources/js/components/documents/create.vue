@@ -133,7 +133,7 @@
                     single-line
                     outlined
                     dense
-                    @change="onChangeNumber"
+                    @change="clearErrors"
                   />
                   <small
                     v-if="errors"
@@ -160,6 +160,7 @@
                     single-line
                     outlined
                     dense
+                    @change="clearErrors"
                   />
                   <v-select
                     v-else
@@ -169,7 +170,6 @@
                     outlined
                     dense
                     clearable
-                    @change="onChangeSubnumber"
                   />
                   <small
                     v-if="errors"
@@ -324,21 +324,10 @@
     },
     methods: {
       /**
-       * @function onChangeNumber
-       *
-       * @description handle to change number to remove error message
+       * @function clearErrors
+       * @description handle to change to remove error message
        */
-      onChangeNumber() {
-        // console.log('onChangeNumber');
-        return this.errors = [];
-      },
-      /**
-       * @function onChangeSubnumber
-       *
-       * @description handle to change subnumber to remove error message
-       */
-      onChangeSubnumber() {
-        // console.log('onChangeSubnumber');
+      clearErrors() {
         return this.errors = [];
       },
 
