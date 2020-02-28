@@ -2,11 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Services\FileService;
 
 class Document extends JsonResource
 {

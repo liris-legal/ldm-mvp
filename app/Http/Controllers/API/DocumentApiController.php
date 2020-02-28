@@ -7,7 +7,6 @@ use App\Models\Defendant;
 use App\Models\Document;
 use App\Models\Plaintiff;
 use App\Models\Submitter;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDocument;
 use App\Http\Requests\StoreDocument;

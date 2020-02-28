@@ -8,21 +8,21 @@
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      {{ lawsuit.number }}
+      {{ lawsuit.number | truncate(15, '...')}}
     </td>
     <td
       scope="col"
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      {{ lawsuit.name }}
+      {{ lawsuit.name | truncate(15, '...')}}
     </td>
     <td
       scope="col"
       class="col col-3"
       :class="{'x-overlays': overlay}"
     >
-      {{ lawsuit.courts_departments }}
+      {{ lawsuit.courts_departments | truncate(15, '...') }}
     </td>
 
     <td
@@ -76,7 +76,7 @@
     >
       <template v-if="lawsuit.other_parties.length">
         <div class="col-md-6 col-lg-6">
-          {{ lawsuit.other_parties[0].name }}
+          {{ lawsuit.other_parties[0].name | truncate(15, '...') }}
           <v-badge
             :content="lawsuit.other_parties.length"
             color="blue lighten-3"

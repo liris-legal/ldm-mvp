@@ -2,7 +2,7 @@
   <v-row class="lawsuit-header pa-3 pt-0 pb-0">
     <v-col class="col-lg-5 col-md-5 col-sm-6 col-xl-6">
       <p class="font-size-12 mb-0">
-        {{ lawsuit.number }}
+        {{ lawsuit.number | truncate(20, '...')}}
       </p>
       <v-skeleton-loader
         :loading="loading"
@@ -14,7 +14,7 @@
           <a
             :href="'/lawsuits/' + lawsuit.id"
           >
-            {{ lawsuit.name }}
+            {{ lawsuit.name | truncate(20, '...')}}
           </a>
         </p>
       </v-skeleton-loader>
@@ -31,7 +31,7 @@
             href="javascript:void(0)"
             @click="onClickHandle('plaintiffs')"
           >
-            原告：{{ lawsuit.plaintiffs | parseParties }}
+            原告：{{ lawsuit.plaintiffs | filterParties | truncate(20, '...')}}
           </a>
         </v-skeleton-loader>
       </p>
@@ -46,7 +46,7 @@
             href="javascript:void(0)"
             @click="onClickHandle('defendants')"
           >
-            被告：{{ lawsuit.defendants | parseParties }}
+            被告：{{ lawsuit.defendants | filterParties | truncate(20, '...')}}
           </a>
         </v-skeleton-loader>
       </p>
@@ -84,7 +84,7 @@
 <script>
 export default {
   filters:{
-    parseParties(arrays){
+    filterParties(arrays){
       if (arrays === undefined || arrays.length <= 0) return '-';
       return arrays[0].name;
     }
