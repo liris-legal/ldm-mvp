@@ -110,14 +110,14 @@
       axios.get('lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
-          const evidenceDocument = this.lawsuit.documents.filter(d => d.type.description === 'evidence' );
-          const filteredEvidence = evidenceDocument.filter(e => e.submitter.description === this.submitter && e.documentable.id === parseInt(this.submitterId));
+          const evidenceDocument = this.lawsuit.documents.filter(d => d.type.description === 'evidence' && d.submitter.description === this.submitter);
+          const filteredEvidence = evidenceDocument.filter(e => e.documentable && e.documentable.id === parseInt(this.submitterId));
 
           const explainDocumentName = this.submitter === 'plaintiff' ? "甲号証" : "乙号証";
           this.evidenceDocuments = filteredEvidence.filter(d => d.name === explainDocumentName).sort((a, b) => a.number >= b.number ? -1 : a.subnumber > b.subnumber ? 1 : -1).reverse();
           this.explainDocuments = filteredEvidence.filter(d => d.name === '証拠説明書').sort((a, b) => a.number > b.number ? 1 : -1);
           })
-        .catch(err => {console.log(err.response);})
+        .catch(err => {console.log(err);})
       .finally(() => {
         this.loading = false;
       });
