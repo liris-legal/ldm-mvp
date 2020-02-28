@@ -31,7 +31,7 @@
               <v-select
                 v-model="submitter"
                 :items="submitters"
-                item-text="display_name"
+                :item-text="submitterFormatted"
                 return-object
                 label="提出者"
                 single-line
@@ -280,8 +280,8 @@
         dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
         datePicker: false,
         disabled: false,
-        errors: []
-      }
+        errors: [],
+    }
     },
     computed: {
       computedDateFormatted () {
@@ -323,13 +323,19 @@
     },
     methods: {
       /**
-       * @function subnumbersFormatted
-       * @description to format numbers selection
+       * @function submitterFormatted
+       * @description to format submitter selector
+       * before: ABCDE株式会社
+       * output: 原告1(ABCDE株式会社)
        */
-      subnumbersFormatted() {
-        // if (this.document.number === 1)
-        //   return this.subnumbers.filter(n => n > 1);
-        // return this.subnumbers;
+      submitterFormatted(submitter) {
+        // console.log('submitter', submitter)
+        if(submitter.hasOwnProperty('submitter_id')){
+          const index = this.submitters.filter(s => s.submitter_id === submitter.submitter_id).findIndex(s => s.id === submitter.id) + 1;
+          const party = parseInt(submitter.submitter_id) === 1 ? '原告' : '被告';
+          return party + index + '(' + submitter.name + ')';
+        }
+        return submitter.name;
       },
 
       /**

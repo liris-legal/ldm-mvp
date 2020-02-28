@@ -11,7 +11,7 @@
       :class="{className, 'x-overlays': overlay}"
     >
       <div class="name">
-        {{ documentName }}
+        {{ documentName | truncate(20, '...') }}
       </div>
     </td>
     <td
@@ -22,7 +22,7 @@
     >
       <div class="name">
         <span v-if="document.documentable">
-          {{ document.submitter.name }}{{ documentIndex }}（{{ document.documentable.name }}）
+          {{ document.submitter.name }}{{ documentIndex }}（{{ document.documentable.name | truncate(15, '...') }}
         </span>
         <span v-else>
           {{ document.submitter.name }}

@@ -14,7 +14,7 @@ class CreateDefendantsTable extends Migration
     public function up()
     {
         Schema::create('defendants', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->start_from(100000);;
             $table->string('name');
             $table->unsignedInteger('lawsuit_id');
             $table->unsignedInteger('submitter_id');
@@ -24,7 +24,7 @@ class CreateDefendantsTable extends Migration
             $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
         });
 
-        DB::statement('ALTER TABLE defendants CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
+        DB::statement('ALTER TABLE defendants CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT = 100000 FIRST');
         DB::statement('ALTER TABLE defendants CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
         DB::statement('ALTER TABLE defendants CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
     }

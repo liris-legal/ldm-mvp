@@ -83,36 +83,7 @@ class Helpers
             $parties->push($sub);
         }
 
-        return Helpers::addAttributes($parties, 'display_name');
-    }
-
-    /**
-     * Select party
-     *
-     * @param $parties
-     * @param string $attr
-     * @return \Illuminate\Support\Collection
-     */
-    public static function addAttributes($parties, $attr = 'display_name')
-    {
-        $addedParties = collect();
-        $counterPlaintiff = 0;
-        $counterDefendant = 0;
-        foreach ($parties as $submitter) {
-            $submitter[$attr] = $submitter->name;
-            if ((int)($submitter->submitter_id) === 1) {
-                $counterPlaintiff += 1;
-                $party = '原告';
-                $submitter[$attr] = $party . $counterPlaintiff . '(' . $submitter->name . ')';
-            } elseif ((int)($submitter->submitter_id) === 3) {
-                $counterDefendant += 1;
-                $party = '被告';
-                $submitter[$attr] = $party . $counterDefendant . '(' . $submitter->name . ')';
-            }
-            $addedParties->push($submitter);
-        }
-
-        return $addedParties;
+        return $parties;
     }
 
     /**
