@@ -130,6 +130,9 @@ export default {
     top: 72px;
     left: 50%;
     min-width: 200px;
+    max-width: 230px;
+    z-index: 1;
+    word-wrap: break-word;
 
     button {
       position: absolute;
