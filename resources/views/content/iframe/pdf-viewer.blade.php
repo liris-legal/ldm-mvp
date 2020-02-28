@@ -426,7 +426,7 @@
             // console.log('sizePage', sizePage)
 
             const sizeVerticalTab = window.outerWidth - pdfViewer.offsetWidth;
-            console.log('sizeVerticalTab', sizeVerticalTab);
+            // console.log('sizeVerticalTab', sizeVerticalTab);
             if (sizeVerticalTab > 48) {
                 current.x = -sizeVerticalTab + (fitOriginal.width - sizePage.width) / (2 * Math.pow(scale, 2));
                 current.x = current.x < -110 ? -110 : current.x;

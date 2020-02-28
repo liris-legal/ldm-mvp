@@ -12,18 +12,26 @@
         height="40"
         hide-slider
       >
-        <v-tab
-          v-for="(plaintiff, index) in lawsuit.plaintiffs"
-          :key="'evidence-document-tab-plaintiff-'+index"
+        <template
+          v-if="hasDocuments('plaintiff')"
         >
-          {{ parsePartyTab(plaintiff, ++index, 'plaintiff') }}
-        </v-tab>
-        <v-tab
-          v-for="(defendant, index) in lawsuit.defendants"
-          :key="'evidence-document-tab-defendant-'+index"
+          <v-tab
+            v-for="(plaintiff, index) in lawsuit.plaintiffs"
+            :key="'evidence-document-tab-plaintiff-'+index"
+          >
+            {{ parsePartyTab(plaintiff, ++index, 'plaintiff') }}
+          </v-tab>
+        </template>
+        <template
+          v-if="hasDocuments('defendant')"
         >
-          {{ parsePartyTab(defendant, ++index, 'defendant') }}
-        </v-tab>
+          <v-tab
+            v-for="(defendant, index) in lawsuit.defendants"
+            :key="'evidence-document-tab-defendant-'+index"
+          >
+            {{ parsePartyTab(defendant, ++index, 'defendant') }}
+          </v-tab>
+        </template>
       </v-tabs>
 
       <v-tabs-items
@@ -98,7 +106,7 @@
       parsePartyTab(party, index, condition){
         const partyType = condition === 'plaintiff' ? '原告' : '被告';
         const hasDocument = this.parseDocuments(party, index, condition);
-        if (hasDocument) return partyType + index + '書面';
+        if (hasDocument.length > 0) return partyType + index + '書面';
         return null;
       },
 
@@ -108,6 +116,15 @@
        */
       parseDocuments(party, index, condition){
         return this.documents.filter(d => { return d.submitter.description === condition && d.documentable.name === party.name });
+      },
+      /**
+       * @function hasDocuments
+       * @description check party has document
+       */
+      hasDocuments(condition){
+        return !!this.documents.find(d => {
+          return d.submitter.description === condition
+        });
       }
     },
   }
