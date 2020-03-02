@@ -20,8 +20,10 @@ class CreatePlaintiffsTable extends Migration
             $table->unsignedInteger('submitter_id');
             $table->timestamps();
 
-            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
-            $table->foreign('submitter_id')->references('id')->on('submitters')->onDelete('cascade');
+            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')
+                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('submitter_id')->references('id')->on('submitters')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
 
         DB::statement('ALTER TABLE plaintiffs CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');

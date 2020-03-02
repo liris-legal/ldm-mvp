@@ -19,7 +19,8 @@ class CreateOtherPartiesTable extends Migration
             $table->unsignedInteger('lawsuit_id');
             $table->timestamps();
 
-            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
+            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
 
         DB::statement('ALTER TABLE other_parties CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT NOT NULL');

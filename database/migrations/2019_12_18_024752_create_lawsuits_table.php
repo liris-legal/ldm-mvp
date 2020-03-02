@@ -23,9 +23,9 @@ class CreateLawsuitsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('cascade');
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('type_lawsuit_id')->references('id')->on('type_lawsuits')
-                ->onDelete('cascade');
+                ->onDelete('cascade')->onUpdate('cascade');
         });
 
         DB::statement('ALTER TABLE lawsuits CHANGE user_id user_id int(6) zerofill NOT NULL');

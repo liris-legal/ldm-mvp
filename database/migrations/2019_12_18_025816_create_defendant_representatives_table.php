@@ -19,7 +19,8 @@ class CreateDefendantRepresentativesTable extends Migration
             $table->unsignedInteger('lawsuit_id');
             $table->timestamps();
 
-            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->onDelete('cascade');
+            $table->foreign('lawsuit_id')->references('id')->on('lawsuits')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
 
         DB::statement('ALTER TABLE defendant_representatives CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
