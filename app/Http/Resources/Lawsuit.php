@@ -27,6 +27,7 @@ class Lawsuit extends JsonResource
 
         return [
             'id'                        => $this->id,
+            'user_id'                   => $this->user_id,
             'type_lawsuit_id'           => $this->type_lawsuit_id,
             'number'                    => $this->number,
             'name'                      => $this->name,

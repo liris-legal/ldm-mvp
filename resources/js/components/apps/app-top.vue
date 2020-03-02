@@ -67,7 +67,7 @@
       rangeAlerts
     },
 	  props: {
-      user: { type: Object, required: true, default: () => {} },
+      authenticatedUser: { type: Object, required: true, default: () => {} },
       routeLogout: { type: String, required: true, default: () => '' }
 		},
 	  data() {
@@ -76,7 +76,7 @@
 			}
     },
     computed: {
-      ...mapState(['notification']),
+      ...mapState(['notification', 'user']),
     },
     watch: {
       displayMenu(val) {
@@ -89,6 +89,9 @@
         }
       }
     },
+    created() {
+      this.$store.dispatch('set_user', this.authenticatedUser);
+    },
 		methods: {
 	    /**
 			 * @function logout
@@ -98,7 +101,7 @@
 				axios({method: 'post', url: this.routeLogout})
 				.then( res => {
           console.log(res);
-          // this.$store.dispatch('create_notification', res.data.message);
+          this.$store.dispatch('set_user', {});
           location.reload();
 				})
 				.catch( err => {

@@ -22,7 +22,7 @@
     >
       <div class="name">
         <span v-if="document.documentable">
-          {{ document.submitter.name }}{{ documentIndex }}（{{ document.documentable.name | truncate(15, '...') }}
+          {{ document.submitter.name }}{{ documentIndex }}（{{ document.documentable.name | truncate(20, '...') }})
         </span>
         <span v-else>
           {{ document.submitter.name }}

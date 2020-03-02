@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('v1')->group(function ($router) {
+Route::prefix('v1/users/{user}')->group(function ($router) {
     Route::resource('lawsuits', 'API\LawsuitsApiController')->except(['create', 'edit']);
     Route::get('lawsuits/{lawsuit}/documents/{documents}', 'API\DocumentApiController@show');
     Route::post('lawsuits/{lawsuit}/documents/{documents}', 'API\LawsuitsApiController@showUrl');

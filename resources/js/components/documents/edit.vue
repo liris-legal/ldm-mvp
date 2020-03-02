@@ -254,6 +254,8 @@
 </template>
 
 <script>
+  import {mapState} from "vuex";
+
   export default {
     name: "DocumentEdit",
     props: {
@@ -287,6 +289,7 @@
       }
     },
     computed: {
+      ...mapState(['user']),
       computedDateFormatted () {
         return this.formatDate(this.date)
       },
@@ -312,7 +315,7 @@
       /**
        * @description fetch document data from API
        */
-      axios.get('lawsuits/'+this.lawsuitId+'/documents/' + this.documentId)
+      axios.get('users/'+this.user.id+'/lawsuits/'+this.lawsuitId+'/documents/' + this.documentId)
         .then(res => {
           this.document = res.data.data;
           // this.document.number = this.document.number ? parseInt(this.document.number) : this.document.number;
@@ -335,7 +338,6 @@
       clearErrors() {
         return this.errors = [];
       },
-      
       /**
        * @function submitterFormatted
        * @description to format submitter selector

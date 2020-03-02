@@ -14,7 +14,7 @@ class CreatePlaintiffsTable extends Migration
     public function up()
     {
         Schema::create('plaintiffs', function (Blueprint $table) {
-            $table->bigIncrements('id')->start_from(100000);
+            $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedInteger('lawsuit_id');
             $table->unsignedInteger('submitter_id');

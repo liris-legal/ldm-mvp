@@ -39,13 +39,14 @@ class DocumentApiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $lawsuit
-     * @param Document $document
+     * @param $userId
+     * @param $lawsuitId
+     * @param $documentId
      * @return \Illuminate\Http\Response
      */
-    public function show($lawsuit, $document)
+    public function show($userId, $lawsuitId, $documentId)
     {
-        $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
+        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->first();
         return response([
             'data' => new DocumentResource($document)
         ]);
@@ -115,10 +116,11 @@ class DocumentApiController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateDocument $request
+     * @param $userId
      * @param Document $document
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateDocument $request, Document $document)
+    public function update(UpdateDocument $request, $userId, Document $document)
     {
         $data = $request->all();
         // If changed submitter
@@ -158,17 +160,20 @@ class DocumentApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param $userId
      * @param Document $document
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Document $document)
+    public function destroy($userId, Document $document)
     {
         $this->fileService->deleteFileS3($document->url);
         $document->delete();
 
         $url = ($document->submitter_id == 1 || $document->submitter_id == 3) && ($document->type_document_id == 2) ?
-            route('documents.index', [$document->lawsuit_id, $document->submitter->description]) :
+            route('documents.index', [
+                $document->lawsuit_id, $document->submitter->description, $document->documentable->id
+            ]) :
             route('lawsuits.show', $document['lawsuit_id']);
 
         $message = ['status' => 'success', 'content' => 'ドキュメントは削除されました。'];

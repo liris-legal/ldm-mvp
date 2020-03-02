@@ -36,6 +36,8 @@
 </template>
 
 <script>
+  import {mapState} from "vuex";
+
   export default {
     name: "PdfViewer",
     props: {
@@ -46,8 +48,11 @@
         src: null,
       }
     },
+    computed: {
+      ...mapState(['user']),
+    },
     created(){
-      axios.post('lawsuits/'+this.document.lawsuit_id+'/documents/'+this.document.id)
+      axios.post('users/'+this.user.id+'/lawsuits/'+this.document.lawsuit_id+'/documents/'+this.document.id)
         .then(res => {
           this.src = res.data.data.url;
         })

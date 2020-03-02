@@ -18,4 +18,12 @@ class User extends Authenticatable
     protected $fillable = [
         'cognito_username', 'email',
     ];
+
+    /**
+     * Get the lawsuits for the user.
+     */
+    public function lawsuits()
+    {
+        return $this->hasMany('App\Models\Lawsuit');
+    }
 }

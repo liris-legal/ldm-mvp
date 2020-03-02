@@ -99,6 +99,8 @@
   </div>
 </template>
 <script>
+  import {mapState} from "vuex";
+
   export default {
     name: "LawsuitShow",
     props: {
@@ -125,8 +127,11 @@
         loading: true,
 			}
     },
+    computed: {
+      ...mapState(['user']),
+    },
     created() {
-      axios.get('lawsuits/'+this.$route.params.lawsuitId)
+      axios.get('users/'+this.user.id+'/lawsuits/'+this.$route.params.lawsuitId)
       .then(res => {
         this.lawsuit = res.data.data;
         this.claimDocuments = this.lawsuit.documents.filter(d => d.type.description === 'claim' );

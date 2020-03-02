@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 const stores = new Vuex.Store({
   state: {
-    notification: null
+    notification: null,
+    user: null,
   },
   mutations: {
     SET_NOTIFICATION(state, message) {
@@ -13,6 +14,9 @@ const stores = new Vuex.Store({
         state.notification = {type: message.status, message: message.content};
       else
         state.notification = null
+    },
+    SET_USER(state, user) {
+      state.user = user ? user : {};
     },
   },
   actions: {
@@ -24,6 +28,10 @@ const stores = new Vuex.Store({
     delete_notification({ commit } ) {
       // console.log('delete_notification');
       return commit('SET_NOTIFICATION', null)
+    },
+    set_user({ commit }, user) {
+      console.log('set_user', user);
+      return commit('SET_USER', user)
     },
   }
 });

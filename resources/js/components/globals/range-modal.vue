@@ -48,6 +48,7 @@
 
 <script>
   import eventBus from "../../eventBus";
+  import {mapState} from "vuex";
   /**
    * modal is global component be used to delete data
    */
@@ -61,6 +62,9 @@
         dataType: 'types',
         message: 'ファイルを削除してもよろしいですか？',
       }
+    },
+    computed: {
+      ...mapState(['user']),
     },
     created() {
       // Listening the event modal-delete
@@ -88,7 +92,7 @@
        */
       handleDeleteSubmit() {
         this.dialog = false;
-        axios.delete(this.dataType +'/' + this.data)
+        axios.delete('users/'+this.user.id+'/'+this.dataType +'/' + this.data)
         .then(res => {
           this.$store.dispatch('create_notification', res.data.message);
           setTimeout(function(){ location.href = res.data.url; }, 3000);

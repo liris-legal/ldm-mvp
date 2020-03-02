@@ -72,6 +72,8 @@
   </div>
 </template>
 <script>
+  import {mapState} from "vuex";
+
   export default {
     name: "DocumentIndex",
     props: {
@@ -95,6 +97,9 @@
         loading: true,
       }
     },
+    computed: {
+      ...mapState(['user']),
+    },
     created() {
       /**
        * parse $route params
@@ -107,7 +112,7 @@
       /**
        * @description fetch lawsuits data from API
        */
-      axios.get('lawsuits/'+this.$route.params.lawsuitId)
+      axios.get('users/'+this.user.id+'/lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
           const evidenceDocument = this.lawsuit.documents.filter(d => d.type.description === 'evidence' && d.submitter.description === this.submitter);

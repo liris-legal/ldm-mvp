@@ -311,6 +311,8 @@
 </template>
 
 <script>
+  import {mapState} from "vuex";
+
   export default {
     name: "LawsuitEdit",
       props: {
@@ -328,12 +330,15 @@
         errors: undefined,
       }
     },
+    computed: {
+      ...mapState(['user']),
+    },
     created() {
       /**
-       * @function
+       * @function+
        * @description fetch lawsuit data from API
        */
-      axios.get('lawsuits/' + this.lawsuitId)
+      axios.get('users/'+this.user.id+'/lawsuits/' + this.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
           this.lawsuit.plaintiffs = this.lawsuit.plaintiffs.length > 0 ? this.lawsuit.plaintiffs : this.plaintiffs;
@@ -372,7 +377,7 @@
         formData = this.convertObjectDataToArrayRequest(formData, 'other_parties');
         formData.append("_method", "PATCH");
 
-        axios.post('lawsuits/' + this.lawsuitId, formData)
+        axios.post('users/'+this.user.id+'/lawsuits/' + this.lawsuitId, formData)
           .then(res => {
             console.log(res.data);
             this.$store.dispatch('create_notification', res.data.message);

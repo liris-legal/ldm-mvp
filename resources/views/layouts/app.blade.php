@@ -28,7 +28,7 @@
     <div id="app">
         <v-app>
             <div id="app-overlay"></div>
-            <app-top :user="{{Auth::user()}}" :route-logout="'{{ route('logout') }}'"></app-top>
+            <app-top :authenticated-user="{{Auth::user()}}" :route-logout="'{{ route('logout') }}'"></app-top>
             <div class="clearfix"></div>
             <v-content class="content-wrapper">
                 @yield('content')

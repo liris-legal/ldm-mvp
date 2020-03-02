@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE users CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
+        DB::statement('ALTER TABLE users AUTO_INCREMENT = 100000');
     }
 
     /**

@@ -11,7 +11,6 @@
 
     <div class="overflow-x-auto">
       <table
-        v-if="lawsuits"
         class="table"
       >
         <thead>
@@ -68,11 +67,13 @@
           </tr>
         </thead>
         <tbody>
-          <range-lawsuit-item
-            v-for="(lawsuit) in lawsuits"
-            :key="'lawsuit-item'+lawsuit.id"
-            :lawsuit="lawsuit"
-          />
+          <template v-if="lawsuits">
+            <range-lawsuit-item
+              v-for="(lawsuit) in lawsuits"
+              :key="'lawsuit-item'+lawsuit.id"
+              :lawsuit="lawsuit"
+            />
+          </template>
         </tbody>
       </table>
       <v-overlay
@@ -91,6 +92,7 @@
 
 <script>
   import rangeLawsuitItem from "./shared/range-lawsuit-item"
+  import {mapState} from "vuex";
   export default {
     name: "LawsuitsIndex",
     components:{ rangeLawsuitItem },
@@ -101,8 +103,11 @@
         opacity: 0.2
       }
     },
+    computed: {
+      ...mapState(['user']),
+    },
     created() {
-      axios.get('lawsuits')
+      axios.get('users/'+this.user.id+'/lawsuits')
         .then(res => {
           this.lawsuits = res.data.data;
           this.overlay = false;

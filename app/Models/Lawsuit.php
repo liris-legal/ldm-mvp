@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lawsuit extends Model
 {
-    public $fillable = ['type_lawsuit_id', 'number', 'name', 'courts_departments'];
+    public $fillable = ['user_id', 'type_lawsuit_id', 'number', 'name', 'courts_departments'];
+
+    /**
+     * Get user for the Lawsuit.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
 
     /**
      * Get the type lawsuits for the lawsuit.

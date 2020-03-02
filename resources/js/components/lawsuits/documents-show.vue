@@ -54,6 +54,7 @@
   import claimDocumentTab from './shared/claim-document-tab'
   import evidenceDocumentTab from './shared/evidence-document-tab'
   import otherDocumentTab from './shared/other-document-tab'
+  import {mapState} from "vuex";
 
   export default {
     name: "LawsuitDocumentShow",
@@ -84,6 +85,9 @@
         loading: true,
       }
     },
+    computed: {
+      ...mapState(['user']),
+    },
     mounted() {
       // console.log(this.$options.name + ' mounted');
       // disable scroll-y
@@ -93,7 +97,7 @@
       /**
        * fetch lawsuit data from API
        */
-      axios.get('lawsuits/'+this.$route.params.lawsuitId)
+      axios.get('users/'+this.user.id+'/lawsuits/'+this.$route.params.lawsuitId)
         .then(res => {
           this.lawsuit = res.data.data;
           const documents = this.lawsuit.documents;

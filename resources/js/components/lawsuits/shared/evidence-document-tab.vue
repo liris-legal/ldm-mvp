@@ -12,45 +12,48 @@
         height="40"
         hide-slider
       >
-        <template
-          v-if="hasDocuments('plaintiff')"
+        <div
+          v-for="(plaintiff, index) in lawsuit.plaintiffs"
+          :key="'evidence-document-tab-plaintiff-'+index"
+          class="d-flex"
         >
-          <v-tab
-            v-for="(plaintiff, index) in lawsuit.plaintiffs"
-            :key="'evidence-document-tab-plaintiff-'+index"
-          >
-            {{ parsePartyTab(plaintiff, ++index, 'plaintiff') }}
+          <v-tab v-if="parsePartyTab(plaintiff, index, 'plaintiff')">
+            {{ parsePartyTab(plaintiff, index, 'plaintiff') }}
           </v-tab>
-        </template>
-        <template
-          v-if="hasDocuments('defendant')"
+        </div>
+
+        <div
+          v-for="(defendant, index) in lawsuit.defendants"
+          :key="'evidence-document-tab-defendant-'+index"
+          class="d-flex"
         >
-          <v-tab
-            v-for="(defendant, index) in lawsuit.defendants"
-            :key="'evidence-document-tab-defendant-'+index"
-          >
-            {{ parsePartyTab(defendant, ++index, 'defendant') }}
+          <v-tab v-if="parsePartyTab(defendant, index, 'defendant')">
+            {{ parsePartyTab(defendant, index, 'defendant') }}
           </v-tab>
-        </template>
+        </div>
       </v-tabs>
 
       <v-tabs-items
         v-model="tabs"
         class="document-items"
       >
-        <v-tab-item
+        <div
           v-for="(plaintiff, index) in lawsuit.plaintiffs"
           :key="'evidence-document-tab-item-plaintiff-'+index"
         >
-          <evidence-document-item :documents="parseEvidenceDocuments(plaintiff, index, 'plaintiff')" />
-        </v-tab-item>
+          <v-tab-item v-if="parseEvidenceDocuments(plaintiff, 'plaintiff').length > 0">
+            <evidence-document-item :documents="parseEvidenceDocuments(plaintiff, 'plaintiff')" />
+          </v-tab-item>
+        </div>
 
-        <v-tab-item
+        <div
           v-for="(defendant, index) in lawsuit.defendants"
           :key="'evidence-document-tab-item-defendant-'+index"
         >
-          <evidence-document-item :documents="parseEvidenceDocuments(defendant, index, 'defendant')" />
-        </v-tab-item>
+          <v-tab-item v-if="parseEvidenceDocuments(defendant, 'defendant').length > 0">
+            <evidence-document-item :documents="parseEvidenceDocuments(defendant, 'defendant')" />
+          </v-tab-item>
+        </div>
       </v-tabs-items>
     </v-container>
   </v-tab-item>
@@ -87,8 +90,8 @@
        * @description get evidence documents of party
        * @return array
        */
-      parseEvidenceDocuments(party, index, condition){
-        const _documents = this.parseDocuments(party, index, condition);
+      parseEvidenceDocuments(party, condition){
+        const _documents = this.parseDocuments(party, condition);
 
         // only "証拠説明書"
         let evidenceStatementDocuments = _documents.filter(d => d.name === '証拠説明書').sort((a, b) => a.number > b.number ? 1 : -1);
@@ -105,8 +108,8 @@
        */
       parsePartyTab(party, index, condition){
         const partyType = condition === 'plaintiff' ? '原告' : '被告';
-        const hasDocument = this.parseDocuments(party, index, condition);
-        if (hasDocument.length > 0) return partyType + index + '書面';
+        const hasDocument = this.parseDocuments(party, condition);
+        if (hasDocument.length > 0) return partyType + ++index + '書面';
         return null;
       },
 
@@ -114,18 +117,9 @@
        * @function parseDocuments
        * @description get document by author name
        */
-      parseDocuments(party, index, condition){
-        return this.documents.filter(d => { return d.submitter.description === condition && d.documentable.name === party.name });
+      parseDocuments(party, condition){
+        return this.documents.filter(d => d.submitter.description === condition && d.documentable.name === party.name );
       },
-      /**
-       * @function hasDocuments
-       * @description check party has document
-       */
-      hasDocuments(condition){
-        return !!this.documents.find(d => {
-          return d.submitter.description === condition
-        });
-      }
     },
   }
 </script>

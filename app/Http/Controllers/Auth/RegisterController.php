@@ -78,7 +78,6 @@ class RegisterController extends Controller
             );
         } catch (CognitoIdentityProviderException $exception) {
             if ($exception->getAwsErrorCode() === self::INVALID_PASSWORD) {
-                dd($exception);
                 return $exception->getAwsErrorMessage();
             }
 

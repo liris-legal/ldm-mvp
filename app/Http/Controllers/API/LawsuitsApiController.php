@@ -17,6 +17,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Services\FileService;
+use Auth;
 
 class LawsuitsApiController extends Controller
 {
@@ -30,12 +31,13 @@ class LawsuitsApiController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $userId
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($userId)
     {
         return response([
-            'data' => Lawsuit::all()->map(function ($lawsuit) {
+            'data' => Lawsuit::where('user_id', $userId)->get()->map(function ($lawsuit) {
                 return new LawsuitResource($lawsuit);
             })
         ]);
@@ -64,12 +66,14 @@ class LawsuitsApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param $userId
      * @param StoreLawsuit $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreLawsuit $request)
+    public function store($userId, StoreLawsuit $request)
     {
         $data = $request->all();
+        $data['user_id'] = $userId;
         $data['created_at'] = now();
         $lawsuit = Lawsuit::create($data);
 
@@ -102,11 +106,13 @@ class LawsuitsApiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Lawsuit $lawsuit
+     * @param $userId
+     * @param $lawsuitId
      * @return \Illuminate\Http\Response
      */
-    public function show(Lawsuit $lawsuit)
+    public function show($userId, $lawsuitId)
     {
+        $lawsuit = Lawsuit::where(['user_id' => $userId, 'id' => $lawsuitId])->first();
         return response([
             'data' => new LawsuitResource($lawsuit)
         ]);
@@ -115,13 +121,14 @@ class LawsuitsApiController extends Controller
     /**
      * Display the Url of specified resource.
      *
-     * @param $lawsuit
-     * @param Document $document
+     * @param $userId
+     * @param $lawsuitId
+     * @param $documentId
      * @return \Illuminate\Http\Response
      */
-    public function showUrl($lawsuit, $document)
+    public function showUrl($userId, $lawsuitId, $documentId)
     {
-        $document = Document::where('id', $document)->where('lawsuit_id', $lawsuit)->first();
+        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->first();
         return response([
             'data' => new DocumentUrlResource($document)
         ]);
@@ -147,11 +154,18 @@ class LawsuitsApiController extends Controller
      * Update the specified resource in storage.
      *
      * @param StoreLawsuit $request
+     * @param $userId
      * @param Lawsuit $lawsuit
      * @return JsonResponse
      */
-    public function update(StoreLawsuit $request, Lawsuit $lawsuit)
+    public function update(StoreLawsuit $request, $userId, Lawsuit $lawsuit)
     {
+        // $lawsuit = Lawsuit::where(['user_id' => $userId, 'id' => $lawsuitId])->first();
+        if ($lawsuit->user_id !== (int)$userId) {
+            $message = ['status' => 'error', 'content' => 'この事件を編集する権限がありません'];
+            return response()->json(['url' => route('lawsuits.index'), 'message' => $message], 403);
+        }
+
         $data = $request->all();
         $data['updated_at'] = now();
         $lawsuit->fill($data)->save();
@@ -188,11 +202,12 @@ class LawsuitsApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param $userId
      * @param Lawsuit $lawsuit
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Lawsuit $lawsuit)
+    public function destroy($userId, Lawsuit $lawsuit)
     {
         $documents = Document::where('lawsuit_id', $lawsuit->id)->get();
         $documents->map(function ($document) {
