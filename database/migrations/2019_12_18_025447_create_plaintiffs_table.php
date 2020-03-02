@@ -25,7 +25,7 @@ class CreatePlaintiffsTable extends Migration
         });
 
         DB::statement('ALTER TABLE plaintiffs CHANGE id id int(6) zerofill NOT NULL AUTO_INCREMENT FIRST');
-        DB::statement('ALTER TABLE plaintiffs AUTO_INCREMENT = 100000');
+        DB::statement('ALTER TABLE plaintiffs AUTO_INCREMENT = 500000');
         DB::statement('ALTER TABLE plaintiffs CHANGE lawsuit_id lawsuit_id int(6) zerofill NOT NULL');
         DB::statement('ALTER TABLE plaintiffs CHANGE submitter_id submitter_id int(6) zerofill NOT NULL');
     }
