@@ -8,6 +8,7 @@ use App\Models\TypeDocument;
 use App\Models\TypeLawsuit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Auth;
 
 class LawsuitsController extends Controller
 {
@@ -53,7 +54,8 @@ class LawsuitsController extends Controller
      */
     public function show($lawsuitId)
     {
-        $submitters = Submitter::where('description', 'NOT LIKE', '%representative')->get();
+        $lawsuit = Lawsuit::where('id', $lawsuitId)->where('user_id', Auth::user()->id)->first();
+        $submitters = Helpers::parseParties($lawsuit);
         $typeDocuments = TypeDocument::all();
 
         return view('content.lawsuits.show')->with([

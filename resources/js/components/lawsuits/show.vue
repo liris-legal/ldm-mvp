@@ -35,7 +35,7 @@
               :key="'claim-document-'+document.id"
               :document="document"
               :document-name="document.name"
-              :document-index="++index"
+              :document-index="submitterIndexFormatted(document)"
               :number-columns="3"
             />
           </template>
@@ -147,6 +147,17 @@
       });
     },
     methods: {
+      /**
+       * @function submitterIndexFormatted
+       */
+      submitterIndexFormatted(document) {
+        if(document.hasOwnProperty('documentable')){
+          let index = this.submitters.filter(s => s.submitter_id === document.submitter.id)
+            .findIndex(s => s.id === document.documentable.id);
+          return ++index;
+        }
+        return document.id;
+      },
       /**
        * @function parseParties
        * @description get submitter of document
