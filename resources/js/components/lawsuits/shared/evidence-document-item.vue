@@ -17,9 +17,9 @@
       >
         {{ parseName(document) }}
         <span class="text-initial">{{ document.number }}</span>
-        {{ hasConjunction(document.name, document.number) ? 'の' : '' }}
+        {{ hasConjunction(document.name, document.subnumber) ? 'の' : '' }}
         <span
-          v-show="hasConjunction(document.name, document.number)"
+          v-show="hasConjunction(document.name, document.subnumber)"
           class="text-initial"
         >{{ document.subnumber }}</span>
       </v-tab>
@@ -69,11 +69,8 @@
        * @function hasConjunction
        * @description has の ?
        */
-      hasConjunction(name, number){
-        if (name !== "証拠説明書")
-          return this.documents.filter(d => d.number === number).length > 1;
-        else
-          return false
+      hasConjunction(name, subnumber){
+        return name !== "証拠説明書" && subnumber > 0;
       },
 
     }
