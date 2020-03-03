@@ -31,7 +31,7 @@
         <tbody>
           <template v-if="claimDocuments.length > 0">
             <range-row-item
-              v-for="(document, index) in claimDocuments"
+              v-for="document in claimDocuments"
               :key="'claim-document-'+document.id"
               :document="document"
               :document-name="document.name"
