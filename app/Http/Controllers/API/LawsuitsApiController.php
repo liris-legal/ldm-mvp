@@ -70,7 +70,7 @@ class LawsuitsApiController extends Controller
      * @param StoreLawsuit $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store($userId, StoreLawsuit $request)
+    public function store(StoreLawsuit $request, $userId)
     {
         $data = $request->all();
         $data['user_id'] = $userId;
@@ -203,13 +203,13 @@ class LawsuitsApiController extends Controller
      * Remove the specified resource from storage.
      *
      * @param $userId
-     * @param Lawsuit $lawsuit
+     * @param $lawsuitId
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
-    public function destroy($userId, Lawsuit $lawsuit)
+    public function destroy($userId, $lawsuitId)
     {
-        $documents = Document::where('lawsuit_id', $lawsuit->id)->get();
+        $lawsuit = Lawsuit::where('id', $lawsuitId)->where('user_id', $userId)->first();
+        $documents = Document::where('lawsuit_id', $lawsuitId)->get();
         $documents->map(function ($document) {
             $this->fileService->deleteFileS3($document);
         });
@@ -225,7 +225,7 @@ class LawsuitsApiController extends Controller
      * @param $field
      * @param $condition
      * @param $value
-     * @return
+     * @return Submitter
      */
     public function selectSubmitter($field, $condition, $value)
     {

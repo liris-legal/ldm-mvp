@@ -34,9 +34,9 @@ class HomeController extends Controller
         // get recently_viewed_documents
         $viewedDocuments = DocumentRecently::where('user_id', Auth::user()->id)->get();
 
-        $documents = $viewedDocuments->isEmpty() ? Document::all()->take(10) : $viewedDocuments;
+        // $documents = $viewedDocuments->isEmpty() ? Document::all()->take(10) : $viewedDocuments;
 
-        return view('content.home', ['documents' => $documents]);
+        return view('content.home', ['documents' => $viewedDocuments]);
     }
 
     /**

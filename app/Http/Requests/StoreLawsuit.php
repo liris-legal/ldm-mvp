@@ -24,8 +24,8 @@ class StoreLawsuit extends FormRequest
     public function rules()
     {
         $rules = [
-            'type_lawsuit_id' => 'bail|required',
-            'number' => 'bail|required|unique:lawsuits',
+            'type_lawsuit_id' => 'bail|required|exists:type_lawsuits,id',
+            'number' => 'bail|required|unique:lawsuits,number,NULL,id,user_id,' . $this->user,
             'name' => 'bail|required|min:1|max:150',
             'courts_departments' => 'bail|required|min:1|max:150',
 
@@ -46,7 +46,8 @@ class StoreLawsuit extends FormRequest
         ];
 
         if (isset($this->lawsuit)) {
-            $rules['number'] = 'bail|required|unique:lawsuits,number,' . $this->lawsuit->id;
+            $rules['number'] = 'bail|required|unique:lawsuits,number,' . $this->lawsuit->id .',id'
+                .',user_id,' . $this->lawsuit->user_id;
         }
 
         return $rules;

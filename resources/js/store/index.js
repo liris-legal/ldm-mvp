@@ -30,7 +30,7 @@ const stores = new Vuex.Store({
       return commit('SET_NOTIFICATION', null)
     },
     set_user({ commit }, user) {
-      console.log('set_user', user);
+      // console.log('set_user', user);
       return commit('SET_USER', user)
     },
   }

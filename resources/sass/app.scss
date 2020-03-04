@@ -162,6 +162,10 @@ body {
     @include app_thead(12px);
     @include app_document(14px);
     @include app-type-lawsuits(14px);
+
+    .has-error {
+        font-size: 12px;
+    }
 }
 
 // home page
