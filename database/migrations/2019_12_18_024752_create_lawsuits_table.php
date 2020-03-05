@@ -17,7 +17,7 @@ class CreateLawsuitsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('type_lawsuit_id');
-            $table->string('number')->unique();
+            $table->string('number');
             $table->string('name');
             $table->string('courts_departments')->nullable();
             $table->timestamps();
