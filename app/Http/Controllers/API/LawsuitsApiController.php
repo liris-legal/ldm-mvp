@@ -171,7 +171,7 @@ class LawsuitsApiController extends Controller
             }
 
             // delete document of submitter is [plaintiffs/ defendants]
-            if ($partyMethod === 'plaintiffs' || $partyMethod === 'defendants'){
+            if ($partyMethod === 'plaintiffs' || $partyMethod === 'defendants') {
                 DB::table('documents')
                     ->where([
                         ['submitter_id', '=', $submitterId],
