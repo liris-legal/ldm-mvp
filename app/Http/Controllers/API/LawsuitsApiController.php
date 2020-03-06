@@ -112,7 +112,7 @@ class LawsuitsApiController extends Controller
      */
     public function show($userId, $lawsuitId)
     {
-        $lawsuit = Lawsuit::where(['user_id' => $userId, 'id' => $lawsuitId])->first();
+        $lawsuit = Lawsuit::where(['user_id' => $userId, 'id' => $lawsuitId])->firstOrFail();
         return response([
             'data' => new LawsuitResource($lawsuit)
         ]);
@@ -128,7 +128,7 @@ class LawsuitsApiController extends Controller
      */
     public function showUrl($userId, $lawsuitId, $documentId)
     {
-        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->first();
+        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->firstOrFail();
         return response([
             'data' => new DocumentUrlResource($document)
         ]);
@@ -208,7 +208,7 @@ class LawsuitsApiController extends Controller
      */
     public function destroy($userId, $lawsuitId)
     {
-        $lawsuit = Lawsuit::where('id', $lawsuitId)->where('user_id', $userId)->first();
+        $lawsuit = Lawsuit::where('id', $lawsuitId)->where('user_id', $userId)->firstOrFail();
         $documents = Document::where('lawsuit_id', $lawsuitId)->get();
         $documents->map(function ($document) {
             $this->fileService->deleteFileS3($document);

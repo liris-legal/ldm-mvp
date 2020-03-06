@@ -54,7 +54,7 @@ class LawsuitsController extends Controller
      */
     public function show($lawsuitId)
     {
-        $lawsuit = Lawsuit::where('id', $lawsuitId)->where('user_id', Auth::user()->id)->first();
+        $lawsuit = Lawsuit::where('id', $lawsuitId)->where('user_id', Auth::user()->id)->firstOrFail();
         $submitters = Helpers::parseParties($lawsuit);
         $typeDocuments = TypeDocument::all();
 

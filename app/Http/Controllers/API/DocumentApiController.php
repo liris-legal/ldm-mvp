@@ -46,7 +46,7 @@ class DocumentApiController extends Controller
      */
     public function show($userId, $lawsuitId, $documentId)
     {
-        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->first();
+        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->firstOrFail();
         return response([
             'data' => new DocumentResource($document)
         ]);

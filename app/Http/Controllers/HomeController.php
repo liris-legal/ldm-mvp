@@ -34,8 +34,6 @@ class HomeController extends Controller
         // get recently_viewed_documents
         $viewedDocuments = DocumentRecently::where('user_id', Auth::user()->id)->get();
 
-        // $documents = $viewedDocuments->isEmpty() ? Document::all()->take(10) : $viewedDocuments;
-
         return view('content.home', ['documents' => $viewedDocuments]);
     }
 
@@ -50,7 +48,7 @@ class HomeController extends Controller
     public function show(Request $request, $lawsuitId, $documentId)
     {
         $time = Carbon::now();
-        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->first();
+        $document = Document::where('id', $documentId)->where('lawsuit_id', $lawsuitId)->firstOrFail();
 
         // update recently_viewed_documents
         DocumentRecently::updateOrCreate(
