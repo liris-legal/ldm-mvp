@@ -77,6 +77,7 @@
 
                 // CSS上のピクセル数を前提としているシステムに合わせます。
                 ctx.scale(scale, scale);
+                ctx.textAlign = 'center';
 
                 // Render PDF page into canvas context
                 var renderContext = {
@@ -92,7 +93,7 @@
                     // intialize hammer.js only after the all canvas is created.
                     if( num === totalPages){
                         // document.getElementById('pdf-viewer') is smoother but hammer cannot work
-                        // initUpdate(document.getElementById('pdf-viewer'));
+                        initUpdate();
                     }
 
                     pageRendering = false;
@@ -150,19 +151,17 @@
                 width: pageViewer.offsetWidth,
                 height: pageViewer.offsetHeight
             };
-            // console.log('fitOriginal', fitOriginal)
-            // console.log('sizePage', sizePage)
 
             const sizeVerticalTab = window.outerWidth - pdfViewer.offsetWidth;
             // console.log('sizeVerticalTab', sizeVerticalTab);
             if (sizeVerticalTab > 48) {
                 current.x = -sizeVerticalTab + (fitOriginal.width - sizePage.width) / (2 * Math.pow(scale, 2));
-                current.x = current.x < -110 ? -110 : current.x;
+                current.x = current.x < -100 ? -100 : current.x;
             } else {
-                current.x = (fitOriginal.width - sizePage.width) / (2 * Math.pow(scale, 2));
+                current.x = (fitOriginal.width - sizePage.width) / (2);
             }
             current.y = 0; // (fitOriginal.height - sizePage.height) / (2 * Math.pow(scale, 2)) < -100 ? -100 : current.x;
-            // console.log('current', current);
+            console.log('current', current);
 
             element.style.transition = "0.4s";
             setTimeout(function() {
@@ -175,6 +174,10 @@
         function update() {
             element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
         }
+
+        $('#canvas-viewer').one('touchstart, touchmove', function (e) {
+            $('#canvas-viewer').css('transform', 'none');
+        });
     </script>
 </div>
 </body>
