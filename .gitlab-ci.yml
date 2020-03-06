@@ -72,7 +72,7 @@ unit_test:
     # Code Beautifier and Fixer
     # Using the PHP Code Beautifier and Fixer
     # https://github.com/squizlabs/PHP_CodeSniffer/wiki/Fixing-Errors-Automatically#using-the-php-code-beautifier-and-fixer
-    - vendor/bin/phpcbf --standard=psr2 app/ --fix
+    - vendor/bin/phpcbf --standard=psr2 app/ -fix
 
     # PHP Code Sniffer
     # only folder app
