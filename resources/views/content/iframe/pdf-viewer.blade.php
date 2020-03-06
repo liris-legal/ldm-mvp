@@ -161,7 +161,7 @@
                 current.x = (fitOriginal.width - sizePage.width) / (2);
             }
             current.y = 0; // (fitOriginal.height - sizePage.height) / (2 * Math.pow(scale, 2)) < -100 ? -100 : current.x;
-            console.log('current', current);
+            // console.log('current', current);
 
             element.style.transition = "0.4s";
             setTimeout(function() {

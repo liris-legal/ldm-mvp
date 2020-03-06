@@ -118,7 +118,7 @@
        * @description get document by author name
        */
       parseDocuments(party, condition){
-        return this.documents.filter(d => d.submitter.description === condition && d.documentable.name === party.name );
+        return this.documents.filter(d => d.submitter.description === condition && d.documentable && d.documentable.name === party.name );
       },
     },
   }

@@ -47,7 +47,7 @@ export const methods = {
       if ( partiesNullable.includes(key) && this.lawsuit[key][i].name.length === 0 )
         console.log('ignored');
       else
-        formData.append(key+'[]', this.lawsuit[key][i].name);
+        formData.append(key+'[]', JSON.stringify(this.lawsuit[key][i]));
     }
     return formData
   },

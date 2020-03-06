@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Services\FileService;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class LawsuitsApiController extends Controller
 {
@@ -138,16 +139,52 @@ class LawsuitsApiController extends Controller
      * Update the specified resource party.
      *
      * @param Request $request
-     * @param $submitter
+     * @param $submitterId
      * @param $lawsuit
      * @param $partyMethod
      * @param $party
      * @param $model
      */
-    public function updateParties(Request $request, $submitter, $lawsuit, $partyMethod, $party, $model)
+    public function updateParties(Request $request, $submitterId, $lawsuit, $partyMethod, $party, $model)
     {
-        $lawsuit->$partyMethod()->delete();
-        $this->storeParties($request, $submitter, $lawsuit, $party, $model);
+        // $lawsuit->$partyMethod()->delete();
+        // $this->storeParties($request, $submitter, $lawsuit, $party, $model);
+        if ($request->has($party)) {
+            $ids = [];
+            foreach ($request->get($party) as $item) {
+                $itemObject = json_decode($item, true);
+                // new data
+                $data = ['name' => $itemObject['name'], 'submitter_id' => $submitterId, 'lawsuit_id' => $lawsuit->id];
+
+                // init model
+                $class = "App\Models\\".$model;
+
+                // update or created new
+                if (isset($itemObject['id'])) {
+                    $class::updateOrCreate(['id' => $itemObject['id']], $data);
+                    array_push($ids, $itemObject['id']);
+                }
+                if (!isset($itemObject['id'])) {
+                    $newObj = $class::create($data);
+                    array_push($ids, $newObj->id);
+                }
+            }
+
+            // delete document of submitter is [plaintiffs/ defendants]
+            if ($partyMethod === 'plaintiffs' || $partyMethod === 'defendants'){
+                DB::table('documents')
+                    ->where([
+                        ['submitter_id', '=', $submitterId],
+                        ['lawsuit_id', '=', $lawsuit->id],
+                        ['documentable_type', '=',"App\Models\\".$model]
+                    ])
+                    ->whereNotIn('documentable_id', $ids)
+                    ->delete();
+            }
+
+            // delete party not in $ids
+            DB::table($party)->where('lawsuit_id', $lawsuit->id)->whereNotIn('id', $ids)->delete();
+        }
     }
 
     /**

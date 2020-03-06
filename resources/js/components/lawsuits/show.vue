@@ -151,7 +151,8 @@
        * @function submitterIndexFormatted
        */
       submitterIndexFormatted(document) {
-        if(document.hasOwnProperty('documentable')){
+        // console.log(document)
+        if(document.hasOwnProperty('documentable') && document.documentable){
           let index = this.submitters.filter(s => s.submitter_id === document.submitter.id)
             .findIndex(s => s.id === document.documentable.id);
           return ++index;
