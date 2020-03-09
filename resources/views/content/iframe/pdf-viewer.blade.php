@@ -21,6 +21,9 @@
         .pdf-viewer > * {
             -webkit-overflow-scrolling: touch;
         }
+        .canvas-viewer {
+            overflow-x: hidden;
+        }
     </style>
 </head>
 <body>
@@ -36,7 +39,7 @@
 
     <script !src="">
         // Constants
-        var ZOOM_COEFFICIENT = 0.55;
+        var ZOOM_COEFFICIENT = 0.559;
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -78,6 +81,8 @@
                 // CSS上のピクセル数を前提としているシステムに合わせます。
                 ctx.scale(scale, scale);
                 ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.setTransform(scale, 0, 0, scale, -100, -50);
 
                 // Render PDF page into canvas context
                 var renderContext = {
@@ -93,7 +98,7 @@
                     // intialize hammer.js only after the all canvas is created.
                     if( num === totalPages){
                         // document.getElementById('pdf-viewer') is smoother but hammer cannot work
-                        initUpdate();
+                        // initUpdate();
                     }
 
                     pageRendering = false;
@@ -176,7 +181,7 @@
         }
 
         $('#canvas-viewer').one('touchstart, touchmove', function (e) {
-            $('#canvas-viewer').css('transform', 'none');
+            // $('#canvas-viewer').css('transform', 'none');
         });
     </script>
 </div>
