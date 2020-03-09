@@ -7,9 +7,12 @@
     <script src="{{asset('js/hammer.min.js')}}"></script>
     <title>PDF Viewer</title>
     <style>
+        body {
+            overflow: hidden;
+        }
         .pdf-viewer {
             position: absolute;
-            max-width: 100%;
+            max-width: 99%;
             max-height: 100%;
             margin: 0 auto;
             overflow: scroll;
@@ -23,6 +26,21 @@
         }
         .canvas-viewer {
             overflow-x: hidden;
+        }
+
+        /* Overwrite the default to keep the scrollbar always visible */
+        ::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 7px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: #1452CC;
+            -webkit-box-shadow: 0 0 1px rgba(20,82,204,.5);
+        }
+        ::-webkit-scrollbar-thumb:horizontal {
+            display: none;
         }
     </style>
 </head>
@@ -39,7 +57,7 @@
 
     <script !src="">
         // Constants
-        var ZOOM_COEFFICIENT = 0.559;
+        var ZOOM_COEFFICIENT = 0.459;
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         var pdfjsLib = window['pdfjs-dist/build/pdf'];
