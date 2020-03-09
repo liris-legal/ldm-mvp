@@ -52,10 +52,14 @@ class HomeController extends Controller
 
         // update recently_viewed_documents
         DocumentRecently::updateOrCreate(
-            ['user_id' => Auth::user()->id, 'document_id' => $documentId,
-                'name' => $document->name, 'number' => $document->number, 'subnumber' => $document->subnumber,
-                'lawsuit_id' => $lawsuitId, 'type_document_id' => $document->type_document_id],
-            ['created_at' => $time]
+            ['user_id' => Auth::user()->id, 'document_id' => $documentId, 'lawsuit_id' => $lawsuitId],
+            [
+                'type_document_id' => $document->type_document_id,
+                'name' => $document->name,
+                'number' => $document->number,
+                'subnumber' => $document->subnumber,
+                'created_at' => $time
+            ]
         );
 
         $src = (new FileService())->getFileUrlS3($document->url);
