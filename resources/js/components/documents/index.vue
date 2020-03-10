@@ -137,13 +137,6 @@
           return this.party+'第'+number+'号証の'+subnumber;
         else
           return this.party+'第'+number+'号証';
-        // if (subnumber === 1)
-        //   if(this.evidenceDocuments.filter(d => d.number === number).length > 1)
-        //     return this.party+'第'+number+'号証の'+subnumber;
-        //   else
-        //     return this.party+'第'+number+'号証';
-        // else
-        //   return this.party + '第' + number + '号証の' + subnumber
       }
     }
   }

@@ -52,17 +52,17 @@
       ...mapState(['user']),
     },
     created(){
+      /**
+       * @description To fetch document data via API
+       */
       axios.post('users/'+this.user.id+'/lawsuits/'+this.document.lawsuit_id+'/documents/'+this.document.id)
         .then(res => {
           this.src = res.data.data.url;
         })
         .catch(err => {
-          console.log(err.response);
+          // console.log(err.response);
           alert('Not found document!');
         });
     },
-    mounted() {
-      console.log('PdfViewer mounted')
-    }
   }
 </script>

@@ -135,7 +135,6 @@
           const tab = documents.findIndex(e => e.name === nameTab);
           return tab !== -1 ? tab : 0;
         }
-        // console.log('not found query');
         return 0;
       }
     }

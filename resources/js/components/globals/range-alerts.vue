@@ -32,14 +32,18 @@
       }
     },
     mounted() {
-      console.log('notification mounted');
+      // console.log('notification mounted');
       setTimeout(this.cleanNotification, 5000)
     },
     methods: {
+      /**
+       * @function cleanNotification
+       * @description To dispatch clean notification
+       */
       cleanNotification(){
         if (this.notification) {
           this.$store.dispatch('delete_notification');
-          console.log('removed notification')
+          // console.log('removed notification')
         }
       }
     }

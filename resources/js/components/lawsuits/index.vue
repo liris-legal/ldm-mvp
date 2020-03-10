@@ -107,6 +107,9 @@
       ...mapState(['user']),
     },
     created() {
+      /**
+       * @description To fetch lawsuits data via API
+       */
       axios.get('users/'+this.user.id+'/lawsuits')
         .then(res => {
           this.lawsuits = res.data.data;

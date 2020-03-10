@@ -93,6 +93,10 @@
     }
     },
     watch: {
+      /**
+       * @function showAdd
+       * @description to show Add button
+       */
       showAdd(val) {
         if (val){
           topBar.style.zIndex = '4';

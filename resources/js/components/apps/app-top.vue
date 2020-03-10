@@ -56,7 +56,7 @@
 
 <script>
 	/**
-	 * app-top-bar component include infomation person of user and logout.
+	 * app-top-bar component include information person of user and logout.
 	 * @property {Boolean} displayMenu - Is to show/hidden Menu App-nav-top
 	 */
   import rangeAlerts from '../globals/range-alerts'
@@ -79,6 +79,10 @@
       ...mapState(['notification', 'user']),
     },
     watch: {
+      /**
+       * @function displayMenu
+       * @description to display account Menu button
+       */
       displayMenu(val) {
         if (val){
           bottomBar.style.zIndex = '4';
@@ -106,7 +110,6 @@
 				})
 				.catch( err => {
           console.log(err.response.data);
-          // location.reload();
 				});
 			},
       /**

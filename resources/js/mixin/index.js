@@ -18,6 +18,11 @@ export const mixin = {
     ClickOutside
   },
   computed: {
+    /**
+     * @function getEndDate
+     * @description To get current date
+     * @return String Date
+     */
     getEndDate() {
       return new Date().toISOString().slice(0,10)
     }

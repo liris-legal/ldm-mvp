@@ -81,9 +81,6 @@
         this.tabs = this.documentTab
       }
     },
-    mounted() {
-      // console.log(this.$options.name + ' mounted');
-    },
     methods: {
       /**
        * @function parseEvidenceDocuments

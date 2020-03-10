@@ -57,7 +57,7 @@
 
     <script !src="">
         // Constants
-        var ZOOM_COEFFICIENT = 0.459;
+        var ZOOM_COEFFICIENT = 0.445;
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -113,12 +113,6 @@
                 renderTask.promise.then(function() {
                     // console.log('rendered, ', canvas);
 
-                    // intialize hammer.js only after the all canvas is created.
-                    if( num === totalPages){
-                        // document.getElementById('pdf-viewer') is smoother but hammer cannot work
-                        // initUpdate();
-                    }
-
                     pageRendering = false;
                     if (pageNumPending !== null) {
                         // New page rendering is pending
@@ -135,9 +129,6 @@
             // console.log('PDF loaded');
             pdfDoc = pdfDoc_;
 
-            // set total pages
-            totalPages = pdfDoc.numPages;
-
             // Initial/first page rendering
             for (var i = 1; i <= pdfDoc.numPages; i++) {
                 renderPage(i);
@@ -146,60 +137,6 @@
             // PDF loading error
             console.error(reason);
             $('.message')[0].innerText = "ERROR: " + reason.message;
-        });
-
-        var current = {
-            x: 0,
-            y: 0,
-            z: 1,
-            zooming: false,
-            width: null,
-            height: null,
-        };
-        const element = document.getElementById('canvas-viewer');
-        current.width = element.offsetWidth;
-        current.height = element.offsetHeight;
-
-        /**
-         * To init update canvas to fit viewport
-         */
-        function initUpdate() {
-            const pdfViewer = document.getElementById('pdf-viewer');
-            const pageViewer = document.getElementById('canvas-id-1');
-            const fitOriginal = {
-                width: pdfViewer.offsetWidth,
-                height: pdfViewer.offsetHeight
-            };
-            const sizePage = {
-                width: pageViewer.offsetWidth,
-                height: pageViewer.offsetHeight
-            };
-
-            const sizeVerticalTab = window.outerWidth - pdfViewer.offsetWidth;
-            // console.log('sizeVerticalTab', sizeVerticalTab);
-            if (sizeVerticalTab > 48) {
-                current.x = -sizeVerticalTab + (fitOriginal.width - sizePage.width) / (2 * Math.pow(scale, 2));
-                current.x = current.x < -100 ? -100 : current.x;
-            } else {
-                current.x = (fitOriginal.width - sizePage.width) / (2);
-            }
-            current.y = 0; // (fitOriginal.height - sizePage.height) / (2 * Math.pow(scale, 2)) < -100 ? -100 : current.x;
-            // console.log('current', current);
-
-            element.style.transition = "0.4s";
-            setTimeout(function() {
-                element.style.transition = "none";
-            }, 400);
-
-            update();
-        }
-
-        function update() {
-            element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
-        }
-
-        $('#canvas-viewer').one('touchstart, touchmove', function (e) {
-            // $('#canvas-viewer').css('transform', 'none');
         });
     </script>
 </div>

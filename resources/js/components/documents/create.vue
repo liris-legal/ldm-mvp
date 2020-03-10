@@ -362,9 +362,6 @@
       clearFileSelected() {
         this.file = null;
         this.selected = false;
-        // let fileInput = document.getElementsByClassName('v-file-input');
-        // let clearIcon = fileInput[0].getElementsByClassName('v-input__icon--clear');
-        // if(clearIcon.length) clearIcon[0].children[0].click()
       },
 
       /**

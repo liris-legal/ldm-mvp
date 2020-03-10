@@ -318,8 +318,6 @@
       axios.get('users/'+this.user.id+'/lawsuits/'+this.lawsuitId+'/documents/' + this.documentId)
         .then(res => {
           this.document = res.data.data;
-          // this.document.number = this.document.number ? parseInt(this.document.number) : this.document.number;
-          // this.document.subnumber = this.document.subnumber ? parseInt(this.document.subnumber) : this.document.subnumber;
           this.type_document_id = this.document.type.id;
           this.submitter = this.document.documentable ? this.document.documentable : this.document.submitter;
           this.submitterOrigin = this.submitter;

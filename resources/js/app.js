@@ -70,7 +70,7 @@ const app = new Vue({
   // this will inject the store instance to all child components.
   store: stores,
   mounted(){
-    console.log('app mounted');
+    // console.log('app mounted');
     window.overlay = document.getElementById('app-overlay');
     window.topBar = document.getElementById("top-bar");
     window.bottomBar = document.getElementById('bottom-bar');

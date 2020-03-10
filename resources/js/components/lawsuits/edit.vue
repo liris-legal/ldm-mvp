@@ -352,9 +352,6 @@
           alert('Not found data!');
         });
     },
-		mounted() {
-      console.log('edit mounted');
-    },
     methods:{
       /**
        * postData is used to edit lawsuit
