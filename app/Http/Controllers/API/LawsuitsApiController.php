@@ -57,7 +57,10 @@ class LawsuitsApiController extends Controller
     {
         if ($request->has($party)) {
             foreach ($request->get($party) as $item) {
-                $data = ['name' => $item, 'submitter_id' => $submitterId, 'lawsuit_id' => $lawsuit->id];
+                $itemObject = json_decode($item, true);
+                // new data
+                $data = ['name' => $itemObject['name'], 'submitter_id' => $submitterId, 'lawsuit_id' => $lawsuit->id];
+
                 $class = "App\Models\\".$model;
                 $class::create($data);
             }
