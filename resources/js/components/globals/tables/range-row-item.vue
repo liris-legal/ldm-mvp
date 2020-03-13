@@ -105,7 +105,9 @@
         let href = '/lawsuits/' + lawsuitId + '/documents?type='+this.document.type.id+'&name='+this.document.name;
         if(this.document.type.id === 2){
           const submitter = this.$route.params.submitter;
-          href = '/lawsuits/' + lawsuitId + '/documents?type='+this.document.type.id+'&submitter='+submitter+'&name='+this.document.name;
+          const documentableId = this.document.documentable.id || 0;
+          href = '/lawsuits/' + lawsuitId + '/documents?type='+this.document.type.id+'&submitter='+submitter+'&submitterId='+documentableId+
+            '&documentId='+this.document.id+'&name='+this.document.name;
         }
         location.href = href;
       },

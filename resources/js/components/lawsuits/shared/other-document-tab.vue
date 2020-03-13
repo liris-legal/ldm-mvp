@@ -12,6 +12,7 @@
         height="40"
         show-arrows
         hide-slider
+        center-active
       >
         <v-tab
           v-for="document in documents"

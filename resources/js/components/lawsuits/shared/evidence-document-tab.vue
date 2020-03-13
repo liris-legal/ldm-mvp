@@ -11,6 +11,8 @@
         active-class="activated"
         height="40"
         hide-slider
+        show-arrows
+        center-active
       >
         <div
           v-for="(plaintiff, index) in lawsuit.plaintiffs"
@@ -21,7 +23,6 @@
             {{ parsePartyTab(plaintiff, index, 'plaintiff') }}
           </v-tab>
         </div>
-
         <div
           v-for="(defendant, index) in lawsuit.defendants"
           :key="'evidence-document-tab-defendant-'+index"
@@ -42,16 +43,21 @@
           :key="'evidence-document-tab-item-plaintiff-'+index"
         >
           <v-tab-item v-if="parseEvidenceDocuments(plaintiff, 'plaintiff').length > 0">
-            <evidence-document-item :documents="parseEvidenceDocuments(plaintiff, 'plaintiff')" />
+            <evidence-document-item
+              :documents="parseEvidenceDocuments(plaintiff, 'plaintiff')"
+              :tab-index="documentTab"
+            />
           </v-tab-item>
         </div>
-
         <div
           v-for="(defendant, index) in lawsuit.defendants"
           :key="'evidence-document-tab-item-defendant-'+index"
         >
           <v-tab-item v-if="parseEvidenceDocuments(defendant, 'defendant').length > 0">
-            <evidence-document-item :documents="parseEvidenceDocuments(defendant, 'defendant')" />
+            <evidence-document-item
+              :documents="parseEvidenceDocuments(defendant, 'defendant')"
+              :tab-index="documentTab"
+            />
           </v-tab-item>
         </div>
       </v-tabs-items>
@@ -73,13 +79,21 @@
     },
     data() {
       return {
-        tabs: this.documentTab,
+        tabs: 0,
+        parties: [],
       }
     },
     watch: {
-      documentTab(){
-        this.tabs = this.documentTab
+      parties(val) {
+        // console.log('parties', val);
+        // console.log('submitterId', this.submitterId)
+        this.tabs = this.parties.findIndex(p => p.id === parseInt(this.submitterId))
       }
+    },
+    mounted() {
+      // console.log('tabs ', this.tabs);
+      // this.submitterType = this.$route.query.hasOwnProperty('submitter') ? this.$route.query.submitter + 's' : '';
+      this.submitterId = this.$route.query.hasOwnProperty('submitterId') ? this.$route.query.submitterId : 0;
     },
     methods: {
       /**
@@ -106,6 +120,12 @@
       parsePartyTab(party, index, condition){
         const partyType = condition === 'plaintiff' ? '原告' : '被告';
         const hasDocument = this.parseDocuments(party, condition);
+        if (hasDocument.length > 0 && this.parties.filter(p => p.id === party.id).length === 0) {
+          // console.log('party', party);
+          // this.parties.push(party);
+          this.parties = [...this.parties, party]
+          // console.log('parties', this.parties);
+        }
         if (hasDocument.length > 0) return partyType + ++index + '書面';
         return null;
       },
@@ -120,7 +140,3 @@
     },
   }
 </script>
-
-<style scoped>
-
-</style>

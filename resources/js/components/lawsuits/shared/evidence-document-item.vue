@@ -7,8 +7,11 @@
       v-model="documentsTab"
       class="item-tabs"
       vertical
+      width="48px"
       active-class="activated"
       hide-slider
+      show-arrows
+      center-active
     >
       <v-tab
         v-for="document in documents"
@@ -46,10 +49,18 @@
     name: "EvidenceDocumentItem",
     props: {
       documents: {required: true, type: Array, default: () => []},
+      tabIndex: {required: false, type: Number, default: () => 0},
     },
     data() {
       return {
         documentsTab: 0,
+      }
+    },
+    created() {
+      // assign tabIndex to current tab activated
+      const submitterId = this.$route.query.hasOwnProperty('submitterId') ? this.$route.query.submitterId : 0;
+      if(this.documents.length > 0 && this.documents[0].documentable.id === parseInt(submitterId)){
+        this.documentsTab = this.tabIndex;
       }
     },
     methods:{

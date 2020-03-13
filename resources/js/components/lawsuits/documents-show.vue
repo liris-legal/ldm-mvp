@@ -36,7 +36,7 @@
         <evidence-document-tab
           :lawsuit="lawsuit"
           :documents="evidenceDocuments"
-          :document-tab="evidenceDocumentTab"
+          :document-tab="evidenceDocumentsTab"
         />
         <!-- △ 証拠書面-->
 
@@ -79,7 +79,7 @@
         claimDocuments: [],
         claimDocumentTab: 0,
         evidenceDocuments: [],
-        evidenceDocumentTab: 0,
+        evidenceDocumentsTab: 0,
         otherDocuments: [],
         otherDocumentTab: 0,
         loading: true,
@@ -106,9 +106,9 @@
           this.otherDocuments = documents.filter(d => d.type.description === 'other');
 
           // initial tab activated
-          this.claimDocumentTab = this.initialData(this.claimDocuments);
-          this.evidenceDocumentTab = this.initialData(this.evidenceDocuments);
-          this.otherDocumentTab = this.initialData(this.otherDocuments);
+          this.claimDocumentTab = this.initialActivatedTab(this.claimDocuments);
+          this.initialEvidenceActivatedTab(this.lawsuit, this.evidenceDocuments);
+          this.otherDocumentTab = this.initialActivatedTab(this.otherDocuments);
           this.loading = false;
           })
         .catch(err => {
@@ -127,15 +127,49 @@
     },
     methods: {
       /**
-       * initial documentTab
+       * @function initialActivatedTab
+       * @description initial Activated Tab
        */
-      initialData(documents){
+      initialActivatedTab(documents){
         if (this.$route.query.hasOwnProperty('type') && parseInt(this.$route.query.type) !== 2){
           const nameTab = this.$route.query.hasOwnProperty('name') ? this.$route.query.name : '';
           const tab = documents.findIndex(e => e.name === nameTab);
           return tab !== -1 ? tab : 0;
         }
         return 0;
+      },
+
+      /**
+       * @function initialEvidenceActivatedTab
+       * @description initial Activated Tab in evidence
+       */
+      initialEvidenceActivatedTab(lawsuit, documents){
+        // evidenceDocumentsTab: 0,
+        if (this.$route.query.hasOwnProperty('type') && parseInt(this.$route.query.type) === 2){
+          const submitterId = this.$route.query.hasOwnProperty('submitterId') ? parseInt(this.$route.query.submitterId) : 0;
+          const documentId = this.$route.query.hasOwnProperty('documentId') ? parseInt(this.$route.query.documentId) : 0;
+          const documentName = this.$route.query.hasOwnProperty('name') ? this.$route.query.name : '';
+
+          // document tab
+          const _documents = this.parseEvidenceDocuments(documents.filter(d => d.documentable.id === submitterId));
+          const documentsTab = _documents.findIndex(e => e.id === documentId && e.name === documentName);
+
+          this.evidenceDocumentsTab = documentsTab !== -1 ? documentsTab : 0;
+        }
+      },
+
+      /**
+       * @function parseEvidenceDocuments
+       * @description re order list documents
+       */
+      parseEvidenceDocuments(documents){
+        // only "証拠説明書"
+        let evidenceStatementDocuments = documents.filter(d => d.name === '証拠説明書').sort((a, b) => a.number > b.number ? 1 : -1);
+        // except "証拠説明書"
+        let evidenceDocuments = documents.filter(d => d.name !== '証拠説明書');
+        evidenceDocuments.sort((a, b) => a.number >= b.number ? -1 : a.subnumber > b.subnumber ? 1 : -1).reverse();
+
+        return evidenceStatementDocuments.concat(evidenceDocuments);
       }
     }
   }
