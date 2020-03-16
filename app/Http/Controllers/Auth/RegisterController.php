@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -23,50 +28,111 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    const INVALID_PASSWORD         = 'InvalidPasswordException';
+
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+
+    /**
+     * AuthManager instance
+     *
+     * @var Object
+     */
+    protected $authManager;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param AuthManager $authManager
      */
-    public function __construct()
+    public function __construct(AuthManager $authManager)
     {
         $this->middleware('guest');
+        $this->authManager = $authManager;
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Register
+     * @param Request $request
+     * @return RedirectResponse|string
+     */
+    public function register(Request $request)
+    {
+        $data = $request->all();
+
+        $this->validatorEmail($data)->validate();
+        $this->validatorPassword($data)->validate();
+
+        try {
+            // Cognito側の新規登録
+            $username = $this->authManager->register(
+                $data['email'],
+                $data['password'],
+                [
+                    'email' => $data['email'],
+                ]
+            );
+        } catch (CognitoIdentityProviderException $exception) {
+            if ($exception->getAwsErrorCode() === self::INVALID_PASSWORD) {
+                return $exception->getAwsErrorMessage();
+            }
+
+            throw $exception;
+        }
+
+        // Laravel側の新規登録
+        $user = $this->create($data, $username);
+        event(new Registered($user));
+        return redirect()->route('login')->with(['status' => 'success', 'message' => 'please check your mail!']);
+    }
+
+    /**
+     * Get a validator password for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validatorPassword(array $data)
+    {
+        $message = ['max' => 'パスワードは8文字以上、32文字以下にしてください。',
+                    'min' => 'パスワードは8文字以上、32文字以下にしてください。'];
+
+        return Validator::make($data, [
+            'password' => ['required', 'string', 'min:8', 'max:32', 'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,32}.+$/i'],
+            'password_confirmation' => 'required|min:8|max:32'
+        ], $message);
+    }
+
+    /**
+     * Get a validator email for an incoming registration request.
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validatorEmail(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'email', 'max:255', 'unique:users', 'cognito_user_unique'],
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @param array $data
+     * @param $username
+     * @return User
      */
-    protected function create(array $data)
+    protected function create(array $data, $username)
     {
         return User::create([
-            'name' => $data['name'],
+            'cognito_username' => $username,
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
         ]);
     }
 }

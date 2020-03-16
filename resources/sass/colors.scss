@@ -1,0 +1,22 @@
+$color___primary: #0B104D;
+$color___white: #fff;
+$color___black: #000;
+$color___background: #F5F7FA;
+$color___success: #4caf50;
+$color___info: #3896f3;
+$color___warning: #3896f3;
+$color___error: #f75252;
+$color___text_primary: #0B104D;
+$color___btn___primary: #1452CC;
+$color___modal_background: #B4B4B465;
+$color___background_tabs: #F5F7FA;
+$color___background_documents_tabs: #BFD3F2;
+
+// Defind background button
+%app-btn-primary{
+    background-color: $color___primary;
+    color: $color___white;
+}
+%background-dark{
+    background-color: $color___background;
+}

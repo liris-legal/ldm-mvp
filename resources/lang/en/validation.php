@@ -12,7 +12,6 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
     'after' => 'The :attribute must be a date after :date.',
@@ -147,5 +146,8 @@ return [
     */
 
     'attributes' => [],
+    'cognito_user_unique' => 'The user with the specified email address already exists.',
+    'uppercase' => 'The :attribute must be uppercase.',
+    'lowercase' => 'The :attribute must be lowercase.',
 
 ];

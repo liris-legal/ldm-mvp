@@ -1,0 +1,41 @@
+version: "2"
+
+services:
+  php-apache:
+    build: ./docker/php-apache
+    container_name: liris-web
+    networks:
+      internal:
+        ipv4_address: 172.23.0.2
+    ports:
+      - 80:80
+      - 443:443
+    links:
+    - mysql
+    volumes:
+    - ./:/var/www/html/liris
+    - ./docker/php-apache/conf/virtualhosts:/etc/apache2/sites-available
+    - ./docker/php-apache/conf/ssl:/usr/local/apache2/ssl
+    - ./docker/logs/httpd:/var/log/apache2
+    restart: always
+
+  mysql:
+    image: connectivdocker/mysql
+    container_name: liris-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: liris
+    networks:
+      internal:
+        ipv4_address: 172.23.0.3
+    volumes:
+      - ./docker/database:/var/lib/mysql
+    restart: always
+
+networks:
+  internal:
+    ipam:
+      config:
+        - subnet: 172.23.0.0/16

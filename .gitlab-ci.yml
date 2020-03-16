@@ -1,0 +1,112 @@
+#
+# Gitlab CI configuration for the Laravel Framework.
+#
+image: connectivdocker/php:7.2
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - vendor/
+    - node_modules/
+
+# The following variables will automatically be passed down to the mysql container
+# as well as the mysql container and available within each.
+# https://docs.gitlab.com/ce/ci/yaml/README.html#variables
+variables:
+  DB_HOST: mysql
+  MYSQL_DATABASE: liris
+  DB_USERNAME: root
+  MYSQL_ROOT_PASSWORD: t00r
+
+# Globally script will be execute
+default:
+  before_script:
+    # Update packages
+    - apk update
+
+# Groups jobs into stages.
+# All jobs in one stage must complete before next stage is executed.
+# Defaults to ['build', 'test', 'deploy'].
+# https://docs.gitlab.com/ce/ci/yaml/README.html#variables
+stages:
+  - build
+  - test
+  - deploy
+
+unit_test:
+  stage: test
+  only:
+    - develop
+  environment:
+    # coding convention check コーディング規約チェック
+    name: testing-environment
+    url: https://ldm.test.connectiv.vn
+  # Pick zero or more services to be used on all builds.
+  # Only needed when using a docker container to run your tests in.
+  # Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-a-service
+  services:
+    - mysql:5.7
+  before_script:
+    # Install packages through composer
+    - composer self-update
+    - composer install --no-progress --no-interaction
+
+    # ENV configuration
+    - cp .env.testing .env
+
+    # Laravel: Generate an application key. Re-cache. migrate
+    - php artisan key:generate
+    - php artisan config:clear
+    - php artisan migrate:refresh
+    - php artisan db:seed --env="testing"
+
+    # Install dependencies through yarn
+    - yarn install
+    # Builder frontend through yarn
+    - yarn prod
+  script:
+    # Mess Detection
+    - vendor/bin/phpmd app/ text phpmd.xml
+
+    # Code Beautifier and Fixer
+    # Using the PHP Code Beautifier and Fixer
+    # https://github.com/squizlabs/PHP_CodeSniffer/wiki/Fixing-Errors-Automatically#using-the-php-code-beautifier-and-fixer
+    - vendor/bin/phpcbf --standard=psr2 app/
+
+    # PHP Code Sniffer
+    # only folder app
+    - vendor/bin/phpcs
+    # - vendor/bin/phpcs --standard=psr2 --ignore=vendor,bootstrap/cache/,storage,database,*.js,*.css,public/index.php,*.blade.php ./
+
+    # PHPUnit
+    - echo "Running PHPUnit test...."
+    - vendor/bin/phpunit --colors --debug
+
+    # ES linter
+    - ./node_modules/.bin/eslint --ext .js,.vue resources
+
+deploy_staging:
+  stage: deploy
+  only:
+    - develop
+  environment:
+    name: development-environment
+    url: https://ldm.test.connectiv.vn
+  before_script:
+    # Run ssh-agent in background:
+    - 'which ssh-agent || ( apk add openssh-client -yqq )'
+    - mkdir -p ~/.ssh
+    # - echo "$SSH_PRIVATE_KEY"
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-add -l
+  script:
+    # Deploy project through envoy
+    - ~/.composer/vendor/bin/envoy run deploy --branch=develop
+
+  when: manual
+

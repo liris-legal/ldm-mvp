@@ -10,7 +10,22 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::resource('type-lawsuits', 'TypeLawsuitsController');
+    Route::resource('lawsuits', 'LawsuitsController')->only(['index', 'create', 'edit', 'show']);
+    Route::get('lawsuits/{lawsuit}/documents', 'LawsuitsController@documentsShow')->name('lawsuits.documents.show');
+
+    Route::get('lawsuits/{lawsuit}/{submitter}/{submitterId}/documents', 'DocumentController@index')
+        ->name('documents.index');
+    Route::get('lawsuits/{lawsuit}/documents/create', 'DocumentController@create')->name('documents.create');
+    Route::get('lawsuits/{lawsuit}/documents/{documents}/edit', 'DocumentController@edit')->name('documents.edit');
+});
+
+Route::get('/iframe/lawsuits/{lawsuit}/documents/{document}', 'HomeController@show');
+
+Route::get('/viewer', function () {
+    return view('viewer');
 });

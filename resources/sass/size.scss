@@ -1,0 +1,22 @@
+// Size
+@mixin font_size($size) {
+    .font-size-#{$size} { //font-size-14
+        font-size: $size + px !important;
+    }
+}
+@include font_size(12);
+@include font_size(14);
+@include font_size(15);
+@include font_size(16);
+@include font_size(18);
+@include font_size(20);
+@include font_size(22);
+@include font_size(30);
+
+// Weight
+@mixin font_weight($weight:600) {
+    .font-weight-#{$weight}{
+        font-weight: $weight !important;
+    }
+}
+@include font_weight();

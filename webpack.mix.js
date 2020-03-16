@@ -12,4 +12,20 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+   .sass('resources/sass/app.scss', 'public/css');
+
+/*
+ |--------------------------------------------------------------------------
+ | Browsersync Reloading
+ |--------------------------------------------------------------------------
+ |
+ | BrowserSync can automatically monitor your files for changes,
+ | and inject your changes into the browser without requiring a manual refresh.
+ | You may enable support by calling the mix.browserSync() method:
+ |
+ | mix.browserSync('my-domain.test');
+ |
+ | @ref: https://laravel.com/docs/6.x/mix#browsersync-reloading
+ |
+ */
+mix.browserSync('http://liris.test.connectiv.vn/');

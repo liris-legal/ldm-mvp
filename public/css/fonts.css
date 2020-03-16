@@ -1,0 +1,12 @@
+@font-face {font-family: "Hiragino Sans GB";
+    src: url("../fonts/Hiragino Sans GB W3/Hiragino Sans GB W3.eot"); /* IE9*/
+    src: url("../fonts/Hiragino Sans GB W3/Hiragino Sans GB W3.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/Hiragino Sans GB W3/Hiragino Sans GB W3.woff2") format("woff2"), /* chrome firefox */
+    url("../fonts/Hiragino Sans GB W3/Hiragino Sans GB W3.woff") format("woff"), /* chrome firefox */
+    url("../fonts/Hiragino Sans GB W3/Hiragino Sans GB W3.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
+    url("../fonts/Hiragino Sans GB W3/Hiragino Sans GB W3.svg#Hiragino Sans GB") format("svg"); /* iOS 4.1- */
+}
+
+html, body {
+    font-family: "Hiragino Sans GB", sans-serif !important;
+}

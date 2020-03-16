@@ -1,0 +1,74 @@
+/*!
+* Custom Vuetify v2.2.1
+*
+*/
+
+// to hidden v-messages in document-create component
+.document {
+    .v-text-field.v-text-field--enclosed .v-text-field__details {
+        display: none;
+    }
+}
+
+// lawsuit-document-show component
+.lawsuit-document-show{
+    .lawsuit-document-card {
+        background-color: $color___background_tabs;
+    }
+    .document-tabs .v-tab{
+        border: 1.3px solid #dee2e6;
+    }
+    .document-items{
+        min-height: 70vh;
+        height: auto;
+        .v-card {
+            margin: 10px;
+
+            // to vertical right tab-bar
+            .item-tabs {
+                .v-tabs-bar {
+                    background-color: initial;
+                    float: right;
+                    position: absolute;
+                    right: 8px;
+                    top: 10px;
+                    z-index: 4;
+                    height: 41rem;
+                    width: 48px;
+
+                    .v-slide-group__next, .v-slide-group__prev{
+                        //flex: none;
+                        //display: none;
+                    }
+
+                    .v-slide-group__wrapper{
+                        //overflow: unset;
+                        overflow-y: auto;
+
+                        .v-tab{
+                            border: 1.3px solid #dee2e6;
+                            padding: 12px;
+                            width: 48px;
+                            min-width: 48px;
+                            height: initial;
+                            min-height: fit-content;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .v-tabs .activated {
+        background-color: $color___background_documents_tabs;
+        color: $color___black;
+    }
+    .v-tabs-items {
+        background-color: $color___background_tabs;
+    }
+
+}
+
+// overlays
+.v-overlay--active {
+    pointer-events: none;
+}

@@ -1,0 +1,231 @@
+.content-wrapper{
+    padding: 46px 0 48px !important;
+    @extend %background-dark;
+}
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+.height-auto{
+    height: auto !important;
+}
+.mr-0-auto{
+    margin: 0 auto !important;
+}
+.fix-form-control{
+    height: 44px !important;
+    margin:0;
+    width: 100%;
+    border: 1px solid #C2C4CC;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+.has-error {
+    display: block;
+    color: $color___error;
+    text-transform: capitalize;
+    font-size: 10px;
+    padding-top: 2px;
+}
+@mixin background-text($background, $textColor){
+    background-color: $background !important;
+    color: $textColor !important;
+}
+@mixin app-btn($width: 100%, $padding: 8px, $borderRadius: 4px){
+    width: $width;
+    padding: $padding;
+    border-radius: $borderRadius;
+}
+.btn{
+    @include app-btn();
+}
+.btn-primary{
+    @include background-text($color___btn___primary, $color___white);
+    text-transform: capitalize;
+    padding: 14.5px 25px !important;
+}
+.dark-link{
+    @include background-text(transparent, #636363);
+    text-decoration: none;
+    &:hover{
+        text-decoration: underline;
+        color: $color___primary !important;
+    }
+}
+// Defind class for notification
+@mixin notification($status, $bgColor, $textColor){
+    .#{$status}{
+        background-color: $bgColor !important;
+        color: $textColor !important;
+    }
+}
+@include notification(success, $color___success, #fff);
+@include notification(info, $color___info, #fff);
+@include notification(warning, $color___warning, #fff);
+@include notification(error, $color___error, #fff);
+
+// defind validation
+@mixin validation($status, $textColor){
+    .text-#{$status} {
+        color: $textColor;
+    }
+}
+// for validate: .text-error
+@include validation(error, $color___error);
+
+// component app-thead
+@mixin app_thead($textSizeName){
+    .app-thead{
+        color: #404040;
+        border: 1px solid #DADDE6;
+        background-color: #FAFAFA;
+
+        .col{
+            padding: 11px;
+            .name{
+                font-size: $textSizeName !important;
+                margin-left: 40px;
+            }
+        }
+    }
+}
+
+// component app-document-two-columns
+@mixin app_document($textSizeName) {
+    .document-two-columns{
+        color: #404040;
+        border: 1px solid #DADDE6;
+        background-color: #FFFFFF;
+
+        &:hover{
+            background-color: #F5F7FA;
+        }
+        .document-link{
+            color: #404040;
+            text-decoration: none;
+
+            .col{
+                padding: 13.5px;
+                .name, .date{
+                    font-size: $textSizeName !important;
+                    margin-left: 40px;
+                }
+            }
+        }
+    }
+}
+
+// component app-type-lawsuits
+@mixin app_type_lawsuits($textSizeName) {
+    .app-type-lawsuits{
+        color: #404040;
+        border: 1px solid #DADDE6;
+        background-color: #FFFFFF;
+
+        &:hover{
+            background-color: #F5F7FA;
+        }
+        .folder-link{
+            color: #404040;
+            text-decoration: none;
+            .col{
+                padding: 6px;
+                .name{
+                    font-size: $textSizeName !important;
+                    margin-left: 40px;
+                    line-height: 40px;
+                    height: 0px;
+                }
+            }
+        }
+    }
+}
+.form-control{
+    @include font_size(18);
+    label{
+        line-height: 40px;
+    }
+    .input-form-group {
+        height: 40px;
+        border-radius: 4px;
+        border: 1px solid #C2C4CC;
+        padding: 5px 20px 5px 10px;
+    }
+}
+
+@mixin mixin_lawsuit_header() {
+    .lawsuit-header {
+        background-color: #d6d6d6;
+        .col {
+            padding-top: 9px;
+            padding-bottom: 9px;
+        }
+    }
+}
+@include mixin_lawsuit_header();
+
+// tables
+@mixin mixin_thead_columns($textSizeName) {
+    .thead-columns {
+        tr{
+            border: 1px solid #DADDE6;
+            background-color: #FAFAFA;
+            th{
+                padding-top: 11px;
+                padding-bottom: 11px;
+
+                .name{
+                    font-size: $textSizeName !important;
+                    margin-left: 40px;
+                }
+            }
+        }
+    }
+}
+
+// range-table-row components
+@mixin mixin_range_row_item($textSizeName) {
+    .range--row-item {
+        cursor: pointer;
+        background-color: $color___white;
+        td {
+            padding: 3px;
+            .name {
+                font-size: $textSizeName !important;
+                margin-left: 48px;
+                line-height: 40px;
+            }
+        }
+    }
+}
+.table {
+    border-spacing: 0;
+    width: 100%;
+    @include mixin_thead_columns(12px);
+    tbody {
+        @include mixin_range_row_item(14px);
+        &:nth-child(2n) {
+            td{
+                //background-color: #e8e8e8;
+                border-top: 1px solid #DADDE6;
+                border-bottom: 1px solid #DADDE6;
+
+                &.last-column {
+                    position: relative;
+
+                    .sub-menu{
+                        visibility: hidden;
+                        top: 52px !important;
+                        right: 5px !important;
+                        @extend %subs-menu;
+                    }
+                    .actived{
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+    }
+}

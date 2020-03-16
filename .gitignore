@@ -10,3 +10,14 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+composer.lock
+
+# mix content
+/public/css/app.css
+/public/js/app.js
+
+# IDE / Editor
+.idea
+
+# webpack builder
+/public/*.js

@@ -1,1 +1,350 @@
-//
+@import '~vuetify/dist/vuetify.min.css';
+@import 'colors';
+@import 'size';
+@import "class-default";
+@import "vuetify-custom";
+
+// Fonts
+$body-font-family: "Hiragino Sans", sans-serif !important;
+.v-application, .v-application .headline, .v-application .title {
+    font-family: $body-font-family;
+    font-size: 14px;
+}
+
+html {
+    overflow: auto;
+}
+body {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    padding: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    /* Let's get this party started */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: $color___btn___primary;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }
+    &::-webkit-scrollbar-thumb:window-inactive {
+        background-color: $color___btn___primary;
+    }
+}
+
+// Defined styles for app
+.v-application{
+    display: block;
+    height: 100vh;
+}
+// login/register
+.invalid-feedback{
+    font-size: 14px;
+}
+.v-application{
+    background-color: $color___background;
+    .login, .register{
+        background-color: inherit;
+        height: 100vh;
+        padding: 7em 0em;
+        .card{
+            border: unset;
+            @extend %background-dark;
+            .card-header{
+                @extend %background-dark;
+                border-bottom: unset;
+                padding-bottom: 2em;
+            }
+            .card-body {
+                height: auto;
+                max-width: 400px;
+                width: 100%;
+                margin: 0 auto;
+                background-color: $color___white;
+                padding: 2em;
+                .form-group{
+                    margin-bottom: .5em;
+                    .form-control{
+                        height: 44px;
+                    }
+                }
+                .btn-add-form-group{
+                    margin-top: 1em;
+                }
+            }
+        }
+    }
+}
+.list-menu-top-bar, %subs-menu{
+    position: absolute;
+    z-index: 9999;
+    right: 15px;
+    top: 115%;
+    @include background-text(#fff, #404040);
+    .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){
+        cursor: pointer;
+        @include background-text(inherit, #404040);
+        &:hover{
+            @include background-text(#F5F7FA, #404040);
+        }
+    }
+}
+.bottom-bar{
+    .col-4{
+        padding: 3px;
+        .v-btn{
+            display: block;
+            width: 100%;
+            margin: 0;
+            max-width: 100%;
+            &--active{
+                color: #1452CC !important;
+            }
+            .v-icon{
+                font-size: 29.25px;
+            }
+        }
+    }
+    .add-button-bottom-app{
+        .list-item-add-button{
+            position: absolute;
+            top: -105px;
+            right: 15px;
+            .v-list-item{
+                text-align: left;
+            }
+        }
+    }
+}
+.notification {
+    .v-alert__border{
+        left: 0;
+    }
+}
+.list-item-add-button{
+    .block-link{
+        &:hover{
+            @include background-text(#F5F7FA, #404040);
+        }
+
+        display: block;
+        text-decoration: none;
+    }
+}
+.container-fluid{
+    .header-content{
+        padding: 1em 2em 0em;
+        .title-name{
+            color: $color___text_primary;
+        }
+        .description {
+            color: #808080;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+    }
+    @include app_thead(12px);
+    @include app_document(14px);
+    @include app-type-lawsuits(14px);
+
+    .has-error {
+        font-size: 12px;
+    }
+}
+
+// home page
+.home-content {
+    margin-bottom: 5em;
+}
+
+// list lawsuits page
+.lawsuit-index{
+    .overflow-x-auto{
+        white-space: nowrap;
+        height: 70vh;
+        table{
+            width: 100%;
+            border-spacing: 0;
+            thead {
+                tr.title{
+                    font-size: 12px !important;
+                    text-align: left;
+                    th{
+                        background-color: #fff;
+                        border-top: 1px solid #DADDE6;
+                        border-bottom: 1px solid #DADDE6;
+                        font-size: 12px !important;
+                        padding: 3px 0px 3px 20px;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    height: 48px;
+                    cursor: pointer;
+                    font-size: 14px !important;
+                    td{
+                        background-color: #f7f7f7;
+                        border-top: 1px solid #DADDE6;
+                        border-bottom: 1px solid #DADDE6;
+                        padding-left: 20px;
+                        .col-btn {
+                            padding: 8px 12px;
+                        }
+                    }
+                    &:nth-child(2n) {
+                        td{
+                            background-color: #e8e8e8;
+                            border-top: 1px solid #DADDE6;
+                            border-bottom: 1px solid #DADDE6;
+                        }
+                    }
+
+                    .last-child-table {
+                        position: relative;
+                        .col-md-6,.col-lg-6{
+                            padding-left: 20px;
+                        }
+                        .sub-menu{
+                            visibility: hidden;
+                            top: 55px !important;
+                            right: 5px !important;
+                            @extend %subs-menu;
+                        }
+                        .actived{
+                            visibility: visible;
+                        }
+                    }
+                }
+            }
+        }
+        /* Let's get this party started */
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background: $color___primary;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+        }
+        &::-webkit-scrollbar-thumb:window-inactive {
+            background-color: $color___primary;
+        }
+        &::-webkit-scrollbar-track {
+            margin: 0em 5em;
+        }
+    }
+}
+.form-group{
+    .form-group-content{
+        background-color: $color___white;
+        padding: 2em 4em 4em;
+        .form-control {
+            .label{
+                font-size: 14px !important;
+            }
+            .input {
+                position: relative;
+                .icon-add, .icon-clear{
+                    position: absolute;
+                    top: 2px;
+                    right: -35px;
+                }
+                .icon-clear{
+                    right: -70px;
+                }
+                font-size: 16px;
+            }
+        }
+    }
+}
+.box-shadow-delete-active{
+    margin: 0 auto;
+    background-color: hsla(0, 1%, 6%, 0.61) !important;
+    filter: blur(2px);
+    pointer-events: none;
+}
+
+.input input {
+    font-size: 16px;
+    font-family: $body-font-family;
+}
+.app--overlay{
+    background-color: $color___modal_background;
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    &.top-bar {
+        z-index: 5 !important;
+    }
+
+    &.bottom-bar {
+        z-index: 5 !important;
+    }
+}
+// fix for vertical tabs
+.evidence-document-tab{
+    .text-vertical.v-tab.activated.v-tab--active, .v-slide-group__content.v-tabs-bar__content{
+        width: 48px;
+        min-width: 48px;
+        color: #000;
+    }
+    .item-content{
+        padding-right: 4.3em;
+    }
+}
+
+/*
+ * Custom Responsive
+ * Medium: 960px > < 1264px*
+ * Small: 600px > < 960px
+ */
+@media only screen and (min-device-width: 960px) and (max-device-width: 1264px) {
+    .lawsuit-index{
+        .col-3{
+            flex: 0 0 22% !important;
+            max-width: 22% !important;
+        }
+    }
+}
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 960px) {
+    .lawsuit-index{
+        th {
+            padding: unset;
+        }
+        .col-3{
+            flex: 0 0 17% !important;
+            max-width: 17% !important;
+        }
+    }
+}
