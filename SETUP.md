@@ -73,7 +73,7 @@ npm run prod
 - Still in docker container (Liris directory): Install composer and permission
 ```
 composer install
-chmod -Rf 775 storage/ bootstrap/
+chmod -Rf 777 storage/ bootstrap/
 ```
 
 - When you have the .env with your database connection set up you can run your migrations and seeder
