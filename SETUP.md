@@ -80,3 +80,7 @@ chmod -Rf 777 storage/ bootstrap/
 ```
 php artisan migrate:refresh --seed
 ```
+
+HTTPS接続時の変更点
+App\Http\Middleware\TrustProxies内の下記内容を変更すること
+protected $proxies; ->  protected $proxies = '*';
